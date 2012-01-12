@@ -1,0 +1,199 @@
+# Variables de configuración
+
+# Las siguientes líneas definen variables de configuración que,
+# eventualmente, usted puede quedar cambiar para adaptar mejor estas fuentes
+# a sus necesidades --después de modificar este archivo ejecute conf.sh.  
+
+# Note que la sintaxis de este archivo es apropiada para
+# ser usada por conf.sh, a continuación de cada variable debe haber
+# dos líneas con comentarios.  La primera describe la variable y la segunda
+# da una indicación de que hacer si ocurre algún problema.
+
+PROYECTO=tecnica
+# Nombre del proyecto
+#
+
+PRY_VERSION=1.0
+# Versión
+#
+
+PRY_DESC="Desarrollo de Mt77"
+# Descripcion corta
+#
+
+URLSITE="https://Mt77.pasosdeJesus.org/"
+# Sitio de desarrollo de este proyecto
+#
+
+ACT_PROC="act-scp"
+# Regla para actualizar sitio de publicación
+# Las que hay por defecto son act-scp y act-ncftpput
+
+
+# Variables empleadas en fuentes
+
+# Las siguientes variables serán modificadas por conf.sh (normalmente no las debe editar)
+
+MES_ACT="octubre de 2002"
+# Mes de actualización
+#
+
+FECHA_ACT=""
+# Fecha de la actualización más reciente
+#
+
+
+# Configuración
+
+HEVEA_STY=""
+# Ruta donde está la hoja de estilo de Hevea
+# Instale hevea (http://pauillac.inria.fr/~maranget/hevea)
+
+PAPEL="letter"
+# Tamaño de papel, puede ser a4 o letter o alguno de los aceptados por gs
+# 
+
+# Herramientas
+
+AWK=""
+# Interprete POSIX Awk.  Empleado para transformar textos.
+# Herramienta típica en sistemas Unix. Hace parte del paquete awk.
+
+BIBTEX=""
+# Procesador de archivos de referencias bibliográficas
+# Parte de LaTeX
+
+CONVERT=""
+# Programa para convertir imagenes de un formato a otro
+# Hace parte del paquete imagemagick
+
+CP=""
+# Para copiar archivos
+# Herramienta típica en sistemas Unix.
+
+CVS=""
+# Para control de versiones
+# Sugerido http://www.opencvs.org
+
+DVIPS=""
+# Conversor de DVI a PostScript dvips
+# 
+
+ED=""
+# Line oriented text editor.  Empleado para transformar textos.
+# Herramienta típica en sistemas Unix.
+
+FIND=""
+# Para ubicar archivos
+# Herramienta típica en sistemas Unix.
+
+GZIP=""
+# Compresor.
+# Herramienta típica en sistemas Unix. 
+
+HEVEA=""
+# Herramienta para convertir de LaTeX a HTML
+# Instale hevea (http://pauillac.inria.fr/~maranget/hevea)
+
+ISPELL=""
+# Corrector ortográfico internacional.
+# http://fmg-www.cs.ucla.edu/fmg-members/geoff/ispell.html
+
+LATEX=""
+# Sistema de preparación de documentos LaTeX
+# Puede ser distribución TeTeX (http://www.tug.org)
+
+MAKE=""
+# Ejecuta comandos requeridos
+# Herramienta estándar en sistemas Unix
+
+MAKEINDEX=""
+# Procesador de indices para LaTeX
+# Parte de LaTeX
+
+MKDIR=""
+# Crea directorios
+# Herramienta estándar en sistemas Unix
+
+MV=""
+# Mueve/renombra archivos
+# Herramienta estándar en sistemas Unix
+
+NCFTPPUT=""
+# Programa para transferir archivos desde línea de comandos usando el protocolo FTP
+# Es una herramienta del paquete ncftp cliente http://www.ncftpd.com/
+
+PDFLATEX=""
+# Genera PDF a partir de fuentes en LaTeX
+# Puede ser distribución TeTeX (http://www.tug.org)
+
+PERL=""
+# Interprete del lenguaje Perl.
+# Herramienta típica en sistemas Unix.  http://www.perl.org
+
+PSPDF=""
+# Conversor de PostScript a PDF
+# 
+
+RM=""
+# Para eliminar archivos
+# Herramienta típica en sistemas Unix.
+
+SCP=""
+# Programa para transferir archivos desde la línea de comandos usando SSH
+# Es una herramienta del paquete ssh  http://www.openssh.org
+
+SED=""
+# Stream Editor.  Empleado para transformar textos.
+# Herramienta típica en sistemas Unix. Hace parte del paquete sed.
+
+TAR=""
+# Empaquetador de archivos tar.
+# Herramienta típica en sistemas Unix.
+    
+TIDY=""
+# Validador de HTML.
+# Sitio de desarrollo: http://www.w3.org/People/Raggett/tidy/
+
+TOUCH=""
+# Programa para actualizar fecha de un archivo (y crearlo si no existe)
+# Herramienta típica en sistemas Unix.
+ 
+WTM=""
+# Navegador de web en texto.
+# http://www.w3m.org
+
+WTM_OPT=""
+# Opciones para visualizador HTML como texto
+#
+
+ZIP=""
+# Compresor zip.
+# Herramienta típica en sistemas Unix.
+
+# Vías de instalación
+
+INSBIN="/usr/local/bin"
+# Directorio de instalación de binarios
+#
+
+INSDOC="/usr/local/share/doc/$PROYECTO"
+# Directorio para instalación de documentación Postscript y HTML
+#
+
+INSDATA="/usr/local/share/$PROYECTO"
+# Directorio para instalación de datos del proyecto
+#
+
+DPLANO="no"
+# Indica si se usa un directorio plano que no requiere rutas de instalación
+# 
+
+BLB_TARGET=""
+# Ruta de archivo de bibliografia .blb
+#
+
+IDX_TARGET=""
+# Ruta de archivo para indice .idx
+#
+

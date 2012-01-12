@@ -1,0 +1,177 @@
+
+Junto con el diseño se ha implementado en lenguaje C++ con STL:
+indexador, de motor de búsqueda y
+mezclador; emplean TrieS como estructura de datos
+almacenada en disco en un formato comprimido.
+
+
+\subsimp{Formato}
+
+Cada nodo del TrieS  se almacena como: cadena , ``apuntador'' a hermano mayor, ``apuntador'' a hijo menor y 
+listado de posiciones de la forma
+$$\{(d_1,\{p_{1,1}, \Delta_{1,2} \dots \Delta_{1,n_1}\}), (d_2,\{p_{2,1} \dots
+\Delta_{2,n_2}\}) \dots (d_k,\{p_{t,1} \dots \Delta_{t,n_t}\})\}$$
+
+Note que se ordenan ascendentemente por número de documento 
+(i.e $1\leq i<j\leq t \to d_i<d_j$) y de posición
+(i.e $1\leq i \leq t$ y $1\leq j < k \leq n_i$ implican $p_{i,j} < p_{i,k}$), 
+para almacenar diferencias entre
+una posición y otra 
+(i.e si $1\leq i\leq n$ y $1<j\leq n_i$ entonces 
+$\Delta_{i,j} = p_{i,j} - p_{i,j-1}$) 
+y así obtener una secuencia de números más pequeños y facilitar diversos 
+esquemas de compresión.
+
+Suponiendo que los números se representarán en notación decimal, y que
+se usarán bastantes caracteres para separar, el TrieS en disco correspondiente 
+al  de la figura \ref{arbol} se presenta en el cuadro \ref{triediscoplano}.
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|l|l|} 
+\hline
+%{\bf Posición} & {\bf Contenido del archivo} \\
+{\bf Posición} & \texttt{\ \ \ \ \ \ \ \ \ 1 \ \ \ \ \ \ \ \ 2  \ \ \ \ \ \ \ \ 3  \ \ \ \ \ \ \ \ 4  \ \ \ \ \ \ \ \ 5  \ \ \ \ \ \ \ \ 6} \\
+         & \texttt{123456789012345678901234567890123456789012345678901234567890123456} \\
+\hline
+1 & \texttt{L\{9;67;\}NOS\{26;0;(1,\{13\})SI\{45;0;(1,\{10,27\})\}VERDAD\{65;0;(1,\{3\})\}} \\
+67 & \texttt{A\{82;0;(1,\{1\})\}IBERARA\{105;0;(1,\{17\})\}} \\
+\hline
+\end{tabular}
+\caption{Aproximación a la representación en disco}
+\label{triediscoplano}
+\end{center}
+\end{table}
+
+En disco, no se emplean tantos caracteres para separar, sólo se separa la 
+cadena de los apuntadores con `\verb|{|', una pareja de otra con
+`\verb|(|', el final de un listado de posiciones con `\verb|}|' y
+el fin de una secuencia de hermanos se denota con un cambio de línea.  
+
+Por sugerencia de \cite{heinz} se comprimen tanto los números de documentos, 
+como las posiciones y deltas con códigos $\Gamma$ de Elías (ver \cite{moffet}),
+de forma que los  números menores a 65535 ocupan entre uno y cuatro 
+bytes\footnote{Si $k$ es entero no negativo, el
+entero $2^{4k}$ requiere $k+1$ bytes en codificación $\Gamma$ de Elías.}.
+Se podrían comprimir más las secuencias de deltas si no se alinea a 
+bytes, aunque eventualmente se afectaría más la velocidad de indexado.
+ 
+
+Cada ``apuntador'' es un desplazamiento
+dentro del archivo representado como un número en base 128 de
+5 ``dígitos'' o bytes (un poco más legible que la representación binaria
+de 4 bytes). 
+ 
+A continuación se presenta el índice que correspondería 
+al TrieS de la figura \ref{arbol} como lo genera
+\verb|hexdump -C| (cada fila presenta 16 bytes, la columna de la izquierda 
+es posición en hexadecimal, la siguiente es columna son los 8 primeros bytes
+en  hexadecimal, la siguiente son los 8 siguientes bytes en hexadecimal
+y la cuarta columna es la representación en ASCII):
+ 
+{\scriptsize
+\verbatiminput{verdad.hexdump}
+}
+
+La relación de documentos del índice estaría en otro archivo y
+suponiendo que el archivo indexado se llame \verb|verdad.txt|
+y que estuviera en el nodo de desarrollo sería algo como:
+
+{\scriptsize
+\begin{verbatim}
+https://pasosdeJesus/verdad.txt 77e3dc9e5afc3ccf1deef0d4730eae56ff57c1320c6887432a3da1cc92795e9f 2009-09-30
+\end{verbatim}
+}
+Note en el índice:
+\begin{itemize}
+\item Después de cada grupo de nodos hermanos se agrega un cambio de línea. 
+\item El número 0 en la codificación en base 128 empleada es
+	00000.
+\item Se espera que comience con un identificador de la versión del formato
+y que esté almacenado en un archivo con extensión {\tt .indice}.
+\end{itemize}
+
+Con respecto a la relación de documentos:
+\begin{itemize}
+\item A continuación de cada URL se pone un condensado (del inglés
+{\em digest}), empleando el algoritmo seguro SHA256 y a continuación 
+la fecha de modificación del archivo.
+\item Se espera que comience con un identificador de la versión del formato
+y que esté almacenado en un archivo con extensión {\tt .relacion}.
+\end{itemize}
+
+La actual implementación emplea un normalizador que excluye palabra
+comunes del español (como artículos y preposiciones), que preserva
+palabras de máximo 32 caracteres y puede reconocer textos planos, 
+documentos XML, HTML, documentos ODF y  
+PDF %que es estándar ISO: ISO 32000-1 ISO 32000-1 http://www.iso.org/iso/pressrelease.htm?refid=Ref1141
+Las etiquetas y datos de documentos XML las almacena como campos con
+valores y de todo documento (incluso vacíos) almacena como campos
+la siguiente metainformación:
+\begin{itemize}
+\item \verb-TITULO- con las palabras del nombre del archivo.
+\item \verb-SITIO- con el nodo de procedencia.
+\item \verb-TIPO- con el tipo del archivo, que en este momento puede ser 
+\verb|TEXTO|, \verb|XML|, \verb|XRLAT| o  \verb|ODT| para documentos
+en OpenOffice Document Format. 
+\end{itemize}
+
+Por esto mismo, el ejemplo anterior en realidad genera el siguiente
+índice (\verb|verdad.indice|):
+
+{\scriptsize
+\verbatiminput{verdadindice.hexdump}
+}
+
+El cual excluye el artículo LA y agrega la metainformación: 
+\verb|SITIO:PASOSDEJESUS|, \verb|TITULO:VERDAD|, \verb|TITULO:TXT| y
+\verb|TIPO:TEXTO|.
+
+La relación de documentos (\verb|verdad.relacion|) sería:
+
+{\scriptsize
+\verbatiminput{verdad.relacion}
+}
+
+
+\subsimp{Otras características del código fuente}
+
+Los errores de ejecución fatales generan excepciones con cadenas 
+explicativas.  Las advertencias durante ejecución se envían al flujo
+\verb|cerr|.  Para depurar se usa en las fuentes el flujo \verb|clog|.
+
+\subsimp{Indexador}
+
+El indexador se ha refinado para que opere en RAM en grupos de documentos
+cuyos tamaños no pasen los 50MB.   Los índices de cada grupo se van mezclando 
+con un índice en disco, hasta completar el procesamiento de todos los 
+documentos.  
+Par leer los diversos formatos emplea varias estrategias:
+\begin{itemize}
+\item ODT: Descomprime y extrae el contenido XML que transforma a texto plano con una hoja de estilo XSLT y la librería libxslt.
+\item XML y relatos: lo lee con la librería expat. Todas las entidades que encuentra las agrega como etiquetas cuyo valor es el dato que tengan.
+\item HTML: Un reconocedor que ignora el formato.
+\item PDF: Emplea la herramienta pdftotxt incluida en el paquete xpdf-utils
+para convertir a texto plano.
+\end{itemize}
+
+\subsimp{Mezclador}
+
+Entre diversas funcionalidades permite mezclar dos índices que están
+en disco para producir un tercer índice en disco.  Por ejemplo en sistemas
+distribuidos esto es útil para producir un índice general a partir de los
+provenientes de diversos nodos.
+
+
+\subsimp{Buscador}
+
+Ordena resultados por fecha y frecuencia de ocurrencia y retorna una parte 
+de los mismos en JSON 
+para que sean interpretados con facilidad.  La parte que retorna depende
+de parámetros que se especifican en la línea de comandos para
+facilitar presentación por páginas.   La búsqueda de cadenas opera
+buscando las palabras de la cadena que resulten tras normalizar y 
+que estén consecutivas (máximo a 5 espacios de diferencia).   La frecuencia
+retornada corresponde a la suma de frecuencias de las palabras o cadenas
+individuales.
+

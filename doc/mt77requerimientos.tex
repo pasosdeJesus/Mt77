@@ -1,0 +1,89 @@
+\subsection{Requerimientos}
+
+\begin{itemize}
+\item[1] Motor de búsqueda (funcionalidad). Recibe solicitudes de búsqueda en 
+un lenguaje sencillo y retorna en HTML lista de URLs que satisfacen la 
+solicitud.
+También debe permitir buscar por tipo de información (vídeo, documento, 
+imágenes) y metainformación XML. Se considera que el idioma de los 
+documentos será 
+español codificable en ISO-8859-1\footnote{Es 
+suficiente para español, inglés, alemán y francés, aunque UNICODE 
+sería deseable, en el momento de este escrito no está bien 
+soportado por las librerías de OpenBSD (ver \ref{ambiente}).}. 
+La forma de especificar la consulta debe
+ser similar a la de Google (ver \cite{singoogle}) en particular:
+\begin{itemize}
+\item[1.1] Al dar una serie de palabras que busque documentos que las 
+contengan todas en cualquier orden y ubicación. %incluyendo en el nombre del documento (que por esto debe indexarse como una palabra más ubicada en la pos. 0 en indexador y además titulo:t)
+\item[1.2] Al dar varias palabras entre comillas busca documentos que
+las incluyen seguidas y en ese orden %intersectar y elegir las que estén en ese orden y cerquita en buscador.
+\item[1.3] No hace distinción entre mayúsculas y minúsculas, ni entre
+vocales tildadas o no tildadas. Ignora signos de puntuación.
+\item[1.4] Si la consulta incluye una cadena como
+``\verb|sitio:www.ejemplo.com|'' se restringirá la búsqueda a 
+documentos de ese servidor (debe ser una por consulta) %la última decide el nombre del índice donde buscar ---buscador indice 'consulta'  es entonces insuficiente, mejor --buscador dirindices indicepordefecto 'consulta' donde dirindices es directorio donde estará justapaz.sincodh.org.indice o el que se especifique en el último sitio: de la consulta o en el que es por defecto en buscador
+\item[1.5] Si la consulta incluye ``\verb|departamento:Cauca|'', la búsqueda
+ se restringirá a documentos XML con etiqueta departamento y dato Cauca.  
+Se podrá restringir por cualquier etiqueta. 
+\item[1.6] Si la consulta incluye ``\verb|tipo:video|'', la búsqueda
+se restringirá al tipo de información especificado.  Los posibles
+tipos son: documento, relato, imagen, vídeo, audio.  
+\item[1.7] El resultado de la consulta debe presentar la cantidad de documentos
+que la cumplen. 
+\item[1.8] Los documentos se presentan en orden según una puntuación 
+de relevancia, que tenga en cuenta por lo menos la cantidad
+de veces que el documento incluye la palabra o palabras buscadas. % En buscador reordenar conjunto respuesta
+\item[1.9] Presenta resultado por páginas con facilidades para pasar a
+otras páginas de resultados de la misma consulta.  % En buscador con cache de resultados en archivo borrable, ver infraestructura
+\end{itemize}
+\item[2] Velocidad del indexador (desempeño).
+No es crítica pero debe poder medirse y compararse por ejemplo con 
+Lucene que tiene años de desarrollo y algunas pruebas disponibles (ver 
+\cite{benchlucene}) 
+\item[3] Velocidad de motor de búsqueda (desempeño).
+Es un importante y difícil requerimiento.  Debe poder medirse y compararse
+al menos con Lucene.
+% OJO Con RDF -> http://beagle2.kbs.uni-hannover.de/white_papers/Beagle++%20-%20Indexing%20and%20Querying%20your%20Desktop.pdf
+\item[4] Lenguajes abiertos (cualificación).  Los programas se desarrollarán 
+en lenguajes 
+eficientes, multiplataforma de amplia difusión y fuentes abiertas 
+(e.g Perl, Python, shell Unix, C, PHP).  
+\item[5] Formatos estándar (cualificación). Los documentos por publicar se 
+esperan en formatos 
+estándar y con especificación abierta, se sugieren: XML, HTML, texto plano, 
+y Open Document Format (ISO/IEC 26300:2006).  Entre los programas que 
+generan ODF el principal es OpenOffice que es de calidad y de fuentes 
+abiertas.  
+Para exportar a estos formatos desde herramientas de MS-Office instalar 
+y emplear los plugins de exportación (ver \cite{pluginodf}).
+\item[6] Estándares de programación (cualificacion). Las fuentes 
+deberán seguir estándares 
+de programación previamente establecidos, pero susceptibles de mejorarse
+durante el desarrollo. 
+\item[7] Redundancia y distribución (funcionalidad). Aunque basta indexar
+documentos locales, debe posibilitar emplear localmente índices generados 
+por el mismo indexador en otros computadores con otras colecciones 
+de documentos.
+\end{itemize}
+
+Se ha dividido la funcionalidad en los siguientes programas:
+\begin{itemize}
+\item \verb|indexador|:  recibe un listado de documentos 
+y relatos por indexar, los procesa y genera un índice.
+\item \verb|buscador|: recibe una consulta 
+y  un índice donde buscar;  retorna los
+resultados de la búsqueda en HTML.  
+\item \verb|operaindice|: 
+ofrece varias funcionalidades (con diferentes opciones en la línea de comando 
+al estilo de AmberFish):
+\begin{enumerate}
+\item Mezclar: Que recibe varios índices y los mezcla en uno sólo.
+\item Extraer subídince conformado por ciertos documentos referenciados por su número y/o URL
+\item Eliminar subíndice conformado por ciertos documentos referenciados por su número y/o URL
+\item Renumerar referencias a unos documentos especificados por número
+\end{enumerate}
+\end{itemize} 
+
+
+

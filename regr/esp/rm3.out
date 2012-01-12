@@ -1,0 +1,68 @@
+{
+  "consulta": "VERDAD",
+  "documentos": 4,
+  "inicio": 1,
+  "fin": 4,
+  "resultados": [
+    { "url": "./juan.txt",
+    "frec": "44",
+    }, 
+    { "url": "./mateo.txt",
+    "frec": "14",
+    }, 
+    { "url": "./lucas.txt",
+    "frec": "7",
+    }, 
+    { "url": "./marcos.txt",
+    "frec": "1",
+    }
+  ]
+}
+{
+  "consulta": "HIJO",
+  "documentos": 4,
+  "inicio": 1,
+  "fin": 4,
+  "resultados": [
+    { "url": "./lucas.txt",
+    "frec": "149",
+    }, 
+    { "url": "./mateo.txt",
+    "frec": "84",
+    }, 
+    { "url": "./juan.txt",
+    "frec": "65",
+    }, 
+    { "url": "./marcos.txt",
+    "frec": "39",
+    }
+  ]
+}
+{
+  "consulta": "DIOS",
+  "documentos": 4,
+  "inicio": 1,
+  "fin": 4,
+  "resultados": [
+    { "url": "./lucas.txt",
+    "frec": "135",
+    }, 
+    { "url": "./juan.txt",
+    "frec": "101",
+    }, 
+    { "url": "./mateo.txt",
+    "frec": "74",
+    }, 
+    { "url": "./marcos.txt",
+    "frec": "58",
+    }
+  ]
+}
+{
+  "consulta": "Y",
+  "documentos": 0,
+  "inicio": 1,
+  "fin": 0,
+  "resultados": [
+  ]
+}

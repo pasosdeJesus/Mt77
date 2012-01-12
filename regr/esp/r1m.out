@@ -1,0 +1,65 @@
+{
+  "consulta": "sitio:r",
+  "documentos": 1,
+  "inicio": 1,
+  "fin": 1,
+  "resultados": [
+    { "url": "http://r/r1.txt",
+    "frec": "1",
+    }
+  ]
+}
+{
+  "consulta": "sitio:s",
+  "documentos": 0,
+  "inicio": 1,
+  "fin": 0,
+  "resultados": [
+  ]
+}
+{
+  "consulta": "tipo:texto",
+  "documentos": 0,
+  "inicio": 1,
+  "fin": 0,
+  "resultados": [
+  ]
+}
+{
+  "consulta": "tipo:xrlt",
+  "documentos": 0,
+  "inicio": 1,
+  "fin": 0,
+  "resultados": [
+  ]
+}
+{
+  "consulta": "titulo:r1",
+  "documentos": 1,
+  "inicio": 1,
+  "fin": 1,
+  "resultados": [
+    { "url": "http://r/r1.txt",
+    "frec": "1",
+    }
+  ]
+}
+{
+  "consulta": "titulo:s",
+  "documentos": 0,
+  "inicio": 1,
+  "fin": 0,
+  "resultados": [
+  ]
+}
+{
+  "consulta": "titulo:txt",
+  "documentos": 1,
+  "inicio": 1,
+  "fin": 1,
+  "resultados": [
+    { "url": "http://r/r1.txt",
+    "frec": "1",
+    }
+  ]
+}

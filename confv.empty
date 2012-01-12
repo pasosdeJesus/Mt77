@@ -1,0 +1,143 @@
+# Variables de configuración
+
+# Las siguientes líneas definen variables de configuración que,
+# eventualmente, usted puede quedar cambiar para adaptar mejor estas fuentes
+# a sus necesidades --después de modificar este archivo ejecute conf.sh.  
+
+# Note que la sintaxis de este archivo es apropiada para
+# ser usada por conf.sh, a continuación de cada variable debe haber
+# dos líneas con comentarios.  La primera describe la variable y la segunda
+# da una indicación de que hacer si ocurre algún problema.
+
+PROYECTO="Mt77"
+# Configurador de fuentes
+#
+
+PRY_VERSION="1.0a1"
+# Versión
+#
+
+PRY_DESC="Motor de búsqueda veloz, preciso y apto para indexación distribuida"
+# Descripcion corta
+#
+
+
+URLSITE="http://mt77.pasosdejesus.org/"
+# Sitio de desarrollo de este proyecto
+#
+
+# Otras variables
+
+
+# Métodos
+
+ACT_PROC="act-scp"
+# Regla para actualizar sitio de publicación
+# Las que hay por defecto son act-scp y act-ncftpput
+
+
+# Variables empleadas en fuentes
+
+# Las siguientes variables serán modificadas por conf.sh (normalmente no las debe editar)
+
+MES_ACT="enero de 2010"
+# Mes de actualización
+#
+
+FECHA_ACT=""
+# Fecha de la actualización más reciente
+#
+
+# Programas
+
+AWK=""
+# Interprete POSIX Awk.  Empleado para transformar textos.
+# Hace parte del paquete awk.
+
+CP=""
+# Para copiar archivos
+# Herramienta típica en sistemas Unix.
+
+CVS=""
+# Para control de versiones
+# Sugerido http://www.opencvs.org
+
+ED=""
+# Editor orientado a linea.
+# Herramienta estándar en sistemas Unix
+
+FIND=""
+# Para ubicar archivos
+# Herramienta típica en sistemas Unix.
+
+GZIP=""
+# Compresor gzip.
+# Herramienta típica en sistemas Unix.
+
+MAKE=""
+# Ejecuta comandos requeridos
+# Herramienta estándar en sistemas Unix
+
+MKDIR=""
+# Crea directorios
+# Herramienta estándar en sistemas Unix
+
+MV=""
+# Mueve/renombra archivos
+# Herramienta estándar en sistemas Unix
+
+NCFTPPUT=""
+# Programa para transferir archivos desde línea de comandos usando el protocolo FTP
+# Es una herramienta del paquete ncftp cliente http://www.ncftpd.com/
+
+PERL=""
+# Interprete del lenguaje Perl.
+# Herramienta típica en sistemas Unix.  http://www.perl.org
+
+RM=""
+# Para eliminar archivos
+# Herramienta típica en sistemas Unix.
+
+SCP=""
+# Programa para transferir archivos desde la línea de comandos usando SSH
+# Es una herramienta del paquete ssh  http://www.openssh.org
+
+SED=""
+# Stream Editor.  Empleado para transformar textos.
+# Hace parte del paquete sed.
+
+TAR=""
+# Empaquetador de archivos tar.
+# Herramienta típica en sistemas Unix.
+
+TOUCH=""
+# touch
+# Herramienta típica en sistemas Unix. 
+
+W3M=""
+# Navegador de web en texto.
+# http://www.w3m.org
+
+W3M_OPT=""
+# Opciones para visualizador HTML como texto
+#
+
+ZIP=""
+# Compresor zip.
+# Herramienta típica en sistemas Unix.
+
+
+
+# Vías de instalación
+
+INSBIN="/usr/local/bin"
+# Directorio de instalación de binarios
+#
+
+INSDOC="/usr/local/share/doc/$PROYECTO"
+# Directorio para instalación de documentación
+#
+
+INSDATA="/usr/local/share/$PROYECTO"
+# Directorio para instalación de datos del proyecto
+#

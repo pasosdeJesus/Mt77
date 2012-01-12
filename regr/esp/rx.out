@@ -1,0 +1,90 @@
+{
+  "consulta": "organizacionresponsable:pasos",
+  "documentos": 1,
+  "inicio": 1,
+  "fin": 1,
+  "resultados": [
+    { "url": "http://h/p2.xrlat",
+    "frec": "1",
+    }
+  ]
+}
+{
+  "consulta": "organizacion:religiosa",
+  "documentos": 1,
+  "inicio": 1,
+  "fin": 1,
+  "resultados": [
+    { "url": "http://h/p2.xrlat",
+    "frec": "1",
+    }
+  ]
+}
+{
+  "consulta": "organizacion:noesta",
+  "documentos": 0,
+  "inicio": 1,
+  "fin": 0,
+  "resultados": [
+  ]
+}
+{
+  "consulta": "nombre:vi",
+  "documentos": 1,
+  "inicio": 1,
+  "fin": 1,
+  "resultados": [
+    { "url": "http://h/p2.xrlat",
+    "frec": "1",
+    }
+  ]
+}
+{
+  "consulta": "departamento:CAUCA",
+  "documentos": 1,
+  "inicio": 1,
+  "fin": 1,
+  "resultados": [
+    { "url": "http://h/p2.xrlat",
+    "frec": "1",
+    }
+  ]
+}
+{
+  "consulta": "iglesia:Cruzada",
+  "documentos": 0,
+  "inicio": 1,
+  "fin": 0,
+  "resultados": [
+  ]
+}
+{
+  "consulta": "sexo:Femenino",
+  "documentos": 1,
+  "inicio": 1,
+  "fin": 1,
+  "resultados": [
+    { "url": "http://h/p2.xrlat",
+    "frec": "1",
+    }
+  ]
+}
+{
+  "consulta": "noesta:noesta",
+  "documentos": 0,
+  "inicio": 1,
+  "fin": 0,
+  "resultados": [
+  ]
+}
+{
+  "consulta": "sexo:masculino",
+  "documentos": 1,
+  "inicio": 1,
+  "fin": 1,
+  "resultados": [
+    { "url": "http://h/p2.xrlat",
+    "frec": "1",
+    }
+  ]
+}

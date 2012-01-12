@@ -1,0 +1,21 @@
+digraph "rdsgc" {
+
+    rankdir=LR;
+"L" [label="L {}"]
+"NOS" [label="NOS {(1,{13})}"]
+"SI" [label="SI {(1,{10, 26})}"]
+"VERDAD" [label="VERDAD {(1,{3})}"]
+subgraph cluster1 {
+"L" -> "NOS" [color="red" style="dashed"]
+"NOS" -> "SI" [color="red" style="dashed"]
+"SI" -> "VERDAD" [color="red" style="dashed"]
+}
+
+"L" -> "LA"
+"LA" [label="A {(1,{1})}"]
+"LIBERARA" [label="IBERARA {(1,{17})}"]
+subgraph cluster2 {
+"LA" -> "LIBERARA" [color="red" style="dashed"] 
+}
+
+}

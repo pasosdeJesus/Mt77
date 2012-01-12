@@ -1,0 +1,61 @@
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|p{0.5cm}|p{15.5cm}|}
+\hline
+P5 & Portabilidad a 32 y 64 bits. Formato de índices comprimido 
+empleando códigos $\Gamma$ de Elías.
+Nueva mezcla de un índice en RAM con uno en disco, que resulta
+más rápida que mezclar dos índices en disco y agiliza operación de
+agregar un documento a un índice existente (opción \texttt{agregadoc} de
+\texttt{operaindice}), así como el indexado de colecciones. Análisis de 
+desempeño (profiling) de indexado y
+mezcla de indice en disco con índice en RAM.  El indexador puede
+leer documentos PDF (ISO 32000-1, ver \cite{pdfiso}) y ahora opera
+sobre colecciones, indexando por lotes en RAM de hasta 50MB y mezclando
+con índice temporal en disco hasta completar todos los lotes. 
+El buscador puede buscar cadenas, encontrando las palabras normalizadas
+que aparezcan consecutivas (de 1 a 5 espacios de distancia).
+El normalizador ahora incluye números y puntos en algunos casos. 
+Se indexa el título como palabra del documento. \\
+\hline
+P4 & Indexa documentos HTML. Formato de índices cambiado para disminuir 
+tamaño e incluir fecha en relación de documentos. Buscador
+ordena resultados según fecha (primero los más recientes) y
+retorna resultados en JSON posibilitando paginación.  \\
+\hline
+P3 & División de índices en 2 archivos para agilizar actualización
+distribuida.  Esquema de indexación local cambiado para indexar
+de a un documento en RAM y mezclar en disco --que aumenta límites
+de indexación para que dependan principalmente del espacio en disco y no en 
+RAM.  Formato cambiado para lograr más velocidad
+en búsquedas y disminuir tamaño de índices.  Permite nombres con espacios
+y caracteres de español. Permite búsquedas con metainformación sitio, 
+tipo y titulo. Indexa documentos XML y ODF (.odt).
+Comparaciones con Lucene y Amberfish.  \\
+\hline
+P2 & Mezclador opera enteramente en disco, aunque el conjunto de
+posiciones lo mantiene en RAM (i.e la cantidad de documentos
+retornados está limitada por la cantidad de RAM --se han probado
+máximo 10'000.000 con 1GB en RAM).  El indexador incluye URL origen del
+documento. Permite búsqueda de varias palabras.
+Normalizador elimina algunas palabras de español tan comunes que
+no añaden información a una consulta (artículos, preposiciones, 
+conjunciones).
+\\
+\hline
+P1 & Indexador y mezclador operan enteramente en RAM 
+(i.e a lo sumo indexan y mezclan en proporción a la RAM que tenga el 
+servidor\footnote{Experimentando con 1GB en RAM hemos notado que un 
+programa puede localizar alrededor de 256MB en un sólo bloque.}),
+en cuanto a formato de entrada sólo soportan textos planos,
+normalizan convirtiendo a mayúsculas y eliminando números, tildes y signos
+de puntuación.
+\\
+\hline
+\end{tabular}
+\caption{Control de versiones}
+\label{buscadorcv}
+\end{center}
+\end{table}
+

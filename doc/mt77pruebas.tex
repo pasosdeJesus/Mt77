@@ -1,0 +1,706 @@
+
+
+ \begin{comment}
+Amberfish
+
+time amberfish-1.6.4/src/af -iCv -d textos ../corpus/*txt
+/var/www/sincodh/buscador/imp/corpus/Mark.txt
+/var/www/sincodh/buscador/imp/corpus/fuentes.txt
+/var/www/sincodh/buscador/imp/corpus/juan.txt
+/var/www/sincodh/buscador/imp/corpus/lucas.txt
+/var/www/sincodh/buscador/imp/corpus/marcos.txt
+/var/www/sincodh/buscador/imp/corpus/mateo.txt
+/var/www/sincodh/buscador/imp/corpus/steph.line.txt
+    0m2.35s real     0m1.37s user     0m0.42s system
+
+time amberfish-1.6.4/src/af -s -d textos -Q 'camino'     
++ 100 textos 4 0 /var/www/sincodh/buscador/imp/corpus/lucas.txt 0 151099
++ 93 textos 6 0 /var/www/sincodh/buscador/imp/corpus/mateo.txt 0 173085
++ 85 textos 5 0 /var/www/sincodh/buscador/imp/corpus/marcos.txt 0 89108
++ 35 textos 3 0 /var/www/sincodh/buscador/imp/corpus/juan.txt 0 118981
+    0m0.02s real     0m0.01s user     0m0.00s system
+
+du -h textos.*
+2.0K    textos.db
+8.0K    textos.dt
+0B      textos.fd
+0B      textos.w0
+0B      textos.w1
+1.0M    textos.x0
+1.3M    textos.y0
+0B      textos.y1
+0B      textos.z0
+0B      textos.z1
+
+~ 2.3M
+
+Linearizar
+
+adonai$ time amberfish-1.6.4/src/af -L -d textos              
+    0m0.12s real     0m0.03s user     0m0.07s system
+
+adonai$ time amberfish-1.6.4/src/af -s -d textos -Q 'camino'  
++ 100 textos 4 0 /var/www/sincodh/buscador/imp/corpus/lucas.txt 0 151099
++ 93 textos 6 0 /var/www/sincodh/buscador/imp/corpus/mateo.txt 0 173085
++ 85 textos 5 0 /var/www/sincodh/buscador/imp/corpus/marcos.txt 0 89108
++ 35 textos 3 0 /var/www/sincodh/buscador/imp/corpus/juan.txt 0 118981
+    0m0.02s real     0m0.01s user     0m0.00s system
+
+adonai$ du -h textos.*
+2.0K    textos.db
+8.0K    textos.dt
+0B      textos.fd
+0B      textos.w0
+0B      textos.w1
+1.0M    textos.x0
+0B      textos.y0
+992K    textos.y1
+0B      textos.z0
+0B      textos.z1
+
+~1.9M
+
+---- corpus 2
+
+Construcción indice:
+    0m15.99s real     0m8.46s user     0m6.37s system
+Tamaño: ~ 18.6MB
+Búsqueda:
++ 100 textos 29 0 /var/www/sincodh/documentos/corpus/essav.txt 0 4309080
++ 100 textos 35 0 /var/www/sincodh/documentos/corpus/sages10.txt 0 4123668
++ 96 textos 28 0 /var/www/sincodh/documentos/corpus/esrv.txt 0 4226421
++ 14 textos 25 0 /var/www/sincodh/documentos/corpus/8va6210.txt 0 1004792
++ 14 textos 24 0 /var/www/sincodh/documentos/corpus/8va5810.txt 0 1005628
++ 10 textos 12 0 /var/www/sincodh/documentos/corpus/17013-8.txt 0 2303005
++ 10 textos 5 0 /var/www/sincodh/documentos/corpus/14311-8.txt 0 400562
++ 8 textos 26 0 /var/www/sincodh/documentos/corpus/8va6510.txt 0 365555
++ 3 textos 17 0 /var/www/sincodh/documentos/corpus/25956-8.txt 0 858313
++ 3 textos 32 0 /var/www/sincodh/documentos/corpus/lucas.txt 0 151099
++ 3 textos 34 0 /var/www/sincodh/documentos/corpus/mateo.txt 0 173085
++ 3 textos 13 0 /var/www/sincodh/documentos/corpus/17340-8.txt 0 319858
++ 3 textos 33 0 /var/www/sincodh/documentos/corpus/marcos.txt 0 89108
++ 3 textos 9 0 /var/www/sincodh/documentos/corpus/15725-8.txt 0 803802
++ 3 textos 14 0 /var/www/sincodh/documentos/corpus/17443-8.txt 0 494428
++ 3 textos 15 0 /var/www/sincodh/documentos/corpus/21831-8.txt 0 509302
++ 1 textos 16 0 /var/www/sincodh/documentos/corpus/21906-8.txt 0 473879
++ 1 textos 22 0 /var/www/sincodh/documentos/corpus/8va0210.txt 0 151741
++ 1 textos 18 0 /var/www/sincodh/documentos/corpus/26404-8.txt 0 177256
++ 1 textos 11 0 /var/www/sincodh/documentos/corpus/16961-8.txt 0 325644
++ 1 textos 8 0 /var/www/sincodh/documentos/corpus/15532-8.txt 0 467704
++ 1 textos 6 0 /var/www/sincodh/documentos/corpus/15206-8.txt 0 387378
++ 1 textos 3 0 /var/www/sincodh/documentos/corpus/13608-8.txt 0 546428
++ 0 textos 10 0 /var/www/sincodh/documentos/corpus/16149-8.txt 0 43960
++ 0 textos 1 0 /var/www/sincodh/documentos/corpus/11657-8.txt 0 240503
++ 0 textos 7 0 /var/www/sincodh/documentos/corpus/15334-8.txt 0 323135
++ 0 textos 2 0 /var/www/sincodh/documentos/corpus/11669-8.txt 0 109925
++ 0 textos 31 0 /var/www/sincodh/documentos/corpus/juan.txt 0 118981
++ 0 textos 19 0 /var/www/sincodh/documentos/corpus/28002-8.txt 0 339449
++ 0 textos 21 0 /var/www/sincodh/documentos/corpus/8pltr10.txt 0 220030
++ 0 textos 4 0 /var/www/sincodh/documentos/corpus/14307-8.txt 0 90874
++ 0 textos 23 0 /var/www/sincodh/documentos/corpus/8va0910.txt 0 182377
+    0m0.04s real     0m0.02s user     0m0.00s system
+
+Linealizar:  0m3.80s real     0m0.23s user     0m3.42s system
+Tamaño L: 12.6M
+Búsqueda L:  0m0.02s real     0m0.01s user     0m0.01s system
+
+\end{comment}
+
+
+\begin{comment}
+adonai$ time ant
+adonai$ vi ej.sh
+adonai$ cat ej.sh
+/usr/local/jdk-1.7.0/bin/java -cp build/lucene-core-2.4.jar:build/lucene-demos-2.4.jar org.apache.lucene.demo.IndexFiles ../../../../documentos/corpus
+adonai$ rm -rf index/
+adonai$ ./ej.sh
+Indexing to directory 'index'...
+adding ../../../../documentos/corpus/CVS/Root
+adding ../../../../documentos/corpus/CVS/Repository
+adding ../../../../documentos/corpus/CVS/Entries
+adding ../../../../documentos/corpus/Mark.txt
+adding ../../../../documentos/corpus/fuentes.txt
+adding ../../../../documentos/corpus/juan.txt
+adding ../../../../documentos/corpus/lucas.txt
+adding ../../../../documentos/corpus/marcos.txt
+adding ../../../../documentos/corpus/mateo.txt
+adding ../../../../documentos/corpus/steph.line.txt
+Optimizing...
+2761 total milliseconds
+
+adonai$ cat ej2.sh
+/usr/local/jdk-1.7.0/bin/java -cp build/lucene-core-2.4.jar:build/lucene-demos-2.4.jar org.apache.lucene.demo.SearchFiles camino
+adonai$ ./ej2.sh
+Enter query: 
+camino
+Searching for: camino
+4 total matching documents
+1. ../../../../documentos/corpus/marcos.txt
+2. ../../../../documentos/corpus/lucas.txt
+3. ../../../../documentos/corpus/mateo.txt
+4. ../../../../documentos/corpus/juan.txt
+Press (q)uit or enter number to jump to a page.
+
+Corpus 2
+
+du -sh corpus2
+22.1M   corpus2/
+
+AMBERFISH
+
+Construcción índice:
+	time amberfish-1.6.4/src/af -iCv -d textos ../../../documentos/corpus2/*txt
+    0m17.17s real     0m8.04s user     0m5.89s system
+	+ Linealizar
+	time amberfish-1.6.4/src/af -L -d textos              
+    0m3.11s real     0m0.31s user     0m2.79s system
+
+	Total
+	0m20.28
+Tamaño índice: ~ 12.1MB
+	time amberfish-1.6.4/src/af -s -d textos -Q 'camino'
+	30 documentos
+	0m0.04s real     0m0.02s user     0m0.00s system
+	 time amberfish-1.6.4/src/af -s -d textos -Q 'biblos'           
+	 1 documento
+	    0m0.02s real     0m0.01s user     0m0.01s system
+	 time amberfish-1.6.4/src/af -s -d textos -Q 'Jesus'           
+	10 doc
+	0m0.02s real     0m0.02s user     0m0.00s system
+	no logra cuando se pide Jesús, pero si encontró textos con Jesús, 
+	may=min
+
+adonai$ grep -l Jesus *txt
+15532-8.txt
+15725-8.txt
+28002-8.txt
+8va5810.txt
+8va6210.txt
+8va6510.txt
+Mark.txt
+essav.txt
+fuentes.txt
+grep -l jesus *txt
+8va5810.txt
+8va6210.txt
+essav.txt
+
+adonai$ time amberfish-1.6.4/src/af -s -d textos -Q 'Jesus'        
++ 100 textos 29 0 /var/www/sincodh/documentos/corpus2/essav.txt 0 4309080
++ 80 textos 24 0 /var/www/sincodh/documentos/corpus2/8va5810.txt 0 1005628
++ 80 textos 25 0 /var/www/sincodh/documentos/corpus2/8va6210.txt 0 1004792
++ 38 textos 26 0 /var/www/sincodh/documentos/corpus2/8va6510.txt 0 365555
++ 9 textos 27 0 /var/www/sincodh/documentos/corpus2/Mark.txt 0 86570
+MAL + 0 textos 28 0 /var/www/sincodh/documentos/corpus2/esrv.txt 0 4226421
+MAL + 0 textos 23 0 /var/www/sincodh/documentos/corpus2/8va0910.txt 0 182377
++ 0 textos 19 0 /var/www/sincodh/documentos/corpus2/28002-8.txt 0 339449
++ 0 textos 9 0 /var/www/sincodh/documentos/corpus2/15725-8.txt 0 803802
++ 0 textos 8 0 /var/www/sincodh/documentos/corpus2/15532-8.txt 0 467704
+MAL + 0 textos 2 0 /var/www/sincodh/documentos/corpus2/11669-8.txt 0 109925
+    0m0.02s real     0m0.01s user     0m0.01s system
+
+
+LUCENE
+
+Construcción índice:
+	sudo rm -rf index/
+	time ./ej.sh ../../../../documentos/corpus2
+0 adding ../../../../documentos/corpus2/lucas.txt
+1 adding ../../../../documentos/corpus2/mateo.txt
+2 adding ../../../../documentos/corpus2/marcos.txt
+3 adding ../../../../documentos/corpus2/steph.line.txt
+4 adding ../../../../documentos/corpus2/juan.txt
+5 adding ../../../../documentos/corpus2/fuentes.txt
+6 adding ../../../../documentos/corpus2/Mark.txt
+7 adding ../../../../documentos/corpus2/11657-8.txt
+8 adding ../../../../documentos/corpus2/8va6210.txt
+9 adding ../../../../documentos/corpus2/8va5810.txt
+10 adding ../../../../documentos/corpus2/8va0910.txt
+11 adding ../../../../documentos/corpus2/8va0210.txt
+12 adding ../../../../documentos/corpus2/8pltr10.txt
+13 adding ../../../../documentos/corpus2/7mjrc10.txt
+14 adding ../../../../documentos/corpus2/28002-8.txt
+15 adding ../../../../documentos/corpus2/26404-8.txt
+16 adding ../../../../documentos/corpus2/25956-8.txt
+17 adding ../../../../documentos/corpus2/21906-8.txt
+18 adding ../../../../documentos/corpus2/21831-8.txt
+19 adding ../../../../documentos/corpus2/17443-8.txt
+20 adding ../../../../documentos/corpus2/17340-8.txt
+21 adding ../../../../documentos/corpus2/17013-8.txt
+22 adding ../../../../documentos/corpus2/16961-8.txt
+23 adding ../../../../documentos/corpus2/16149-8.txt
+24 adding ../../../../documentos/corpus2/15725-8.txt
+25 adding ../../../../documentos/corpus2/15532-8.txt
+26 adding ../../../../documentos/corpus2/15334-8.txt
+27 adding ../../../../documentos/corpus2/15206-8.txt
+28 adding ../../../../documentos/corpus2/14311-8.txt
+29 adding ../../../../documentos/corpus2/14307-8.txt
+30 adding ../../../../documentos/corpus2/13608-8.txt
+31 adding ../../../../documentos/corpus2/11669-8.txt
+32 adding ../../../../documentos/corpus2/8va6510.txt
+33 adding ../../../../documentos/corpus2/essav.txt
+34 adding ../../../../documentos/corpus2/fuentes.txt~
+35 adding ../../../../documentos/corpus2/esrv.txt
+	6851 total milliseconds
+	0m7.31s real     0m5.94s user     0m0.51s system
+Tamaño: 938K
+Búsquedas:
+	time ./ej3.sh camino
+	30 docs.
+	0m0.57s real     0m0.47s user     0m0.05s system
+	time ./ej3.sh biblos
+	1 doc
+	0m0.57s real     0m0.41s user     0m0.08s system
+	time ./ej3.sh Jesus
+	5 doc (igual may=min, diferencia u de ú, aunque Jesús encuentra en 16)
+Searching for: jesus
+doc=6 Mark score=0.25575218		BIEN
+doc=8 8va6210 score=0.19278046		BIEN
+doc=9 8va5810 score=0.19469872		BIEN
+doc=31 11669 score=0.027263274	MAL en 11669 no está Jesus ni jesus (sin tilde)
+doc=32 8va6510 score=0.19847962		BIEN	
+	0m0.57s real     0m0.46s user     0m0.05s system
+
+Faltó 15725 (24) y 28002 (14) y essav (33) donde tien signo
+de puntuación a continuación.
+También faltó 15532-8 (25) sin explicación.
+
+Sobra 11669 donde está con tilde pero no sin tilde
+
+
+time ./ej3.sh Jesús
+Searching for: "jes s"
+doc=0 score=0.25453535
+doc=1 score=0.19566289
+doc=2 score=0.31642896
+doc=4 score=0.31989995
+doc=8 score=0.02713356
+doc=10 score=0.2959922
+doc=14 score=0.038372647
+doc=16 score=0.02713356
+doc=17 score=0.038372647
+doc=19 score=0.038372647
+doc=20 score=0.02713356
+doc=22 score=0.0469967
+doc=24 score=0.02713356
+doc=25 score=0.0469967
+doc=28 score=0.038372647
+doc=31 score=0.038372647
+    0m0.57s real     0m0.46s user     0m0.07s system
+
+
+
+Mt77
+
+Indexado
+    2m51.13s real     2m47.15s user     0m2.86s system
+5m18.72s real     4m28.03s user     0m40.31s system
+Tamaño índice: 47.9M
+Busqueda 
+    Camino
+    0m0.00s real     0m0.01s user     0m0.00s system
+    biblos
+time ../buscador/buscador local.indice biblos
+<p><a href="https://.sincodh.org:17443/documentos/corpus2/steph.line.txt">https://.sincodh.org:17443/documentos/corpus2/steph.line.txt</a> 
+    0m0.00s real     0m0.00s user     0m0.00s system
+    time ../buscador/buscador local.indice Jesus 
+https://.sincodh.org:17443/documentos/corpus2/lucas.txt S T
+https://.sincodh.org:17443/documentos/corpus2/mateo.txt S T
+https://.sincodh.org:17443/documentos/corpus2/marcos.txt S T
+https://.sincodh.org:17443/documentos/corpus2/juan.txt S T
+https://.sincodh.org:17443/documentos/corpus2/Mark.txt T
+https://.sincodh.org:17443/documentos/corpus2/11657-8.txt S
+https://.sincodh.org:17443/documentos/corpus2/8va6210.txt S T
+https://.sincodh.org:17443/documentos/corpus2/8va5810.txt T
+https://.sincodh.org:17443/documentos/corpus2/8va0910.txt S
+https://.sincodh.org:17443/documentos/corpus2/28002-8.txt S T
+https://.sincodh.org:17443/documentos/corpus2/25956-8.txt S
+https://.sincodh.org:17443/documentos/corpus2/21906-8.txt S 
+https://.sincodh.org:17443/documentos/corpus2/21831-8.txt S
+https://.sincodh.org:17443/documentos/corpus2/17443-8.txt S
+https://.sincodh.org:17443/documentos/corpus2/17340-8.txt S
+https://.sincodh.org:17443/documentos/corpus2/17013-8.txt S 
+https://.sincodh.org:17443/documentos/corpus2/16961-8.txt S 
+https://.sincodh.org:17443/documentos/corpus2/15725-8.txt S T
+https://.sincodh.org:17443/documentos/corpus2/15532-8.txt S T
+https://.sincodh.org:17443/documentos/corpus2/15334-8.txt S
+https://.sincodh.org:17443/documentos/corpus2/15206-8.txt S
+https://.sincodh.org:17443/documentos/corpus2/14311-8.txt S
+https://.sincodh.org:17443/documentos/corpus2/11669-8.txt S
+https://.sincodh.org:17443/documentos/corpus2/8va6510.txt S T
+https://.sincodh.org:17443/documentos/corpus2/essav.txt T
+https://.sincodh.org:17443/documentos/corpus2/esrv.txt S
+    0m0.02s real     0m0.02s user     0m0.00s system
+
+grep -l "Jesus" *txt
+T 15532-8.txt 
+T 15725-8.txt 
+T 28002-8.txt
+T 8va5810.txt
+T 8va6210.txt
+T 8va6510.txt
+T Mark.txt
+T essav.txt
+T fuentes.txt  dice nuestroamigoJesus  que no debe ser indexado
+T juan.txt
+T lucas.txt
+T marcos.txt
+T mateo.txt
+
+grep -l "Jesús" *txt
+S 8va6510.txt
+S esrv.txt
+S juan.txt
+S lucas.txt
+S marcos.txt
+S mateo.txt
+S 11657-8.txt
+S 11669-8.txt
+S 14311-8.txt
+S 15206-8.txt
+S 15334-8.txt
+S 15532-8.txt
+S 15725-8.txt
+S 16961-8.txt
+S 17013-8.txt
+S 17340-8.txt
+S 17443-8.txt
+S 21831-8.txt
+S 21906-8.txt
+S 25956-8.txt
+S 28002-8.txt
+S 8va0910.txt
+S 8va6210.txt
+
+
+Corpus 3
+
+du -sh corpus     
+160M    corpus/
+
+
+AmberFish
+Construcción Indice:
+	time amberfish-1.6.4/src/af -iCv -d textos ../../../documentos/corpus/*txt
+	3m6.47s real     0m34.06s user     1m6.21s system
+	+ Linealizar
+	time amberfish-1.6.4/src/af -L -d textos              
+	0m44.23s real     0m1.27s user     0m23.23s system
+	Total:   3m48
+
+Búsqueda. camino
+	time amberfish-1.6.4/src/af -s -d textos -Q 'camino'  
+	0m0.24s real     0m0.02s user     0m0.00s system
+	way
+time amberfish-1.6.4/src/af -s -d textos -Q 'biblos'       
++ 100 textos 71 0 /var/www/sincodh/documentos/corpus/npnf201.txt 0 4932439
++ 49 textos 93 0 /var/www/sincodh/documentos/corpus/steph.line.txt 0 961257
+    0m0.06s real     0m0.02s user     0m0.00s system
+time amberfish-1.6.4/src/af -s -d textos -Q 'Jesus'
+    0m0.02s real     0m0.02s user     0m0.00s system
+
+
+LUCENE
+Construcción Indice:
+sudo rm -rf index/
+time ./ej.sh   
+13965 total milliseconds
+    0m14.26s real     0m12.19s user     0m0.93s system
+
+Búsqueda
+
+time ./ej3.sh camino
+    0m0.58s real     0m0.46s user     0m0.05s system
+time ./ej3.sh biblos
+    0m0.55s real     0m0.47s user     0m0.05s system
+time ./ej3.sh Jesus
+    0m0.58s real     0m0.48s user     0m0.04s system
+
+
+Mt77 p2 no pudo
+Mt77 p3pre 
+Construcción Índice:
+  120m27.82s real    83m22.31s user    19m45.15s system
+
+camino. 32
+0m0.03s real     0m0.02s user     0m0.00s system
+
+biblos. 2
+0m0.16s real     0m0.16s user     0m0.01s system
+
+Jesús. 81
+0m0.20s real     0m0.19s user     0m0.00s system
+
+\end{comment}
+
+\subsubsection{Ambiente de pruebas}
+
+El ambiente de pruebas en un computador con AMD Athlon de 
+1.8GHz, con 1GB en RAM, 120GB en disco duro y OpenBSD-current.  Realizamos
+pruebas con 3 corpus de pruebas que contienen sólo documentos de dominio
+público.
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|c|c|c|c|} 
+\hline
+{\bf Criterio } & {\bf Corpus 1} & {\bf Corpus 2 } & {\bf Corpus 3} \\
+\hline
+Número de documentos & 7 & 40 & 96 \\
+\hline
+Espacio en disco & 1.5MB & 22.6MB & 160MB \\
+\hline
+\end{tabular}
+\caption{Proporciones de los corpus de prueba} 
+\label{proporcionescorpus}
+\end{center}
+\end{table}
+
+
+En el caso de Amberfish se compiló la versión 1.6.4 con las opciones por 
+defecto y después
+de cada indexación se linealizó el índice (el tiempo presentado suma indexado
+más linealizado y el tamaño es el tamaño después de linealizar).
+
+Con respecto a Lucene se compiló la versión 2.4.0 con un JDK-1.7, y se
+utilizó sin cambios el programa de demostración incluido con las fuentes.
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|} 
+\hline
+{\bf Lucene 2.4} & {\bf Amberfish} & {\bf Prot. 1 } & {\bf Prot. 2} & {\bf Prot. 3} & {\bf Prot. 4} & {\bf Prot. 5} \\
+\hline
+ 30s & 7.4s & - & 35s & 24s & 25s & \\
+\hline
+\end{tabular}
+\caption{Tiempo de compilación} %\footnote{\tt cd buscador/imp/trieS; make limpia; time make} &
+\label{tiempocompilacion}
+\end{center}
+\end{table}
+
+En las siguiente subsecciones se comparan los resultados empleando como
+parámetros de comparación: 
+Tiempo para indexar corpus, %\footnote{\verb|cd indices; time indexador corpus.indice "../" \`find ../documentos/corpus -name "*txt"\`|};
+Espacio en disco del índice producido, %\footnote{\tt ls -lh indices/corpus.indice};
+Tiempo para buscar una palabra y Precisión de los resultados de la búsqueda.
+%Máximo tamaño estimado para la colección de documentos en cada nodo.
+
+
+
+\subsubsection{Corpus de prueba 1}
+
+Se trata de Evangelios en español (\cite{bdp}), en inglés y en griego. 
+En total 7 documentos de 1.5MB.
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|c|} 
+\hline
+{\bf Criterio} & {\bf Lucene 2.4} & {\bf Amberfish} & {\bf P1 } & {\bf P2} & {\bf P3} & {\bf P4} & {\bf P5} \\
+\hline
+Indexado & 2.2s & 2.4s & 12s & 13.5s & 22.09s & 15.42s & 7.48s\\
+%\footnote{\tt cd indices; time indexador corpus.indice "../" \`find ../documentos/corpus -name "*txt"\`} 
+\hline
+Tamaño del índice & 192K & 2.3MB & 5.5MB & 4.4MB & 3.3MB & 1.7MB & 1.2MB\\
+% 3.6 veces, 2.9, 2.2
+\hline
+Buscar ``Jesus'' & 0.5s & 0.2s & <0.1s & <0.1s & <0.1s & <0.1s & <0.1s \\
+\hline
+Resultados precisos & SI & SI & SI & SI & SI & SI & SI\\   % 5 resultados
+\hline
+\end{tabular}
+\caption{Corpus 1}
+\label{corpus1}
+\end{center}
+\end{table}
+
+
+\subsubsection{Corpus de prueba 2}
+
+Incluye el primero además Biblias en español y literatura en español
+del proyecto Gutenberg (\cite{gutenberg}). Son 40 documentos de 22.6MB.
+
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|} 
+\hline
+{\bf Criterio} & {\bf Lucene 2.4} & {\bf Amberfish} & {\bf P2}  & {\bf P3} & 
+{\bf P4} & {\bf P5} \\
+\hline
+Indexado & 7.3s & 20.2s & 171s & 8m29s & 6m54s & 1m47\\
+%% P5 38 - 27 - 
+%\footnote{\tt cd indices; time indexador corpus.indice "../" \`find ../documentos/corpus -name "*txt"\`} 
+\hline
+Tamaño del índice & 983K & 12.1M & 47.9MB & 34.3MB & 16.2MB & 11.6M\\
+\hline
+Buscar ``Jesus'' & 0.5s & 0.2s & 0.1s & 0.1s & 0.1s & \\
+\hline
+Resultados precisos & NO* & NO** & SI & SI & SI & SI \\
+\hline
+\end{tabular}
+\caption{Corpus 2}
+\label{corpus2}
+\end{center}
+\end{table}
+
+El primer prototipo (que operaba enteramente en RAM) no logró indexar la 
+colección completa por lo que no se incluyó en esta comparación.
+
+Empleando otra herramienta ({\tt grep}) comprobamos que los 26 resultados
+reportados por los prototipos de Mt77 son justamente los correctos 
+al considerar palabras completas, ignorar
+diferencias entre mayúsculas y minúsculas y entre vocales con tilde y
+sin tilde (en 18 documentos aparece sólo con tilde, en 3 aparece
+sólo sin tilde y en 5 aparece tanto con tilde como sin tilde).
+
+
+* Los 10 resultados de Amberfish no fueron precisos porque si bien
+incluyeron los 8 textos donde estaba la palabra sin tilde, agregó
+otros 2 donde no estaba. En esos 2 textos aparecía
+la palabra con tilde pero Amberfish no reportó los otros 16 donde
+también aparecía sólo con tilde.   Con Amberfish no nos fue posible 
+realizar búsqueda de palabras con tilde.
+
+** Por su parte Lucene de los 5 resultados que reportó, incluye 1 donde
+no está la palabra buscada.  Es decir reportó sólo 4 de los 8 textos
+donde estaba.  3 de los 4 documentos que Lucene no reportó tienen la palabra 
+seguida de un signo de puntuación, lo cual nos hace pensar que el analizador 
+por defecto de Lucene (usado por el buscador de demostración) no soporta 
+bien signos de puntuación y hace 
+diferencia entre vocales tildadas y sin tilde (que consideramos deberían ser 
+intercambiables para buscadores sobre textos en español).  A diferencia
+de Amberfish, Lucene si permite buscar palabras con tilde, pero al buscar 
+``Jesús'' tampoco dio los 23 documentos esperados (dio 16).
+
+\begin{comment}
+El detalle de los errores se describe en un documento aparte.
+Dado que se encontraron errores en los resultados, Empleando la herramienta {\tt grep} comprobamos que las palabras completas 
+Jesús y Jesus (con tilde y sin tilde) están en los siguientes textos
+del segundo corpus:
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|c|c|c|} 
+\hline
+{\bf Texto} & {\bf Jesús} & {\bf Jesus} \\
+\hline
+esrv    & * &   \\
+essav   &   & * \\
+juan    & * &   \\
+lucas   & * &   \\
+Mark    &   & * \\
+marcos  & * &   \\
+mateo   & * &   \\
+8va0910 & * &   \\
+8va5810 &   & * \\
+8va6210 & * & * \\
+8va6510 & * & * \\
+11657-8 & * &   \\
+11669-8 & * &   \\
+14311-8 & * &   \\
+15206-8 & * &   \\
+15334-8 & * &   \\
+15532-8 & * & * \\
+15725-8 & * & * \\
+16961-8 & * &   \\
+17013-8 & * &   \\
+17340-8 & * &   \\
+17443-8 & * &   \\
+21831-8 & * &   \\
+21906-8 & * &   \\
+25956-8 & * &   \\
+28002-8 & * & * \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+Mt77 da justamente estos textos al buscar la palabra Jesús con
+tilde, sin tilde y con mayúsculas o minúsculas.
+
+Los resultados que arrojó Amberfish para la búsqueda Jesus fueron:
+esrv,
+essav,
+Mark,
+8va5810,
+8va6210,
+8va6510,
+8va0910,
+11669-8,
+15532-8,
+15725-8,
+28002-8
+
+Es decir incluye todos los textos donde está la palabra, pero agrega otros
+donde no aparece (esrv, 11669-8), y aunque en esos 2 documentos si 
+está la palabra con tilde, Amberfish no incluye todos los que la incluyen 
+tildada.  Por cierto no nos fue posible realizar búsqueda de palabras con
+tilde.
+
+Por su parte los resultados arrojados por Lucene fueron:
+Mark,
+8va5810,
+8va6210,
+8va6510,
+11669-8
+
+Donde sobra 11669-8 que no incluye la palabra (aunque si la incluye con
+tilde) y faltan 15725-8, 28002-8, essav y 15532-8.  Los 
+3 primeros tienen la palabra seguida de un signo de puntuación, que
+nos hace pensar que el analizador por defecto de Lucene (usado por el
+buscador de demostración incluido con las fuentes) no soporte bien signos
+de puntuación y evidentemente hace diferencia entre vocales tildadas
+y sin tilde (que consideramos deberían ser intercambiables para
+buscadores sobre textos en español).  Lucene si permite buscar palabras
+con tilde, pero al buscar Jesús tampoco dio los 23 documentos esperados
+(dio 16).
+\end{comment}
+
+\subsubsection{Corpus de prueba 3}
+
+Incluye el segundo corpus junto con libros históricos de los Padres de la 
+Iglesia de los siglos I a IV traducidos al inglés (\cite{ccel}).  
+Son 98 documentos de 160MB.
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|} 
+\hline
+{\bf Criterio} & {\bf Lucene 2.4} & {\bf Amberfish} & {\bf P3} & {\bf P4} & {\bf P5} \\
+\hline
+Indexado & 14.6s & 3m48s & 169m & 100m & 19m13 \\
+%\footnote{\tt cd indices; time indexador corpus.indice "../" \`find ../documentos/corpus -name "*txt"\`} 
+\hline
+Tamaño del índice & 2.4M & 12.1M & 301M & 117M & 77.7M \\
+\hline
+Buscar ``Jesus'' & 0.5s & 0.2s & 0.1s & 0.1s & < 0.1s \\
+\hline
+Resultados precisos & NO & NO & SI & SI & SI \\
+\hline
+\end{tabular}
+\caption{Corpus 3}
+\label{corpus3}
+\end{center}
+\end{table}
+
+El segundo prototipo no logró indexar la colección completa por
+agotamiento de memoria RAM como se predecía por lo que no se incluyó en
+esta comparación.
+
+La palabra completa Jesus (sin tilde e ignorando mayúsculas y minúsculas) se 
+encontró con otras herramientas en 63 de los 96 documentos,
+la palabra completa Jesús (con tilde e ignorando mayúsculas y minúsculas) se 
+% grep -i -l "Jesús" *txt
+encontró en 24 documentos.  La palabra
+% grep -i -l "Jesus" *txt
+aparece tanto con tilde como sin tilde en 6 documentos 
+% 15532-8.txt 15725-8.txt 28002-8.txt 8va6210.txt 8va6510.txt sages10.txt
+y por tanto está con tilde o sin tilde en 81 documentos que son 
+justamente los reportados por Mt77.
+
+% en fuentes.txt aparece pero no como palabra completa pasosdeJesus
+% en practice.txt aparece unicamente en mayúsculas JESUS
+
+

@@ -1,0 +1,85 @@
+{
+  "consulta": "LA VERDAD",
+  "documentos": 1,
+  "inicio": 1,
+  "fin": 1,
+  "resultados": [
+    { "url": "http://r/r1.txt",
+    "frec": "2",
+    }
+  ]
+}
+{
+  "consulta": "VERDAD VERDAD",
+  "documentos": 1,
+  "inicio": 1,
+  "fin": 1,
+  "resultados": [
+    { "url": "http://r/r1.txt",
+    "frec": "2",
+    }
+  ]
+}
+{
+  "consulta": "OS VERDAD",
+  "documentos": 1,
+  "inicio": 1,
+  "fin": 1,
+  "resultados": [
+    { "url": "http://r/r1.txt",
+    "frec": "3",
+    }
+  ]
+}
+{
+  "consulta": "LIBRES OS VERDAD",
+  "documentos": 1,
+  "inicio": 1,
+  "fin": 1,
+  "resultados": [
+    { "url": "http://r/r1.txt",
+    "frec": "4",
+    }
+  ]
+}
+{
+  "consulta": "CONOCEREÍS LA VERDAD Y LA VERDAD OS HARÁ LIBRES",
+  "documentos": 1,
+  "inicio": 1,
+  "fin": 1,
+  "resultados": [
+    { "url": "http://r/r1.txt",
+    "frec": "6",
+    }
+  ]
+}
+{
+  "consulta": "OS VERDAD LIBRES",
+  "documentos": 1,
+  "inicio": 1,
+  "fin": 1,
+  "resultados": [
+    { "url": "http://r/r1.txt",
+    "frec": "4",
+    }
+  ]
+}
+{
+  "consulta": "OS Y Y Y Y Y VERDAD LIBRES",
+  "documentos": 1,
+  "inicio": 1,
+  "fin": 1,
+  "resultados": [
+    { "url": "http://r/r1.txt",
+    "frec": "4",
+    }
+  ]
+}
+{
+  "consulta": "FALSO VERDAD",
+  "documentos": 0,
+  "inicio": 1,
+  "fin": 0,
+  "resultados": [
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "consulta": "VERDAD",
+  "documentos": 1,
+  "inicio": 1,
+  "fin": 1,
+  "resultados": [
+    { "url": "http://r/r1.txt",
+    "frec": "2",
+    }
+  ]
+}
+{
+  "consulta": "HIJO",
+  "documentos": 1,
+  "inicio": 1,
+  "fin": 1,
+  "resultados": [
+    { "url": "http://r/r2.txt",
+    "frec": "1",
+    }
+  ]
+}
+{
+  "consulta": "DIOS",
+  "documentos": 1,
+  "inicio": 1,
+  "fin": 1,
+  "resultados": [
+    { "url": "http://r/r2.txt",
+    "frec": "1",
+    }
+  ]
+}
+{
+  "consulta": "Y",
+  "documentos": 0,
+  "inicio": 1,
+  "fin": 0,
+  "resultados": [
+  ]
+}

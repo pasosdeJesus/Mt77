@@ -1,0 +1,694 @@
+#!/usr/bin/awk -f
+# Translates from LaTex with conventions to repasa.
+# Public domain. 2003. No warranties. vtamara@informatik.uni-kl.de
+
+# /*
+# <refentry id="latex2rep" lang="es">
+
+#  <refmeta>
+#    <refentrytitle>latex2rep</refentrytitle>
+#    <manvolnum>1</manvolnum>
+#  </refmeta>
+
+#  <refnamediv>
+#    <refname>latex2rep</refname>
+#    <refpurpose>Extrae archivos para &repasa; de un documento LaTeX con convenciones</refpurpose>
+#  </refnamediv>
+#  <refsynopsisdiv><cmdsynopsis>
+#    <command>latex2rep</command> 
+#    <arg choice="opt" rep="repeat">archivo</arg>
+#  </cmdsynopsis></refsynopsisdiv>
+
+# <refsect1 id="latex2rep-descripcion">
+# <title>DESCRIPCIÓN</title>
+# <para>
+# El script <command>latex2rep</command> convierte uno o más archivos
+# escritos en LaTeX con convenciones para &repasa; en tres archivos
+# XML con definiciones (<citerefentry><refentrytitle>def</refentrytitle>
+# <manvolnum>5</manvolnum></citerefentry>), clasificación 
+# (<citerefentry><refentrytitle>clasif</refentrytitle>
+# <manvolnum>5</manvolnum></citerefentry>)  y secuencia 
+# (<citerefentry><refentrytitle>sec</refentrytitle>
+# <manvolnum>5</manvolnum></citerefentry>).  Los archivos generados y
+# las convenciones son apropiadas para procesar material de estudio
+# organizado de acuerdo a la legislación colombiana vigente para
+# colegios (Ley 115/1994).
+# </para>
+# <para>
+# Este script no recibe opciones por la línea de comando, pero puede
+# adaptarse empleando las siguientes variables de ambiente:
+# <variablelist>
+# <varlistentry><term>DEF</term>
+# <listitem><para>Nombre  del archivo de definiciones por generar.
+# </para></listitem></varlistentry>
+# <varlistentry><term>CLA</term>
+# <listitem><para>Nombre del archivo de clasificaciones por generar.
+# </para></listitem></varlistentry>
+# <varlistentry><term>SEC</term>
+# <listitem><para>Nombre del archivo de secuencia por generar.
+# </para></listitem></varlistentry>
+# <varlistentry><term>DESC</term>
+# <listitem><para>Descripción por emplear en los archivos que se generan.
+# </para></listitem></varlistentry>
+# <varlistentry><term>FECHA</term>
+# <listitem><para>Fecha de actualización que debe emplearse.
+# </para></listitem></varlistentry>
+# <varlistentry><term>BIBLIO</term>
+# <listitem><para>Bibliografía por agregar  en los archivos que se generan.
+# </para></listitem></varlistentry>
+# <varlistentry><term>TIPO_DERECHOS</term>
+# <listitem><para>Tipo de derechos de reproducción por emplear en archivos que se generan.
+# </para></listitem></varlistentry>
+# <varlistentry><term>TIEMPO_DERECHOS</term>
+# <listitem><para>Año(s) en los que comienzan a regir derechos de reproducción
+# </para></listitem></varlistentry>
+# <varlistentry><term>DERECHOS</term>
+# <listitem><para>Términos de reproducción completos.
+# </para></listitem></varlistentry>
+# <varlistentry><term>AUTORES</term>
+# <listitem><para>Nombres de los autores.
+# </para></listitem></varlistentry>
+# <varlistentry><term>IDSIGNIFICADO</term>
+# <listitem><para>Es la cadena con la que se completan identificadores
+# de significados.  Si no se especifica una se emplea <literal>sig</literal>.
+# </para></listitem></varlistentry>
+# </variablelist>
+# </para>
+# <para>Para extraer esta información hemos supuesto que el documento LaTeX
+# es material de referencia para estudiantes, que ha sido escrito por
+# uno o más profesores, y que emplea un formato más o menos estándar:
+# <itemizedlist>
+# <listitem><para>Cuenta con logros y sus indicadores de logros escritos,
+#  por ejemplo, al comienzo de una guía o sección o capítulo.</para></listitem>
+# <listitem><para>Incluye definiciones importantes diferenciadas del resto 
+# del documento y valoradas de acuerdo a su relevancia.  Estas definiciones 
+# deben  relacionarse con los indicadores de logro que desarrollan. 
+# Las palabras podrían servir como elementos del índice del documento, o 
+# junto con las definiciones podrían emplearse en un glosario.
+# </para></listitem>
+# <listitem><para>Ejercicios relacionados con indicadores de logro y 
+# sus soluciones.  Las soluciones podrían emplearse para generar un 
+# solucionario.
+# </para></listitem>
+# <listitem><para>Un orden para presentar los logros e indicadores de
+# acuerdo al periodo en el que se presenten.
+# </para></listitem>
+# </itemizedlist>
+# </para>
+
+# <para>
+# Esta información es extractada y dejada en archivos XML para 
+# &repasa;, que emplean el formato <literal>tex</literal>.
+# Queda separada así:
+# <itemizedlist>
+# <listitem><para>Las definiciones y significados quedan en el archivo
+# para definiciones
+# </para></listitem>
+# <listitem><para>Los logros e indicadores quedan en el archivo de
+# clasificación con tipos <literal>Logro</literal> y
+# <literal>Indicador</literal>.
+# Dentro de la clasificación de un indicador quedan
+# referenciados los significados que se relacionen con el indicador
+# junto con el peso, y quedan incluidos los ejercicios que se relacionen
+# con el indicador.
+# </para></listitem>
+# <listitem><para>La división en periodos queda en el archivo de
+# secuencia con tipo <literal>Periodo</literal>.  Dentro de cada
+# secuencia quedan referenciados los indicadores del periodo
+# correspondiente.</para></listitem>
+# </itemizedlist>
+# </para>
+# </refsect1>
+
+#  <refsect1><title>Convenciones para documentos LaTeX</title>
+
+# <para>Para adaptar LaTeX hemos definido algunos macros que se
+# presentan en detalle a continuación</para>
+# */
+
+# [to_xml(str)] returns an XML representation of string [str] 
+# (e.g replaces & with &amp; )
+function to_xml(str) 
+{
+        gsub(/&/,"\\&amp;",str);
+        gsub(/</,"\\&lt;",str);
+        gsub(/>/,"\\&gt;",str);
+        gsub(/"/,"\\&quot;",str);
+        gsub(/%/,"\\&#37;",str);
+        return str;
+}
+
+# [trim(str)] removes redundant spaces in [str]
+function trim(str)
+{
+	sub(/^[ \t]*/,"",str);
+	sub(/[ \t]*$/,"",str);
+	sub(/ [ \t]*$/," ",str);
+	return str;
+}
+
+
+# [str_from(str,i)] returns the substring of [str] that begins in position
+# [i]
+function str_from(str,i) {
+        return substr(str,i,length(str)-i+1);
+}
+
+# Receives argument (after {), returns next position of closing }
+function end_arg(str,start) {
+	p=start;
+	open=1;
+	while (p<=length(str) && open>0) {
+		if (substr(str,p,1)=="{") {
+			open=open+1;
+		}
+		else if (substr(str,p,1)=="}") {
+			open=open-1;
+		}
+		p=p+1;
+	}
+	return p;
+}
+# [extract_id(str)] extracts value of attribute id
+function extract_param(num,macro,str) {
+	if (match(str,macro "[ ]*{[^}]*}")<=0) {
+		print FILENAME ":" FNR ": Se esperaba " macro "{...}";
+		error=1;
+		return "";
+	}
+	else {
+		r=str_from(str,RSTART+length(macro));
+		k=0;
+		while (k<num) {
+			if (match(r,/{.*}/)<=0) {
+				print FILENAME ":" FNR ": Macro " macro " no tiene " num " parámetros";
+				error=1;
+				return "";
+			}
+			e=end_arg(r,RSTART+1);
+			p=substr(r,RSTART+1,e-RSTART-2);
+			r=str_from(r,e);
+			k=k+1;
+		}
+		return p;
+	}
+}
+
+# [cur_pos()]  returns the current position of file in XML format accepted
+# for referencing of Markup
+function cur_pos() {
+	return "<!--# " FNR " " FILENAME "-->";
+}
+
+# [sepstr(str)]  returns a string to separate a string from [str]
+function sepstr(str) {
+	if (str!="" && substr(str,length(str),1)!=" ") {
+		return " ";
+	}
+	return "";
+}
+
+# Ends capture of answer
+(s_cap==3) && (/\\item/ || /\\ejercicio/ || /begin{respuesta}/ || /end{enumerate}/) {
+        s_cap=0;
+}
+
+(s_cap==5) && (/end{respuesta}/) {
+        idejer="";
+        s_cap=0;
+}
+# Capturates certain texts that could be in more than one line
+s_cap!=0 && /.*/ {
+        lin=$0;
+        sub(/^[ \t]*/,"",lin);
+        sub(/[ \t]*$/,"",lin);
+ 	if (lin!="" && (s_cap==3 || s_cap==5)) { # Leyendo un ejercicio
+                iejer[idejer]=iejer[idejer] " " lin;
+	}
+}
+
+
+# /*
+# <refsect2 id="latex2rep-periodos">
+#   <title>Periodos</title>
+# <para>
+# El orden en el que se especifiquen y procesen los archivos fuente
+# debe corresponder al orden de presentación del material en periodos.  
+# El inicio del material para un periodo se especifica con
+# el macro <literal>periodo</literal> cuyo argumento es el periodo.
+# Se supone que el material de un periodo termina si no hay más 
+# archivos por procesar o al iniciarse material para un nuevo periodo.
+# Se espera que como parte del material para un periodo se especifique
+# al menos un indicador de logro.
+# Por ejemplo:
+# <screen>
+# \periodo{p1}
+# </screen>
+# </para>
+# </refsect2>
+# */
+
+/\\periodo[ ]*{.*}/ {
+	if (periodo!="" && numindper==0) {
+		print lperiodo_FILENAME ":" lperiodo_FNR ": Faltan indicadores en periodo " periodo;
+		error=1;
+	}
+	if (periodo!="") {
+        	print "      </sec>" >> out_seq;
+	}
+	periodo=extract_param(1,"periodo",$0);
+	print cur_pos() "<sec tipo=\"Periodo\" id=\"" to_xml(periodo) "\"><desc>" to_xml(periodo) "</desc>" >> out_seq;
+	lperiodo_FILENAME=FILENAME;
+	lperiodo_FNR=FNR;
+	numindper=0;
+}
+
+# /*
+# <refsect2 id="latex2rep-logros-e-indicadores-de-logro">
+#   <title>Logros e indicadores-de-logro</title>
+#   <para>Tanto un logro como un indicador de logro se esperan especificados 
+#   con el macro <literal>clasif</literal> cuyo primer
+#   parámetro debe ser <literal>logro</literal> o 
+#   <literal>indicador</literal>,  cuyo segundo parámetro debe ser
+#   el identificador y como tercer parámetro debe tener el logro o
+#   indicador. Por ejemplo:
+# <screen>
+# \clasif{indicador}{contexto.geografía}{Identifica la zona 
+# geográfica en la que vivió Jesús entre los años 0 y 33d.}
+# </screen>
+# </para>
+# <para>El logro que desarrolla uno o más indicadores debe especificarse
+# antes (digamos los logros al comienzo de un capítulo mientras que los
+# indicadores al comienzo de una sección), y los indicadores deben 
+# especificarse cómo parte de algún periodo.
+# </para>
+# </refsect2>
+# */
+
+/\\clasif[ ]*{logro}/ {
+	idlogro=extract_param(2,"clasif",$0);
+	logro[idlogro]=extract_param(3,"clasif",$0);
+	pos_logro[idlogro]=cur_pos();
+}
+
+/\\clasif[ ]*{indicador}/ {
+	if (periodo=="") {
+		print FILENAME ":" FNR ": Falta un elemento con rol periodo antes de primer indicador";
+		error=1;
+	}
+	
+	idindicador=extract_param(2,"clasif",$0);
+	print "    " cur_pos() "<refcla tipo=\"Indicador\" idcla=\"" to_xml(idindicador) "\"/>" >> out_seq;
+		
+	ind[idindicador]=extract_param(3,"clasif",$0);
+	pos_ind[idindicador]=cur_pos();
+	ipals[idindicador]="";
+	iejer[idindicador]="";
+	match(idindicador,/[.]/);
+	idl=substr(idindicador,1,RSTART-1);
+	idi=str_from(idindicador,RSTART+1);
+	if (idl=="") {
+		print FILENAME ":" FNR ": Falta identificacion de logro como prefijo en indicador";
+		error=1;
+	}
+	else if (!(idl in logro)) {
+		print FILENAME ":" FNR ": Ident. de logro no existente '" idl "'";
+		error=1;
+	}
+	else {
+		indlog[idl]=indlog[idl] "." idi;
+	}
+	numindper=numindper+1;
+}
+
+
+
+# /*
+# <refsect2 id="latex2rep-definiciones">
+#   <title>Definiciones</title>
+# <para>
+# Una definición debe constar de una palabra,un significado, un
+# peso y un indicador de logro asociado (en realidad  pueden ser varias 
+# palabras separadas por espacio o números o caracteres arbitrarios)
+# </para>
+# <para>
+# Para especificar una palabra se emplea el macro
+# <literal>pal</literal>, cuyo primer parámetro debe ser la
+# palabra, el segundo parámetro será la identificación del indicador de 
+# logro seguida de una identificación para la palabra (si se omite se 
+# emplea la palabra misma), el tercer parámetro es el peso,
+# el cuarto la definición, el quinto posibles pistas y el sexto
+# posibles despistes.  Las pistas/despistes se separan unas de otras con
+# | (y se usa || para representar |).
+# El peso representa la importancia de la palabra con respecto a otras 
+# (se sugiere un número de  1 a 5, siendo 5 las más importantes) y si 
+# se desea, separada con el caracter dos puntos (':'), la 
+# heurística que una herramienta de repaso
+# (ver <citerefentry><refentrytitle>repasa</refentrytitle>
+# <manvolnum>1</manvolnum></citerefentry> o 
+# <citerefentry><refentrytitle>repasatk</refentrytitle>
+# <manvolnum>1</manvolnum></citerefentry>) debería emplear al
+# valorar respuestas de quien estudie la definición
+# ---<command>repasa</command> y <command>repasatk</command> soportan
+# <literal>dist</literal> e <literal>indist</literal> para tener en
+# cuenta o no diferencia entre mayúsculas y minúsculas en respuestas
+# abiertas.  Por ejemplo:
+# <screen>
+# \pal{Denario}{contexto.historia.denario}{3:indist}{Moneda empleada por los romanos del tiempo de Jesús, equivalía al jornal de un día de trabajo agrícola.}{Asarion|Oro}{}
+# </screen>
+# Tenga en cuenta que el paquete para LaTeX de &repasa; no 
+# presenta los párrafos con definiciones.
+# </para>
+# <para>
+# De emplear la misma palabra con diversos significados agregue a la
+# identificación una cadena que distinga unas de otras separadas con
+# el caracter '.'  Por ejemplo una segunda definición para "denario"
+# podría tener como identificación 
+# <literal>contexto.historia.denario.2</literal>
+# </para>
+# </refsect2> 
+# */
+
+/\\nipal[ ]*{/ || /\\pal[ ]*{/ {
+	if (match($0,/\\nipal/)>0) {
+		tag="nipal";
+	}
+	else {
+		tag="pal";
+	}
+	pal=extract_param(1,tag,$0);
+	idp=extract_param(2,tag,$0);
+	split(idp,bid,/[.]/);
+	idi=bid[1] "." bid[2];
+	palid=bid[3];
+	if (pal=="") {
+		print FILENAME ":" FNR ": Significado sin palabra";
+		error=1;
+	}
+	else if (palid=="") {
+		palid=pal;
+	}
+	c=extract_param(3,tag,$0);
+	if (match(c,/:/)>0) {
+		peso=substr(c,1,RLENGTH);
+		heur=str_from(c,RLENGTH+2);
+	}
+	else {
+		peso=c;
+		heur="";
+	}
+	sig=extract_param(4,tag,$0);
+	if (palabras[palid]=="") {
+		sep="";
+		num_rep[palid]=0;
+		palpal[palid]=pal;
+	 } 
+	else {
+		sep="%;%";
+		num_rep[palid]=num_rep[palid]+1;
+	}
+	pis=extract_param(5,tag,$0);
+	desp=extract_param(6,tag,$0);
+	
+	if (error==0) {
+
+		palabras[palid]=palabras[palid] sep "<!--# " FNR " " FILENAME "-->%-%" bid[4] "%-%" heur "%-%" sig "%-%" pis "%-%" desp ;
+		if (!(idi in ind)) {
+			print FILENAME ":" FNR ": Indicador en palabra inexistente '" idi "'";
+#			error=1;
+		}
+		ipals[idi]=ipals[idi] "%;%<!--#" FNR " " FILENAME "-->%-%" palid "%-%" peso "%-%" bid[4];
+	}
+}
+
+# /*
+# <refsect2 id="latex2rep-ejercicios">
+#   <title>Ejercicios</title>
+# <para>
+# En medio de un ambiente <literal>\enumerate</literal>, pueden 
+# incluirse ejercicios con el macro <literal>ejercicio</literal> que
+# remplaza al macro <literal>\item</literal>.
+# La respuesta puede ir a continuación en el ambiente
+# <literal>respuesta</literal>.   El enunciado del ejercicio 
+# abarca hasta una línea que comience con una de las siguientes:
+# <itemizedlist>
+# <listitem><para><literal>\item</literal></para></listitem>
+# <listitem><para><literal>\ejercicio</literal></para></listitem>
+# <listitem><para><literal>\end{enumerate}</literal></para></listitem>
+# <listitem><para><literal>\begin{respuesta}</literal></para></listitem>
+# </itemizedlist>
+# El parámetro del macro <literal>ejercicio</literal> es la 
+# identificación que debe comenzar con la identificación del indicador/logro
+# seguida de punto y una identificación particular para el ejercicio que
+# que lo distinga de otros del mismo indicador.
+# Tanto en el enunciado del ejercicio como en la respuesta, evite emplear
+# las cadenas %-% y %;%.   
+# <screen>
+# \ejercicio{dh.busca.carta}
+# Un camino directo que puede seguir para buscar determinar
+# si cierta información de derechos humanos es cierta o falsa es 
+# preguntar por confirmación directamente a quienes la información 
+# afecte. ¿Dónde puede consultar casos actuales de derechos humanos
+# en Colombia y direcciones donde pueda escribir solicitando confirmación?
+# \begin{respuesta}
+# Entre las organizaciones que mantienen información 
+# reciente sobre casos en Colombia están:
+# \begin{itemize}
+# \item Amnistía Internacional.  http://www.amnesty.org   
+# Además de mantener información
+# publicada (reportes, cartas, acciones urgentes), cuenta con una lista de 
+# distribución abierta de acciones urgentes.  Estas acciones incluyen 
+# direcciones a las cuales escribir.
+# \item Human Right Watch. http://www.hrw.org
+# Publica reportes con regularidad.  Cuenta con lista de noticias.
+# \item Banco de violencia política de Justicia y Paz \&amp;
+# CINEP.  http://www.nocheyniebla.org 
+# Registra # todos los casos de violación a derechos humanos de los 
+# que se tiene noticia, así como reportes periódicos. Cuenta con lista 
+# de noticias.
+# \end{itemize}
+# \end{respuesta}
+# </screen>
+# </para>
+# </refsect2>
+
+# </refsect1>
+# </refentry>
+
+# */
+/\\ejercicio/ {
+	ts=extract_param(1,"ejercicio",$0);
+	if (idejer!="") {
+		print lejer_FILENAME ":" lejer_FNR ": Ejercicio sin respuesta";
+		error=1;
+	}
+	lejer_FILENAME=FILENAME;
+	lejer_FNR=FNR;
+	match(ts,/[^.]*[.][^.]*[.]/);
+	idejer=substr(ts,1,RLENGTH-1);
+	if (!(idejer in ind) ) {
+		match(ts,/[^.]*[.]/);
+		idejer=substr(ts,1,RLENGTH-1);
+		if (!(idejer in logro)) {
+			print FILENAME ":" FNR ": Identificador de indicador/logro no existente '" idejer "'";
+			error=1;
+		}
+	}
+	ide=str_from(ts,RLENGTH+1);
+	match($0,/ejercicio{[^}]*}/);
+	iejer[idejer]=iejer[idejer] "%;% <!--# " FNR " " FILENAME "-->%-%" ide "%-%" str_from($0,RSTART+RLENGTH) ;
+	s_cap=3;
+}
+
+idejer!="" && /\\begin{respuesta}/ {
+	match($0,/\\begin{respuesta}/);
+	s_cap=5;
+	iejer[idejer]=iejer[idejer] "%-%" str_from($0,RSTART+RLENGTH) ;
+}
+
+
+BEGIN {
+    	
+	out_def=ENVIRON["DEF"];
+	out_cla=ENVIRON["CLA"];
+	out_seq=ENVIRON["SEC"];
+	desc=ENVIRON["DESC"];
+	fecha=ENVIRON["FECHA"];
+	biblio=ENVIRON["BIBLIO"];
+	tipo_derechos=ENVIRON["TIPO_DERECHOS"];
+	tiempo_derechos=ENVIRON["TIEMPO_DERECHOS"];
+	derechos=ENVIRON["DERECHOS"];
+	autores=ENVIRON["AUTORES"];
+	if (ENVIRON["IDSIGNIFICADO"]!="") {
+		idmeaning=to_xml(ENVIRON["IDSIGNIFICADO"]);
+	}
+	else {
+		idmeaning="sig";  
+	}
+
+#	out_def="tmp.def";
+#	out_cla="tmp.cla";
+#	out_seq="tmp.sec";
+#	fecha="2003";
+#	desc="hola";
+
+	if (fecha=="") {
+		print "Falta variable de ambiente FECHA";
+		exit 1;
+	}
+	if (out_def=="") {
+		print "Falta variable DEF con archivo .def";
+		exit 1;
+	}
+	if (out_cla=="") {
+		print "Falta variable CLA con archivo .cla";
+		exit 1;
+	}
+	if (out_seq=="") {
+		print "Falta variable SEC con archivo .sec";
+		exit 1;
+	}
+	if (desc=="") {
+		print "Falta variable DESC con descripción";
+		exit 1;
+	}
+
+	print "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>" > out_def ;
+	print "<!DOCTYPE def PUBLIC \"-//Structio//DTD definiciones 1.0\" \"def.dtd\">" >> out_def ;
+	print "<def formato=\"tex\">" >> out_def ;
+	
+	print "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>" > out_cla ;
+	print "<!DOCTYPE clasificacion PUBLIC \"-//Structio//DTD clasificacion 1.0\" \"clasif.dtd\">" >> out_cla ;
+	print "<clasificacion formato=\"tex\" tipos=\"Logro;Indicador\">" >> out_cla ;
+	
+	print "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>" > out_seq ;
+	print "<!DOCTYPE secuencia PUBLIC \"-//Structio//DTD secuencia 1.0\" \"sec.dtd\">" >> out_seq ;
+	print "<secuencia formato=\"tex\" tipos=\"Periodo\">" >> out_seq ;
+
+	print "  <desc>" to_xml(desc) "</desc>" >> out_def;
+	print "  <desc>" to_xml(desc) "</desc>" >> out_cla;
+	print "  <desc>" to_xml(desc) "</desc>" >> out_seq;
+		
+	if (biblio!="") {
+		print "  <biblio>" to_xml(biblio) "</biblio>" >> out_def;
+		print "  <biblio>" to_xml(biblio) "</biblio>" >> out_cla;
+		print "  <biblio>" to_xml(biblio) "</biblio>" >> out_seq;
+		
+	}
+
+	if (tipo_derechos!="") {
+		print "  <derechos tipo=\"" to_xml(tipo_derechos) "\" tiempo=\"" to_xml(tiempo_derechos) "\">" >> out_def;
+		print "  " to_xml(derechos) >> out_def;
+		print "  </derechos>" >> out_def;
+		print "  <derechos tipo=\"" to_xml(tipo_derechos) "\" tiempo=\"" to_xml(tiempo_derechos) "\">" >> out_cla;
+		print "  " to_xml(derechos) >> out_cla;
+		print "  </derechos>" >> out_cla;
+		print "  <derechos tipo=\"" to_xml(tipo_derechos) "\" tiempo=\"" to_xml(tiempo_derechos) "\">" >> out_seq;
+		print "  " to_xml(derechos) >> out_seq;
+		print "  </derechos>" >> out_seq;
+	}
+	
+	if (autores!="") {
+		print "  <autor fecha=\"" to_xml(fecha) "\">" to_xml(autores) "</autor>" >> out_def;
+		print "  <autor fecha=\"" to_xml(fecha) "\">" to_xml(autores) "</autor>" >> out_cla;
+		print "  <autor fecha=\"" to_xml(fecha) "\">" to_xml(autores) "</autor>" >> out_seq;
+	}
+
+			
+}
+
+
+END {
+	
+	if (periodo!="") {
+		print "  </sec>" >> out_seq;
+	}
+	for (l in logro) {
+		print "  " pos_logro[l] "<clasif tipo=\"Logro\" id=\"" to_xml(l) "\"><desc>" to_xml(logro[l]) "</desc>" >> out_cla;
+		split(iejer[l],pp,"%;%");
+		for (p in pp) {
+			if (pp[p]!="") {
+				split(pp[p],ee,"%-%");
+				print "      <ejercicio id=\"" to_xml(l) "." to_xml(ee[2]) "\" tipo=\"" to_xml(idmeaning) "\">" ee[1] "<pregunta>" to_xml(ee[3]) "</pregunta>" >>out_cla;
+				print "        <respuesta>" to_xml(ee[4]) "</respuesta></ejercicio>" >> out_cla;
+			}
+		}
+		split(indlog[l],iind,/[.]/);
+		for (n in iind) {
+			if (iind[n]!="") {
+				i=l "." iind[n];
+				print "    " pos_ind[i] "<clasif tipo=\"Indicador\" id=\"" to_xml(l) "." to_xml(iind[n]) "\"><desc>" to_xml(ind[i]) "</desc>" >> out_cla;
+				split(ipals[i],pp,"%;%");
+				for (p in pp) {
+					if (pp[p]!="") {
+						split(pp[p],ee,"%-%");
+						if (ee[4]=="") {
+							idm=to_xml(idmeaning);
+						}
+						else {
+							idm=to_xml(ee[4]);
+						}
+						print "        " ee[1] "<refsig idsig=\"" to_xml(ee[2]) "." idm "\" peso=\"" to_xml(ee[3]) "\" />" >> out_cla;  
+					}
+				}
+				
+				split(iejer[i],pp,"%;%");
+				for (p in pp) {
+					if (pp[p]!="") {
+						split(pp[p],ee,"%-%");
+						print "        <ejercicio id=\"" to_xml(l) "." to_xml(iind[n]) "." to_xml(ee[2]) "\" tipo=\"" to_xml(idmeaning) "\">" ee[1] "<pregunta>" to_xml(ee[3]) "</pregunta>" >>out_cla;
+						print "          <respuesta>" to_xml(ee[4]) "</respuesta></ejercicio>" >> out_cla;
+					}
+				}
+				print "    </clasif>" >> out_cla;
+			}
+		}
+		print "  </clasif>" >> out_cla;
+	}
+	
+	for (idp in palabras) {
+		if (idp==palpal[idp]) {
+			p="";
+		}
+		else {
+			p=" pal=\"" to_xml(palpal[idp]) "\"";
+		}
+		print "  " pos_fpal[idp] "<pal id=\"" idp "\"" p ">" >> out_def;
+		split(palabras[idp], sigs, "%;%");
+		for (n in sigs) {
+			split(sigs[n], ee, "%-%");
+			if (ee[2] == "") {
+				id=to_xml(idmeaning);
+			} 
+			else {
+				id=to_xml(ee[2]);
+			}
+			if (ee[3]!="") {
+				heur="heur=\"" ee[3] "\"";
+			}
+			else {
+				heur="";
+			}
+			print "    " ee[1] "<sig id=\"" idp "." id "\" fecha=\"" fecha "\" " heur ">" to_xml(ee[4]) "</sig>" >> out_def;
+			gsub(/\|\|/, "#$#", ee[5]);
+			split(ee[5], pistas, "|");
+			for (pi in pistas) {
+				gsub(/#\$#/,"|",pistas[pi]);
+				print "    <pista>" to_xml(pistas[pi]) "</pista>" >> out_def;
+			}
+			gsub(/\|\|/,"#$#",ee[6]);
+			split(ee[6], despistes , "|");
+			for (de in despistes) {
+				gsub(/#\$#/,"|", despistes[de]);
+				print "    <despiste>" to_xml(despistes[de]) "</despiste>" >> out_def;
+			}
+		}
+		print "  </pal>" >> out_def;
+	}
+	
+	print "</secuencia>" >> out_seq;
+	print "</clasificacion>" >> out_cla;
+	print "</def>" >> out_def;
+
+	exit error;
+}

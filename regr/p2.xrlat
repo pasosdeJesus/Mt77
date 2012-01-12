@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE relatos PUBLIC "-//SINCODH/DTD relatos 0.9" "relatos.dtd">
+<relatos><relato>
+  <organizacion_responsable>Pasos de Jesús</organizacion_responsable>
+  <derechos>Dominio público</derechos>
+  <id_relato>pJ1</id_relato>
+  <forma_compartir>privado</forma_compartir>
+  <titulo>titulo</titulo>
+  <hechos>el memo</hechos>
+  <!-- Victimas individuales -->
+  <persona>
+    <id_persona>pJ_vi_1</id_persona>
+    <nombre>vi</nombre>
+    <fecha_nacimiento>2006</fecha_nacimiento>
+    <sexo>Femenino</sexo>
+  </persona>
+  <!-- Victimas combatientes -->
+  <persona>
+    <id_persona>pJ_vc_1</id_persona>
+    <nombre>bc</nombre>
+    <fecha_nacimiento>2006</fecha_nacimiento>
+    <sexo>Masculino</sexo>
+  </persona>
+  <!-- Victimas colectivas -->
+  <grupo>
+    <id_grupo>pJ_vcol_1</id_grupo>
+    <nombre_grupo>bc</nombre_grupo>
+    <observaciones tipo="anotacion">adfs</observaciones>
+    <observaciones tipo="personas_aprox">3</observaciones>
+    <observaciones tipo="id_organizacion_armada">16</observaciones>
+    <observaciones tipo="id_sector">DESEMPLEADO (A), EMPLEADO</observaciones>
+    <observaciones tipo="id_profesion">ABOGADO, ADMINISTRADOR PUBLICO</observaciones>
+    <observaciones tipo="id_vinculo_estado">ASAMBLEA DEPARTAMENTAL, CASAS DE JUSTICIA</observaciones>
+    <observaciones tipo="id_antecedente">AMNISTIA - INDULTO, ATENTADO</observaciones>
+    <observaciones tipo="id_filiacion">ALIANZAS TRADICIONALES, CIVICO POLITICOS ELECTORA</observaciones>
+    <observaciones tipo="id_organizacion">AMBIENTALISTA, CAMPESINA</observaciones>
+    <observaciones tipo="id_rango">De 26 a 45 Años, De 46 a 60</observaciones>
+  </grupo>
+  <!-- Presuntos responsables -->
+  <grupo>
+    <id_grupo>pJ_presp_38</id_grupo>
+    <nombre_grupo>FISCALIA</nombre_grupo>
+    <observaciones tipo="tipo">0</observaciones>
+    <observaciones tipo="bloque">bloque</observaciones>
+    <observaciones tipo="frente">frente</observaciones>
+    <observaciones tipo="brigada">brigada</observaciones>
+    <observaciones tipo="batallon">batallón</observaciones>
+    <observaciones tipo="division">división</observaciones>
+    <observaciones tipo="otro">otro</observaciones>
+  </grupo>
+  <!-- Victima Individual -->
+  <victima>
+    <id_persona>pJ_vi_1</id_persona>
+    <ocupacion>TRANSPORTADOR</ocupacion>
+    <sector_condicion>PROFESIONAL</sector_condicion>
+    <organizacion>RELIGIOSA</organizacion>
+    <observaciones tipo="hijos">2</observaciones>
+    <observaciones tipo="id_rango_edad">De 0 a 15 Años</observaciones>
+    <observaciones tipo="id_filiacion">POLO DEMOCRÁTICO</observaciones>
+    <observaciones tipo="id_vinculo_estado">SECRETARIAS MPALES.</observaciones>
+    <observaciones tipo="id_organizacion_armada">FUERZA PUBLICA</observaciones>
+  </victima>
+  <!-- Victima Combatiente-->
+  <victima>
+    <id_persona>pJ_vc_1</id_persona>
+    <ocupacion>SIN INFORMACIÓN</ocupacion>
+    <sector_condicion>PROFESIONAL</sector_condicion>
+    <organizacion>SINDICAL</organizacion>
+    <observaciones tipo="alias">al</observaciones>
+    <observaciones tipo="id_resultado_agresion">HERIDO</observaciones>
+    <observaciones tipo="id_rango_edad">De 0 a 15 Años</observaciones>
+    <observaciones tipo="id_filiacion">CONSERVADOR</observaciones>
+    <observaciones tipo="id_vinculo_estado">SECRETARIAS MPALES.</observaciones>
+    <observaciones tipo="id_organizacion_armada">SIJIN</observaciones>
+  </victima>
+  <!-- Actos con Victimas Individuales -->
+  <acto>
+	  <fecha>"2009-04-08"</fecha> 
+	  <departamento>CAUCA</departamento>
+	  <municipio>POPAYAN</municipio>
+    	  <duracion>3</duracion>
+	  <agresion_general>VIDA</agresion_general>
+	  <agresion_particular>14</agresion_particular>
+	  <id_victima_individual>pJ_vi_1</id_victima_individual>
+	  <id_presunto_grupo_responsable>pJ_presp_38</id_presunto_grupo_responsable>
+  </acto>
+  <!-- Actos con Victimas Combatientes -->
+  <!-- Actos con Victimas Colectivas -->
+  <observaciones tipo="hora">3</observaciones>
+  <observaciones tipo="duracion">3</observaciones>
+  <observaciones tipo="gr_confiabilidad">Alta</observaciones>
+  <observaciones tipo="gr_esclarecimiento">Alto</observaciones>
+  <observaciones tipo="gr_impunidad">Nula</observaciones>
+  <observaciones tipo="gr_informacion">Parc</observaciones>
+</relato></relatos>
+

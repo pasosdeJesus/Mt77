@@ -1,0 +1,84 @@
+{
+  "consulta": "CONOCEREÍS",
+  "documentos": 0,
+  "inicio": 1,
+  "fin": 0,
+  "resultados": [
+  ]
+}
+{
+  "consulta": "CREA",
+  "documentos": 1,
+  "inicio": 1,
+  "fin": 1,
+  "resultados": [
+    { "url": "http://r/r2.txt",
+    "frec": "1",
+    }
+  ]
+}
+{
+  "consulta": "UNIGÉNITO",
+  "documentos": 1,
+  "inicio": 1,
+  "fin": 1,
+  "resultados": [
+    { "url": "http://r/r2.txt",
+    "frec": "1",
+    }
+  ]
+}
+{
+  "consulta": "VIDA",
+  "documentos": 1,
+  "inicio": 1,
+  "fin": 1,
+  "resultados": [
+    { "url": "http://r/r2.txt",
+    "frec": "1",
+    }
+  ]
+}
+{
+  "consulta": "ETERNA",
+  "documentos": 1,
+  "inicio": 1,
+  "fin": 1,
+  "resultados": [
+    { "url": "http://r/r2.txt",
+    "frec": "1",
+    }
+  ]
+}
+{
+  "consulta": "QUE",
+  "documentos": 0,
+  "inicio": 1,
+  "fin": 0,
+  "resultados": [
+  ]
+}
+{
+  "consulta": "HIJO",
+  "documentos": 1,
+  "inicio": 1,
+  "fin": 1,
+  "resultados": [
+    { "url": "http://r/r2.txt",
+    "frec": "1",
+    }
+  ]
+}
+1 http://r/nombre%20con%20espacio.txt
+2 http://r/nombre%20con%20e%fffffff1e.txt
+NOMBRECONESPACIO.TXT 1
+NOMBRECONEÑE.TXT 1
+SITIO:R 2
+TIPO:DOCUMENTO 2
+TITULO:CON 2
+TITULO:ESPACIO 1
+TITULO:ESPACIO.TXT 1
+TITULO:EÑE 1
+TITULO:EÑE.TXT 1
+TITULO:NOMBRE 2
+TITULO:TXT 2

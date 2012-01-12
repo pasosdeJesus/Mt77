@@ -1,0 +1,632 @@
+digraph "rdsgc" {
+
+    rankdir=LR;
+"AQUEL" [label="AQUEL {(1,49)}"]
+"C" [label="C {}"]
+"D" [label="D {}"]
+"ETERNA" [label="ETERNA {(1,98)}"]
+"H" [label="H {}"]
+"LIBRES" [label="LIBRES {(2,41)}"]
+"NO" [label="NO {(1,70)}"]
+"OS" [label="OS {(2,33)}"]
+"PIERDA" [label="PIERDA {(1,76)}"]
+"R" [label="R {}"]
+"S" [label="S {}"]
+"T" [label="T {}"]
+"UNIGENITO" [label="UNIGENITO {(1,25)}"]
+"V" [label="V {}"]
+subgraph cluster1 {
+"AQUEL" -> "C" [color="red"]
+"C" -> "D" [color="red"]
+"D" -> "ETERNA" [color="red"]
+"ETERNA" -> "H" [color="red"]
+"H" -> "LIBRES" [color="red"]
+"LIBRES" -> "NO" [color="red"]
+"NO" -> "OS" [color="red"]
+"OS" -> "PIERDA" [color="red"]
+"PIERDA" -> "R" [color="red"]
+"R" -> "S" [color="red"]
+"S" -> "T" [color="red"]
+"T" -> "UNIGENITO" [color="red"]
+"UNIGENITO" -> "V" [color="red"]
+}
+
+"C" -> "CONOCEREIS"
+"CONOCEREIS" [label="ONOCEREIS {(2,1)}"]
+"CREA" [label="REA {(1,65)}"]
+subgraph cluster2 {
+"CONOCEREIS" -> "CREA" [color="red"]
+}
+
+"D" -> "DADO"
+"DADO" [label="ADO {(1,10)}"]
+"DIOS" [label="IOS {(1,2)}"]
+subgraph cluster3 {
+"DADO" -> "DIOS" [color="red"]
+}
+
+"H" -> "HA"
+"HA" [label="A {(1,7)}"]
+"HIJO" [label="IJO {(1,20)}"]
+subgraph cluster4 {
+"HA" -> "HIJO" [color="red"]
+}
+
+"HA" -> "HARA"
+"HARA" [label="RA {(2,36)}"]
+"R" -> "R1.TXT"
+"R1.TXT" [label="1.TXT {(2,1)}"]
+"R2.TXT" [label="2.TXT {(1,1)}"]
+subgraph cluster5 {
+"R1.TXT" -> "R2.TXT" [color="red"]
+}
+
+"S" -> "SE"
+"SE" [label="E {(1,73)}"]
+"SITIO:R" [label="ITIO:R {(1,2), (2,2)}"]
+subgraph cluster6 {
+"SE" -> "SITIO:R" [color="red"]
+}
+
+"T" -> "TENGA"
+"TENGA" [label="ENGA {(1,87)}"]
+"TI" [label="I {}"]
+"TODO" [label="ODO {(1,44)}"]
+subgraph cluster7 {
+"TENGA" -> "TI" [color="red"]
+"TI" -> "TODO" [color="red"]
+}
+
+"TI" -> "TIPO:DOCUMENTO"
+"TIPO:DOCUMENTO" [label="PO:DOCUMENTO {(1,10), (2,10)}"]
+"TITULO:" [label="TULO: {}"]
+subgraph cluster8 {
+"TIPO:DOCUMENTO" -> "TITULO:" [color="red"]
+}
+
+"TITULO:" -> "TITULO:R"
+"TITULO:R" [label="R {}"]
+"TITULO:TXT" [label="TXT {(1,4), (2,4)}"]
+subgraph cluster9 {
+"TITULO:R" -> "TITULO:TXT" [color="red"]
+}
+
+"TITULO:R" -> "TITULO:R1"
+"TITULO:R1" [label="1 {(2,3)}"]
+"TITULO:R2" [label="2 {(1,3)}"]
+subgraph cluster10 {
+"TITULO:R1" -> "TITULO:R2" [color="red"]
+}
+
+"TITULO:R1" -> "TITULO:R1.TXT"
+"TITULO:R1.TXT" [label=".TXT {(2,7)}"]
+"TITULO:R2" -> "TITULO:R2.TXT"
+"TITULO:R2.TXT" [label=".TXT {(1,7)}"]
+"V" -> "VERDAD"
+"VERDAD" [label="ERDAD {(2,14), (2,26)}"]
+"VIDA" [label="IDA {(1,93)}"]
+subgraph cluster11 {
+"VERDAD" -> "VIDA" [color="red"]
+}
+
+}
+digraph "rdsgc" {
+
+    rankdir=LR;
+"AQUEL" [label="AQUEL {(2,49)}"]
+"C" [label="C {}"]
+"D" [label="D {}"]
+"ETERNA" [label="ETERNA {(2,98)}"]
+"H" [label="H {}"]
+"LIBRES" [label="LIBRES {(1,41)}"]
+"NO" [label="NO {(2,70)}"]
+"OS" [label="OS {(1,33)}"]
+"PIERDA" [label="PIERDA {(2,76)}"]
+"R" [label="R {}"]
+"S" [label="S {}"]
+"T" [label="T {}"]
+"UNIGENITO" [label="UNIGENITO {(2,25)}"]
+"V" [label="V {}"]
+subgraph cluster1 {
+"AQUEL" -> "C" [color="red"]
+"C" -> "D" [color="red"]
+"D" -> "ETERNA" [color="red"]
+"ETERNA" -> "H" [color="red"]
+"H" -> "LIBRES" [color="red"]
+"LIBRES" -> "NO" [color="red"]
+"NO" -> "OS" [color="red"]
+"OS" -> "PIERDA" [color="red"]
+"PIERDA" -> "R" [color="red"]
+"R" -> "S" [color="red"]
+"S" -> "T" [color="red"]
+"T" -> "UNIGENITO" [color="red"]
+"UNIGENITO" -> "V" [color="red"]
+}
+
+"C" -> "CONOCEREIS"
+"CONOCEREIS" [label="ONOCEREIS {(1,1)}"]
+"CREA" [label="REA {(2,65)}"]
+subgraph cluster2 {
+"CONOCEREIS" -> "CREA" [color="red"]
+}
+
+"D" -> "DADO"
+"DADO" [label="ADO {(2,10)}"]
+"DIOS" [label="IOS {(2,2)}"]
+subgraph cluster3 {
+"DADO" -> "DIOS" [color="red"]
+}
+
+"H" -> "HA"
+"HA" [label="A {(2,7)}"]
+"HIJO" [label="IJO {(2,20)}"]
+subgraph cluster4 {
+"HA" -> "HIJO" [color="red"]
+}
+
+"HA" -> "HARA"
+"HARA" [label="RA {(1,36)}"]
+"R" -> "R1.TXT"
+"R1.TXT" [label="1.TXT {(1,1)}"]
+"R2.TXT" [label="2.TXT {(2,1)}"]
+subgraph cluster5 {
+"R1.TXT" -> "R2.TXT" [color="red"]
+}
+
+"S" -> "SE"
+"SE" [label="E {(2,73)}"]
+"SITIO:R" [label="ITIO:R {(1,2), (2,2)}"]
+subgraph cluster6 {
+"SE" -> "SITIO:R" [color="red"]
+}
+
+"T" -> "TENGA"
+"TENGA" [label="ENGA {(2,87)}"]
+"TI" [label="I {}"]
+"TODO" [label="ODO {(2,44)}"]
+subgraph cluster7 {
+"TENGA" -> "TI" [color="red"]
+"TI" -> "TODO" [color="red"]
+}
+
+"TI" -> "TIPO:DOCUMENTO"
+"TIPO:DOCUMENTO" [label="PO:DOCUMENTO {(1,10), (2,10)}"]
+"TITULO:" [label="TULO: {}"]
+subgraph cluster8 {
+"TIPO:DOCUMENTO" -> "TITULO:" [color="red"]
+}
+
+"TITULO:" -> "TITULO:R"
+"TITULO:R" [label="R {}"]
+"TITULO:TXT" [label="TXT {(1,4), (2,4)}"]
+subgraph cluster9 {
+"TITULO:R" -> "TITULO:TXT" [color="red"]
+}
+
+"TITULO:R" -> "TITULO:R1"
+"TITULO:R1" [label="1 {(1,3)}"]
+"TITULO:R2" [label="2 {(2,3)}"]
+subgraph cluster10 {
+"TITULO:R1" -> "TITULO:R2" [color="red"]
+}
+
+"TITULO:R1" -> "TITULO:R1.TXT"
+"TITULO:R1.TXT" [label=".TXT {(1,7)}"]
+"TITULO:R2" -> "TITULO:R2.TXT"
+"TITULO:R2.TXT" [label=".TXT {(2,7)}"]
+"V" -> "VERDAD"
+"VERDAD" [label="ERDAD {(1,14), (1,26)}"]
+"VIDA" [label="IDA {(2,93)}"]
+subgraph cluster11 {
+"VERDAD" -> "VIDA" [color="red"]
+}
+
+}
+digraph "rdsgc" {
+
+    rankdir=LR;
+"AQUEL" [label="AQUEL {(3,49)}"]
+"C" [label="C {}"]
+"D" [label="D {}"]
+"ETERNA" [label="ETERNA {(3,98)}"]
+"H" [label="H {}"]
+"LIB" [label="LIB {}"]
+"NO" [label="NO {(3,70)}"]
+"OS" [label="OS {(2,33)}"]
+"PIERDA" [label="PIERDA {(3,76)}"]
+"R" [label="R {}"]
+"S" [label="S {}"]
+"T" [label="T {}"]
+"UNIGENITO" [label="UNIGENITO {(3,25)}"]
+"V" [label="V {}"]
+subgraph cluster1 {
+"AQUEL" -> "C" [color="red"]
+"C" -> "D" [color="red"]
+"D" -> "ETERNA" [color="red"]
+"ETERNA" -> "H" [color="red"]
+"H" -> "LIB" [color="red"]
+"LIB" -> "NO" [color="red"]
+"NO" -> "OS" [color="red"]
+"OS" -> "PIERDA" [color="red"]
+"PIERDA" -> "R" [color="red"]
+"R" -> "S" [color="red"]
+"S" -> "T" [color="red"]
+"T" -> "UNIGENITO" [color="red"]
+"UNIGENITO" -> "V" [color="red"]
+}
+
+"C" -> "CONOCEREIS"
+"CONOCEREIS" [label="ONOCEREIS {(2,1)}"]
+"CREA" [label="REA {(3,65)}"]
+subgraph cluster2 {
+"CONOCEREIS" -> "CREA" [color="red"]
+}
+
+"D" -> "DADO"
+"DADO" [label="ADO {(3,10)}"]
+"DIOS" [label="IOS {(3,2)}"]
+subgraph cluster3 {
+"DADO" -> "DIOS" [color="red"]
+}
+
+"H" -> "HA"
+"HA" [label="A {(3,7)}"]
+"HIJO" [label="IJO {(3,20)}"]
+subgraph cluster4 {
+"HA" -> "HIJO" [color="red"]
+}
+
+"HA" -> "HARA"
+"HARA" [label="RA {(2,36)}"]
+"LIB" -> "LIBERARA"
+"LIBERARA" [label="ERARA {(1,17)}"]
+"LIBRES" [label="RES {(2,41)}"]
+subgraph cluster5 {
+"LIBERARA" -> "LIBRES" [color="red"]
+}
+
+"NO" -> "NOS"
+"NOS" [label="S {(1,13)}"]
+"R" -> "R1.TXT"
+"R1.TXT" [label="1.TXT {(2,1)}"]
+"R2.TXT" [label="2.TXT {(3,1)}"]
+subgraph cluster6 {
+"R1.TXT" -> "R2.TXT" [color="red"]
+}
+
+"S" -> "SE"
+"SE" [label="E {(3,73)}"]
+"SI" [label="I {(1,10), (1,27)}"]
+subgraph cluster7 {
+"SE" -> "SI" [color="red"]
+}
+
+"SI" -> "SITIO:"
+"SITIO:" [label="TIO: {}"]
+"SITIO:" -> "SITIO:PASOSDEJESUS"
+"SITIO:PASOSDEJESUS" [label="PASOSDEJESUS {(1,13)}"]
+"SITIO:R" [label="R {(2,2), (3,2)}"]
+subgraph cluster8 {
+"SITIO:PASOSDEJESUS" -> "SITIO:R" [color="red"]
+}
+
+"T" -> "TENGA"
+"TENGA" [label="ENGA {(3,87)}"]
+"TI" [label="I {}"]
+"TODO" [label="ODO {(3,44)}"]
+subgraph cluster9 {
+"TENGA" -> "TI" [color="red"]
+"TI" -> "TODO" [color="red"]
+}
+
+"TI" -> "TIPO:DOCUMENTO"
+"TIPO:DOCUMENTO" [label="PO:DOCUMENTO {(1,10), (2,10), (3,10)}"]
+"TITULO:" [label="TULO: {}"]
+subgraph cluster10 {
+"TIPO:DOCUMENTO" -> "TITULO:" [color="red"]
+}
+
+"TITULO:" -> "TITULO:R"
+"TITULO:R" [label="R {}"]
+"TITULO:TXT" [label="TXT {(1,4), (2,4), (3,4)}"]
+"TITULO:VERDAD" [label="VERDAD {(1,7)}"]
+subgraph cluster11 {
+"TITULO:R" -> "TITULO:TXT" [color="red"]
+"TITULO:TXT" -> "TITULO:VERDAD" [color="red"]
+}
+
+"TITULO:R" -> "TITULO:R1"
+"TITULO:R1" [label="1 {(2,3)}"]
+"TITULO:R2" [label="2 {(3,3)}"]
+subgraph cluster12 {
+"TITULO:R1" -> "TITULO:R2" [color="red"]
+}
+
+"TITULO:R1" -> "TITULO:R1.TXT"
+"TITULO:R1.TXT" [label=".TXT {(2,7)}"]
+"TITULO:R2" -> "TITULO:R2.TXT"
+"TITULO:R2.TXT" [label=".TXT {(3,7)}"]
+"TITULO:VERDAD" -> "TITULO:VERDAD.TXT"
+"TITULO:VERDAD.TXT" [label=".TXT {(1,11)}"]
+"V" -> "VERDAD"
+"VERDAD" [label="ERDAD {(1,3), (2,14), (2,26)}"]
+"VIDA" [label="IDA {(3,93)}"]
+subgraph cluster13 {
+"VERDAD" -> "VIDA" [color="red"]
+}
+
+"VERDAD" -> "VERDAD.TXT"
+"VERDAD.TXT" [label=".TXT {(1,1)}"]
+}
+digraph "rdsgc" {
+
+    rankdir=LR;
+"AQUEL" [label="AQUEL {(3,49)}"]
+"C" [label="C {}"]
+"D" [label="D {}"]
+"ETERNA" [label="ETERNA {(3,98)}"]
+"H" [label="H {}"]
+"LIB" [label="LIB {}"]
+"NO" [label="NO {(3,70)}"]
+"OS" [label="OS {(1,33)}"]
+"PIERDA" [label="PIERDA {(3,76)}"]
+"R" [label="R {}"]
+"S" [label="S {}"]
+"T" [label="T {}"]
+"UNIGENITO" [label="UNIGENITO {(3,25)}"]
+"V" [label="V {}"]
+subgraph cluster1 {
+"AQUEL" -> "C" [color="red"]
+"C" -> "D" [color="red"]
+"D" -> "ETERNA" [color="red"]
+"ETERNA" -> "H" [color="red"]
+"H" -> "LIB" [color="red"]
+"LIB" -> "NO" [color="red"]
+"NO" -> "OS" [color="red"]
+"OS" -> "PIERDA" [color="red"]
+"PIERDA" -> "R" [color="red"]
+"R" -> "S" [color="red"]
+"S" -> "T" [color="red"]
+"T" -> "UNIGENITO" [color="red"]
+"UNIGENITO" -> "V" [color="red"]
+}
+
+"C" -> "CONOCEREIS"
+"CONOCEREIS" [label="ONOCEREIS {(1,1)}"]
+"CREA" [label="REA {(3,65)}"]
+subgraph cluster2 {
+"CONOCEREIS" -> "CREA" [color="red"]
+}
+
+"D" -> "DADO"
+"DADO" [label="ADO {(3,10)}"]
+"DIOS" [label="IOS {(3,2)}"]
+subgraph cluster3 {
+"DADO" -> "DIOS" [color="red"]
+}
+
+"H" -> "HA"
+"HA" [label="A {(3,7)}"]
+"HIJO" [label="IJO {(3,20)}"]
+subgraph cluster4 {
+"HA" -> "HIJO" [color="red"]
+}
+
+"HA" -> "HARA"
+"HARA" [label="RA {(1,36)}"]
+"LIB" -> "LIBERARA"
+"LIBERARA" [label="ERARA {(2,17)}"]
+"LIBRES" [label="RES {(1,41)}"]
+subgraph cluster5 {
+"LIBERARA" -> "LIBRES" [color="red"]
+}
+
+"NO" -> "NOS"
+"NOS" [label="S {(2,13)}"]
+"R" -> "R1.TXT"
+"R1.TXT" [label="1.TXT {(1,1)}"]
+"R2.TXT" [label="2.TXT {(3,1)}"]
+subgraph cluster6 {
+"R1.TXT" -> "R2.TXT" [color="red"]
+}
+
+"S" -> "SE"
+"SE" [label="E {(3,73)}"]
+"SI" [label="I {(2,10), (2,27)}"]
+subgraph cluster7 {
+"SE" -> "SI" [color="red"]
+}
+
+"SI" -> "SITIO:"
+"SITIO:" [label="TIO: {}"]
+"SITIO:" -> "SITIO:PASOSDEJESUS"
+"SITIO:PASOSDEJESUS" [label="PASOSDEJESUS {(2,13)}"]
+"SITIO:R" [label="R {(1,2), (3,2)}"]
+subgraph cluster8 {
+"SITIO:PASOSDEJESUS" -> "SITIO:R" [color="red"]
+}
+
+"T" -> "TENGA"
+"TENGA" [label="ENGA {(3,87)}"]
+"TI" [label="I {}"]
+"TODO" [label="ODO {(3,44)}"]
+subgraph cluster9 {
+"TENGA" -> "TI" [color="red"]
+"TI" -> "TODO" [color="red"]
+}
+
+"TI" -> "TIPO:DOCUMENTO"
+"TIPO:DOCUMENTO" [label="PO:DOCUMENTO {(1,10), (2,10), (3,10)}"]
+"TITULO:" [label="TULO: {}"]
+subgraph cluster10 {
+"TIPO:DOCUMENTO" -> "TITULO:" [color="red"]
+}
+
+"TITULO:" -> "TITULO:R"
+"TITULO:R" [label="R {}"]
+"TITULO:TXT" [label="TXT {(1,4), (2,4), (3,4)}"]
+"TITULO:VERDAD" [label="VERDAD {(2,7)}"]
+subgraph cluster11 {
+"TITULO:R" -> "TITULO:TXT" [color="red"]
+"TITULO:TXT" -> "TITULO:VERDAD" [color="red"]
+}
+
+"TITULO:R" -> "TITULO:R1"
+"TITULO:R1" [label="1 {(1,3)}"]
+"TITULO:R2" [label="2 {(3,3)}"]
+subgraph cluster12 {
+"TITULO:R1" -> "TITULO:R2" [color="red"]
+}
+
+"TITULO:R1" -> "TITULO:R1.TXT"
+"TITULO:R1.TXT" [label=".TXT {(1,7)}"]
+"TITULO:R2" -> "TITULO:R2.TXT"
+"TITULO:R2.TXT" [label=".TXT {(3,7)}"]
+"TITULO:VERDAD" -> "TITULO:VERDAD.TXT"
+"TITULO:VERDAD.TXT" [label=".TXT {(2,11)}"]
+"V" -> "VERDAD"
+"VERDAD" [label="ERDAD {(1,14), (1,26), (2,3)}"]
+"VIDA" [label="IDA {(3,93)}"]
+subgraph cluster13 {
+"VERDAD" -> "VIDA" [color="red"]
+}
+
+"VERDAD" -> "VERDAD.TXT"
+"VERDAD.TXT" [label=".TXT {(2,1)}"]
+}
+digraph "rdsgc" {
+
+    rankdir=LR;
+"AQUEL" [label="AQUEL {(2,49)}"]
+"C" [label="C {}"]
+"D" [label="D {}"]
+"ETERNA" [label="ETERNA {(2,98)}"]
+"H" [label="H {}"]
+"LIB" [label="LIB {}"]
+"NO" [label="NO {(2,70)}"]
+"OS" [label="OS {(1,33)}"]
+"PIERDA" [label="PIERDA {(2,76)}"]
+"R" [label="R {}"]
+"S" [label="S {}"]
+"T" [label="T {}"]
+"UNIGENITO" [label="UNIGENITO {(2,25)}"]
+"V" [label="V {}"]
+subgraph cluster1 {
+"AQUEL" -> "C" [color="red"]
+"C" -> "D" [color="red"]
+"D" -> "ETERNA" [color="red"]
+"ETERNA" -> "H" [color="red"]
+"H" -> "LIB" [color="red"]
+"LIB" -> "NO" [color="red"]
+"NO" -> "OS" [color="red"]
+"OS" -> "PIERDA" [color="red"]
+"PIERDA" -> "R" [color="red"]
+"R" -> "S" [color="red"]
+"S" -> "T" [color="red"]
+"T" -> "UNIGENITO" [color="red"]
+"UNIGENITO" -> "V" [color="red"]
+}
+
+"C" -> "CONOCEREIS"
+"CONOCEREIS" [label="ONOCEREIS {(1,1)}"]
+"CREA" [label="REA {(2,65)}"]
+subgraph cluster2 {
+"CONOCEREIS" -> "CREA" [color="red"]
+}
+
+"D" -> "DADO"
+"DADO" [label="ADO {(2,10)}"]
+"DIOS" [label="IOS {(2,2)}"]
+subgraph cluster3 {
+"DADO" -> "DIOS" [color="red"]
+}
+
+"H" -> "HA"
+"HA" [label="A {(2,7)}"]
+"HIJO" [label="IJO {(2,20)}"]
+subgraph cluster4 {
+"HA" -> "HIJO" [color="red"]
+}
+
+"HA" -> "HARA"
+"HARA" [label="RA {(1,36)}"]
+"LIB" -> "LIBERARA"
+"LIBERARA" [label="ERARA {(3,17)}"]
+"LIBRES" [label="RES {(1,41)}"]
+subgraph cluster5 {
+"LIBERARA" -> "LIBRES" [color="red"]
+}
+
+"NO" -> "NOS"
+"NOS" [label="S {(3,13)}"]
+"R" -> "R1.TXT"
+"R1.TXT" [label="1.TXT {(1,1)}"]
+"R2.TXT" [label="2.TXT {(2,1)}"]
+subgraph cluster6 {
+"R1.TXT" -> "R2.TXT" [color="red"]
+}
+
+"S" -> "SE"
+"SE" [label="E {(2,73)}"]
+"SI" [label="I {(3,10), (3,27)}"]
+subgraph cluster7 {
+"SE" -> "SI" [color="red"]
+}
+
+"SI" -> "SITIO:"
+"SITIO:" [label="TIO: {}"]
+"SITIO:" -> "SITIO:PASOSDEJESUS"
+"SITIO:PASOSDEJESUS" [label="PASOSDEJESUS {(3,13)}"]
+"SITIO:R" [label="R {(1,2), (2,2)}"]
+subgraph cluster8 {
+"SITIO:PASOSDEJESUS" -> "SITIO:R" [color="red"]
+}
+
+"T" -> "TENGA"
+"TENGA" [label="ENGA {(2,87)}"]
+"TI" [label="I {}"]
+"TODO" [label="ODO {(2,44)}"]
+subgraph cluster9 {
+"TENGA" -> "TI" [color="red"]
+"TI" -> "TODO" [color="red"]
+}
+
+"TI" -> "TIPO:DOCUMENTO"
+"TIPO:DOCUMENTO" [label="PO:DOCUMENTO {(1,10), (2,10), (3,10)}"]
+"TITULO:" [label="TULO: {}"]
+subgraph cluster10 {
+"TIPO:DOCUMENTO" -> "TITULO:" [color="red"]
+}
+
+"TITULO:" -> "TITULO:R"
+"TITULO:R" [label="R {}"]
+"TITULO:TXT" [label="TXT {(1,4), (2,4), (3,4)}"]
+"TITULO:VERDAD" [label="VERDAD {(3,7)}"]
+subgraph cluster11 {
+"TITULO:R" -> "TITULO:TXT" [color="red"]
+"TITULO:TXT" -> "TITULO:VERDAD" [color="red"]
+}
+
+"TITULO:R" -> "TITULO:R1"
+"TITULO:R1" [label="1 {(1,3)}"]
+"TITULO:R2" [label="2 {(2,3)}"]
+subgraph cluster12 {
+"TITULO:R1" -> "TITULO:R2" [color="red"]
+}
+
+"TITULO:R1" -> "TITULO:R1.TXT"
+"TITULO:R1.TXT" [label=".TXT {(1,7)}"]
+"TITULO:R2" -> "TITULO:R2.TXT"
+"TITULO:R2.TXT" [label=".TXT {(2,7)}"]
+"TITULO:VERDAD" -> "TITULO:VERDAD.TXT"
+"TITULO:VERDAD.TXT" [label=".TXT {(3,11)}"]
+"V" -> "VERDAD"
+"VERDAD" [label="ERDAD {(1,14), (1,26), (3,3)}"]
+"VIDA" [label="IDA {(2,93)}"]
+subgraph cluster13 {
+"VERDAD" -> "VIDA" [color="red"]
+}
+
+"VERDAD" -> "VERDAD.TXT"
+"VERDAD.TXT" [label=".TXT {(3,1)}"]
+}

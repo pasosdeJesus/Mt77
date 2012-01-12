@@ -1,0 +1,47 @@
+\subsubsection{Estudio de Caso: Amberfish}
+
+Amberfish permite indexar colecciones de documentos y hacer búsquedas
+sobre los índices.  Su autor previamente había desarrollado {\tt isearch}.
+
+Desventajas: no soporta ISO-8859-1, al parecer sólo ASCII de 7 bits.
+(ver \cite{amberunicode}).
+
+Ventajas: Permite búsquedas booleanas, opera sobre archivos XML de forma 
+genérica.
+
+%Requiere menos tiempo en compilación y en construcción de índices, genera índices más pequeños. Los tiempos de búsqueda que obtuvimos fueron mejores desde el primer prototipo (ver \cite{conclusionesbuscar}).
+
+
+
+\subsubsection{Estudio de Caso: Lucene}
+
+Es un buscador muy popular con años de desarrollo
+en el marco del proyecto Apache.  Hay bastantes programas que lo incluyen
+y otros que son compatibles con sus índices binarios.  En cuanto
+a motores de búsqueda, Lucene es posiblemente el parámetro de comparación 
+estándar.
+
+Ventajas: modularidad, diseño maduro, tamaño de índices y velocidad de indexado.
+
+Desventajas: escrito en Java que no ha sido tan portable en la práctica.
+
+%Lucene requiere menos tiempo de compilación y en la construcción de índices y aunque los índices que genera son muy pequeños, los tiempos de búsqueda que obtuvimos fueron mejores desde el primer prototipo (ver \cite{conclusionesbuscar}).
+
+
+Las fuentes de  Lucene constan de varios paquetes y clases bien divididos
+e ideados.  En \cite{nagi} se describe una extensión a Lucene, y se 
+describen brevemente las 2 operaciones que Lucene realiza: indexar y buscar.  
+El proceso de {\em indexado} se hace sobre
+documentos puestos a disposición por el {\em recolector
+de datos,} que el  {\em reconocedor} convierte a textos planos. En la 
+fase de {\em análisis} los datos se dividen de acuerdo a delimitadores
+predefinidos y se realizan algunas operaciones sobre estos --por ejemplo
+convertir a minúsculas, retirar algunas palabras, convertir a
+forma raíz.   El proceso de {\em búsqueda} primero {\em reconoce} la
+consulta del usuario  para extraer sus unidades y operandos, estos pasan
+al mismo {\em analizador} del  indexado, después el índice se recorre en
+busca de coincidencias y se retorna una lista de hallazgos ordenados. 
+El {\em procesador de consultas difuso} define los criterios de coincidencia
+y el puntaje de cada hallazgo.
+
+

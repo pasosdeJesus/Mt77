@@ -1,0 +1,23 @@
+
+Para soportar otros formatos de documentos, en el momento
+de este escrito debe:
+\begin{enumerate}
+\item Incluir un caso de detección del formato en la función 
+\verb|determinaFormato| del archivo \verb|Operaciones.cpp|.
+\item Incluir en el proceso de compilación un nuevo archivo donde esté
+la función de conversión (i.e en el archivo \verb|Makefile| ver ejemplo
+\verb|leeXML.cpp|), esta función típicamente recibirá el nombre
+del archivo, el número de documento al que corresponde y el árbol 
+\verb|NodoTrieS|
+donde deben añadirse las palabras.  Lo que debe hacer es abrir el archivo,
+leer las palabras indexables y su posición y agregarlas al árbol que recibe.
+Para añadir las palabras una a una puede emplear la función
+\verb|inserta| (ver ejemplo en función \verb|leeXML|) o bien puede
+convertir todo el documento a texto plano y emplear la función 
+\verb|leeTexto| (ver ejemplo en función \verb|leeODT|).
+\item Incluir un caso de conversión en la función
+\verb|indexa| de \verb|Operaciones.cpp| que llame la función del punto anterior
+cada vez que se lea un archivo en el nuevo formato.
+\end{enumerate}
+
+

@@ -1,0 +1,48 @@
+% Paquete repasa.sty
+% Macros de repasa para LaTeX
+% Dominio público. 2003. Sin garantías.
+% http://structio.sourceforge.net/repasa structio-info@lists.sourceforge.net
+% Ver documentación en latex2rep
+
+% Con TeTeX puede consultarse documentación sobre paquetes y clases para LaTeX
+% en texmf/doc/latex/base/clsguide.dvi
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{repasa}
+
+% Paquete para poder emplear excludeversion/includeversion en respuesta
+\RequirePackage{comment}
+
+\excludecomment{respuesta}
+
+% \clasif{indicador}{red.planred}{Propone un ...}
+
+% Los dos siguientes macros fueron extraidos de custom-bib collection "A General Master Bibliography Style" (Patrick W Daly).  /usr/local/share/texmf/tex/latex/custom-bib/merlin.mbs
+\newcommand{\Capitalize}[1]{\uppercase{#1}}
+\newcommand{\capitalize}[1]{\expandafter\Capitalize#1}
+
+\newcommand{\clasif}[3]{\textbf{\capitalize{#1}}: #3}
+
+% \periodo{1}
+\newcommand{\periodo}[1]{}
+
+% \pal{palabra}{identificacion-cla}{peso}{definicion}{pistas}{despistes}
+% se separa un(a) despiste/pista de otro(a) con |.  Para hacer | usar ||
+\newcommand{\pal}[6]{\index{#1}}
+
+% \nipal{palabra}{identificacion-cla}{peso}{definicion}{pistas}{despistes}
+% se separa un(a) despiste/pista de otro(a) con |.  Para hacer | usar ||
+\newcommand{\nipal}[6]{}
+
+% \ejercicio{identificacion-cla}
+\newcommand{\ejercicio}[1]{\item \label{#1}}
+
+
+%\renewcommand{\chaptername}{Capítulo}
+
+%\renewcommand{\bibname}{Bibliografía}
+
+% El siguiente tomado de /usr/local/lib/hevea/makeidx.hva
+\renewcommand{\makeindex}{\newindex{default}{idx}{ind}{Índice}}
+
+\endinput

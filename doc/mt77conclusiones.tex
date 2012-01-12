@@ -1,0 +1,97 @@
+
+\item Los tamaños de índices de Lucene y de Amberfish son mejores que los de 
+Mt77, aunque con cada prototipo de Mt77 el tamaño promedio de los índices se ha reducido en las 
+proporciones aproximadas presentadas en la tabla \ref{proporcionindices}.
+
+\begin{table}[ch]
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|} 
+\hline
+& {\bf P1} & {\bf P2} & {\bf P3} & {\bf P4} & {\bf P5} \\
+\hline
+Tamaño del índice / Tamaño del documento & ~4 & ~3 & ~2 & ~1 & ~0.6\\
+\hline
+\end{tabular}
+\caption{Proporción tamaño del índice sobre tamaño del documento}
+\label{proporcionindices}
+\end{center}
+\end{table}
+
+Consideramos que es buena la tasa de compresión alcanzada que estimamos mejorará entre más pequeños sean los documentos 
+por indexar (se sugiere menos de 64KB cada uno). Preveemos más posibilidades de comprimir
+aplicando más intensamente las estrategias hasta ahora empleadas (por ejemplo empleando otra representación para 
+desplazamientos y comprimiendo la secuencia completa de posiciones y deltas de un documento y no una a una) o 
+investigando otros esquemas de compresión.
+
+
+\item Los tiempos de indexado de Lucene y Amberfish son mucho mejores que los de 
+Mt77, aunque la poca precisión en la búsqueda de esos programas no permite compararlos justamente con Mt77.  
+El prototipo cinco ha logrado el mejor tiempo de indexado de los cinco desarrollados aumentando más de 200\% la
+velocidad de indexado con respecto al prototipo 4, 
+sin  embargo esta velocidad decrece para colecciones de más de 50MB y a medida que aumenta el tamaño de la colección como muestra la 
+tabla \ref{tabvelocidad} y la gráfica \ref{grafvelocidad}.
+Aunque la velocidad del indexador no era un requerimiento crítico, y permite cumplir los demás requerimientos 
+esperados sin afectar directamente la interacción del usuario final (i.e la del buscador), es importante continuar
+el análisis de desempeño e investigar optimizaciones más profundas para el indexado y
+la mezcla de índices.
+\begin{table}[ch]
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|} 
+\hline
+Corpus & Tamaño & {\bf Lucene} & {\bf Amberfish} & {\bf P3} & {\bf P4} & {\bf P5} \\
+\hline
+1 & 1.5MB & 0.68 MB/s & 0.62 MB/s & 0.06 MB/s & 0.09 MB/s & 0.20 MB/s \\
+\hline
+2 & 22.3MB & 3.09 MB/s & 1.11 MB/s & 0.04 MB/s & 0.05 MB/s & 0.20 MB/s\\
+\hline
+3 & 160MB & 10.95 MB/s & 0.70 MB/s & 0.01 MB/s & 0.02 MB/s & 0.13MB/s \\
+\hline
+\end{tabular}
+\caption{Velocidad de indexado. MB por segundo }
+\label{tabvelocidad}
+\end{center}
+\end{table}
+
+\begin {figure}[ch]
+\begin{center}
+\include{velocidadindexado}
+\end{center}
+\label{grafvelocidad}
+\end {figure}
+
+\item Mt77 tuvo los mejores tiempos de búsqueda con respecto a
+Lucene y Amberfish, dio los resultados más precisos y por defecto opera 
+especialmente bien con documentos y búsquedas en español.
+
+\item Deben emplearse otros buscadores que sean precisos con los corpus de pruebas, de forma que resulte
+justa la comparación de tamaño de índice y tiempo de indexado. También debe ampliarse el ambiente de pruebas 
+empleando otro corpus por lo menos de 1GB.
+
+
+\item Encontramos una balanza o canje entre el tiempo de búsqueda y el tiempo 
+de indexado\footnote{'\em La eficiencia de un 
+algoritmo es típicamente medida de acuerdo al uso de algún recurso 
+computacional relevante.  El recurso más estudiado
+es tiempo computacional, pero otro recurso importante es espacio
+computacional.   Típicamente, los problemas de diseño algorítmico se
+enfocan en la meta de minimizar uno de estos recursos. 
+...
+De hecho para muchos problemas computacionales fundamentales como 
+ordenamiento, multiplicación matricial y conectividad de grafos
+dirigidos, las metas de minimizar tiempo y espacio parecen estar en
+conflicto; los algoritmos más eficientes en tiempo conocidos requieren
+pesados recursos de memoria y a medida que decrece la cantidad
+de memoria usada, la cantidad de tiempo requerida para resolver el 
+problema aparentemente aumenta significativamente.  Este canje
+aparente entre tiempo y espacio ha motivado un gran cuerpo de 
+investigación en teoría de la complejidad' \cite{canje}
+} y hemos ubicado Mt77 en favor del tiempo de búsqueda por haber
+sido este uno de los requerimientos explícitos del proyecto
+---requerimiento que consideramos ampliamente satisfecho. 
+% Por otra parte los experimentos realizados muestran que entre los límites en su capacidad de indexación no es la cantidad de memoria RAM el más decisivo sino el espacio disponible en disco.  Sin embargo su implementación admite refinamiento para disminuir un poco más el tamaño de los índices y el tiempo de indexado, sin afectar su desempeño y límites en capacidad de indexación.
+
+
+%Máxima colección por nodo & & & 3MB & 60MB \\
+
+
+%Es posible comprimir más los índices o disminuir los tiempos de indexado

@@ -1,0 +1,23 @@
+\item Sistema operativo: Con FFS2 sistemas de archivos y particiones
+máximo de 2TB i.e $2^{41}$ bytes.
+\item Formato: Máxima cantidad de documentos que puede indexar: $2^{31}$ 
+Máximo tamaño de un documento: $2^{31}$ = 2GB. Máximo tamaño de un
+índice: $2^{31}$ = 2GB, lo cual a su vez limita el máximo tamaño de un documento
+indexable a $2^{31}\over 2$ = 1GB.  El método de compresión empleado mejora al 
+indexar documentos de menos de 64K.
+\item Indexador de un documento: Opera en RAM, en experimentos ha logrado indexar documentos
+de hasta 60MB.   Aunque limitado, lo consideramos suficiente porque no es 
+típico tener documentos de tales tamaños y el mezclador permite manejar
+colecciones mucho mayores.
+\item Mezclador: En RAM sólo requiere conjunto de posiciones de un nodo,
+las cuales según experimentos con 1GB en RAM alcanzan para indexar
+una misma palabra aproximadamente en 10 millones de posiciones. La
+limitación en su operación la impone el espacio disponible en
+disco.  Para mezclar 2 índices de tamaños $P$ y $Q$ requiere
+espacio $P+Q$ temporales, es decir si todas las mezclas se hacen en la misma
+partición $2P+2Q$.  O si la colección de documentos de una
+organización es de tamaño $T$, el índice será de tamaño $0.6 T$ y
+la construcción del mismo requerirá un espacio similar es decir
+$2.2 T$. i.e. máximo 9GB en una partición de 20GB.
+
+

@@ -1,0 +1,40 @@
+{
+  "consulta": "CONOCEREÍS",
+  "documentos": 1,
+  "inicio": 1,
+  "fin": 1,
+  "resultados": [
+    { "url": "http://r/r1.txt",
+    "frec": "1",
+    }
+  ]
+}
+{
+  "consulta": "CONOCEREÍS",
+  "documentos": 0,
+  "inicio": 1,
+  "fin": 0,
+  "resultados": [
+  ]
+}
+1 http://r/r2.txt
+AQUEL 1
+CREA 1
+DADO 1
+DIOS 1
+ETERNA 1
+HA 1
+HIJO 1
+NO 1
+PIERDA 1
+R2.TXT 1
+SE 1
+SITIO:R 1
+TENGA 1
+TIPO:DOCUMENTO 1
+TITULO:R2 1
+TITULO:R2.TXT 1
+TITULO:TXT 1
+TODO 1
+UNIGENITO 1
+VIDA 1

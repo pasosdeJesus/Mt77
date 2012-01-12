@@ -1,0 +1,326 @@
+\subsection{Infraestructura Tecnológica}
+
+%\subsubsection{Metodología para desarrollo de Software}
+%      In depth explanation of the methodology used in developing the system so that the client is provided with a clear explanation of the process being followed and the benefits received by using the methodology.
+
+\subsubsection{Herramientas de Desarrollo y Estándares}
+\label{estbuscador}
+
+
+El código fuente seguirá estándares de indentación (ver \cite{astyle}) 
+que se aseguran con \verb|make indenta|, e incluirá comentarios con 
+estructura para generar documentación del mismo
+(ver \cite{doxygen}) con \verb|make doctec|.  
+Además de estar en un lenguaje multiplataforma, se empleará
+bibliotecas de funciones estándar y el código buscará ser portables.
+Los programas o scripts que dependan del sistema operativo en sus fuentes 
+tendrán la sección dependiente aislada en funciones que podrán remplazarse 
+fácilmente de una plataforma a otra.
+
+Las librerías desarrolladas deben contar con pruebas de unidad 
+(ver \cite{cppunit}) que se ejecutan con \verb|make unidad|.
+Las pruebas de unidad deben cubrir por completo las librerías
+(ver \cite{gcov}), como debe verificar \verb|make cobertura|.
+Los programas deben contar con pruebas de regresión, que se
+ejecutan con \verb|make regr|.   Para optimizar recursos se
+realizan análisis de desempeño (profiling) con 
+\verb-make desempeno-.
+
+
+No nos acogeremos a un formato de índices, pues aún cuando diversas 
+herramientas emplean el formato en disco de Lucene
+(e.g. Zend Framework, ver \cite{zend}), por lo menos 
+Ferret --un descendiente de ese buscador, ver \cite{ferret}-- prefirió 
+cambiar el formato para mejorar la velocidad, y buscadores como Google
+en lugar de un formato emplea todo un sistema de archivos nuevo (ver
+\cite{gfs}).
+
+Se ha elegido C++ por eficiencia y posibilidad de organizar diseño y fuentes,
+por ser multiplataforma, de amplia difusión y contar con implementaciones
+de fuentes abiertas desde hace tiempo.
+Además cuenta con librerías de estructuras de datos bien diseñadas
+(STL y Boost).
+
+Se descartó Java, porque sólo desde 2007 su licencia ha permitido
+portabilidad y aunque el popular buscador Lucene está implementando en 
+ese lenguaje, hemos comprobado que aún con compiladores JIT, pierde eficiencia 
+al ejecutarse en una máquina virtual ---la cual debe implementarse sobre 
+la máquina real.  
+
+%Una ventaja de C sobre C++ es la disponibilidad de compiladores en más plataformas, y en particular en la plataforma objetivo la disponibilidad de diversos compiladores como pcc.
+
+
+\subsubsection{Estructuras de datos}
+
+\label{buscadoret}
+
+El buscador requiere un índice invertido que a cada palabra de los
+textos indexados le asocie las posiciones precisas donde aparece, 
+es decir a cada palabra le asocie una lista 
+$$\{(d_1, \{p_{1,1},\dots,p_{1,n_1}\}), (d_2, \{p_{2,1},
+\dots p_{2,n_2}\}) \dots (d_t, \{p_{t,1},\dots,p_{t,n_t}\})\}$$ 
+donde cada una de
+las $t$ parejas representa ocurrencias de la palabra. $d_i$
+es índice del i-ésimo documento donde aparece y la lista de posiciones 
+donde aparece en ese documento es ($\{p_{i,1},\dots,
+p_{i,n_i}\}$).
+Entre las estructuras de datos
+para implementarlo que \cite{heinz} recomienda están
+tablas de hashing y un tipo no convencional de tries.  De una experiencia 
+anterior con tries convencionales (ver \cite{tries}) encontramos que 
+desperdician RAM en palabras únicas (pues cada letra ocupa un nodo) y 
+que termina siendo más crítico el formato en disco.
+
+El formato en disco es clave para lograr balance entre uso de memoria RAM y 
+uso de disco tanto en indexado como en búsquedas. Una búsqueda en RAM es 
+muy veloz, pero cargar una estructura de datos grande de disco a 
+RAM es demasiado costoso en tiempo.  La estrategia de 
+Lucene (ver \cite{estlucene}) es mantener varios índices en disco con facilidad para mezclarlos 
+también en disco, las búsquedas las realiza en disco para lo cual
+emplea listas ordenadas, resultando una complejidad temporal que
+está en $O(\log n)$ donde $n$ es cantidad de elementos en el índice.
+
+Dado que la complejidad temporal de la búsqueda en tries está en 
+$O(L)$ donde $L$ es longitud de la palabra buscada, preferimos esa estructura.
+ Para disminuir la cantidad de nodos 
+experimentamos con tries especiales (los llamamos TrieS) que en cada nodo 
+mantienen una 
+cadena (en lugar de un caracter).   Así un TrieS
+que únicamente representa la palabra \verb|AMOR| como primera palabra de un
+primer documento, sólo requerirá un nodo con una sola posición (1,\{1\}).  
+Como ejemplo el TrieS del
+texto {\tt LA VERDAD SI NOS LIBERARÁ SI} cuyas posiciones se presentan
+en el cuadro \ref{texto} se presenta como árbol en las figuras \ref{arbol}
+y \ref{arbol2}.
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|l|l|} 
+\hline
+{\bf Posición. } & {\bf Palabra} \\
+\hline
+1 & LA \\
+3 & VERDAD \\
+10 & SI \\
+13 & NOS \\
+17 & LIBERARÁ, \\
+26 & SI \\
+\hline
+\end{tabular}
+\caption{Posiciones de un texto de ejemplo}
+\label{texto}
+\end{center}
+\end{table}
+
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=10cm]{img/arbol}
+\caption{TrieS}
+\label{arbol}
+\end{center}
+\end{figure}
+
+
+
+\subsubsection{Formato}
+
+Experimentamos un formato eficiente para almacenar el trie especial
+en disco de forma que la búsqueda aún en disco se mantenga en $O(L)$
+y que la mezcla de varios TrieS pueda hacerse eficientemente.
+Así podríamos adoptar la estrategia de Lucene pero mejorando su velocidad
+de búsqueda.
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=10cm]{img/arbol2}
+\caption{Árbol n-ario con apuntador a hijo menor y a hermano mayor}
+\label{arbol2}
+\end{center}
+\end{figure}
+
+Dado que el diseño planteado no requiere modificación de TrieS una
+vez en disco, la propuesta inicial es imitar la organización de un 
+árbol n-ario en RAM cuando se dota a cada nodo de apuntador a
+hermano mayor e hijo menor (ver figura \ref{arbol2} donde los
+apuntadores a hermanos son líneas punteadas), pero cambiando los 
+apuntadores por desplazamientos en el archivo.  Los nodos se organizarán 
+como en un recorrido en preórden.
+
+La estrategia para mezclas en disco es recorrer simultáneamente los dos
+TrieS como por grupo de hermanos. Se analiza cada grupo de hermanos y se 
+escribe el grupo de hermanos que resulte posible dejando una cola de 
+pendientes que se retoma tras completar el grupo de hermanos (primero 
+hermanos después hijos con sobrinos).
+
+
+\begin{comment}
+Para disminuir el espacio en disco que requieren estos índices se 
+propone emplear un formato binario para los números (enteros entre
+0 y $16^8$, i.e de 32 bits) y mantener las cadenas comprimidas empleando 
+codificación de Huffman
+con el siguiente diccionario que se basa en frecuencia de letras del
+español (ver \cite{frecuenciaesp}) y propuesta sencilla (ver \cite{huffmansimple}):
+
+\begin{longtable}[l]{|p{2cm}|p{2cm}|p{2cm}|} 
+\hline
+{\bf binario} & {\bf letra} & {\bf número} \\
+\hline
+0001 & E & 1 \\      
+\hline
+0010 & A & 2 \\      
+\hline
+0011 & O & 3 \\      
+\hline
+0100 & S & 4 \\      
+\hline
+0101 & R & 5 \\  
+\hline
+0110 & N & 6 \\  
+\hline
+0111 & I & 7 \\      
+\hline
+10000 & D & 8 \\    
+\hline
+10001 & L & 9 \\    
+\hline
+10010 & C & 10 \\    
+\hline
+10011 & T & 11 \\    
+\hline
+10100 & U & 12 \\    
+\hline
+10101 & M & 13 \\    
+\hline
+10110 & P & 14 \\    
+\hline
+10111 & B & 15 \\    
+\hline
+1100000 & G & 16 \\
+\hline
+1100001 & Y & 17 \\
+\hline
+1100010 & V & 18 \\
+\hline
+1100011 & Q & 19 \\
+\hline
+1100100 & H & 20 \\
+\hline
+1100101 & F & 21 \\
+\hline
+1100110 & Z & 22 \\
+\hline
+1100111 & J & 23 \\
+\hline
+1101000 & X & 24 \\    
+\hline
+1101001 & W & 25 \\    
+\hline
+1101010 & K & 26 \\    
+\hline
+1101011 & Ñ & 27 \\    
+\hline
+1101100 & 3 & 28 \\    
+\hline
+1101101 & 4 & 29 \\
+\hline
+1101110 & 5 & 30 \\    
+\hline
+1101111 & 6 & 31 \\    
+\hline
+1110000 & 7 & 32 \\    
+\hline
+1110001 & 8 & 33 \\    
+\hline
+1110010 & 9 & 34 \\    
+\hline
+1110011 & 1 & 35 \\    
+\hline
+1110100 & 0 & 36 \\    
+\hline
+1110101 & | & 37 \\    
+\hline
+%1110110 & & 38 \\    
+%1110111 & 39 \\    
+%1111000 & 4 & 0 \\
+%1111001 & 4 & 1 \\
+%1111010 & 4 & 2 \\
+%1111011 & 4 & 3 \\
+%1111100 & 4 & 4 \\
+%1111101 & 4 & 5 \\
+%1111110 & 4 & 6 \\
+%1111111 & 4 & 7 \\
+\end{longtable}
+\end{comment}
+
+\noindent
+{\bf Rationale}
+
+Un índice en el formato propuesto no es fácil de modificar después de 
+escrito.  Justamente la innovación de los TrieS de nodos con cadenas
+en lugar de caracteres es la fuente del problema.  Empleando la analogía de
+apuntadores como desplazamientos en el archivo sería más sencillo modificar
+tries convencionales en disco.  %Vale la pena comparar diferencia al buscar en disco con TrieS y con tries convencionales, pues aunque el tamaño aumenta en tries convencionales, podría compensarse con la posibilidad de modificar índices.
+
+Otra opción para facilitar actualización manteniendo los TrieS es
+permitir nodos con cadenas vacías que signifiquen continuación del
+nodo papá, así como cadenas de nodo terminadas en '$\backslash 0$' o algún
+caracter que indique su fin pudiendo dejar espacio localizado sobrante.
+Con esto podrían eliminarse y agregarse palabras, pero se pierde la
+unicidad de la representación en disco y a menos que se optimizara/reorganizara
+con relativa frecuencia, podría perderse la eficiencia en las búsquedas.
+
+
+\subsubsection{Estrategia de Desarrollo}
+
+Al tener un mezclador de índices en disco, el proceso de indexado de
+documentos locales se facilita indexando en RAM algunos documentos
+y empleando un mezclador que opere en disco para mezclar el nuevo
+índice con uno completo.
+
+Para disminuir problemas de bloqueos entre búsquedas que se realicen
+simultáneamente con indexados, los índices no se sobreescriben 
+(excepto cuando esté terminado un procesamiento).
+
+Con respecto a la información por mantener junto con cada palabra
+consideramos mejor mantener posición  dentro del documento donde 
+aparece (`índice posicional' según \cite{cursobuscadores}), para
+facilitar la búsqueda de varias 
+palabras consecutivas ---en la figura \ref{arbol} son los 
+conjuntos de parejas junto a cada palabra.
+
+Para hacer búsquedas sobre campos se puede indexar el nombre
+del campo seguido de su valor e.g \verb-DEPARTAMENTO:ANTIOQUIA-.  Análogamente
+puede indexarse el tipo (\verb-TIPO:VIDEO-), el sitio de origen 
+(\verb-SITIO:WWW.TANGLE.COM-) y otros metadatos de cada documento.
+
+El diseño propuesto se ha implementado progresivamente con cada prototipo
+como se presenta en el cuadro  \ref{progresa}.
+
+
+\begin{table}[h]
+\begin{tabular}{|c|c|c|c|c|c|} 
+\hline
+{\bf Pr. } & {\bf F. Indice} & {\bf Indexado en } & {\bf F. Doc.} & {\bf Normalización } & {\bf Consulta} \\
+\hline
+1 & Texto & RAM & Texto & Mayúsculas &  Una palabra \\ 
+  &       &     &       & Sólo letras & \\
+\hline
+2 & Texto & RAM y Disco & Relato &  & Varias palabras \\ 
+\hline
+3 & Binario & RAM y Disco & ODF & Sin conectores español & Metainformación \\
+ & & en RAM 1 doc & & & \\
+\hline
+4 & Comprimido & HTML & & & \\
+\hline
+5 & Más Comprimido & RAM y Disco & PDF & Algunos dígitos y puntos & Cadenas \\
+ & & lotes de 50MB & & & \\
+\hline
+\end{tabular}
+\caption{Progreso en prototipos}
+\label{progresa}
+\end{table}
+
+
+%Durante el desarrollo son críticos los cambios de formato en los índices por cuanto un nodo podría tener su índice local en un formato anterior al de otro.   Para menguar este problema debe buscarse automatizar tanto como sea posible la actualización de los programas en todos los nodos,  la reindexación de documentos locales tras una actualización y unas horas después (para dar tiempo a todos los nodos de reindexar sus documentos locales) la actualización de índices remotos y mezcla en el índice general y además incluir la versión del formato en cada índice y su detección por parte de las herramientas.
+

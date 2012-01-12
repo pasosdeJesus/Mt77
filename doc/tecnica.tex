@@ -1,0 +1,177 @@
+\documentclass[12pt,spanish]{article} 
+
+% Codificación de caracteres apropiada para español
+\usepackage[T1]{fontenc}
+
+% Graficas
+\usepackage{epic}
+\usepackage{eepic}
+
+\usepackage{latexsym}
+
+% Soporte para español 
+\usepackage[spanish]{babel}
+
+% Indices.  Ver documentación en texmf/doc/makeidx y man makeindex
+%\usepackage{makeidx}
+%\makeindex
+
+% Inclusión de gráficas en diversos formatos. Ver texmf/doc/latex/graphic/epslatex.ps
+\usepackage{graphicx}
+\usepackage{graphics}
+\usepackage{toolbox}
+
+\usepackage{verbatim}
+
+% URLs y facilidades para conversión a HTML.
+\usepackage{hevea}
+
+% Comentarios
+\usepackage{comment}
+
+\usepackage{amsmath}
+\usepackage{geometry}
+\usepackage{multicol}
+\usepackage{longtable}
+
+
+\newcommand{\CVSID}[1]{{         %
+#1
+}}
+% \mbox{#1}
+%  \lfoot[ \mbox{#1} ] { \mbox{#1} }  %
+%}}
+
+\newcommand\cvsid{\$Id: tecnica.tex,v 1.8 2010/01/06 13:13:20 vtamara Exp $\$$}
+\newcommand{\ver}{\toolboxReplace{tecnica.tex,v}{}\cvsid}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\rhead{\bfseries \PRYDESC}
+%\cfoot{\cvsid}
+%\rfoot{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\newcommand{\subsimp}{\subsection}
+% Convenciones para LaTeX de repasa.
+\usepackage{repasa}
+
+\geometry{verbose,tmargin=20mm,bmargin=25mm,lmargin=15mm,rmargin=15mm,headheight=25mm,headsep=5mm,footskip=5mm}
+
+
+% Variables de configuración
+\input{confv}
+
+% Separación de palabras usadas en el documento en sílabas (para que
+% queden bien los guiones insertados en cambios de línea en medio de
+% palabras)
+\hyphenation{si-guien-te}
+
+% Siguiente es ayuda de http://www.recoil.org/~djs/latex.html
+
+\begin{document}
+\title{\PRYDESC}
+\author{Vladimir Támara Patiño\\
+vtamara@pasosdeJesus.org}
+%\date%{Versión: \cvsid \\ }
+\thispagestyle{fancy} 
+\maketitle
+\begin{latexonly}
+\abstract{Describimos detalles del desarrollo de la versión \PRYVERSION
+\ del búscador Mt77.   
+La estructura del documento toma ideas de \cite{plantdis}.
+Esta información se libera al dominio público y se dedica a Dios por su 
+Enseñanza. }
+\end{latexonly}
+
+\section{Proceso de Ingeniería de Software}
+\label{pis}
+
+Se ha planteado en el marco del proyecto SINCODH 
+financiado por la agencia Diakonia, teniendo en cuenta lineamientos de 
+programación extrema (pequeñas entregas, 
+diseño simple, probar, refactorizar, ver \cite{xp} y \cite{ayudadesprog}).  
+La implementación de la versión 1.0 se ha desarrollo iterativamente
+con 5 prototipos (cada iteración con refinamiento de requerimientos, 
+de diseño, de implementación y pruebas).  
+
+El quinto prototipo corresponde a la versión 1.0a1 (alfa 1), el cual
+invitamos a auditar publicamente.
+
+En \verb|https://Mt77.pasosdeJesus.org| se mantiene el repositorio
+CVS y se realizan pruebas.
+
+\section{Diseño}
+
+\subsection{Ambiente}
+\label{ambiente}
+
+Debe funcionar en un computador con características modestas
+al momento de este escrito.
+Se sugiere uno con procesador AMD de 64 bits, 1GB en RAM y una
+partición de al menos 20GB para los documentos e índices.
+Como sistema operativo se sugiere la distribución adJ 
+de OpenBSD (\cite{adJ}).
+
+\subsection{Metodología de Desarrollo}
+
+Ver sección \ref{pis}.
+
+\input{mt77metodologia}
+\input{mt77inftec}
+
+\section{Implementación}
+\input{mt77implementacion}
+
+
+
+\subsection{Comparación}
+
+Para comparar tiempos de respuesta de 
+acuerdo al estado del arte en buscadores, hemos preparado 3
+corpus de prueba y comparado con Amberfish y Lucene.
+
+\input{mt77pruebas}
+
+\subsection{Límites}
+
+Los estimamos a partir del ambiente sugerido (ver \ref{ambiente}).
+Y tras las comparaciones, suponiendo índices comprimidos al 60\% respecto a los documentos i.e $P=0.6 T$ .
+
+\begin{itemize}
+\input{mt77limites}
+\end{itemize}
+
+En resumen y de forma más práctica en el ambiente propuesto 
+con una partición de 20GB dedicada a documentos e índices, estimamos que pueden 
+indexarse máximo 600.000 documentos, cada uno de 
+los cuales tenga menos de 60MB, con un tamaño total de documentos 
+máximo de 9GB (pueden publicarse vídeos y audios de 
+tamaños arbitrarios pues su contenido no será indexado --aunque restarán espacio en disco que 
+es requerido en los procesos de indexación).
+
+\newpage
+\section{Control de versiones}
+
+Ver cuadro \ref{buscadorcv}.
+
+\input{mt77cv}
+
+\section{Conclusiones}
+\begin{itemize}
+\input{mt77conclusiones}
+\end{itemize}
+
+\section*{Anexo A. Extender soporte a otros Formatos}
+\input{mt77extender}
+
+
+
+%\section{Glosario}
+
+\bibliography{tecnica}
+\bibliographystyle{plain}
+%\printindex
+\end{document}
