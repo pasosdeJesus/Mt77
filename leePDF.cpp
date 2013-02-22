@@ -53,7 +53,7 @@ throw(std::string)
         //clog << "OJO dt = " << dt << endl;
         string ns = dt + string("/salidapdftotext.txt");
         //clog << "OJO ns = " << ns << endl;
-        string cmd = string("/usr/local/bin/pdftotext ") + escapeshellarg(na) +
+        string cmd = string("/usr/local/bin/pdftotext -enc Latin1 ") + escapeshellarg(na) +
                 string(" ") + escapeshellarg(ns); // Para evitar problemas de permisos con  + string(" > /tmp/pdftotext.bitacora 2>&1"); o de /dev/null dentro de jaula chroot dejemos que pdftotext se queje
         //clog << "OJO cmd = " << cmd << endl;
         int rc = system(cmd.c_str());
