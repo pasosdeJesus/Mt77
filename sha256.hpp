@@ -487,7 +487,7 @@ int func_name (hash_state * md, const unsigned char *in, uint64_t inlen)        
  *
  * @return Representación hexadecimal como para imprimir
  */
-std::string hexaDeHash(unsigned char *hash, int l);
+std::string hexaDeHash(unsigned const char *hash, int l);
 
 
 /**

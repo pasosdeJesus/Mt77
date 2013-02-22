@@ -68,7 +68,7 @@ ulg updcrc(uch *s, ulg n)
 /**
  * Exit on error with a message and a code 
  **/
-void err(int n, char *m)
+void err(int n, const char *m)
 {
         fprintf(stderr, "funzip error: %s\n", m);
         exit(n);
@@ -78,7 +78,7 @@ void err(int n, char *m)
 /**
  * Given a zip file on stdin, decompress the first entry to stdout.
  **/
-void unzipUno(FILE *in, char *nombre, FILE *out)
+void unzipUno(FILE *in, const char *nombre, FILE *out)
 {
         //fprintf(stderr, "OJO unzipUno(%p, %s, %p)\n", in, nombre, out);
         uch h[LOCHDR];
@@ -183,7 +183,7 @@ void unzipUno(FILE *in, char *nombre, FILE *out)
                         register ulg n;
                         n = LG(h + LOCLEN);
                         if (n != LG(h + LOCSIZ)) {
-                                fprintf(stderr, "len %ld, siz %ld\n", n, LG(h + LOCSIZ));
+                                fprintf(stderr, "len %Lu, siz %Lu\n", n, LG(h + LOCSIZ));
                                 err(4, "invalid compressed data--length mismatch");
                         }
                         uint64_t nsal = 0;
@@ -246,10 +246,10 @@ void unzipUno(FILE *in, char *nombre, FILE *out)
                 /* validate decompression */
                 uint64_t crcu = updcrc(colsal, 0L);
                 if (LG(h + LOCCRC) != crcu) {
-                        fprintf(stderr, "invalid compressed data--crc error en %s, dio %li, se esperaba %li\n", noma, crcu, LG(h + LOCCRC));
+                        fprintf(stderr, "invalid compressed data--crc error en %s, dio %Lu, se esperaba %Lu\n", noma, crcu, LG(h + LOCCRC));
                 }
                 if (LG(h + LOCLEN) != outsiz) {
-                        fprintf(stderr, "invalid compressed data--length error en %s, dio %li, se esperaba %li\n", noma, outsiz, LG(h + LOCLEN));
+                        fprintf(stderr, "invalid compressed data--length error en %s, dio %Lu, se esperaba %Lu\n", noma, outsiz, LG(h + LOCLEN));
                 }
 
                 /* check if there are more entries */

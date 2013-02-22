@@ -30,7 +30,7 @@
 
 using namespace std;
 
-void crypt_argchk(char *v, char *s, int d)
+void crypt_argchk(const char *v, const char *s, int d)
 {
         fprintf(stderr, "LTC_ARGCHK '%s' failure on line %d of file %s\n",
                 v, d, s);
@@ -302,7 +302,7 @@ int sha256_done(hash_state * md, unsigned char *out)
 }
 
 
-string hexaDeHash(unsigned char *hash, int l)
+string hexaDeHash(unsigned const char *hash, int l)
 {
         int i;
         stringstream ss;

@@ -117,12 +117,12 @@ uint64_t updcrc(unsigned char *s, uint64_t n);
 /**
  * Exit on error with a message and a code 
  **/
-void err(int n, char *m);
+void err(int n, const char *m);
 
 
 /**
  * Given a zip file on stdin, decompress the first entry to stdout.
  **/
-void unzipUno(FILE *in, char *nombre, FILE *out);
+void unzipUno(FILE *in, const char *nombre, FILE *out);
 
 #endif
