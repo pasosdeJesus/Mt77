@@ -196,7 +196,7 @@ int main(int argc, char *argv[])
                 leeRelacion(nomrel, sdocs);
         }
         long tamsdocsini = sdocs.size();
-        // clog << "OJO Por aumentar indice con " << tamsdocsini << " documentos" << endl;
+        //clog << "OJO Por aumentar indice con " << tamsdocsini << " documentos" << endl;
  
         vector<uint32_t> grupo; // Índice donde termina cada grupo en idocs
         uint32_t tg = 0 ; // Tamaño del grupo actual
@@ -254,7 +254,7 @@ int main(int argc, char *argv[])
                                 sdocs.push_back(idocs[nd]);
                                 nd++;
                         }
-                        //cerr<<"idocs.size="<<idocs.size()<<endl;
+                        //clog<<"idocs.size="<<idocs.size()<<endl;
 
 /*                        if (g == 0) {
                                 //clog << "OJO escribiendo primer grupo en " << nomi[g % 2] << endl;
