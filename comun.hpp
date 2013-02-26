@@ -16,6 +16,7 @@
 #include <string>
 #include <ostream>
 #include <sstream>
+#include <iomanip>
 #include <stdint.h>
 
 #ifdef ASSERT

@@ -29,11 +29,6 @@ using namespace std;
 #define XML_FMT_INT_MOD "l"
 #endif
 
-const int MAXPROF = 100;
-
-const char *elem[MAXPROF];
-const char **vatts[MAXPROF];
-
 int profundidad = 0;
 int numdoc = -1;
 NodoTrieS *nodotries;
@@ -43,18 +38,17 @@ XML_Parser parser = NULL;
 static void XMLCALL
 startElement(void *userData, const char *name, const char **atts)
 {
+        //clog << "OJO startElement(userData, " << name << ", atts)" << endl;
         /*int i;
-         for (i = 0; i < profundidad; i++)
-            putchar('\t');
-          puts(name); 
-          for (i = 0; atts[i] != NULL; i+=2) {
-        	  printf("%s -> %s\n", atts[i], atts[i+1]);
-          } */
-        if (profundidad < MAXPROF ) {
-                elem[profundidad] = name;
-                vatts[profundidad] = atts;
+        for (i = 0; i < profundidad; i++) {
+                clog << '\t';
         }
-        profundidad ++;
+        clog << name; 
+        for (i = 0; atts[i] != NULL; i+=2) {
+                clog << atts[i] << "->" << atts[i+1] << " ";
+        }
+        clog << endl; */
+        profundidad++;
 }
 
 /** Elimina espacios redundantes en s */
@@ -83,19 +77,21 @@ endElement(void *userData, const char *name)
 {
         //long pa = XML_GetCurrentByteIndex(parser);
 
+        //clog << "OJO endElement(userData, " << name << ")" << endl;
         if (ultpal != "") {
                 string nec = solopal(ultpal);
                 vector<string> pals=estalla(" ", ultpal);
+                //clog << "OJO nec=" << nec << ", ultpal=" << ultpal << endl;
                 long la = 0;
                 for(uint32_t i=0; i < pals.size(); i++) {
                         if (pals[i] != "") {
+                                //clog << "OJO insertado " << i << ", " << pals[i] << " en " << name << ", posición " << inipal + la << endl;
                                 nodotries->insertaConEtiqueta(pals[i],
-                                                elem[profundidad - 1],
+                                                name,
                                                 numdoc, inipal + la);
                                 nodotries->insertaNormalizando(pals[i],
                                                 numdoc, inipal + la, true);
 
-                                //clog << "OJO insertado " << pals[i] << " en " << elem[profundidad - 1] << ", posición " << inipal + la << endl;
                                 la += pals[i].length() + 1;
                         }
                 }
@@ -108,8 +104,11 @@ endElement(void *userData, const char *name)
 static void XMLCALL
 charHandler(void *userData, const char *s, int len)
 {
-        if (len >= 0 && profundidad > 0 && profundidad < MAXPROF) {
-                //clog << "OJO charHandler(userData, " << s << ", " << len << ")" << endl;
+        if (len >= 0 && profundidad > 0 ) {
+                char *cad = (char *)malloc(sizeof(char) * (len + 1));
+                /*snprintf(cad, len, "%s", s);
+                clog << "OJO charHandler(userData, " << cad << ", " << len << ")" << endl; 
+                free(cad); */
                 if (len > 0) {
                         string pal = utf8_a_latin1(s, len);
                         if (ultpal == "") {
