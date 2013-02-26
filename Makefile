@@ -12,8 +12,8 @@ CFLAGS += -Wall -I/usr/X11R6/include -I/usr/local/include #-I/usr/X11R6/include 
 #CFLAGS=-I/usr/local/include -I/usr/X11R6/include
 LFLAGS += -L/usr/local/lib -L/usr/X11R6/lib # -p -pg -fprofile-arcs -ftest-coverage 
 
-DEPLFLAGS=-g -p -pg -fprofile-arcs -ftest-coverage
-DEPCFLAGS=-O0 -g -fprofile-arcs -ftest-coverage -p -pg
+DEPLFLAGS=-g -p -pg 
+DEPCFLAGS=-O0 -g -p -pg
 
 produccion: 
 	LFLAGS="-g" CFLAGS="-g -O0 -DNDEBUG" make all -DNDEBUG
