@@ -166,6 +166,7 @@ extraezip(string odt, string dt)
         if ((out = fopen(nomout, "wb")) == (FILE *)NULL) {
                 stringstream ss;
                 ss << "No puede escribir " << nomout;
+                fclose(in);
                 throw ss.str();
         }
         unzipUno(in, "mimetype", out);
@@ -176,6 +177,7 @@ extraezip(string odt, string dt)
         if ((out = fopen(nomout, "wb")) == (FILE *)NULL) {
                 stringstream ss;
                 ss << "No puede escribir " << nomout ;
+                fclose(in);
                 throw ss.str();
         }
         unzipUno(in, "content.xml", out);

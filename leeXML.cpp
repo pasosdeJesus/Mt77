@@ -105,8 +105,8 @@ static void XMLCALL
 charHandler(void *userData, const char *s, int len)
 {
         if (len >= 0 && profundidad > 0 ) {
-                char *cad = (char *)malloc(sizeof(char) * (len + 1));
-                /*snprintf(cad, len, "%s", s);
+                /*char *cad = (char *)malloc(sizeof(char) * (len + 1));
+                snprintf(cad, len, "%s", s);
                 clog << "OJO charHandler(userData, " << cad << ", " << len << ")" << endl; 
                 free(cad); */
                 if (len > 0) {
