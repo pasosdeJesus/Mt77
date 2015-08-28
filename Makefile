@@ -214,6 +214,7 @@ include herram/comdist.mak
 # Elimina hasta configuración
 limpiadist: limpiamas
 	rm -f confv.sh confv.ent Make.inc
+	rm confaux.sed confaux.tmp confv.bak depuraindice
 
 # Elimina archivos generables
 limpiamas: limpia
