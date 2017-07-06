@@ -1,24 +1,24 @@
-Mt77 es un motor de b˙squeda r·pido, preciso, apto para indexaciÛn
-distribuida y de dominio p˙blico
+Mt77 es un motor de b√∫squeda r√°pido, preciso, apto para indexaci√≥n
+distribuida y de dominio p√∫blico
 
-1. CaracterÌsticas:
-	- M·s veloz en b˙squedas que Lucene y que Amberfish, aunque los 
-	  Ìndices son m·s grandes y requieren m·s tiempo de construcciÛn
-	- Especialmente diseÒado para textos en EspaÒol
+1. Caracter√≠sticas:
+	- M√°s veloz en b√∫squedas que Lucene y que Amberfish, aunque los 
+	  √≠ndices son m√°s grandes y requieren m√°s tiempo de construcci√≥n
+	- Especialmente dise√±ado para textos en Espa√±ol
 	- Puede leer textos planos, archivos XML, HTML, PDF y ODF
-	- Permite buscar una o varias palabras, asÌ como  una o m·s cadenas
-	- Permite indexar y buscar metainformaciÛn (tÌtulo, tipo de archivo,
+	- Permite buscar una o varias palabras, as√≠ como  una o m√°s cadenas
+	- Permite indexar y buscar metainformaci√≥n (t√≠tulo, tipo de archivo,
 	  sitio de origen, etiquetas XML)
-	- Escrito en C++ siguiendo est·ndares, con pruebas de unidad 
-	  (con make unidad) y de regresiÛn (con make regr)
+	- Escrito en C++ siguiendo est√°ndares, con pruebas de unidad 
+	  (con make limpia; make prueba; make unidad) y de regresi√≥n (con make limpia; make prueba; make regr)
 
 2. Herramientas
 
 Consta de las siguientes herramientas:
 
-buscador	para buscar palabras o metainformaciÛn en un Ìndice
-indexador 	para crear un Ìndice a partir de uno o m·s textos
-operaindice	para mezclar Ìndices en disco o RAM y hacer otras operaciones
+buscador	para buscar palabras o metainformaci√≥n en un √≠ndice
+indexador 	para crear un √≠ndice a partir de uno o m√°s textos
+operaindice	para mezclar √≠ndices en disco o RAM y hacer otras operaciones
 txtdeodt 	extraer texto de un documento odt (Open Document Format)
-unzipuno 	extraer un sÛlo archivo de un conteneder ZIP
+unzipuno 	extraer un s√≥lo archivo de un conteneder ZIP
 tomsha256	Calcula hash sha256 empleando rutina de libtomcrypt-1.16
