@@ -18,7 +18,7 @@ Consta de las siguientes herramientas:
 
 - __buscador__ para buscar palabras o metainformación en un índice
 - __indexador__ para crear un índice a partir de uno o más textos
-- ``operaindice`` para mezclar índices en disco o RAM y hacer otras operaciones
-- ``txtdeodt`` extraer texto de un documento odt (Open Document Format)
-- ``unzipuno`` extraer un sólo archivo de un conteneder ZIP
-- ``tomsha256`` Calcula hash sha256 empleando rutina de libtomcrypt-1.16
+- __operaindice__ para mezclar índices en disco o RAM y hacer otras operaciones
+- __txtdeodt__ extraer texto de un documento odt (Open Document Format)
+- __unzipuno__ extraer un sólo archivo de un conteneder ZIP
+- __tomsha256__ Calcula hash sha256 empleando rutina de libtomcrypt-1.16
