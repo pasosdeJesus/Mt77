@@ -2,29 +2,23 @@ Mt77 es un motor de búsqueda rápido, preciso, apto para indexación
 distribuida y de dominio público
 
 1. Características:
-- Más veloz en búsquedas que Lucene y que Amberfish, aunque los
-  índices son más grandes y requieren más tiempo de construcción
-- Especialmente diseñado para textos en Español
-- Puede leer textos planos, archivos XML, HTML, PDF y ODF
-- Permite buscar una o varias palabras, así como  una o más cadenas
-- Permite indexar y buscar metainformación (título, tipo de archivo,
-  sitio de origen, etiquetas XML)
-- Escrito en C++ siguiendo estándares, con pruebas de unidad
-  (con make limpia; make prueba; make unidad) y de regresión (con make limpia; make prueba; make regr)
+  - Más veloz en búsquedas que Lucene y que Amberfish, aunque los
+    índices son más grandes y requieren más tiempo de construcción
+  - Especialmente diseñado para textos en Español
+  - Puede leer textos planos, archivos XML, HTML, PDF y ODF
+  - Permite buscar una o varias palabras, así como  una o más cadenas
+  - Permite indexar y buscar metainformación (título, tipo de archivo,
+    sitio de origen, etiquetas XML)
+  - Escrito en C++ siguiendo estándares, con pruebas de unidad
+    (con make limpia; make prueba; make unidad) y de regresión (con make limpia; make prueba; make regr)
 
 2. Herramientas
 
 Consta de las siguientes herramientas:
 
-buscador
-: para buscar palabras o metainformación en un índice
-indexador
-: para crear un índice a partir de uno o más textos
-operaindice
-: para mezclar índices en disco o RAM y hacer otras operaciones
-txtdeodt
-: extraer texto de un documento odt (Open Document Format)
-unzipuno
-: extraer un sólo archivo de un conteneder ZIP
-tomsha256
-: Calcula hash sha256 empleando rutina de libtomcrypt-1.16
+- __buscador__ para buscar palabras o metainformación en un índice
+- __indexador__ para crear un índice a partir de uno o más textos
+- ``operaindice`` para mezclar índices en disco o RAM y hacer otras operaciones
+- ``txtdeodt`` extraer texto de un documento odt (Open Document Format)
+- ``unzipuno`` extraer un sólo archivo de un conteneder ZIP
+- ``tomsha256`` Calcula hash sha256 empleando rutina de libtomcrypt-1.16
