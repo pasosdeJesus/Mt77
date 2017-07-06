@@ -27,7 +27,7 @@ all: indexador buscador operaindice unzipuno txtdeodt tomsha256 depuraindice
 # paquete cppunit en OpenBSD (pkg_add cppunit)
 PUNIDAD=pruebaComun pruebaElias pruebaPos pruebaDoc pruebaNodoTrieS pruebaTrieSDisco pruebaRamDisco 
 unidad: 
-	CFLAGS="$(DEPCFLAGS)" make $(PUNIDAD)
+	CFLAGS="$(DEPCFLAGS)" LFLAGS="$(DEPLFLAGS)" make $(PUNIDAD)
 	for i in $(PUNIDAD) ; do echo $$i; /usr/bin/time ./$$i; done
 
 depura: 

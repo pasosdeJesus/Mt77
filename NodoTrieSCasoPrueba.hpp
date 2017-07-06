@@ -25,7 +25,7 @@ class NodoTrieSCasoPrueba : public CPPUNIT_NS::TestFixture
                 CPPUNIT_TEST(prueba_mezcla);
                 CPPUNIT_TEST(prueba_renumeraDocs);
                 CPPUNIT_TEST(prueba_leeTexto);
-                CPPUNIT_TEST(prueba_condensado);
+                //CPPUNIT_TEST(prueba_condensado);
                 CPPUNIT_TEST_SUITE_END();
 
         public:
@@ -37,7 +37,7 @@ class NodoTrieSCasoPrueba : public CPPUNIT_NS::TestFixture
                 void prueba_mezcla();
                 void prueba_renumeraDocs();
                 void prueba_leeTexto() ;
-                void prueba_condensado() ;
+                //void prueba_condensado() ;
 };
 
 
