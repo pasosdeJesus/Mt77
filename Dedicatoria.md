@@ -1,3 +1,3 @@
-A quien m·s ama a los niÒos y las niÒas.
+A quien m√°s ama a los ni√±os y las ni√±as.
 http://www.pasosdeJesus.org/musica/ser_como_ninos.ogg
  

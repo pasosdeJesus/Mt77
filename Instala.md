@@ -1,9 +1,9 @@
 
-Mt77 Motor de búsqueda rápido, preciso, distribuido y de dominio público
+Mt77 Motor de bÃºsqueda rÃ¡pido, preciso, distribuido y de dominio pÃºblico
 
 1. Ejecute programa para configurar (y verificar programas requeridos) con:
 	./conf.sh
-2. Ejecute las pruebas de regresión con:
+2. Ejecute las pruebas de regresiÃ³n con:
 	make regr
 3. Instale con
 	make instala
