@@ -1079,7 +1079,7 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         sos.seekp(MARCAIND.length() +1);
         sos.seekg(MARCAIND.length() +1);
         sos.clear();
-        escribePlanoStream(na, sos);
+        escribePlanoStream(na, sos, 0);
         sos.seekg(0);
         // cout << "COMIA sos=" << sos.str() << ", l=" << sos.str().length() << endl;
         sos.seekg(0);
@@ -1107,7 +1107,7 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         	sis2.seekp(MARCAIND.length() +1);
         	sis2.seekg(MARCAIND.length() +1);
         	sis2.clear(); */
-        escribePlanoStream(na, sis2);
+        escribePlanoStream(na, sis2, 0);
         //cout << "sis2.str()=" << sis2.str() << endl;
         sis2.seekg(0);
         delete na;
@@ -1318,6 +1318,7 @@ void TrieSDiscoCasoPrueba::prueba_buscaPlano()
         set<Pos> *b = buscaPlano("ej.indice", "ej.relacion",
                                       "JESUS", docs);
         CPPUNIT_ASSERT(b->size() == 1);
+        return;
 }
 
 

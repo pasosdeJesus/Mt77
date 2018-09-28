@@ -1,10 +1,10 @@
 // vim: set expandtab tabstop=8 shiftwidth=8 foldmethod=marker:
 /** @file Pos.cpp
- * Posición
+ * PosiciÃ³n
  *
  * @package Mt77
- * @author Vladimir Támara Patiño. vtamara@pasosdeJesus.org
- * Dominio público. 2009.  Sin garantías
+ * @author Vladimir TÃ¡mara PatiÃ±o. vtamara@pasosdeJesus.org
+ * Dominio pÃºblico. 2009.  Sin garantÃ­as
  * http://creativecommons.org/licenses/publicdomain/
  * @version   $Id: Pos.cpp,v 1.13 2010/01/18 16:12:50 vtamara Exp $
  */
@@ -59,14 +59,14 @@ void escribePos(iostream &os, set<Pos> *cpos)
                         if (nd != l) {
                                 os << sep;
                                 escribe_elias_gama2(os, (uint32_t)nd);
-                                //clog << "escribió nd" << endl;
+                                //clog << "escribiÃ³ nd" << endl;
                                 unumb = 0;
                                 sep = "(";
                                 l = nd;
                         }
                         ASSERT(i->numb - unumb >= 1);
                         escribe_elias_gama2(os, i->numb - unumb);
-                        //clog << "escribió i->numb-unumb=" << i->numb-unumb << endl;
+                        //clog << "escribiÃ³ i->numb-unumb=" << i->numb-unumb << endl;
                         unumb = i->numb;
                 }
         }
@@ -176,13 +176,13 @@ set<Pos> *leePos(istream &is, vector<int64_t> *renum)
                         //clog << "OJO c=" << (int)c << ", como car=" << (char)c << endl;
                         if ((c & 128) == 0 && c != 0 && c != '}'
                                         && c != '(') {
-                                throw errorFormato(is, "Se esperaba numero en codificación de elias o { o (");
+                                throw errorFormato(is, "Se esperaba numero en codificaciÃ³n de elias o { o (");
                         }
 
                         np++;
                 } while (c != '}' && c != '(' && c != EOF) ;
                 // } ascii 125 ( ascii 40, son buenos porque no corresponden
-                // a códigos elias ---los ve como uno porque su rep. binaria
+                // a cÃ³digos elias ---los ve como uno porque su rep. binaria
                 // comienza con 0
                 c = is.get();
         }

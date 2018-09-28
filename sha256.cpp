@@ -39,7 +39,7 @@ void crypt_argchk(const char *v, const char *s, int d)
 
 const struct ltc_hash_descriptor sha256_desc =
         {
-                "sha256",
+                (char *)"sha256",
                 0,
                 32,
                 64,

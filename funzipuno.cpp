@@ -10,13 +10,13 @@
  *   http://www.haxxed.com/belkin/download/tools/trx.c 
  * - Ideas de:
  * 	- Archivo funzip de versiones recientes de unzip (que no son de 
- * 		dominio público)
+ * 		dominio pÃºblico)
  * 	- Ejemplo miniunz incluido en zlib-1.2.3 
  * 	- examples/zpipe.c de zlib-1.2.3
  *
  * @package Mt77
- * @author Vladimir Támara Patiño. vtamara@pasosdeJesus.org
- * Dominio público. 2009.  Sin garantías
+ * @author Vladimir TÃ¡mara PatiÃ±o. vtamara@pasosdeJesus.org
+ * Dominio pÃºblico. 2009.  Sin garantÃ­as
  * http://creativecommons.org/licenses/publicdomain/
  * @version   $Id: funzipuno.cpp,v 1.6 2010/01/18 16:12:50 vtamara Exp $
  */
@@ -49,7 +49,7 @@ unsigned char colsal[TAMCS];
  **/
 ulg updcrc(uch *s, ulg n)
 {
-        register ulg c;       /* temporary variable */
+        /*register*/ulg c;       /* temporary variable */
 
         static ulg crc = 0xffffffffL; /* shift register contents */
 
@@ -149,7 +149,7 @@ void unzipUno(FILE *in, const char *nombre, FILE *out)
                         int flush = 0;
                         do {
                                 if ((tl = fread((char *)colen, 1, TAMCE, in)) < 0)
-                                        err(4, "vacío");
+                                        err(4, "vacÃ­o");
                                 //				printf("OJO tl=%i\n", tl);
                                 stream.next_in = colen;
                                 stream.avail_in = tl;
@@ -180,7 +180,7 @@ void unzipUno(FILE *in, const char *nombre, FILE *out)
                         //			printf("OJO stored\n");
                         tl = 0;
                         stream.avail_in = 0;
-                        register ulg n;
+                        ulg n;
                         n = LG(h + LOCLEN);
                         if (n != LG(h + LOCSIZ)) {
                                 fprintf(stderr, "len %Lu, siz %Lu\n", n, LG(h + LOCSIZ));

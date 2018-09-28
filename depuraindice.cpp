@@ -1,10 +1,10 @@
 // vim: set expandtab tabstop=8 shiftwidth=8 foldmethod=marker:
 /** @file depuraindice.cpp
- * Depura un índice con un trie-especial 
+ * Depura un Ã­ndice con un trie-especial 
  *
  * @package Mt77
- * @author Vladimir Támara Patiño. vtamara@pasosdeJesus.org
- * Dominio público. 2009.  Sin garantías
+ * @author Vladimir TÃ¡mara PatiÃ±o. vtamara@pasosdeJesus.org
+ * Dominio pÃºblico. 2009.  Sin garantÃ­as
  * http://creativecommons.org/licenses/publicdomain/
  * @version   $Id: depuraindice.cpp,v 1.5 2010/03/08 12:02:40 vtamara Exp $
  */
@@ -32,7 +32,7 @@ void uso()
 {
         cerr << "depuraindice [-cd] indice" << endl;
         cerr << "       -c indica que calcularse condensado" << endl;
-        cerr << "       -d imprime representación a la que se calcula condensado" << endl;
+        cerr << "       -d imprime representaciÃ³n a la que se calcula condensado" << endl;
         exit(1);
 }
 

@@ -3,13 +3,13 @@
  * A partir de un texto, crea un trie-s y lo salva en un formato
  * propio.
  * 
- * ConvenciÚn para un Ïndice vacio:
+ * Convenci√≤n para un √¨ndice vacio:
  * archivo.indice tiene cabecera con fin de linea
  * archivo.relacion tiene cabecer sin fin de lina
  *
  * @package Mt77
- * @author Vladimir T·mara PatiÒo. vtamara@pasosdeJesus.org
- * Dominio p˙blico. 2009.  Sin garantÌas
+ * @author Vladimir T√°mara Pati√±o. vtamara@pasosdeJesus.org
+ * Dominio p√∫blico. 2009.  Sin garant√≠as
  * http://creativecommons.org/licenses/publicdomain/
  * @version   $Id: indexador.cpp,v 1.21 2010/11/01 23:31:31 vtamara Exp $
  */
@@ -43,9 +43,9 @@ string ELIMPREF = "../";
  * Indexa contenido del archivo noma en RAM
  *
  * @param nom Nombre de archivo por indexar
- * @param metainformacion Agregar metainformaciÛn
+ * @param metainformacion Agregar metainformaci√≥n
  * @param pref Prefijo del URL
- * @param t Arbol con Ìndice por completar
+ * @param t Arbol con √≠ndice por completar
  * @param tipo Tipo determinado
  * @param formato Formato determinado
  */
@@ -60,7 +60,7 @@ indexa(Doc &d, long numdoc, bool metainformacion, const char *pref,
         tipo = "otro";
         char nom[MAXLURL];
         snprintf(nom, MAXLURL, "%s", d.URL.c_str());
-        //Si es XML y/o relato emplear otra funciÛn
+        //Si es XML y/o relato emplear otra funci√≥n
         formato = determinaFormato(nom);
         //clog << "OJO formato= "<< formato << endl;
         try {
@@ -83,7 +83,7 @@ indexa(Doc &d, long numdoc, bool metainformacion, const char *pref,
                         leePDF(nom, numdoc, t, metainformacion);
                         tipo = "documento";
                 } else if (formato == "ogv" || formato == "flv") {
-                        tipo = "vÌdeo";
+                        tipo = "v√≠deo";
                 } else if (formato == "ogg" || formato == "mp3") {
                         tipo = "audio";
                 } else if (formato == "jpg" || formato == "png" || formato == "gif") {
@@ -91,16 +91,16 @@ indexa(Doc &d, long numdoc, bool metainformacion, const char *pref,
                 }
                 //clog << "OJO tipo= "<< tipo<< endl;
                 if (metainformacion) {
-                        // Insertamos titulo tambiÈn como palabra
+                        // Insertamos titulo tambi√©n como palabra
                         t.insertaConEtiqueta(nom, "titulo", numdoc, 1);
                         string tt = normaliza(nom);
                         if (tt != "") {
                                 t.inserta(tt, Pos(numdoc, 1));
                         }
-                        // Insertamos la extensiÛn como titulo
+                        // Insertamos la extensi√≥n como titulo
                         vector<string> bext = estalla(".", nom);
                         if (bext.size() > 1) {
-                                //clog << "OJO Insertando extensiÛn " << bext[bext.size() -1] << endl;
+                                //clog << "OJO Insertando extensi√≥n " << bext[bext.size() -1] << endl;
                                 t.insertaConEtiqueta(bext[bext.size() - 1],
                                                      "titulo", numdoc, 1);
                         }
@@ -184,13 +184,13 @@ int main(int argc, char *argv[])
         }
 
         if (!existe_archivo(noma)) {
-                // Lo creamos en blanco y sdocs comienza vacÌo
+                // Lo creamos en blanco y sdocs comienza vac√≠o
                 fstream os(noma, ios_base::out);
                 os << MARCAIND << endl;
                 os << endl;
                 os.close();
         } else if (!existe_archivo(nomrel)) {
-                cerr << "DeberÌa existir " << nomrel << endl;
+                cerr << "Deber√≠a existir " << nomrel << endl;
                 exit(1);
         } else {
                 leeRelacion(nomrel, sdocs);
@@ -198,8 +198,8 @@ int main(int argc, char *argv[])
         long tamsdocsini = sdocs.size();
         //clog << "OJO Por aumentar indice con " << tamsdocsini << " documentos" << endl;
  
-        vector<uint32_t> grupo; // Õndice donde termina cada grupo en idocs
-        uint32_t tg = 0 ; // TamaÒo del grupo actual
+        vector<uint32_t> grupo; // √çndice donde termina cada grupo en idocs
+        uint32_t tg = 0 ; // Tama√±o del grupo actual
         for (int i = 4; i < argc; i++) {
                 FILE *f = NULL;
                 if ((f = fopen (argv[i],  "rb")) == NULL) {
@@ -211,7 +211,7 @@ int main(int argc, char *argv[])
                         fclose(f);
                         //clog << "i=" << i << ", argv[i]=" << argv[i] << ", sz=" << sz << endl;
                         if (sz > MAXG) {
-                                cerr << "El archivo " << argv[i] << " es demasiado grande (" << sz << " bytes), no se indexar·." << endl;
+                                cerr << "El archivo " << argv[i] << " es demasiado grande (" << sz << " bytes), no se indexar√°." << endl;
                         } else {
                                 idocs.push_back(Doc(argv[i], "", "1960-01-01"));
                                 if (tg + sz > MAXG) {

@@ -47,7 +47,7 @@ inline void llena_ss(std::stringstream &ss, NodoTrieS *n, string pref = "")
         ss.seekg(0);
         ss.clear();
         ss << pref;
-        escribePlanoStream(n, ss);
+        escribePlanoStream(n, ss, 0);
         ss.seekg(0);
 }
 

@@ -47,8 +47,8 @@ class NodoTrieS
                 friend uint32_t precalcula_escribe_con_hermanos(NodoTrieS *n);
                 friend uint32_t precalcula_escribe(NodoTrieS *n);
                 friend void escribePlanoStream (NodoTrieS *n,
-                                                iostream &os, 
-						uint32_t desp = 0);
+                                                iostream &os,
+						uint32_t desp);
                 friend class TrieSDiscoCasoPrueba;
                 friend uint32_t escribeCopiaNodoRam(iostream &os, NodoTrieS *a,
                                                 NodoTrieS **phijo,

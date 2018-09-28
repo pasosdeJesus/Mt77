@@ -3,8 +3,8 @@
  * Ejemplo de uso de funzipuno.h
  *
  * @package Mt77
- * @author Vladimir Támara Patiño. vtamara@pasosdeJesus.org
- * Dominio público. 2009.  Sin garantías
+ * @author Vladimir TÃ¡mara PatiÃ±o. vtamara@pasosdeJesus.org
+ * Dominio pÃºblico. 2009.  Sin garantÃ­as
  * http://creativecommons.org/licenses/publicdomain/
  * @version   $Id: unzipuno.cpp,v 1.5 2010/01/06 10:09:30 vtamara Exp $
  */
@@ -31,7 +31,7 @@ main(int argc, char **argv)
                 cerr << "  zip es contenedor ZIP" << endl;
                 cerr << "  archivo es archivo que se espera en contenedor zip"
                 << endl;
-                cerr << "  dir Directorio donde se descomprimirá" << endl;
+                cerr << "  dir Directorio donde se descomprimirÃ¡" << endl;
                 exit(3);
         }
 
