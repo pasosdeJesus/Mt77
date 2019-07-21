@@ -82,7 +82,7 @@ escribeNodo(iostream &os, string c, set<Pos> *cpos,
         escribePos(os, cpos);
 
         if (depuraos != NULL) {
-                clog << "escribeNodo: '" << depuraos->str() << "'" << endl;
+                //clog << "escribeNodo: '" << depuraos->str() << "'" << endl;
         }
         return pih;
 }
@@ -99,7 +99,8 @@ uint32_t escribeCopiaNodo(iostream &os, istream &is, uint32_t &phijo,
         string cad = leeCad(is);
         //clog << " cad='" << cad << "'";
         if (cad != "") {
-                uint32_t phermano = leeNDesp(is); // Warning si no depura
+                //uint32_t phermano = leeNDesp(is); 
+                (void)leeNDesp(is); // Si depura comentar y descomentar ant.
                 //clog << " phermano=" << phermano;
                 phijo = leeNDesp(is);
                 uint32_t dhijo = 0;
@@ -147,7 +148,8 @@ escribeCopiaSubarbol(iostream &os, istream &is, bool conHermanos,
          */
         for (n = 0; cad != "" && (conHermanos || n == 0); n++) {
                 //clog << "OJO is.tellg()=" << is.tellg() << endl;
-                uint32_t phermano = leeNDesp(is); 
+                //uint32_t phermano = leeNDesp(is); 
+                (void)leeNDesp(is); 
                 //clog << "OJO prini=" << prini << " phermano=" << phermano << endl;
                 uint32_t h = leeNDesp(is);
                 //clog << "OJO prini=" << prini << " h=" << h << endl;
@@ -688,6 +690,8 @@ buscaPlano(const char *na, const char *nrel, string pal, vector<Doc> &docs)
         verificaIndice(is);
         try {
                 r = buscaPlanoStream(is, pal);
+                //clog << "OJO buscado r=" << r << endl;
+                throw errorFormato(is, "OJO paso 2");
         } catch (string m) {
                 throw errorFormato(is, m);
         }

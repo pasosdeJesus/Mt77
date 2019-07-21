@@ -46,7 +46,7 @@ tomsha256: $(FTOMSHA256)
 
 FTXTDEODT = comun.o Elias.o Pos.o Doc.o sha256.o NodoTrieS.o funzipuno.o leeODT.o txtdeodt.o 
 txtdeodt : $(FTXTDEODT)
-	c++ $(LFLAGS) -o $(.TARGET) -lc -lxslt -lz $(FTXTDEODT)
+	c++ $(LFLAGS) -o $(.TARGET) -lc -lxml2 -lxslt -lz $(FTXTDEODT)
 
 FUNZIPUNO = funzipuno.o unzipuno.o
 unzipuno: $(FUNZIPUNO)
