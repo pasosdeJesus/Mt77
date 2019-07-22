@@ -79,7 +79,7 @@ extern stringstream *depuraos ;
  * @param desp Desplazamiento por agregar a todo 'apuntador'
  **/
 void
-escribePlanoStream(NodoTrieS *n, std::iostream &os, uint32_t desp=0)
+escribePlanoStream(NodoTrieS *n, std::iostream &os, uint32_t desp)
 {
 
         NodoTrieS *tn;
@@ -172,7 +172,7 @@ escribePlano(NodoTrieS &t, vector<Doc> &docs, const char *na, const char *nrel)
 
         fstream os(na, ios_base::out);
         os << MARCAIND << endl;
-        escribePlanoStream(&t, os);
+        escribePlanoStream(&t, os, 0);
         os.close();
 
         escribeRelacion(nrel, docs, NULL);

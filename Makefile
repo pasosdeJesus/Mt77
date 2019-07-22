@@ -12,8 +12,8 @@ CFLAGS += -Wall -I/usr/X11R6/include -I/usr/local/include #-I/usr/X11R6/include 
 #CFLAGS=-I/usr/local/include -I/usr/X11R6/include
 LFLAGS += -L/usr/local/lib -L/usr/X11R6/lib # -p -pg -fprofile-arcs -ftest-coverage 
 
-DEPLFLAGS=-g #-p -pg 
-DEPCFLAGS=-O0 -g #-p -pg
+DEPLFLAGS=-g -p -pg 
+DEPCFLAGS=-O0 -g -p -pg
 
 produccion: 
 	LFLAGS="-g" CFLAGS="-g -O0 -DNDEBUG" make all -DNDEBUG
@@ -21,13 +21,15 @@ produccion:
 prueba: 
 	LFLAGS="-g" CFLAGS="-g -O0" make all 
 
-all: indexador buscador operaindice unzipuno txtdeodt tomsha256 depuraindice
+BINARIOS=indexador buscador operaindice unzipuno txtdeodt tomsha256 depuraindice
+
+all: $(BINARIOS)
 
 # Requieren cppunit instalado en /usr/local/include --por defecto en
 # paquete cppunit en OpenBSD (pkg_add cppunit)
 PUNIDAD=pruebaComun pruebaElias pruebaPos pruebaDoc pruebaNodoTrieS pruebaTrieSDisco pruebaRamDisco 
 unidad: 
-	CFLAGS="$(DEPCFLAGS)" LFLAGS="$(DEPLFLAGS)" make $(PUNIDAD)
+	CFLAGS="$(DEPCFLAGS)" make $(PUNIDAD)
 	for i in $(PUNIDAD) ; do echo $$i; /usr/bin/time ./$$i; done
 
 depura: 
@@ -223,13 +225,20 @@ limpiamas: limpia
 	rm -f img/*.eps img/*.ps
 	rm -f $(PROYECTO)-$(PRY_VERSION).tar.gz
 
+#	$(MKDIR) -p $(DESTDIR)$(INSDATA)/
+#	$(CP) herram/*.mak herram/*.sh $(DESTDIR)$(INSDATA)/
+#	$(SED) -e 's|rutaconfsh=".*"|rutaconfsh="$(DESTDIR)$(INSDATA)"|g' herram/confaux.sh > $(DESTDIR)$(INSDATA)/confaux.sh
 instala:
-	$(MKDIR) -p $(INSDATA)/
-	$(CP) herram/*.mak herram/*.sh $(INSDATA)/
-	$(SED) -e 's|rutaconfsh=".*"|rutaconfsh="$(INSDATA)"|g' herram/confaux.sh > $(INSDATA)/confaux.sh
+	for i in $(BINARIOS); do echo $$i; \
+		cp $$i $(DESTDIR)$(INSBIN)/; \
+	done;
 
+#	$(RM) -rf $(INSDATA)
 desinstala:
-	$(RM) -rf $(INSDATA)
+	for i in $(BINARIOS); do echo $$i; \
+		rm $(DESTDIR)$(INSBIN)/$$i; \
+	done;
+
 
 
 #.PRECIOUS: .pdoc
