@@ -40,7 +40,7 @@ using namespace std;
 string ELIMPREF = "../";
 
 /*
- * Indexa contenido del archivo noma en RAM
+ * Indexa contenido del archivo indice en RAM
  *
  * @param nom Nombre de archivo por indexar
  * @param metainformacion Agregar metainformación
@@ -51,7 +51,7 @@ string ELIMPREF = "../";
  */
 void
 indexa(Doc &d, long numdoc, bool metainformacion, const char *pref,
-       NodoTrieS &t, string &tipo, string &formato) 
+       NodoTrieS &t, string &tipo, string &formato)
 {
         //clog << "OJO indexa(d.URL=" << d.URL << ", " << numdoc << ", " << metainformacion << ", " << pref << ", t," << tipo << "," << formato << ")" << endl;
         ASSERT(numdoc >= 1);
@@ -157,13 +157,13 @@ int main(int argc, char *argv[])
         }
         vector<Doc> idocs;
         vector<Doc> sdocs;
-        char noma[1024], nomt[1024], nomrel[1024], pref[1024];
+        char indice[1024], indice_temporal[1024], nomrel[1024], pref[1024];
 
         verificaNombre(argv[1], nomrel);
-        snprintf(noma, 1000, "%s", argv[1]);
-        snprintf(nomt, 1000, "%s", argv[2]);
-        snprintf(pref, 1024, "%s", argv[3]);
         //cerr<<"noma="<<noma<<endl;
+        snprintf(indice, 1000, "%s", argv[1]); // indice a crear
+        snprintf(indice_temporal, 1000, "%s", argv[2]); // indice temporal
+        snprintf(pref, 1024, "%s", argv[3]); // url
 
         char *cm = getenv("MT77MAXG");
         if (cm != NULL) {
@@ -177,15 +177,15 @@ int main(int argc, char *argv[])
         if (cm != NULL) {
                 ELIMPREF = cm;
         }
- 
-        if (strcmp(nomt, noma) == 0) {
+
+        if (strcmp(indice_temporal, indice) == 0) {
                 cerr<<"Indice por crear o aumentar y temporal deben ser diferentes" << endl;
                 exit(1);
         }
 
-        if (!existe_archivo(noma)) {
+        if (!existe_archivo(indice)) {
                 // Lo creamos en blanco y sdocs comienza vacío
-                fstream os(noma, ios_base::out);
+                fstream os(indice, ios_base::out);
                 os << MARCAIND << endl;
                 os << endl;
                 os.close();
@@ -197,9 +197,13 @@ int main(int argc, char *argv[])
         }
         long tamsdocsini = sdocs.size();
         //clog << "OJO Por aumentar indice con " << tamsdocsini << " documentos" << endl;
- 
+
         vector<uint32_t> grupo; // Índice donde termina cada grupo en idocs
         uint32_t tg = 0 ; // Tamaño del grupo actual
+
+
+        // verifica la existencia de los archivos a usar y en dado
+        // caso verifica que no excedan MAXG en tam
         for (int i = 4; i < argc; i++) {
                 FILE *f = NULL;
                 if ((f = fopen (argv[i],  "rb")) == NULL) {
@@ -209,7 +213,6 @@ int main(int argc, char *argv[])
                         fseek(f, 0L, SEEK_END);
                         uint32_t sz = ftell(f);
                         fclose(f);
-                        //clog << "i=" << i << ", argv[i]=" << argv[i] << ", sz=" << sz << endl;
                         if (sz > MAXG) {
                                 cerr << "El archivo " << argv[i] << " es demasiado grande (" << sz << " bytes), no se indexará." << endl;
                         } else {
@@ -221,7 +224,6 @@ int main(int argc, char *argv[])
                                         tg += sz;
                                 }
                         }
-                        //clog << "tg=" << tg << endl;
                 }
         }
         if (idocs.size() > 0) {
@@ -229,30 +231,25 @@ int main(int argc, char *argv[])
         }
 
         char *nomi[2];  // Nombres de temporal e indice final
-/*        if (grupo.size() % 2 == 1) {
-                nomi[0] = noma;
-                nomi[1] = nomt;
-        } else { */
-        nomi[0] = nomt;
-        nomi[1] = noma;
-        //        }
-        //
+        nomi[0] = indice_temporal;
+        nomi[1] = indice;
 
         string tipo = "otro";
         string formato;
         NodoTrieS *t;
-        uint32_t nd = 0; // indice del documento procesado
+        uint32_t indice_documento_procesado = 0; // indice del documento procesado
         try {
+                //para todos los archivos del grupo, llama indexa
                 for (uint32_t g = 0; g < grupo.size(); g++) {
                         //clog << "OJO indexando grupo g=" << g << " que termina en " << grupo[g] << endl;
                         t = new NodoTrieS();
-                        while (nd <= grupo[g]) {
-                                //clog << "OJO indexando nd=" << nd << " como " << tamsdocsini + nd + 1 << endl;
-                                indexa(idocs[nd], tamsdocsini + nd + 1, 
+                        while (indice_documento_procesado <= grupo[g]) {
+                                //clog << "OJO indexando indice_documento_procesado=" << indice_documento_procesado << " como " << tamsdocsini + indice_documento_procesado + 1 << endl;
+                                indexa(idocs[indice_documento_procesado], tamsdocsini + indice_documento_procesado + 1,
                                                 metainformacion, pref,
                                                 *t, tipo, formato);
-                                sdocs.push_back(idocs[nd]);
-                                nd++;
+                                sdocs.push_back(idocs[indice_documento_procesado]);
+                                indice_documento_procesado++;
                         }
                         //clog<<"idocs.size="<<idocs.size()<<endl;
 
@@ -279,8 +276,8 @@ int main(int argc, char *argv[])
                         delete t;
                 }
                 if (grupo.size() % 2 == 1) {
-                        remove(noma);
-                        rename(nomt, noma);
+                        remove(indice);
+                        rename(indice_temporal, indice);
                 }
                 if (grupo.size() >= 0) {
                         //clog << "OJO escribiendo relacion de documentos" << endl;
@@ -288,7 +285,7 @@ int main(int argc, char *argv[])
                 }
 
         } catch (string m) {
-                cerr << noma << ":" << m;
+                cerr << indice << ":" << m;
                 exit(1);
         }
 
