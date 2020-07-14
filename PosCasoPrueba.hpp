@@ -1,9 +1,9 @@
 /**
  * Pruebas a Pos
  *
- * @author Vladimir Támara Patiño vtamara@pasosdeJesus.org
- * Dominio público. 2008. Sin garantías.
- * http://creativecommons.org/licenses/publicdomain/ Dominio Público. Sin garantías.
+ * @author Vladimir TÃ¡mara PatiÃ±o vtamara@pasosdeJesus.org
+ * Dominio pÃºblico. 2008. Sin garantÃ­as.
+ * http://creativecommons.org/licenses/publicdomain/ Dominio PÃºblico. Sin garantÃ­as.
  * @version $Id: PosCasoPrueba.hpp,v 1.6 2010/01/06 04:19:25 vtamara Exp $
  */
 

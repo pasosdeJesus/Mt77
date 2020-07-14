@@ -1,9 +1,9 @@
 /** @file Operaciones.hpp
- * Realiza operaciones en un índice.
+ * Realiza operaciones en un Ã­ndice.
  *
  * @package Mt77
- * @author Vladimir Támara Patiño. vtamara@pasosdeJesus.org
- * Dominio público. 2009. Sin garantías
+ * @author Vladimir TÃ¡mara PatiÃ±o. vtamara@pasosdeJesus.org
+ * Dominio pÃºblico. 2009. Sin garantÃ­as
  * http://creativecommons.org/licenses/publicdomain/
  * @version   $Id: Operaciones.hpp,v 1.7 2010/01/18 16:12:50 vtamara Exp $
  */
@@ -16,7 +16,7 @@ using namespace std;
 #include "RamDisco.hpp"
 
 /**
- * Muestra palabras y frecuencias contenidas en un índice.
+ * Muestra palabras y frecuencias contenidas en un Ã­ndice.
  * @param is Flujo de entrada
  * @param pre Prefijo para indentar
  */
@@ -24,17 +24,17 @@ void
 muestraStream(std::istream &is, string pre); //throw(char *)
 
 /**
- * Lista por salida estándar palabras y frecuencias contenidas en índice.
- * @param noma Nombre de archivo con índice
- * @param nrel Nombre de archivo con relación  de documentos
+ * Lista por salida estÃ¡ndar palabras y frecuencias contenidas en Ã­ndice.
+ * @param noma Nombre de archivo con Ã­ndice
+ * @param nrel Nombre de archivo con relaciÃ³n  de documentos
  */
 void listaPalabras(char *noma, char *nrel) throw(string);
 
 /**
  * Elimina del indice nomind el documento nd y deja resultado en noma
- * @param noma Nombre del índice de salida
- * @param nomind Nombre del índice de entrada
- * @param nd Número de documento a eliminar de nomind
+ * @param noma Nombre del Ã­ndice de salida
+ * @param nomind Nombre del Ã­ndice de entrada
+ * @param nd NÃºmero de documento a eliminar de nomind
  */
 void
 eliminaDoc(char *noma, char *nomind, uint32_t nd) throw(string);
@@ -57,26 +57,26 @@ string determinaFormato(string narch);
 
 
 /**
- * Mezcla en disco dos índices
- * @param indsal Nombre del índice de salida
- * @param ind1 Nombre del primer índice por mezclar
- * @param ind2 Nombre del segundo índice por mezclar
- * @param nd Posición dentro de ind1 a partir del cual incluir
- * los de ind2.  Por convención 0 es al final.
+ * Mezcla en disco dos Ã­ndices
+ * @param indsal Nombre del Ã­ndice de salida
+ * @param ind1 Nombre del primer Ã­ndice por mezclar
+ * @param ind2 Nombre del segundo Ã­ndice por mezclar
+ * @param nd PosiciÃ³n dentro de ind1 a partir del cual incluir
+ * los de ind2.  Por convenciÃ³n 0 es al final.
  */
 void
 mezclaDosDisco(const char *indsal, const char *ind1, const char *ind2,
                uint32_t nd = 0) throw(string);
 
 /**
- * Agrega un documento a un índice
+ * Agrega un documento a un Ã­ndice
  *
  * @param indsal Indice de salida
  * @param inden Indice de entrada
  * @param nom Nombre de documento por agregar
  * @param metainformacion decide si se agrega o no
  * @param pref Prefijo para URL en nombre de documento
- * @param nd Número de documento en medio del índice existente en el que se pondrá nuevo documento o 0 para agregar al final
+ * @param nd NÃºmero de documento en medio del Ã­ndice existente en el que se pondrÃ¡ nuevo documento o 0 para agregar al final
  */
 void
 agregaDoc(const char *indsal, const char *inden, const char *nom,

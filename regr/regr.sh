@@ -1,10 +1,10 @@
 #!/bin/sh
-# Pruebas de regresión a Mt77
-# Dominio público. 2009. vtamara@pasosdeJesus.org
+# Pruebas de regresiÃ³n a Mt77
+# Dominio pÃºblico. 2009. vtamara@pasosdeJesus.org
 
 #function x {
 
-echo "Ìndice vacio:"
+echo "ÃŒndice vacio:"
 rm -rf r0.indice; ../indexador r0.indice t.indice "http://r" "" > r0.out 2>&1
 ../buscador r0.indice LA 1 0 sincopiarecientes >> r0.out 2>&1
 ../operaindice lista r0.indice >> r0.out 2>&1
@@ -17,33 +17,34 @@ rm -rf rc0.indice; ../indexador rc0.indice t.indice "http://r" "" >> r0.out 2>&1
 
 cmp r0.out esp/r0.out
 if (test "$?" != "0") then {
-	echo "** ERROR: r0 falló";
+	echo "** ERROR: r0 fallÃ³";
 } fi;
-
-echo "Creación de índices";
+echo "CreaciÃ³n de Ã­ndices";
 rm -f r1.indice; ../indexador r1.indice t.indice "http://r/" r1.txt 
 rm -f verdad.indice; ../indexador verdad.indice t.indice "http://pasosdeJesus/" verdad.txt 
 
 #function t {
 
-echo "Búsqueda sobre índice"
-(../buscador r1.indice CONOCEREÍS  1 0 sincopiarecientes;
+echo "BÃºsqueda sobre Ã­ndice"
+conocereis_l1=`cat conocereis-latin1.txt`
+hara_l1=`cat hara-latin1.txt`
+(../buscador r1.indice $conocereis_l1 1 0 sincopiarecientes;
 ../buscador r1.indice LA 1 0 sincopiarecientes ;
 ../buscador r1.indice VERDAD 1 0 sincopiarecientes ;
 ../buscador r1.indice Y  1 0 sincopiarecientes;
 ../buscador r1.indice VERDAD 1 0 sincopiarecientes ;
 ../buscador r1.indice OS 1 0 sincopiarecientes ;
-../buscador r1.indice HARÁ 1 0 sincopiarecientes ;
+../buscador r1.indice $hara_l1 1 0 sincopiarecientes ;
 ../buscador r1.indice LIBRES 1 0 sincopiarecientes ;
 ../buscador r1.indice INEXISTENTE 1 0 sincopiarecientes;
 ../operaindice lista r1.indice ) | grep -v "\"fecha\":" > r1.out 2>&1
 
 cmp r1.out esp/r1.out
 if (test "$?" != "0") then {
-	echo "** ERROR: r1 falló";
+	echo "** ERROR: r1 fallÃ³";
 } fi;
 
-echo "Búsqueda de metainformación"
+echo "BÃºsqueda de metainformaciÃ³n"
 (../buscador r1.indice sitio:r 1 0 sincopiarecientes;
 ../buscador r1.indice sitio:s 1 0 sincopiarecientes;
 ../buscador r1.indice tipo:texto 1 0 sincopiarecientes;
@@ -54,40 +55,42 @@ echo "Búsqueda de metainformación"
 
 cmp r1m.out esp/r1m.out
 if (test "$?" != "0") then {
-	echo "** ERROR: r1m falló";
+	echo "** ERROR: r1m fallÃ³";
 } fi;
 
 
-echo "Caso vacío";
-(rm -f nse.indice; ../indexador nse.indice t.indice "http://r/" "nombre con espacio.txt" "nombre con eñe.txt";
+echo "Caso vacÃ­o";
+nombrearc_latin1="`cat nombrearc-latin1.txt`"
+(rm -f nse.indice; ../indexador nse.indice t.indice "http://r/" "nombre con espacio.txt" "$nombrearc_latin1";
 ../buscador nse.indice HOLA 1 0 sincopiarecientes;
 ../buscador nse.indice "" 1 0 sincopiarecientes;
 ../operaindice lista nse.indice ) | grep -v "fecha:\"" > nse.out
 
 cmp nse.out esp/nse.out
 if (test "$?" != "0") then {
-	echo "** ERROR: nse falló";
+	echo "** ERROR: nse fallÃ³";
 } fi;
 
 
-echo "Creación de otro índice";
+echo "CreaciÃ³n de otro Ã­ndice";
 rm -f r4.indice; ../indexador r4.indice t.indice "http://r/" r4.txt 
 
 
 cmp r1.out esp/r1.out
 if (test "$?" != "0") then {
-	echo "** ERROR: r1 falló";
+	echo "** ERROR: r1 fallÃ³";
 } fi;
 
 
-echo "Otro índice";
+echo "Otro Ã­ndice";
 rm -f r2.indice; ../indexador r2.indice t.indice "http://r/" r2.txt 
 
-echo "Búsqueda sobre índice"
+echo "BÃºsqueda sobre Ã­ndice"
 
-(../buscador r2.indice CONOCEREÍS 1 0 sincopiarecientes ;
+unigenito_l1=`cat unigenito-latin1.txt`
+(../buscador r2.indice $conocereis_l1 1 0 sincopiarecientes ;
 ../buscador r2.indice CREA 1 0 sincopiarecientes ;
-../buscador r2.indice UNIGÉNITO 1 0 sincopiarecientes ;
+../buscador r2.indice $unigenito_l1 1 0 sincopiarecientes ;
 ../buscador r2.indice VIDA 1 0 sincopiarecientes ;
 ../buscador r2.indice ETERNA 1 0 sincopiarecientes ;
 ../buscador r2.indice QUE 1 0 sincopiarecientes ;
@@ -97,6 +100,8 @@ cmp r2.out esp/r2.out
 if (test "$?" != "0") then {
 	echo "** ERROR: r2 fallo";
 } fi;
+
+
 echo "Mezcla"
 
 ../operaindice mezclaram rm.indice r1.indice r2.indice
@@ -113,7 +118,7 @@ if (test "$?" != "0") then {
 ../operaindice mezclaram rm2.indice rm.indice r1.indice r2.indice
 cmp rm.indice rm2.indice
 if (test "$?" != "0") then {
-	echo "** ERROR: rm2 y rm -f deberían ser identicos";
+	echo "** ERROR: rm2 y rm -f deberÃ­an ser identicos";
 } fi;
 
 echo "Otra mezcla"
@@ -122,8 +127,9 @@ rm -f ro.indice; ../indexador ro.indice t.indice "http://r/" r1.txt r2.txt
 
 cmp ro.indice rm.indice
 if (test "$?" != "0") then {
-	echo "** ERROR: ro y rm deberían ser identicos";
+	echo "** ERROR: ro y rm deberÃ­an ser identicos";
 } fi;
+
 
 echo "Comparando mezcla en memoria con mezcla en disco"
 rm -f mateo.indice; ../indexador mateo.indice t.indice ./ mateo.txt
@@ -135,27 +141,27 @@ rm -f juan.indice; ../indexador juan.indice t.indice ./ juan.txt
 ../operaindice mezcladisco md.indice marcos.indice mateo.indice
 cmp mm.indice md.indice
 if (test "$?" != "0") then {
-	echo "** ERROR: mm y md deberían ser identicos";
+	echo "** ERROR: mm y md deberÃ­an ser identicos";
 } fi;
 
 ../operaindice mezclaram mm2.indice mm.indice lucas.indice
 ../operaindice mezcladisco md2.indice md.indice lucas.indice
 cmp mm2.indice md2.indice
 if (test "$?" != "0") then {
-	echo "** ERROR: mm2 y md2 deberían ser identicos";
+	echo "** ERROR: mm2 y md2 deberÃ­an ser identicos";
 } fi;
 
 ../operaindice mezclaram mm3.indice mm2.indice juan.indice
 ../operaindice mezcladisco md3.indice md2.indice juan.indice
 cmp mm3.indice md3.indice
 if (test "$?" != "0") then {
-	echo "** ERROR: mm3 y md3 deberían ser identicos";
+	echo "** ERROR: mm3 y md3 deberÃ­an ser identicos";
 } fi;
 
 ../operaindice mezclaram mmt.indice marcos.indice mateo.indice lucas.indice juan.indice
 cmp mmt.indice md3.indice
 if (test "$?" != "0") then {
-	echo "** ERROR: mmt y md3 deberían ser identicos";
+	echo "** ERROR: mmt y md3 deberÃ­an ser identicos";
 } fi;
 
 (../buscador md3.indice VERDAD 1 0 sincopiarecientes ;
@@ -167,12 +173,12 @@ if (test "$?" != "0") then {
 	echo "** ERROR: rm3 fallo";
 } fi;
 
-echo "Búsqueda de varias palabras"
+echo "BÃºsqueda de varias palabras"
 ../buscador r1.indice "LA VERDAD" 1 0 sincopiarecientes | grep -v "fecha\":" > r5.out 2>&1;
 ../buscador r1.indice "VERDAD VERDAD" 1 0 sincopiarecientes | grep -v "fecha\":" >> r5.out 2>&1;
 ../buscador r1.indice "OS VERDAD" 1 0 sincopiarecientes | grep -v "fecha\":" >> r5.out 2>&1;
 ../buscador r1.indice "LIBRES OS VERDAD" 1 0 sincopiarecientes | grep -v "fecha\":" >> r5.out 2>&1;
-../buscador r1.indice "CONOCEREÍS LA VERDAD Y LA VERDAD OS HARÁ LIBRES" 1 0 sincopiarecientes | grep -v "fecha\":" >> r5.out 2>&1;
+../buscador r1.indice "$conocereis_l1 LA VERDAD Y LA VERDAD OS $hara_l1 LIBRES" 1 0 sincopiarecientes | grep -v "fecha\":" >> r5.out 2>&1;
 ../buscador r1.indice "OS VERDAD LIBRES" 1 0 sincopiarecientes | grep -v "fecha\":" >> r5.out 2>&1;
 ../buscador r1.indice "OS Y Y Y Y Y VERDAD LIBRES" 1 0 sincopiarecientes | grep -v "fecha\":" >> r5.out 2>&1;
 ../buscador r1.indice "FALSO VERDAD" 1 0 sincopiarecientes  | grep -v "fecha\":" >> r5.out 2>&1
@@ -224,9 +230,9 @@ if (test "$?" != "0") then {
 echo "Elimina un documento"
 
 rm -f ro.indice; ../indexador ro.indice t.indice "http://r/" r1.txt r2.txt 
-../buscador ro.indice "CONOCEREÍS" 1 0 sincopiarecientes | grep -v "fecha\":" > ro2.out 2>&1;
+../buscador ro.indice "$conocereis_l1" 1 0 sincopiarecientes | grep -v "fecha\":" > ro2.out 2>&1;
 ../operaindice eliminadoc ro2.indice ro.indice 1 
-../buscador ro2.indice "CONOCEREÍS" 1 0 sincopiarecientes | grep -v "fecha\":" >> ro2.out 
+../buscador ro2.indice "$conocereis_l1" 1 0 sincopiarecientes | grep -v "fecha\":" >> ro2.out 
 ../operaindice lista ro2.indice >> ro2.out 
 cmp ro2.out esp/ro2.out
 if (test "$?" != "0") then {
@@ -255,7 +261,7 @@ if (test "$?" != "0") then {
 	echo "** ERROR: ra fallo";
 } fi;
 
-echo "Agrega documentos a un índice"
+echo "Agrega documentos a un Ã­ndice"
 cp r1.indice rd1.indice; cp r1.relacion rd1.relacion
 ../indexador rd1.indice t.indice "http://r/" r2.txt
 ../operaindice grafo rd1.indice > rd.out #| awk '/.*/ { n = n + 1; if (n>2) { print $0; }}' > /tmp/z1
@@ -276,14 +282,14 @@ time (rm -f juan.indice; ../indexador juan.indice t.indice ./ juan.txt; ../opera
 time (cp marcos.indice mmja.indice; cp marcos.relacion mmja.relacion; ../indexador mmja.indice t.indice "./" juan.txt)
 cmp mmj.indice mmja.indice
 if (test "$?" != "0") then {
-	echo "** ERROR: mmj y mmja deberían ser identicos";
+	echo "** ERROR: mmj y mmja deberÃ­an ser identicos";
 } fi;
 
 time (rm -f mateo.indice; ../indexador mateo.indice t.indice ./ mateo.txt; ../operaindice mezcladisco mmj.indice juan.indice mateo.indice; rm -f marcos.indice; ../indexador marcos.indice t.indice ./ marcos.txt; ../operaindice mezcladisco mmj2.indice mmj.indice marcos.indice; rm -f lucas.indice; ../indexador lucas.indice t.indice ./ lucas.txt; ../operaindice mezcladisco mmj.indice mmj2.indice lucas.indice;)
 time (cp juan.indice mmja.indice; cp juan.relacion mmja.relacion; ../indexador mmja.indice t.indice "./" mateo.txt marcos.txt lucas.txt)
 cmp mmj.indice mmja.indice
 if (test "$?" != "0") then {
-	echo "** ERROR: mmj y mmja deberían ser identicos";
+	echo "** ERROR: mmj y mmja deberÃ­an ser identicos";
 } fi;
 
 
@@ -296,21 +302,21 @@ if (test ! -f t.indice) then {
 rm -f rgt1.indice; ../indexador rgt1.indice t.indice "http://r/" r1.txt r2.txt 
 cmp rg1.indice rgt1.indice
 if (test "$?" != "0") then {
-	echo "** ERROR: rg1 y rgt1 deberían ser identicos";
+	echo "** ERROR: rg1 y rgt1 deberÃ­an ser identicos";
 } fi;
 
 
-echo "Búsqueda de cadenas"
-(../buscador r1.indice "CONOCEREÍS"  1 0 sincopiarecientes;
+echo "BÃºsqueda de cadenas"
+(../buscador r1.indice "$conocereis_l1"  1 0 sincopiarecientes;
 ../buscador r1.indice "CONOCEREIS LA VERDAD" 1 0 sincopiarecientes ;
-../buscador r1.indice "\"Y LA VERDAD OS HARÁ LIBRES\"" 1 0 sincopiarecientes
+../buscador r1.indice "\"Y LA VERDAD OS $hara_l1 LIBRES\"" 1 0 sincopiarecientes
 ../buscador md3.indice "HIJO DE DIOS" 1 0 sincopiarecientes
 ../buscador md3.indice '"HIJO DE DIOS"' 1 0 sincopiarecientes
 ) | grep -v "fecha\":" > rc1.out 2>&1
 
 cmp rc1.out esp/rc1.out
 if (test "$?" != "0") then {
-	echo "** ERROR: rc1 falló";
+	echo "** ERROR: rc1 fallÃ³";
 } fi;
 
 echo "En PDF"
@@ -323,7 +329,7 @@ if (test "$?" != "0") then {
 
 #}
 
-echo "Extrae subíndice"
+echo "Extrae subÃ­ndice"
 ../operaindice subindice rsub.indice r1.indice 1
 ../operaindice lista rsub.indice > rsub.lista
 cmp rsub.lista esp/rsub.lista
@@ -334,7 +340,7 @@ if (test "$?" != "0") then {
 ../operaindice subindice rsubm.indice mmj.indice 1 # Saca Mateo
 cmp rsubm.indice juan.indice
 if (test "$?" != "0") then {
-	echo "** ERROR: rsubm.indice y mateo.indice debería ser iguales";
+	echo "** ERROR: rsubm.indice y mateo.indice deberÃ­a ser iguales";
 } fi;
 
 
