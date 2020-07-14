@@ -1,10 +1,10 @@
 // vim: set expandtab tabstop=8 shiftwidth=8 foldmethod=marker:
 /** @file buscador.cpp
-* Carga un índice con un trie-especial y realiza una búsqueda sobre el mismo.
+* Carga un Ã­ndice con un trie-especial y realiza una bÃºsqueda sobre el mismo.
  *
  * @package Mt77
- * @author Vladimir Támara Patiño. vtamara@pasosdeJesus.org
- * Dominio público. 2009.  Sin garantías
+ * @author Vladimir TÃ¡mara PatiÃ±o. vtamara@pasosdeJesus.org
+ * Dominio pÃºblico. 2009.  Sin garantÃ­as
  * http://creativecommons.org/licenses/publicdomain/
  * @version   $Id: buscador.cpp,v 1.14 2011/10/14 11:26:10 vtamara Exp $
  */
@@ -30,7 +30,7 @@ using namespace std;
 
 
 /**
- * Recibe consulta, la analiza y retorna un conjunto de cadenas por buscar con la función realizaBusqueda
+ * Recibe consulta, la analiza y retorna un conjunto de cadenas por buscar con la funciÃ³n realizaBusqueda
  */
 set<string> analizaConsulta(char *consulta)
 {
@@ -44,10 +44,10 @@ set<string> analizaConsulta(char *consulta)
         /** 0 saltando blancos
          * 1 leyendo palabra
          * 2 leyendo palabra entre comillas
-         * 3 leyendo etiqueta después de :
+         * 3 leyendo etiqueta despuÃ©s de :
          */
         char pal[MAXCAD];
-        int npal = 0;  // Número de caracteres escritos en pal
+        int npal = 0;  // NÃºmero de caracteres escritos en pal
         uint32_t p = 0;
         for (p = 0; p < strlen(consulta); p++) {
                 if (estado == 0) {
@@ -96,7 +96,7 @@ set<string> analizaConsulta(char *consulta)
                                                 sep = " ";
                                         }
                                 }
-                                //clog << "OJO se insertará a la consulta '" << cres << "'" << endl;
+                                //clog << "OJO se insertarÃ¡ a la consulta '" << cres << "'" << endl;
                                 ccad.insert(cres);
                         } else if (npal < (int)MAXCAD-3  && (!isspace(consulta[p]) ||
                                                              !isspace(consulta[p-1]))) {
@@ -163,8 +163,8 @@ int compDoc(Pos p1, Pos p2)
 
 
 /**
- * Realiza búsqueda en el índice especificado.
- * Las cadenas por buscar ya están normalizadas.
+ * Realiza bÃºsqueda en el Ã­ndice especificado.
+ * Las cadenas por buscar ya estÃ¡n normalizadas.
  */
 set<uint32_t> *realizaBusqueda(char *indice, set<string> &consulta,
                                                  vector<Doc> &docs)
@@ -211,7 +211,7 @@ set<uint32_t> *realizaBusqueda(char *indice, set<string> &consulta,
                                         cpi = cp->begin();
                                         cpi2 = cp2->begin();
                                         while (cpi != cp->end() && cpi2 != cp2->end()) {
-                                                // Hay palabra entre cpi y cpi2 sería mejor criterio
+                                                // Hay palabra entre cpi y cpi2 serÃ­a mejor criterio
                                                 if ((cpi->numd < cpi2->numd)) {
                                                         cpi++;
                                                 } else if ((cpi->numd == cpi2->numd) &&
@@ -253,7 +253,7 @@ set<uint32_t> *realizaBusqueda(char *indice, set<string> &consulta,
                                                         mira = cpi->numd - 1;
                                                         //clog << "activando mira en " << mira << endl;
                                                 } else if (mira == cpi->numd - 1) {
-                                                        //clog << "mirando que aumentó en primera iteración docs[" << mira << "].numoc a " << docs[mira].numoc << endl;
+                                                        //clog << "mirando que aumentÃ³ en primera iteraciÃ³n docs[" << mira << "].numoc a " << docs[mira].numoc << endl;
                                                 }
                                         }
                                         //clog << endl;
@@ -273,7 +273,7 @@ set<uint32_t> *realizaBusqueda(char *indice, set<string> &consulta,
                                                         resi++;
                                                 } else {
                                                         res2->insert(cpi->numd);
-                                                        //clog << "Agregando doc donde también esta siguiente palabra, docs[cpi->numd] es " << docs[cpi->numd - 1].numoc << endl;
+                                                        //clog << "Agregando doc donde tambiÃ©n esta siguiente palabra, docs[cpi->numd] es " << docs[cpi->numd - 1].numoc << endl;
                                                         //clog << "*resi=" << *resi << ", cpi->numd=" << (uint32_t)cpi->numd << endl;
                                                         while (cpi != cp->end() && *resi == (uint32_t)cpi->numd) {
                                                                 docs[cpi->numd - 1].numoc++;
@@ -287,13 +287,13 @@ set<uint32_t> *realizaBusqueda(char *indice, set<string> &consulta,
                                                 }
                                         }
 
-                                        //clog << "Intersección dió res2.size()=" << res2->size() << endl;
+                                        //clog << "IntersecciÃ³n diÃ³ res2.size()=" << res2->size() << endl;
                                         //clog << *res2 << endl;
                                         delete res;
                                         res = res2;
                                 }
                                 delete cp;
-                        } else { // Si un conjunto es vacío la intersección es vacía.
+                        } else { // Si un conjunto es vacÃ­o la intersecciÃ³n es vacÃ­a.
                                 delete res;
                                 res = new set<uint32_t>();
                                 break;
@@ -339,7 +339,7 @@ bool resconsulta_reciente(string nc)
         time_t actual = time_t();
         double d = difftime(actual, o);
 
-        if (d>(24*60*60)) {  // 1 día
+        if (d>(24*60*60)) {  // 1 dÃ­a
                 return false;
         }
 
@@ -393,7 +393,7 @@ class Esc
                 bool operator() (uint32_t i, uint32_t j)
                 {
                         if (i >= docs->size() || j >= docs->size()) {
-                                throw "Problema buscando.  Posiblemente no coinciden índice y relación";
+                                throw "Problema buscando.  Posiblemente no coinciden Ã­ndice y relaciÃ³n";
                         }
                         ASSERT(i>=0 && i<docs->size());
                         ASSERT(j>=0 && j<docs->size());
@@ -487,21 +487,21 @@ int main(int argc, char *argv[])
         timespec t1;
         clock_gettime(CLOCK_REALTIME, &t1);
         if (argc < 3) {
-                cerr<<"Se esperaban al menos 2 argumentos, el primero indice por leer y el segundo consulta. 3ero número de resultado inicial"<<endl;
+                cerr<<"Se esperaban al menos 2 argumentos, el primero indice por leer y el segundo consulta. 3ero nÃºmero de resultado inicial"<<endl;
                 exit(1);
         }
 
         vector<Doc> docs;
         set<string> cons = analizaConsulta(argv[2]);
-        //clog << "OJO analizaConsulta retornó conjunto de tamaño " << cons.size() << endl;
+        //clog << "OJO analizaConsulta retornÃ³ conjunto de tamaÃ±o " << cons.size() << endl;
         /*	if (cons.size() == 0) {
-        		cout << "Consulta vacía<br>" << endl;
+        		cout << "Consulta vacÃ­a<br>" << endl;
         		exit(1);
         	} */
         char *f;
         if ((f = strstr(argv[1], ".indice")) == NULL ||
                         (uint32_t)(f - argv[1]) != (strlen(argv[1]) - 7) ) {
-                cerr << "se esperaba extensión .indice. "
+                cerr << "se esperaba extensiÃ³n .indice. "
                 << argv[1] << endl;
                 exit(1);
         }
@@ -518,7 +518,7 @@ int main(int argc, char *argv[])
         //	if (!resconsulta_reciente(nc) || sincopiarec) {
         //cerr << "No es reciente " << argv[1] << endl;
         set<uint32_t> *cpos = realizaBusqueda(argv[1], cons, docs);
-        //clog << "OJO realizaBusqueda retornó conjunto de tamaño " << cpos->size() << endl;
+        //clog << "OJO realizaBusqueda retornÃ³ conjunto de tamaÃ±o " << cpos->size() << endl;
         vpos = escalafon(cpos, &docs);
         ASSERT(cpos->size() == vpos->size());
         /*		guarda_resconsulta(nc, vpos);
@@ -548,7 +548,7 @@ int main(int argc, char *argv[])
                         inicio = 1;
                 }
         }
-        if (argc >= 5) {  // Convención fin en 0 significa todos
+        if (argc >= 5) {  // ConvenciÃ³n fin en 0 significa todos
                 fin = atoi(argv[4]);
                 if (fin == 0) {
                         fin = vpos->size();

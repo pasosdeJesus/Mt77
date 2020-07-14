@@ -3,8 +3,8 @@
  * Basado en ejemplo de expat
  *
  * @package Mt77
- * @author Vladimir Támara Patiño. vtamara@pasosdeJesus.org
- * Dominio público. 2009.  Sin garantías
+ * @author Vladimir TÃ¡mara PatiÃ±o. vtamara@pasosdeJesus.org
+ * Dominio pÃºblico. 2009.  Sin garantÃ­as
  * http://creativecommons.org/licenses/publicdomain/
  * @version   $Id: leeXML.cpp,v 1.11 2010/01/18 16:12:50 vtamara Exp $
  */
@@ -68,7 +68,7 @@ solopal(string s)
 }
 
 
-long inipal = -1000; // Posición en la que comienza la palabra ultpal
+long inipal = -1000; // PosiciÃ³n en la que comienza la palabra ultpal
 
 string ultpal = "";
 
@@ -85,7 +85,7 @@ endElement(void *userData, const char *name)
                 long la = 0;
                 for(uint32_t i=0; i < pals.size(); i++) {
                         if (pals[i] != "") {
-                                //clog << "OJO insertado " << i << ", " << pals[i] << " en " << name << ", posición " << inipal + la << endl;
+                                //clog << "OJO insertado " << i << ", " << pals[i] << " en " << name << ", posiciÃ³n " << inipal + la << endl;
                                 nodotries->insertaConEtiqueta(pals[i],
                                                 name,
                                                 numdoc, inipal + la);
@@ -131,7 +131,7 @@ void leeXML(const char *na, long ndoc, NodoTrieS &t)
         char buf[BUFSIZ];
         parser = XML_ParserCreate("ISO-8859-1");
         if (XML_SetEncoding(parser, "ISO-8859-1") != XML_STATUS_OK) {
-                throw "No puede ponerse codificación ISO-8859-1" ;
+                throw "No puede ponerse codificaciÃ³n ISO-8859-1" ;
         }
         int done;
         int depth = 0;

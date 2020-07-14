@@ -1,5 +1,5 @@
 /** @file Elias.hpp
- * Algoritmos de compresi髇 para n鷐eros 
+ * Algoritmos de compresi贸n para n煤meros 
  *
  * Tomados de: Compression and coding algorithms
  * Escrito por Alistair Moffat, Andrew Turpin
@@ -7,14 +7,14 @@
  * http://books.google.com.co/books?id=czwqegW_NCAC&pg=PA42&lpg=PA42&dq=Binary+Interpolative+Coding&source=bl&ots=SJ0D8VHszl&sig=nkk2CIg4rpskJkCSh6NnRimC3eU&hl=es&ei=vYqWSteBLoyvtgfXiOy-Dg&sa=X&oi=book_result&ct=result&resnum=7#v=onepage&q=Binary%20Interpolative%20Coding&f=false
  *
  * @package Mt77
- * @author Vladimir T醡ara Pati駉. vtamara@pasosdeJesus.org
- * Dominio p鷅lico. 2009. Sin garant韆s
+ * @author Vladimir T谩mara Pati帽o. vtamara@pasosdeJesus.org
+ * Dominio p煤blico. 2009. Sin garant铆as
  * http://creativecommons.org/licenses/publicdomain/
  * @version   $Id: Elias.hpp,v 1.5 2010/01/18 16:12:50 vtamara Exp $
  */
 
 #if !defined(Elias_hpp)
-#define Eliass_hpp
+#define Elias_hpp
 
 #include <vector>
 #include <string>
@@ -38,13 +38,13 @@ uint32_t piso_logb2(uint32_t x);
 uint64_t pot2(uint32_t e);
 
 /**
- * Representaci髇 de un binario como cadena imprimible de unos y ceros 
+ * Representaci贸n de un binario como cadena imprimible de unos y ceros 
  * con espacios cada 8 digitos
  */
 string bin2ascii(string bs);
 
 /**
- * Representaci髇 de un vector de booleanos como cadena imprimible de unos 
+ * Representaci贸n de un vector de booleanos como cadena imprimible de unos 
  * y ceros, con espacios cada 8 digitos
  */
 string vb2ascii(vector<bool> &vb);
@@ -75,17 +75,17 @@ void codifica_unario(uint64_t x, vector<bool> &vb);
 uint64_t decodifica_unario(vector<bool> &vb);
 
 /**
- * Convierte un entero a binario de m醲imo nbits digitos
+ * Convierte un entero a binario de m谩ximo nbits digitos
  */
 void pone_un_entero(uint64_t x, uint32_t nbits, vector<bool> &vb);
 
 /**
- * Convierte un binario de m醲imo nbits digitos a entero
+ * Convierte un binario de m谩ximo nbits digitos a entero
  */
 uint64_t toma_un_entero(uint32_t nbits, vector<bool> &vb);
 
 /**
- * Convierte x a su codificaci髇 Gama de Elias.
+ * Convierte x a su codificaci贸n Gama de Elias.
  */
 void codifica_elias_gama(uint32_t x, vector<bool> &vb);
 
@@ -96,40 +96,40 @@ uint64_t
 decodifica_elias_gama(vector<bool> &vb);
 
 /**
- * Lee un n鷐ero en codificaci髇 elias gama de un flujo.
+ * Lee un n煤mero en codificaci贸n elias gama de un flujo.
  * @param is flujo de entrada
  **/
 uint64_t
 lee_elias_gama(std::istream &is) throw(string);
 
 /**
- * Lee rapidamente un n鷐ero en codificaci髇 elias gama de un flujo.
+ * Lee rapidamente un n煤mero en codificaci贸n elias gama de un flujo.
  * @param is flujo de entrada
  **/
 uint64_t
 lee_elias_gama2(std::istream &is) throw(string);
 
 /**
- * Escribe al flujo os un entero en codificaci髇 gama de Elias.
+ * Escribe al flujo os un entero en codificaci贸n gama de Elias.
  * @param os Flujo de salida
- * @param n N鷐ero por escribir 
+ * @param n N煤mero por escribir 
  **/
 void
 escribe_elias_gama(std::ostream &os, uint32_t n);
 
 /**
- * Escribe rapidamente al flujo os un entero en codificaci髇 gama de Elias.
+ * Escribe rapidamente al flujo os un entero en codificaci贸n gama de Elias.
  * @param os Flujo de salida
- * @param n N鷐ero por escribir 
+ * @param n N煤mero por escribir 
  **/
 void
 escribe_elias_gama2(std::ostream &os, uint32_t n);
 
 
 /**
- * Retorna espacio que requerir韆 en un flujo codificar un n鷐ero en 
- * codificaci髇 gama de El韆s
- * @param n n鷐ero
+ * Retorna espacio que requerir铆a en un flujo codificar un n煤mero en 
+ * codificaci贸n gama de El铆as
+ * @param n n煤mero
  *
  * @return longitud
  */
@@ -137,12 +137,12 @@ uint32_t
 long_elias_gama(uint64_t n);
 
 /**
- * Convierte un entero menor o igual a n a su codificaci髇 binaria m韓ima 
+ * Convierte un entero menor o igual a n a su codificaci贸n binaria m铆nima 
  */
 void codifica_binaria_minima(uint64_t x, uint32_t n, vector<bool> &vb);
 
 /**
- * Convierte vb de codificaci髇 binaria m韓ima con m醲imo n a entero
+ * Convierte vb de codificaci贸n binaria m铆nima con m谩ximo n a entero
  */
 uint64_t decodifica_binaria_minima(uint32_t n, vector<bool> &vb);
 

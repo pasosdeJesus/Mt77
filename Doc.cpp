@@ -3,8 +3,8 @@
  * Documento.
  *
  * @package Mt77
- * @author Vladimir Támara Patiño. vtamara@pasosdeJesus.org
- * Dominio público. 2009.  Sin garantías
+ * @author Vladimir TÃ¡mara PatiÃ±o. vtamara@pasosdeJesus.org
+ * Dominio pÃºblico. 2009.  Sin garantÃ­as
  * http://creativecommons.org/licenses/publicdomain/
  * @version   $Id: Doc.cpp,v 1.10 2010/01/18 16:12:50 vtamara Exp $
  */
@@ -53,7 +53,7 @@ operator<<(std::ostream &os, Doc d)
         os << endl;
         if (es >= MAXLURL) {
                 throw std::string(string("El URL del documento '") + d.URL +
-                                  string("' requeriría demasiado espacio"));
+                                  string("' requerirÃ­a demasiado espacio"));
         }
         return os;
 }
@@ -120,14 +120,14 @@ vector<Doc> leeDocs(istream &is)
                 for (uint32_t i = 0; i < 4 && c != EOF; i++) {
                         if (c < '0' || c > '9') {
                                 throw errorFormato(is,
-                                                   "Se esperaba digito de año");
+                                                   "Se esperaba digito de aÃ±o");
                         }
                         f += c;
                         c = is.get();
                 }
                 //clog << "leeDocs f1=" << f << ", c=" << c << endl;
                 if (c != '-') {
-                        throw errorFormato(is, "Se esperaba - tras año");
+                        throw errorFormato(is, "Se esperaba - tras aÃ±o");
                 }
                 f += c;
                 c = is.get();
@@ -155,7 +155,7 @@ vector<Doc> leeDocs(istream &is)
                 //clog << "leeDocs f3=" << f << endl;
                 if (c != '\n') {
                         stringstream ss;
-                        ss << "Se esperaba fin de línea tras fecha, no " << (int) c;
+                        ss << "Se esperaba fin de lÃ­nea tras fecha, no " << (int) c;
                         //clog << ss.str();
                         throw ss.str();
                 }

@@ -39,7 +39,7 @@ void crypt_argchk(const char *v, const char *s, int d)
 
 const struct ltc_hash_descriptor sha256_desc =
         {
-                "sha256",
+                (char *)"sha256",
                 0,
                 32,
                 64,
@@ -56,6 +56,7 @@ const struct ltc_hash_descriptor sha256_desc =
         };
 
 
+#ifdef LTC_SMALL_CODE
 /* Arreglo K */
 static const ulong32 K[64] =
         {
@@ -73,6 +74,7 @@ static const ulong32 K[64] =
                 0x682e6ff3UL, 0x748f82eeUL, 0x78a5636fUL, 0x84c87814UL, 0x8cc70208UL,
                 0x90befffaUL, 0xa4506cebUL, 0xbef9a3f7UL, 0xc67178f2UL
         };
+#endif
 
 /* funciones lógicas */
 #define Ch(x,y,z)       (z ^ (x & (y ^ z)))

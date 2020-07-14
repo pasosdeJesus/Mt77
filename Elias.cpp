@@ -519,7 +519,7 @@ lee_elias_gama2(std::istream &is) throw (string)
                 } else {
                         // Ultimo byte puede no estar totalmente lleno
                         ui <<= nbits - bl;
-                        unsigned char cui = ((unsigned char)c) >> 8 - nbits + bl;
+                        unsigned char cui = ((unsigned char)c) >> (8 - nbits + bl);
                         //clog << "OJO último nbits=" << nbits << ", bl=" << bl << ", nbits-bl=" << nbits-bl << ", cui=" << (uint32_t)cui << " = " << ulong2ascii(cui, 8) << endl;
                         ui |= cui;
                         bl = nbits;

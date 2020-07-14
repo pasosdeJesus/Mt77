@@ -3,8 +3,8 @@
  * Funciones comunes
  *
  * @package Mt77
- * @author Vladimir Támara Patiño. vtamara@pasosdeJesus.org
- * Dominio público. 2009.  Sin garantías
+ * @author Vladimir TÃ¡mara PatiÃ±o. vtamara@pasosdeJesus.org
+ * Dominio pÃºblico. 2009.  Sin garantÃ­as
  * http://creativecommons.org/licenses/publicdomain/
  * @version   $Id: comun.cpp,v 1.17 2011/03/29 23:07:26 vtamara Exp $
  */
@@ -71,9 +71,9 @@ void verificaNombre(const char *na, char *nrel) throw(string)
         /*	nrel[MAXLURL - 1] = '\0';
         	ASSERT(nrel[MAXLURL - 1] == '\0'); */
 
-        if (strcmp(na + (strlen(na) - 7), ".indice") != 0) {
+        if (strlen(na) < 7 || strcmp(na + (strlen(na) - 7), ".indice") != 0) {
                 stringstream ss;
-                ss << "Se esperaba extensión .indice de '" << na << "'" ;
+                ss << "Se esperaba extensiÃ³n .indice de '" << na << "'" ;
                 throw ss.str();
         }
         if (strlen(na) > MAXLURL - 3) {
@@ -86,7 +86,7 @@ void verificaNombre(const char *na, char *nrel) throw(string)
         strlcat(nrel, ".relacion", MAXLURL);
 }
 
-/** Retorna el prefijo común más largo de dos cadenas */
+/** Retorna el prefijo comÃºn mÃ¡s largo de dos cadenas */
 string
 prefijo_comun_mas_largo(string a, string b)
 {
@@ -103,7 +103,7 @@ std::string errorFormato(std::istream &is, string m)
         return r.str();
 }
 
-/** Lee de un stream una cadena vacía (si el stream no puede leerse) o
+/** Lee de un stream una cadena vacÃ­a (si el stream no puede leerse) o
  * terminada con { o de MAXCAD caracteres*/
 string leeCad(std::istream &is) throw(string)
 {
@@ -117,7 +117,7 @@ string leeCad(std::istream &is) throw(string)
                 c = is.get();
         }
         if (cad.size() >= MAXCAD) {
-                cerr << "No se indexó completa palabra larga: " << cad << endl;
+                cerr << "No se indexÃ³ completa palabra larga: " << cad << endl;
                 while (c != FINCADENA && c != EOF) {
                         c =  is.get();
                 }
@@ -129,7 +129,7 @@ string leeCad(std::istream &is) throw(string)
         return cad;
 }
 
-/** Lee un número hexadecimal */
+/** Lee un nÃºmero hexadecimal */
 long
 leeHex(std::istream &is) throw(std::string)
 {
@@ -214,7 +214,7 @@ lee128b(std::istream &is) throw (std::string)
 
 
 /**
- * Convierte número a cadena usada en archivos
+ * Convierte nÃºmero a cadena usada en archivos
 string n128b_c(uint64_t n) {
 	std::stringstream ss;
 	escribe128b(ss, n);
@@ -224,7 +224,7 @@ string n128b_c(uint64_t n) {
 
 
 /**
- * Convierte número de cadena usada en archivos a long
+ * Convierte nÃºmero de cadena usada en archivos a long
  
 uint64_t c_n128b(string s) {
 	std::stringstream ss;
@@ -239,27 +239,27 @@ string normalizaCaracter(char c)
 {
         string o = "";
         if ((c >= 'A' && c <= 'Z') ||
-                        (c >= '0' && c <= '9') ) { //Mayúsculas
+                        (c >= '0' && c <= '9') ) { //MayÃºsculas
                 o += c;
         }
-        if (c >= 'a' && c <= 'z') { //Minúsculas pasan a mayúsculas
+        if (c >= 'a' && c <= 'z') { //MinÃºsculas pasan a mayÃºsculas
                 o += (c - ('a' - 'A'));
-        } else if (c == 'á' || c == 'Á') { // Tildes
+        } else if (c == '\xe1' || c == '\xc1') { // Tildes
                 o += 'A';
-        } else if (c == 'é' || c == 'É') { // Tildes
+        } else if (c == '\xe9' || c == '\xc9') { // Tildes
                 o += 'E';
-        } else if (c == 'í' || c == 'Í') { // Tildes
+        } else if (c == '\xed' || c == '\xCD') { // Tildes
                 o += 'I';
-        } else if (c == 'ó' || c == 'Ó') { // Tildes
+        } else if (c == '\xf3' || c == '\xd3') { // Tildes
                 o += 'O';
-        } else if (c == 'ú' || c == 'Ú') { // Tildes
+        } else if (c == '\xfa' || c == '\xda') { // Tildes
                 o += 'U';
-        } else if (c == 'ü' || c == 'Ü') { // Dieresis
+        } else if (c == '\xfc' || c == '\xdc') { // Dieresis
                 o += 'U';
-        } else if (c == 'ñ') {
-                o += 'Ñ';
+        } else if (c == '\xf1') {
+                o += '\xd1';
         }
-        // Lo demás se ignora
+        // Lo demÃ¡s se ignora
         return o;
 }
 
@@ -268,7 +268,7 @@ string noagregan[tamnoagregan] = {
 
                                          "Y",  // Conjunciones
                                          "O",
-                                         "EL", // Artículos
+                                         "EL", // ArtÃ­culos
                                          "LA",
                                          "LOS",
                                          "LAS",
@@ -312,7 +312,7 @@ string noagregan[tamnoagregan] = {
 
 /** Retorna cadena normalizada. i.e siguiendo convenciones de:
  * - caracteres aceptables 
- * - longitud máxima
+ * - longitud mÃ¡xima
  * - palabras excluidas
  */
 string normaliza(string s)

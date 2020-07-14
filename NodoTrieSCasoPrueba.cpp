@@ -189,11 +189,11 @@ void NodoTrieSCasoPrueba::prueba_leeTexto()
         NodoTrieS t;
         leeTexto("verdad.txt", 1, t, false);
         //clog << "t=" << t.preorden() << endl;
-        CPPUNIT_ASSERT(t.preorden() == "LAIBERARÁNOSSIVERDAD");
+        CPPUNIT_ASSERT(t.preorden() == "LAIBERAR\xC1NOSSIVERDAD");
         NodoTrieS u;
         leeTexto("verdadlarga.txt", 1, u, false);
         //clog << "u=" << u.preorden() << endl;
-        CPPUNIT_ASSERT(u.preorden() == "LAVERDADSINOSLIBERARÁSIABCDEFGHI");
+        CPPUNIT_ASSERT(u.preorden() == "LAVERDADSINOSLIBERAR\xC1SIABCDEFGHI");
 
         NodoTrieS v;
         leeTexto("verdad.txt", 1, v, true);

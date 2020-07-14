@@ -2,41 +2,41 @@
 /** @file NodoTrieS.cpp
  * TrieS en RAM.
  * Basado en http://www.pasosdejesus.org/vtamara/estinf2006-1/proy-s/index.html
- * Dominio público. 2008. vtamara@pasosdejesus.org
+ * Dominio pÃºblico. 2008. vtamara@pasosdejesus.org
  *
- * Diseño:
+ * DiseÃ±o:
  * Se intenta por sugerencia de ... que en eficiencia para indices invertidos
  * es mejor tablas de hashing que tries normales, excepto tries especiales.
  *
- * Estrategia para búsquedas tras ver doc. lucene es mantener varios indices 
- * en disco con facilidad para mezclarlos en disco y cuyas búsquedas en 
- * disco sean muy rápidas.
+ * Estrategia para bÃºsquedas tras ver doc. lucene es mantener varios indices 
+ * en disco con facilidad para mezclarlos en disco y cuyas bÃºsquedas en 
+ * disco sean muy rÃ¡pidas.
  *
- * Construir índices se facilita entonces porque se hace en memoria hasta
- * que quepa, cuando no se agota memoria RAM se escribe índice en disco y
- * se comienza uno nuevo y así sucesivamente hasta que todos los documentos
- * son indexados.  Entonces se mezclan todos los índices producidos.
+ * Construir Ã­ndices se facilita entonces porque se hace en memoria hasta
+ * que quepa, cuando no se agota memoria RAM se escribe Ã­ndice en disco y
+ * se comienza uno nuevo y asÃ­ sucesivamente hasta que todos los documentos
+ * son indexados.  Entonces se mezclan todos los Ã­ndices producidos.
  *
  * Para disminuir problemas de bloqueos, los indices no se sobreescriben 
- * (excepto cuando esté terminado un procesamiento).
+ * (excepto cuando estÃ© terminado un procesamiento).
  *
- * 2 índices grandes por sitio: local, todo.  El local es enviado a los demás
- * nodos. El de todo se construye localmente después de traer de todos los
+ * 2 Ã­ndices grandes por sitio: local, todo.  El local es enviado a los demÃ¡s
+ * nodos. El de todo se construye localmente despuÃ©s de traer de todos los
  * nodos.
  *
  * Tras revisar ... mejor mantener posicion(es) dentro del documento de cada 
  * ocurrencia para poder buscar varias palabras consecutivas.
  *
- * Implementación:
+ * ImplementaciÃ³n:
  * 4 fases imp: memoria, disco en formato extra-simple, disco en formato binario , disco en formato binario comprimido
  *
  *
- * Suponemos que las cadenas ya viene en un formato estándar, por ejemplo
- * mayúsculas sin signos de puntuación.
+ * Suponemos que las cadenas ya viene en un formato estÃ¡ndar, por ejemplo
+ * mayÃºsculas sin signos de puntuaciÃ³n.
  *
  * @package Mt77
- * @author Vladimir Támara Patiño. vtamara@pasosdeJesus.org
- * Dominio público. 2009.  Sin garantías
+ * @author Vladimir TÃ¡mara PatiÃ±o. vtamara@pasosdeJesus.org
+ * Dominio pÃºblico. 2009.  Sin garantÃ­as
  * http://creativecommons.org/licenses/publicdomain/
  * @version   $Id: NodoTrieS.cpp,v 1.19 2010/01/18 16:12:50 vtamara Exp $
  */
@@ -69,8 +69,8 @@ NodoTrieS::NodoTrieS(string cad, NodoTrieS *hijo_menor,
 
 
 /**
- * p es una posición por insertar
- * Convención: Si p tien algún componente negativo no lo inserta en 
+ * p es una posiciÃ³n por insertar
+ * ConvenciÃ³n: Si p tien algÃºn componente negativo no lo inserta en 
  * conjunto cpos 
  **/
 NodoTrieS::NodoTrieS(string cad, NodoTrieS *hijo_menor,
@@ -96,7 +96,7 @@ NodoTrieS::~NodoTrieS()
 }
 
 
-/** Apuntador retornado es a información del árbol.
+/** Apuntador retornado es a informaciÃ³n del Ã¡rbol.
  * OJO al borrar.
  **/
 set<Pos>
@@ -116,7 +116,7 @@ set<Pos>
 }
 
 
-/** Retorna nueva raíz.
+/** Retorna nueva raÃ­z.
  * Pensando en siguiente arbol
  * 	BUEN -> PODEROSO
  * 	 |
@@ -149,7 +149,7 @@ NodoTrieS::inserta(string pal, Pos p)
         delete npos;
 }
 
-/** Retorna nueva raíz.
+/** Retorna nueva raÃ­z.
  * Pensando en siguiente arbol
  * 	BUEN -> PODEROSO
  * 	 |
@@ -252,10 +252,10 @@ NodoTrieS::inserta(string pal, set<Pos> *npos)
                         //cerr << "    OJO cad<pal y h_m==NULL" << endl;
                         if (cad == "") {
                                 ASSERT(hijo_menor==NULL);
-                                /* Primer nodo del árbol después de crear
+                                /* Primer nodo del Ã¡rbol despuÃ©s de crear
                                  * con constructora por defecto.
                                  */
-                                //cerr << "    OJO estaba vacío" << endl;
+                                //cerr << "    OJO estaba vacÃ­o" << endl;
                                 cad = pal;
                                 set<Pos>::iterator si;
                                 for(si = npos->begin(); si != npos->end(); si++) {
@@ -320,7 +320,7 @@ NodoTrieS::aDotty(std::ostream &os, string pref, bool primero, bool mayor)
                         hermano_mayor->aDotty(os, pref, false, false);
                 }
         } else {
-                throw string("  # Nodo con cadena vacia no procesado");
+                throw string("  # Nodo con cadena vacÃ­a no procesado");
         }
         if (primero) {
                 os << "}" << endl;
@@ -344,9 +344,9 @@ NodoTrieS::preorden()
 
 /**
  * Mezcla dos tries retornando un tercero con el resultado.
- * memoria: a1 y a2 son destruidos, la memoria que debían liberar
- * ahora es responsabilidad del nuevo árbol retornado.
- * Debería llamarse así: 
+ * memoria: a1 y a2 son destruidos, la memoria que debÃ­an liberar
+ * ahora es responsabilidad del nuevo Ã¡rbol retornado.
+ * DeberÃ­a llamarse asÃ­: 
  * 	r = mezcla(a1, a2); a1=NULL; a2=NULL;
  */
 NodoTrieS *
@@ -473,7 +473,7 @@ mezcla(NodoTrieS *a1, NodoTrieS *a2)
                         }
                 }
         }
-        /*cerr << "Sale de función con trie iniciado con ";
+        /*cerr << "Sale de funciÃ³n con trie iniciado con ";
         if (res!=NULL) {
         	cerr <<"res="<<res<<"("<<res->cad<<")"<<endl;
         	long p = 0;
@@ -540,13 +540,13 @@ void leeTexto(const char *na, uint32_t ndoc, NodoTrieS &t, bool normalizaPal)
 
 
 /**
- * La función estádnar ispunct considera que las tildes son signos
- * de puntuación por eso no se usa.
+ * La funciÃ³n estÃ¡dnar ispunct considera que las tildes son signos
+ * de puntuaciÃ³n por eso no se usa.
  */
 bool es_signo_punt(unsigned char c)
 {
         if (c < '0' || (c > '9' && c < 'A') || (c > 'Z' && c < 'a')) {
-                //clog << c << "si es signo de puntuación" << endl;
+                //clog << c << "si es signo de puntuaciÃ³n" << endl;
                 return true;
         }
 
@@ -556,8 +556,8 @@ bool es_signo_punt(unsigned char c)
 /** 
  * Inserta una palabra normalizandola antes si normaliza es true
  * @param pal Palabra por insertar 
- * @param numdoc Numero de documento en el que insertará
- * @param pini Posición inicial donde insertará
+ * @param numdoc Numero de documento en el que insertarÃ¡
+ * @param pini PosiciÃ³n inicial donde insertarÃ¡
  * @param normaliza Indica si debe o no normalizar
  */
 void
@@ -578,12 +578,12 @@ NodoTrieS::insertaNormalizando(string pal, uint32_t numdoc, uint32_t p, bool
 
 /**
  * Divide la cadena c en palabras e inserta cada una con la etiqueta
- * dada en el árbol, referenciando el documento numdoc desde la
- * posición inicial posini.
+ * dada en el Ã¡rbol, referenciando el documento numdoc desde la
+ * posiciÃ³n inicial posini.
  * @param c Cadena con palabras por insertar
  * @param etiqueta Por agregar a cada palabra
- * @param numdoc Número de documento del cual provienen
- * @param pini Posición inicial en documento de la cadena c
+ * @param numdoc NÃºmero de documento del cual provienen
+ * @param pini PosiciÃ³n inicial en documento de la cadena c
  */
 void
 NodoTrieS::insertaConEtiqueta(string c, string etiqueta,

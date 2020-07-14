@@ -1,39 +1,39 @@
 // vim: set expandtab tabstop=8 shiftwidth=8 foldmethod=marker:
 /** @file operaindice.cpp
- * Realiza operaciones en un índice:
- * - Listar palabras de un índice con la frecuencia
+ * Realiza operaciones en un Ã­ndice:
+ * - Listar palabras de un Ã­ndice con la frecuencia
  *    lista i
- * - Generar árbol en formato dotty
+ * - Generar Ã¡rbol en formato dotty
  *    grafo i
- * - Genera condensado de índice
+ * - Genera condensado de Ã­ndice
  *    condensado i
- * - Mezcla en ram los índices i1 a i_n y deja el resultado en is
+ * - Mezcla en ram los Ã­ndices i1 a i_n y deja el resultado en is
  *    mezclaram is i1 i2 ... i_n
- * - Mezcla en disco el índice i1 con el índice i2 y deja el resultado en is
+ * - Mezcla en disco el Ã­ndice i1 con el Ã­ndice i2 y deja el resultado en is
  *    mezcladisco is i1 i2 
- * - Indexar y añadir textos a indice i con dominio d y dejar resultado en o. 
+ * - Indexar y aÃ±adir textos a indice i con dominio d y dejar resultado en o. 
  *    indexa i d a -salida o
- * - Mezclar con otro índice y dejar resultado en un tercer archivo.
- *   o Añadir un índice 
+ * - Mezclar con otro Ã­ndice y dejar resultado en un tercer archivo.
+ *   o AÃ±adir un Ã­ndice 
  *     i1 d -aumenta i2 -salida i3
- * - Eliminar uno o más documentos
+ * - Eliminar uno o mÃ¡s documentos
  *     i d -elimina d1 -elimina d2 ... -elimina d_n
  * - Renumerar referencias a documento
  *     i -renumera d1 d2 -renumera d3 d4 ...
- * - Generar el subíndice correspondiente a un documento
+ * - Generar el subÃ­ndice correspondiente a un documento
  *     subindice i d
- * - Mezclar subíndice en índice manteniendo numeración
+ * - Mezclar subÃ­ndice en Ã­ndice manteniendo numeraciÃ³n
  *     i -mezcla i2 d2
  *
  * @package Mt77
- * @author Vladimir Támara Patiño. vtamara@pasosdeJesus.org
- * Dominio público. 2009.  Sin garantías
+ * @author Vladimir TÃ¡mara PatiÃ±o. vtamara@pasosdeJesus.org
+ * Dominio pÃºblico. 2009.  Sin garantÃ­as
  * http://creativecommons.org/licenses/publicdomain/
  * @version   $Id: operaindice.cpp,v 1.16 2010/03/08 12:02:40 vtamara Exp $
  */
 
 /**
- * Dominio público. 2009. vtamara@pasosdejesus.org
+ * Dominio pÃºblico. 2009. vtamara@pasosdejesus.org
  */
 
 #include <iostream>
@@ -53,34 +53,34 @@ bool metainformacion=true;
 int main(int argc, char *argv[])
 {
         if (argc < 2) {
-                cerr<<"Se esperaba operación y parámetros" << endl;
-                cerr<<"Las operaciones posibles y sus parámetros son:" << endl;
+                cerr<<"Se esperaba operaciÃ³n y parÃ¡metros" << endl;
+                cerr<<"Las operaciones posibles y sus parÃ¡metros son:" << endl;
                 cerr << endl;
                 cerr << "eliminadoc is i n" << endl;
-                cerr << "	Elimina el n-esimo documento del índice i (n>=1) produciendo is" << endl;
+                cerr << "	Elimina el n-esimo documento del Ã­ndice i (n>=1) produciendo is" << endl;
 
                 cerr << "grafo i" << endl;
-                cerr << "	Generar árbol en formato dotty" << endl;
+                cerr << "	Generar Ã¡rbol en formato dotty" << endl;
                 cerr << "condensado i" << endl;
                 cerr << "	Generar condensado" << endl;
                 cerr << "lista i" << endl;
-                cerr << "	Lista palabras de un índice con frecuencia" << endl;
+                cerr << "	Lista palabras de un Ã­ndice con frecuencia" << endl;
                 cerr << "mezclaram is i1 i2 ... i_n" << endl;
-                cerr << "	Mezcla en ram índices i1 e i2 produciendo is" << endl;
+                cerr << "	Mezcla en ram Ã­ndices i1 e i2 produciendo is" << endl;
                 cerr << "mezcladisco is i1 i2 [n]" << endl;
-                cerr << "	Mezcla en disco. Análogo a mezclaram, aunque el parametro opcional n " << endl;
-                cerr << "	índica la posición en medio de documentos referenciados por i1, " << endl;
-                cerr << "	en la que se insertarán documentos referenciados " << endl;
-                cerr << "	por i2. Si no se especifica se insertan después de los de i1. " << endl;
-                cerr << "	Puede ser entre 1 y el total de documentos de i1 más 1"  << endl;
+                cerr << "	Mezcla en disco. AnÃ¡logo a mezclaram, aunque el parametro opcional n " << endl;
+                cerr << "	Ã­ndica la posiciÃ³n en medio de documentos referenciados por i1, " << endl;
+                cerr << "	en la que se insertarÃ¡n documentos referenciados " << endl;
+                cerr << "	por i2. Si no se especifica se insertan despuÃ©s de los de i1. " << endl;
+                cerr << "	Puede ser entre 1 y el total de documentos de i1 mÃ¡s 1"  << endl;
 /* Esto lo hace indexador 
  * cerr << "agregadoc is i1 pref d [n]" << endl;
                 cerr << "	Usando como prefijo para URL pref, indexa el documento d en RAM y " << endl;
-                cerr << "       lo mezcla con el índice i1, dejando el índice resultante en is." << endl;
-                cerr << "	El parámetro n es como en mezcladisco " << endl;
+                cerr << "       lo mezcla con el Ã­ndice i1, dejando el Ã­ndice resultante en is." << endl;
+                cerr << "	El parÃ¡metro n es como en mezcladisco " << endl;
                 */
                 cerr << "subindice is i n" << endl;
-                cerr << "	Saca del índice i el subíndice que corresponde al documento n " << endl;
+                cerr << "	Saca del Ã­ndice i el subÃ­ndice que corresponde al documento n " << endl;
                 cerr << "       y lo escribe en is" << endl;
 
 
@@ -100,7 +100,7 @@ int main(int argc, char *argv[])
 //              (strcmp(argv[1], "agregadoc") == 0 && argc != 6 && argc != 7) ||
                 (strcmp(argv[1], "mezcladisco") == 0 &&
                 (argc < 5 || argc>6))) {
-                cerr << "Cantidad de parámetros incorrecta" << endl;
+                cerr << "Cantidad de parÃ¡metros incorrecta" << endl;
                 exit(1);
         }
         try {
@@ -135,7 +135,7 @@ int main(int argc, char *argv[])
 
                         vector<Doc> docs2;
                         for (int i = 3; i < argc; i++) {
-                                vector<Doc> docs1; // Documentos en i-esimo índ.
+                                vector<Doc> docs1; // Documentos en i-esimo Ã­nd.
                                 verificaNombre(argv[i], nrel);
                                 NodoTrieS *r = leePlano(argv[i], nrel, docs1);
                                 // Renumera los del r
@@ -189,7 +189,7 @@ int main(int argc, char *argv[])
 
                         subindice(argv[3], argv[2], nd);
                 } else {
-                        cerr << "operación desconocida " << argv[1] << endl;
+                        cerr << "operaciÃ³n desconocida " << argv[1] << endl;
                         return 1;
                 }
         } catch (string s) {

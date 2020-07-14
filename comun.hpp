@@ -2,8 +2,8 @@
  * Datos comunes.
  *
  * @package Mt77
- * @author Vladimir Támara Patiño. vtamara@pasosdeJesus.org
- * Dominio público. 2008. Sin garantías
+ * @author Vladimir TÃ¡mara PatiÃ±o. vtamara@pasosdeJesus.org
+ * Dominio pÃºblico. 2008. Sin garantÃ­as
  * http://creativecommons.org/licenses/publicdomain/
  * @version   $Id: comun.hpp,v 1.11 2010/01/18 16:12:50 vtamara Exp $
  */
@@ -30,55 +30,55 @@
   if (! (x)) \
   { \
     stringstream _sa; _sa.clear(); _sa.str(""); \
-    _sa << __FILE__ << ":" << __LINE__ << "Falló aserción " << #x << " \n"; \
+    _sa << __FILE__ << ":" << __LINE__ << "FallÃ³ aserciÃ³n " << #x << " \n"; \
     throw std::string(_sa.str()); \
   }
 #endif
 
-/** Máxima longitud de un URL --de documentaos indexables */
+/** MÃ¡xima longitud de un URL --de documentaos indexables */
 const uint32_t MAXLURL = 1024;
 
-/** Máxima longitud de un condensado */
+/** MÃ¡xima longitud de un condensado */
 const uint32_t MAXLCONDENSADO = 64;
 
-/** Máxima longitud de un hexadecimal.  Usado por lo menos en
- *  indice de documento en posición, posiciones dentro del índice. */
+/** MÃ¡xima longitud de un hexadecimal.  Usado por lo menos en
+ *  indice de documento en posiciÃ³n, posiciones dentro del Ã­ndice. */
 const uint32_t MAXLHEX = 8;
 
-/** Máxima longitud de un 128b (número en base 128).  Por usar en
- * índice de documento, posición, ``apuntadores'' al archivo 
+/** MÃ¡xima longitud de un 128b (nÃºmero en base 128).  Por usar en
+ * Ã­ndice de documento, posiciÃ³n, ``apuntadores'' al archivo 
  */
 const int MAXL128B = 5;
 
 /**
- * Máxima longitud de un número en formato escogido para archivo 
+ * MÃ¡xima longitud de un nÃºmero en formato escogido para archivo 
  **/
 const int MAXLNUMERO = MAXL128B;
 
-/** Máxima longitud de un decimal. Empleado por lo menos para
- * indexar documentos referenciados por un índice. */
+/** MÃ¡xima longitud de un decimal. Empleado por lo menos para
+ * indexar documentos referenciados por un Ã­ndice. */
 const int MAXLDEC = 10;
 
-/** Tamaño máximo de una cadena indexable */
+/** TamaÃ±o mÃ¡ximo de una cadena indexable */
 const uint32_t MAXCAD = 32;
 
 using namespace std;
 
-/** Marca en índice */
-const string MARCAIND = "Mt77:índiceP5";
+/** Marca en Ã­ndice */
+const string MARCAIND = "Mt77:Ã­ndiceP5";
 
 
-/** Marca en relación de documentos */
-const string MARCAREL = "Mt77:relaciónP5";
+/** Marca en relaciÃ³n de documentos */
+const string MARCAREL = "Mt77:relaciÃ³nP5";
 
 
 /** Caracter que marca final de una cadena en archivo */
 const char FINCADENA = '{';
 
 /**
- * Verifica nombre de índice, y genera nombre de relación de documentos
+ * Verifica nombre de Ã­ndice, y genera nombre de relaciÃ³n de documentos
  * asociada
- * @param na Nombre de índice
+ * @param na Nombre de Ã­ndice
  * @param nrel con espacio para MAXLURL caracteres, retorna nombre de rel.
  */
 void verificaNombre(const char *na, char *nrel) throw(string);
@@ -86,9 +86,9 @@ void verificaNombre(const char *na, char *nrel) throw(string);
 
 /**
  * Formatea un conjunto a un flujo de salida
- * @param os Flujo de sálida
+ * @param os Flujo de sÃ¡lida
  * @param c Conjunto
- * @return El mismo flujo de sálida recibido pero tras envíar una represntación
+ * @return El mismo flujo de sÃ¡lida recibido pero tras envÃ­ar una represntaciÃ³n
  * plan del conjunto
  */
 template <class T>
@@ -107,17 +107,17 @@ operator<<(std::ostream &os, set<T> c)
 }
 
 /**
- * Retorna el prefijo común más largo de dos cadenas
+ * Retorna el prefijo comÃºn mÃ¡s largo de dos cadenas
  * @param a Primera cadena
  * @param b Segunda cadena
  **/
 string prefijo_comun_mas_largo(string a, string b);
 
 /**
- * Retorna cadena de error con posición de is
+ * Retorna cadena de error con posiciÃ³n de is
  * @param is Flujo de entrada
  * @param m Cadena con error 
- * @return Cadena con mensaje de error precedido de posición en is
+ * @return Cadena con mensaje de error precedido de posiciÃ³n en is
  **/
 std::string errorFormato(std::istream &is, string m);
 
@@ -128,7 +128,7 @@ std::string errorFormato(std::istream &is, string m);
 string leeCad(istream &is) throw(string);
 
 /**
- * Lee un número hexadecimal 
+ * Lee un nÃºmero hexadecimal 
  * @param is flujo de entrada
  **/
 long leeHex(std::istream &is) throw(string);
@@ -137,14 +137,14 @@ long leeHex(std::istream &is) throw(string);
 /**
  * Escribe en os un entero como hexadecimal de 8 digitos.
  * @param os Flujo de salida
- * @param n Número por escribir como hexadecimla de 8 dígitos
+ * @param n NÃºmero por escribir como hexadecimla de 8 dÃ­gitos
  **/
 void escribeHex(std::ostream &os, uint32_t n);
 
 /**
- * Lee un número en base 128.
+ * Lee un nÃºmero en base 128.
  * Cada digito es un caracter entre '0' (ASCII 48) y el de ASCII 175.
- * Con 5 dígitos de estos puede representarse más de 4294967295 = 0xFFFFFFFF 
+ * Con 5 dÃ­gitos de estos puede representarse mÃ¡s de 4294967295 = 0xFFFFFFFF 
  * @param is flujo de entrada
  **/
 long lee128b(std::istream &is) throw(string);
@@ -154,27 +154,27 @@ long lee128b(std::istream &is) throw(string);
  * Escribe en os un entero en base 128.
  * @see lee128b
  * @param os Flujo de salida
- * @param n Número por escribir en base 128
+ * @param n NÃºmero por escribir en base 128
  **/
 void escribe128b(std::ostream &os, uint32_t n);
 
 /**
- * Convierte número a cadena en base 128b
+ * Convierte nÃºmero a cadena en base 128b
  * @see lee128b
- * @param n Número por retornar
+ * @param n NÃºmero por retornar
  */
 string n128b_c(uint32_t n);
 
 /**
- * Convierte número en base 128 a entero
+ * Convierte nÃºmero en base 128 a entero
  * @see lee128b
- * @param s Cadena con númro en base 128
+ * @param s Cadena con nÃºmro en base 128
  */
 uint32_t c_n128b(string s);
 
 /**
- * Retorna longitud de un número en base 128
- * @param n número
+ * Retorna longitud de un nÃºmero en base 128
+ * @param n nÃºmero
  *
  * @return longitud
  */
@@ -186,7 +186,7 @@ long128b(uint32_t n)
 
 
 /**
- * Lee un número en formato escogido para desplazamientos
+ * Lee un nÃºmero en formato escogido para desplazamientos
  * @param is flujo de entrada
  **/
 inline uint32_t
@@ -197,9 +197,9 @@ leeNDesp(std::istream &is) throw (std::string)
 
 
 /**
- * Escribe un número en el formato escogido para desplazamientos
+ * Escribe un nÃºmero en el formato escogido para desplazamientos
  * @param os Flujo de salida
- * @param n Número por escribir 
+ * @param n NÃºmero por escribir 
  **/
 inline void
 escribeNDesp(std::ostream &os, uint32_t n)
@@ -209,7 +209,7 @@ escribeNDesp(std::ostream &os, uint32_t n)
 
 
 /**
- * Retorna longitud del número n al escribirlo con escribeNDesp
+ * Retorna longitud del nÃºmero n al escribirlo con escribeNDesp
  */
 inline uint32_t
 longNDesp(uint32_t n)
@@ -221,7 +221,7 @@ longNDesp(uint32_t n)
 /**
  * Normaliza caracter
  * @param c Caracter 
- * @return Cadena que corresponde (tipicamente mayúscula o vacío)
+ * @return Cadena que corresponde (tipicamente mayÃºscula o vacÃ­o)
  */
 string normalizaCaracter(char c);
 
@@ -233,8 +233,8 @@ string normalizaCaracter(char c);
 string normaliza(string s);
 
 /**
- * Convierte primer caracter de cadena u8 con codificación UTF-8 al
- * caracter que le corresponde en codificación latin1.
+ * Convierte primer caracter de cadena u8 con codificaciÃ³n UTF-8 al
+ * caracter que le corresponde en codificaciÃ³n latin1.
  * Inspirado en 
  * - utf8_decode de 
  * http://svn.apache.org/repos/asf/stdcxx/branches/4.1.3/util/charmap.cpp
@@ -242,12 +242,12 @@ string normaliza(string s);
  *
  * @param u8 Cadena en UTF-8
  * @param latin1 Caracter de salida
- * @return Cantidad de bytes leidos de u8 para la conversión
+ * @return Cantidad de bytes leidos de u8 para la conversiÃ³n
  */
 int car_utf8_a_latin1(const char *u8, char *latin1);
 
 /**
- * Convierte cadena u8 con codificación UTF-8 a latin 1 (ISO8859-1).
+ * Convierte cadena u8 con codificaciÃ³n UTF-8 a latin 1 (ISO8859-1).
  *
  * @param u8 Cadena en UTF-8
  * @param len Longitud de u8

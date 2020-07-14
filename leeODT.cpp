@@ -1,11 +1,11 @@
 // vim: set expandtab tabstop=8 shiftwidth=8 foldmethod=marker:
 /** @file leeODT.cpp
  * Lee un archivo en formato odt de Open Document Format e incluye su 
- * información a un índice.
+ * informaciÃ³n a un Ã­ndice.
  *
  * @package Mt77
- * @author Vladimir Támara Patiño. vtamara@pasosdeJesus.org
- * Dominio público. 2009.  Sin garantías
+ * @author Vladimir TÃ¡mara PatiÃ±o. vtamara@pasosdeJesus.org
+ * Dominio pÃºblico. 2009.  Sin garantÃ­as
  * http://creativecommons.org/licenses/publicdomain/
  * @version   $Id: leeODT.cpp,v 1.11 2010/01/06 10:09:30 vtamara Exp $
  */
@@ -42,11 +42,11 @@ using namespace std;
 /**
  * Aplica XSLT que  extrae textos al archivo de nombre arch.
  *
- * En vez de usar librería libxslt podría recorrerse el XML con expat
+ * En vez de usar librerÃ­a libxslt podrÃ­a recorrerse el XML con expat
  * haciendo lo que hace la hoja de estilo.
  * @param dt Directorio temporal
- * @param arch nombre de archivo al cual se aplicará xslt
- * @param nomsal archivo donde se dejará resultado
+ * @param arch nombre de archivo al cual se aplicarÃ¡ xslt
+ * @param nomsal archivo donde se dejarÃ¡ resultado
  **/
 void
 aplicaXSLT(string dt, string arch, string nomsal)
@@ -146,7 +146,7 @@ aplicaXSLT(string dt, string arch, string nomsal)
  * directorio dt
  * @param odt
  * @param odt Ruta al archivo ODT del cual extraer
- * @param dt Ruta al directorio tempral donde se dejarán archivos
+ * @param dt Ruta al directorio tempral donde se dejarÃ¡n archivos
  *
  * Ver funzipuno.c
  */
@@ -202,7 +202,7 @@ string prepara(string odt)
         char tipo[100];
         is.getline(tipo, 100);
         if (strcmp(tipo, "application/vnd.oasis.opendocument.text") != 0) {
-                throw "Sólo puede convertir textos OpenDocument" ;
+                throw "SÃ³lo puede convertir textos OpenDocument" ;
         }
         return dt;
         //xsltproc  $md/odtatexto.xsl /var/tmp/odtatexto/content.xml > $s

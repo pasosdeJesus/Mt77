@@ -1,10 +1,10 @@
 // vim: set expandtab tabstop=8 shiftwidth=8 foldmethod=marker:
 /** @file TrieSDisco.cpp
- * RepresentaciÛn en disco de un TrieS
+ * Representaci√≥n en disco de un TrieS
  *
  * @package Mt77
- * @author Vladimir T·mara PatiÒo. vtamara@pasosdeJesus.org
- * Dominio p˙blico. 2009.  Sin garantÌas
+ * @author Vladimir T√°mara Pati√±o. vtamara@pasosdeJesus.org
+ * Dominio p√∫blico. 2009.  Sin garant√≠as
  * http://creativecommons.org/licenses/publicdomain/
  * @version   $Id: TrieSDisco.cpp,v 1.24 2010/03/08 12:02:40 vtamara Exp $
  */
@@ -51,7 +51,7 @@ precalcula_escribe_actual(uint32_t longcad, set<Pos> *cpos)
  * }
  * @param desp Desplazamiento inicial en stream
  * @param dhijo Distancia al hijo menor
- * @return PosiciÛn donde comienza ''apuntador'' a hijo menor
+ * @return Posici√≥n donde comienza ''apuntador'' a hijo menor
  */
 uint32_t
 escribeNodo(iostream &os, string c, set<Pos> *cpos,
@@ -82,7 +82,7 @@ escribeNodo(iostream &os, string c, set<Pos> *cpos,
         escribePos(os, cpos);
 
         if (depuraos != NULL) {
-                clog << "escribeNodo: '" << depuraos->str() << "'" << endl;
+                //clog << "escribeNodo: '" << depuraos->str() << "'" << endl;
         }
         return pih;
 }
@@ -99,7 +99,8 @@ uint32_t escribeCopiaNodo(iostream &os, istream &is, uint32_t &phijo,
         string cad = leeCad(is);
         //clog << " cad='" << cad << "'";
         if (cad != "") {
-                uint32_t phermano = leeNDesp(is);
+                //uint32_t phermano = leeNDesp(is); 
+                (void)leeNDesp(is); // Si depura comentar y descomentar ant.
                 //clog << " phermano=" << phermano;
                 phijo = leeNDesp(is);
                 uint32_t dhijo = 0;
@@ -140,14 +141,15 @@ escribeCopiaSubarbol(iostream &os, istream &is, bool conHermanos,
         cad = leeCad(is);
         //clog << "OJO cad=" << cad << endl;
         /* INV: cad es cadena leida del nodo por copiar
-         * "cursor" de is est· a continuaciÛn de la cadena leÌda 
+         * "cursor" de is est√° a continuaci√≥n de la cadena le√≠da 
          * n es cantidad de nodos hermanos ya leidos
          * dhijo tiene lista de apuntadores a hijos 
          * pih es vector de posiciones de apuntadores a hijos escritos en os
          */
         for (n = 0; cad != "" && (conHermanos || n == 0); n++) {
                 //clog << "OJO is.tellg()=" << is.tellg() << endl;
-                uint32_t phermano = leeNDesp(is);
+                //uint32_t phermano = leeNDesp(is); 
+                (void)leeNDesp(is); 
                 //clog << "OJO prini=" << prini << " phermano=" << phermano << endl;
                 uint32_t h = leeNDesp(is);
                 //clog << "OJO prini=" << prini << " h=" << h << endl;
@@ -178,9 +180,9 @@ escribeCopiaSubarbol(iostream &os, istream &is, bool conHermanos,
         }
         uint32_t i;
         /* INV: n cantidad de nodos hermanos por copiar
-         * "cursor" de os est· al final
-         * dhijo[i] tiene posiciÛn  en is del hijo menor del i-esimo nodo
-         * pih[i] es posiciÛn en os donde est· el hexadecimal con posiciÛn
+         * "cursor" de os est√° al final
+         * dhijo[i] tiene posici√≥n  en is del hijo menor del i-esimo nodo
+         * pih[i] es posici√≥n en os donde est√° el hexadecimal con posici√≥n
          * 	de hijo menor del i-esimo nodo.
          */
         uint32_t pini, pfin;
@@ -212,11 +214,11 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
 
         string cad1;
         string cad2;
-        uint32_t numhermanos; // N˙mero de hermanos escritos en os
-        uint32_t n1=0; // N˙mero de hermanos revisados en is1
-        uint32_t n2=0; // N˙mero de hermanos revisados en is2
-        uint32_t phermano1; // PosiciÛn de hermano en is1
-        uint32_t phermano2; // PosiciÛn de hermano en is2
+        uint32_t numhermanos; // N√∫mero de hermanos escritos en os
+        uint32_t n1=0; // N√∫mero de hermanos revisados en is1
+        uint32_t n2=0; // N√∫mero de hermanos revisados en is2
+        uint32_t phermano1; // Posici√≥n de hermano en is1
+        uint32_t phermano2; // Posici√≥n de hermano en is2
 
         // Posibles operaciones con hijos en is1 e is2 para producir hijo(s)
         // en os
@@ -230,12 +232,12 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
         ;
         vector<int64_t> dhijo1(0); // apuntadores a hijos de nodos en is1
         vector<int64_t> dhijo2(0); // apuntadores a hijos de nodos en is2
-        vector<string> resto1(0); // Cadenas con las que comenazar·n hijos
-        vector<string> resto2(0); // Cadenas con las que comenzarÌan hijos
-        vector<int64_t> opera(0); // operaciÛn por realizar a hijos en 2da parte
+        vector<string> resto1(0); // Cadenas con las que comenazar√°n hijos
+        vector<string> resto2(0); // Cadenas con las que comenzar√≠an hijos
+        vector<int64_t> opera(0); // operaci√≥n por realizar a hijos en 2da parte
         vector<int64_t> pih(0); // posiciones de apuntadores a hijos en os
 
-        int64_t prini = os.tellp(); //podrÌa ser -1 
+        int64_t prini = os.tellp(); //podr√≠a ser -1 
         //clog << "OJO mezclaRec prini=" << prini << ", is1.tellg()=" << is1.tellg() << ", is2.tellg()=" << is2.tellg() << endl;
         //clog << "peek1=" << is1.peek() << endl;
         //clog << "peek2=" << is2.peek() << endl;
@@ -260,9 +262,9 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
                 /* INV:
                  * cad1 es cadena en nodo de is1
                  * cad2 es cadena en nodo de is2
-                 * cursor de is1 est· a continuaciÛn de cad1 
+                 * cursor de is1 est√° a continuaci√≥n de cad1 
                  * 	(sobre inicio de posiciones)
-                 * cursor de is2 est· a continuaciÛn de cad2 
+                 * cursor de is2 est√° a continuaci√≥n de cad2 
                  * conHermanos1 es true si debe continuar con hermanos en is1
                  * conHermanos2 es true si debe seguir con hermanos en is2
                  */
@@ -290,7 +292,7 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
                                 cad1 = leeCad(is1);
                                 n1++;
                                 // cad2 quieto
-                                // en la recursiÛn hijos de cad1
+                                // en la recursi√≥n hijos de cad1
                                 //quedamos en el siguiente hermano mayor en is1
                         } else { /*cad2!="" && (cad1=="" || cad1 >= cad2) */
                                 // e.g BUENO y AMOR o
@@ -349,7 +351,7 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
                                 // e.g BUENO BUENOS
                                 ASSERT(r2 != "");
                                 //clog << "r1 vacio"<<endl;
-                                // debe mezclar hijo de is1 con un sÛlo
+                                // debe mezclar hijo de is1 con un s√≥lo
                                 // nodo de is2 pero is2 comenzando en el
                                 // posfijo r2
 
@@ -447,7 +449,7 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
         uint32_t hijo1=0, hijo2=0;
         uint32_t ph1, ph2, pnh1, pnh2;
         for (uint32_t  n = 0; n < numhermanos; n++) {
-                pini = 0; // PosiciÛn donde queda hijo en os
+                pini = 0; // Posici√≥n donde queda hijo en os
                 switch (opera[n]) {
                 case O_COPIA1:
                         //clog << "COPIA1" <<endl;
@@ -538,8 +540,8 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
                         pini = os.tellp();  // no puede ser -1
 
                         // pos no es NULL en los siguientes,
-                        // m·s bien copiar de is1 e is2 e hijos
-                        // despuÈs.
+                        // m√°s bien copiar de is1 e is2 e hijos
+                        // despu√©s.
                         pnh1=escribeCopiaNodo(os, is1, hijo1, renum1);
                         pnh2=escribeCopiaNodo(os, is2, hijo2, renum2);
                         os << endl;
@@ -661,7 +663,7 @@ buscaPlanoStream(std::istream &is, string pal) throw(string)
 
                 return buscaPlanoStream(is, pal);
         }
-        //clog<<"OJO no se encontrÛ" << endl;
+        //clog<<"OJO no se encontr√≥" << endl;
         return NULL;
 }
 
@@ -673,7 +675,7 @@ void verificaIndice(istream &is)
         is.seekg(0);
         is.getline(rec, MAXLURL);
         if (rec != MARCAIND) {
-                throw errorFormato(is, string("Se esperaba `") + MARCAIND + string("' pero se encontrÛ ") + rec);
+                throw errorFormato(is, string("Se esperaba `") + MARCAIND + string("' pero se encontr√≥ ") + rec);
         }
 }
 
@@ -688,6 +690,8 @@ buscaPlano(const char *na, const char *nrel, string pal, vector<Doc> &docs)
         verificaIndice(is);
         try {
                 r = buscaPlanoStream(is, pal);
+                //clog << "OJO buscado r=" << r << endl;
+                throw errorFormato(is, "OJO paso 2");
         } catch (string m) {
                 throw errorFormato(is, m);
         }
@@ -714,14 +718,14 @@ leeRelacion(const char *nrel,  vector<Doc> &docs) throw(string)
         fstream is(nrel, ios_base::in);
         if (!is) {
                 stringstream ss;
-                ss << "No pudo abrir relaciÛn " << nrel;
+                ss << "No pudo abrir relaci√≥n " << nrel;
                 throw ss.str();
         }
         is.seekg(0);
         is.getline(rec, 100);
         if (rec != MARCAREL) {
                 throw errorFormato(is,
-                                   string("Se esperaba marca de relaciÛn ") + MARCAREL + " pero se encontrÛ " + rec);
+                                   string("Se esperaba marca de relaci√≥n ") + MARCAREL + " pero se encontr√≥ " + rec);
         }
         docs = leeDocs(is);
         is.close();
@@ -770,7 +774,7 @@ void condensadoPos(set<Pos> *cpos, hash_state *md, bool imprime = false)
 
 
 /**
- * Calcula condensando de un flujo de Ìndice teniendo en cuenta palabras
+ * Calcula condensando de un flujo de √≠ndice teniendo en cuenta palabras
  * completas y las posiciones donde aparece.
  *
  * @param is       archivo que se lee ubicado al comienzo de un nodo
@@ -819,10 +823,10 @@ void condensadoFlujo(istream &is,  hash_state *md, string precad, bool imprime)
 
 
 /**
- * Calcula condensando de un Ìndice teniendo en cuenta palabras
+ * Calcula condensando de un √≠ndice teniendo en cuenta palabras
  * completas y las posiciones donde aparece.
  *
- * @param indice   Õndice
+ * @param indice   √çndice
  * @param depura   Si debe presentar datos a los que calcula SHA256
  * 
  * @return string 32 bytes hexadececimales

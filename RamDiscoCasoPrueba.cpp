@@ -1,10 +1,10 @@
 // vim: set expandtab tabstop=8 shiftwidth=8 foldmethod=marker:
 /** @file RamDiscoCasoPrueba.cpp
- * Pruebas de regresión a operaciones en disco y RAM
+ * Pruebas de regresiÃ³n a operaciones en disco y RAM
  *
  * @package Mt77
- * @author Vladimir Támara Patiño. vtamara@pasosdeJesus.org
- * Dominio público. 2009.  Sin garantías
+ * @author Vladimir TÃ¡mara PatiÃ±o. vtamara@pasosdeJesus.org
+ * Dominio pÃºblico. 2009.  Sin garantÃ­as
  * http://creativecommons.org/licenses/publicdomain/
  * @version   $Id: RamDiscoCasoPrueba.cpp,v 1.14 2010/01/18 16:12:50 vtamara Exp $
  */
@@ -95,7 +95,8 @@ void RamDiscoCasoPrueba::prueba_leePlano()
 
         docs.clear();
 
-        NodoTrieS *n = leePlano("ej.indice", "ej.relacion", docs);
+        NodoTrieS *n = leePlano((char *)"ej.indice", (char *)"ej.relacion", 
+                        docs);
         cout << n->preorden() << endl;
         CPPUNIT_ASSERT(docs.size() == 1);
         CPPUNIT_ASSERT(n->preorden() == "JESUSORAMTAM");
@@ -153,13 +154,13 @@ void RamDiscoCasoPrueba::prueba_leeTexto()
 {
 
         fstream os("verdad.txt", ios_base::out);
-        os << "LA VERDAD SI NOS LIBERARÁ SI" << endl;
+        os << "LA VERDAD SI NOS LIBERAR\xC1 SI" << endl;
         os.close();
         NodoTrieS t;
         leeTexto("verdad.txt", 1, t, false);
 
         //cout << "OJO " << t.preorden() << endl;
-        CPPUNIT_ASSERT(t.preorden() == "LAIBERARÁNOSSIVERDAD");
+        CPPUNIT_ASSERT(t.preorden() == "LAIBERAR\xC1NOSSIVERDAD");
 
         //t.aDotty(cout, "");
         std::stringstream sos;
@@ -466,7 +467,7 @@ void RamDiscoCasoPrueba::prueba_mezclaDiscoRam()
 
                 //cout<<"sos='"<<sos.str()<<"'"<<endl;
                 CPPUNIT_ASSERT(sos.str() == sist.str());
-                delete na;  // Borra a nm también
+                delete na;  // Borra a nm tambiÃ©n
                 delete nam;
 
 
@@ -479,7 +480,7 @@ void RamDiscoCasoPrueba::prueba_mezclaDiscoRam()
                 //llena_ss(sis2, na);
 
                 mezclaDiscoRam(sis1, na, 0, sos, true, true, NULL, NULL);
-                delete na; // Borra también no
+                delete na; // Borra tambiÃ©n no
                 delete nam;
 
                 no = new NodoTrieS("o", NULL, NULL, set<Pos>());
@@ -711,7 +712,7 @@ void RamDiscoCasoPrueba::prueba_mezclaDiscoRam()
                 CPPUNIT_ASSERT(sos.str() == sis1.str());
 
 
-                // En un sos no vacío
+                // En un sos no vacÃ­o
 
                 sos.clear();
                 sos.str("");
