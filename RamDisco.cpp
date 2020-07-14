@@ -172,7 +172,7 @@ escribePlano(NodoTrieS &t, vector<Doc> &docs, const char *na, const char *nrel)
 
         fstream os(na, ios_base::out);
         os << MARCAIND << endl;
-        escribePlanoStream(&t, os);
+        escribePlanoStream(&t, os, 0);
         os.close();
 
         escribeRelacion(nrel, docs, NULL);

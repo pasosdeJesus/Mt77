@@ -320,7 +320,7 @@ NodoTrieS::aDotty(std::ostream &os, string pref, bool primero, bool mayor)
                         hermano_mayor->aDotty(os, pref, false, false);
                 }
         } else {
-                throw string("  # Nodo con cadena vacía no procesado");
+                throw string("  # Nodo con cadena vacia no procesado");
         }
         if (primero) {
                 os << "}" << endl;

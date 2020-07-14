@@ -1,7 +1,7 @@
 #!/bin/sh
 # Aplica a todas las fuentes las transformaciones de herram/trans.sed
 # y herram/trans.awk si existe
-# Dominio público. 2009. vtamara@pasosdeJesus.org
+# Dominio pÃºblico. 2009. vtamara@pasosdeJesus.org
 
 mkdir -p /tmp/pruebas/aut
 mkdir -p /tmp/aut
