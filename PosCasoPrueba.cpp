@@ -1,10 +1,10 @@
 // vim: set expandtab tabstop=8 shiftwidth=8 foldmethod=marker:
 /** @file PosCasoPrueba.cpp
- * Pruebas de regresión a Pos
+ * Pruebas de regresiÃ³n a Pos
  *
  * @package Mt77
- * @author Vladimir Támara Patiño. vtamara@pasosdeJesus.org
- * Dominio público. 2009.  Sin garantías
+ * @author Vladimir TÃ¡mara PatiÃ±o. vtamara@pasosdeJesus.org
+ * Dominio pÃºblico. 2009.  Sin garantÃ­as
  * http://creativecommons.org/licenses/publicdomain/
  * @version   $Id: PosCasoPrueba.cpp,v 1.10 2010/01/18 16:12:50 vtamara Exp $
  */
@@ -29,14 +29,14 @@ string posAstringYBorra(set<Pos> *n)
         std::stringstream sso;
         sso << *n;
         delete n;
-        //	cout << "OJO posAstringYborra retornará " << sso.str() << endl;
+        //	cout << "OJO posAstringYborra retornarÃ¡ " << sso.str() << endl;
         return sso.str();
 }
 
 
 /**
- * Convierte número a cadena en codificacio usada en archivos para posiciones
- * Números y posiciones
+ * Convierte nÃºmero a cadena en codificacio usada en archivos para posiciones
+ * NÃºmeros y posiciones
  */
 string numC(long n)
 {
@@ -47,7 +47,7 @@ string numC(long n)
 
 
 /**
- * Convierte cadena con codificacion para números usada en archivos a long
+ * Convierte cadena con codificacion para nÃºmeros usada en archivos a long
  */
 uint64_t cNum(string s)
 {

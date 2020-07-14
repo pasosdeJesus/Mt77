@@ -1,11 +1,11 @@
 // vim: set expandtab tabstop=8 shiftwidth=8 foldmethod=marker:
 /** @file DocCasoPrueba.cpp
  *
- * Pruebas de regresión a Doc
+ * Pruebas de regresiÃ³n a Doc
  *
  * @package Mt77
- * @author Vladimir Támara Patiño. vtamara@pasosdeJesus.org
- * Dominio público. 2009.  Sin garantías
+ * @author Vladimir TÃ¡mara PatiÃ±o. vtamara@pasosdeJesus.org
+ * Dominio pÃºblico. 2009.  Sin garantÃ­as
  * http://creativecommons.org/licenses/publicdomain/
  * @version   $Id: DocCasoPrueba.cpp,v 1.9 2010/01/18 16:12:50 vtamara Exp $
  */

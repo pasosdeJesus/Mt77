@@ -76,7 +76,7 @@ static const ulong32 K[64] =
         };
 #endif
 
-/* funciones lógicas */
+/* funciones lÃ³gicas */
 #define Ch(x,y,z)       (z ^ (x & (y ^ z)))
 #define Maj(x,y,z)      (((x | y) & z) | (x & y))
 #define S(x, n)         RORc((x),(n))
@@ -322,8 +322,8 @@ string hexaDeHash(unsigned const char *hash, int l)
 /* Calcula condensado SHA-256 de un archivo.
  *
  * Basado en md5wrapper::getHashFromFile(std::string filename)	de
- * código de dominio público.
- * Feb. 2005	Benjamin Grüdelbach	
+ * cÃ³digo de dominio pÃºblico.
+ * Feb. 2005	Benjamin GrÃ¼delbach	
  * http://www.md5hashing.com/c++/md5wrapper.h
  *
  * @param narch Nombre del archivo
