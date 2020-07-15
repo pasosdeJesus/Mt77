@@ -29,26 +29,26 @@
 #define CRYPT   0x0116
 #define SCRYPT  "1.16"
 
-/* Máximo tamaño de un bloque del hash */
+/* MÃ¡ximo tamaÃ±o de un bloque del hash */
 #define MAXBLOCKSIZE  128
 
-/* tamaño de la tabla de descriptores */
+/* tamaÃ±o de la tabla de descriptores */
 #define TAB_SIZE      32
 
-/* códigos de error */
+/* cÃ³digos de error */
 enum {
-        CRYPT_OK=0,             /* El resultado está bien*/
-        CRYPT_ERROR,            /* Error genérico */
-        CRYPT_NOP,              /* No es falla pero no se efectuó operación */
+        CRYPT_OK=0,             /* El resultado estÃ¡ bien*/
+        CRYPT_ERROR,            /* Error genÃ©rico */
+        CRYPT_NOP,              /* No es falla pero no se efectuÃ³ operaciÃ³n */
 
-        CRYPT_INVALID_KEYSIZE,  /* Tamaño de llave invalido*/
-        CRYPT_INVALID_ROUNDS,   /* Número de rondas invalido */
+        CRYPT_INVALID_KEYSIZE,  /* TamaÃ±o de llave invalido*/
+        CRYPT_INVALID_ROUNDS,   /* NÃºmero de rondas invalido */
         CRYPT_FAIL_TESTVECTOR,  /* El algoritmo fallo con vectores de prueba */
 
         CRYPT_BUFFER_OVERFLOW,  /* No hay suficiente espacio para el resultado */
         CRYPT_INVALID_PACKET,   /* Paquete de entrada invalido */
 
-        CRYPT_INVALID_PRNGSIZE, /* Número de bits invalidos pra PRNG */
+        CRYPT_INVALID_PRNGSIZE, /* NÃºmero de bits invalidos pra PRNG */
         CRYPT_ERROR_READPRNG,   /* No pudo leer suficiente de un PRNG */
 
         CRYPT_INVALID_CIPHER,   /* Cifrador invalido */
@@ -67,9 +67,9 @@ enum {
         CRYPT_PK_INVALID_SYSTEM,/* Sistema PK invalido */
         CRYPT_PK_DUP,           /* LLave duplicada en anillo de llaves */
         CRYPT_PK_NOT_FOUND,     /* Llave no encontrada en anillo de llaves */
-        CRYPT_PK_INVALID_SIZE,  /* Tamaño de entrada invalido en parametros de PK */
+        CRYPT_PK_INVALID_SIZE,  /* TamaÃ±o de entrada invalido en parametros de PK */
 
-        CRYPT_INVALID_PRIME_SIZE,/* Tamaño de primo invalido */
+        CRYPT_INVALID_PRIME_SIZE,/* TamaÃ±o de primo invalido */
         CRYPT_PK_INVALID_PADDING /* Relleno en entrada invalido */
 };
 
@@ -363,9 +363,9 @@ extern  struct ltc_hash_descriptor
                 char *name;
                 /** ID interna */
                 unsigned char ID;
-                /** Tamaño del condensado en octetos */
+                /** TamaÃ±o del condensado en octetos */
                 uint64_t hashsize;
-                /** Tamaño del bloque de entrada en octetos */
+                /** TamaÃ±o del bloque de entrada en octetos */
                 uint64_t blocksize;
                 /** ASN.1 OID */
                 uint64_t OID[16];
@@ -374,7 +374,7 @@ extern  struct ltc_hash_descriptor
 
                 /** Inicializa el estado de un hash
                   @param hash   Hash por inicializar
-                  @return CRYPT_OK si tiene éxito
+                  @return CRYPT_OK si tiene Ã©xito
                 */
                 int (*init)(hash_state *hash);
 
@@ -382,24 +382,24 @@ extern  struct ltc_hash_descriptor
                   @param hash   Estado del hash
                   @param in     Datos para el hash
                   @param inlen  Longitud de los datos (octetos)
-                  @return CRYPT_OK si tiene éxito
+                  @return CRYPT_OK si tiene Ã©xito
                 */
                 int (*process)(hash_state *hash, const unsigned char *in, uint64_t inlen);
 
                 /** Produce el condensado y lo almacena
                   @param hash   Estado del hash
                   @param out    [out] Destino del condensado
-                  @return CRYPT_OK si tiene éxito
+                  @return CRYPT_OK si tiene Ã©xito
                 */
                 int (*done)(hash_state *hash, unsigned char *out);
 
                 /** auto-prueba
-                  @return CRYPT_OK si tiene éxito, CRYPT_NOP si se han deshabilitado auto-pruebas
+                  @return CRYPT_OK si tiene Ã©xito, CRYPT_NOP si se han deshabilitado auto-pruebas
                 */
                 int (*test)(void);
 
-                /* Función respuesta a hmac acelerado: si necesita multiples
-                 * paquetes usar el hmac_memory generico y proveer una función
+                /* FunciÃ³n respuesta a hmac acelerado: si necesita multiples
+                 * paquetes usar el hmac_memory generico y proveer una funciÃ³n
                  * de respuesta */
                 int  (*hmac_block)(const unsigned char *key, uint64_t  keylen,
                                    const unsigned char *in,  uint64_t  inlen,
@@ -411,7 +411,7 @@ hash_descriptor[];
 /**
  * Inicializa el estado del condensado
  * @param md   Estado del condensado que usted desea inicializar
- * @return CRYPT_OK si tiene éxito
+ * @return CRYPT_OK si tiene Ã©xito
  */
 int sha256_init(hash_state * md);
 
@@ -421,17 +421,17 @@ int sha256_init(hash_state * md);
  * @param md     Estado del condensado
  * @param in     Datos por pasar por el hash
  * @param inlen  Longitud de los datos en in (octetos)
- * @return CRYPT_OK si tiene éxito
+ * @return CRYPT_OK si tiene Ã©xito
  */
 int sha256_process(hash_state * md, const unsigned char *in,
                    uint64_t inlen);
 
 
 /**
- * Termina el cálculo para retornar el condensado final.
+ * Termina el cÃ¡lculo para retornar el condensado final.
  * @param md  Estado del condensado
  * @param hash [out] Destino del condensado (32 bytes)
- * @return CRYPT_OK si tiene éxito
+ * @return CRYPT_OK si tiene Ã©xito
  */
 int sha256_done(hash_state *md, unsigned char *hash);
 
@@ -485,7 +485,7 @@ int func_name (hash_state * md, const unsigned char *in, uint64_t inlen)        
  * @param hash Condensado calculado
  * @param l    Longitud del condensado
  *
- * @return Representación hexadecimal como para imprimir
+ * @return RepresentaciÃ³n hexadecimal como para imprimir
  */
 std::string hexaDeHash(unsigned const char *hash, int l);
 
@@ -493,7 +493,7 @@ std::string hexaDeHash(unsigned const char *hash, int l);
 /**
  * Calcula sha256 al archivo dado
  * @param narch nombre de archivo (debe existir)
- * @return Cadena de 64 caracteres con los 32 números del hash sha256
+ * @return Cadena de 64 caracteres con los 32 nÃºmeros del hash sha256
  *  	   del archivo cada uno en hexadecimal
  */
 std::string sha256archivo(std::string narch);

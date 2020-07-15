@@ -1,10 +1,10 @@
 /**@file leeHTML.hpp
  * Lee un archivo en formato HTML e incluye su 
- * información a un índice.
+ * informaciÃ³n a un Ã­ndice.
  *
  * @package Mt77
- * @author Vladimir Támara Patiño. vtamara@pasosdeJesus.org
- * Dominio público. 2009.  Sin garantías
+ * @author Vladimir TÃ¡mara PatiÃ±o. vtamara@pasosdeJesus.org
+ * Dominio pÃºblico. 2009.  Sin garantÃ­as
  * http://creativecommons.org/licenses/publicdomain/
  * @version   $Id: leeHTML.hpp,v 1.4 2010/01/06 11:48:45 vtamara Exp $
  */

@@ -2,8 +2,8 @@
  * Datos de un documento indexado
  *
  * @package Mt77
- * @author Vladimir T·mara PatiÒo. vtamara@pasosdeJesus.org
- * Dominio p˙blico. 2009.  Sin garantÌas
+ * @author Vladimir T√°mara Pati√±o. vtamara@pasosdeJesus.org
+ * Dominio p√∫blico. 2009.  Sin garant√≠as
  * http://creativecommons.org/licenses/publicdomain/
  * @version   $Id: Doc.hpp,v 1.8 2010/01/18 16:12:50 vtamara Exp $
  */
@@ -17,15 +17,15 @@
 using namespace std;
 
 /**
- * Clase que representa una posiciÛn en un archivo entre varios posibles.
+ * Clase que representa una posici√≥n en un archivo entre varios posibles.
  */
 class Doc
 {
         public:
                 string URL; /**< URL del documento */
                 string cond; /**< Condensado SHA-256 */
-                string fecha; /**< Fecha de actualizaciÛn */
-                uint32_t numoc; /**< N˙mero de ocurrencias (resultado de b˙squeda)*/
+                string fecha; /**< Fecha de actualizaci√≥n */
+                uint32_t numoc; /**< N√∫mero de ocurrencias (resultado de b√∫squeda)*/
 
                 Doc(string u, string c, string f, long n = 0): 
 			URL(u), cond(c), fecha(f), numoc(n)
@@ -40,7 +40,7 @@ class Doc
 };
 
 /**
- * EnvÌa una representaciÛn plana de un documento a un flujo de salida
+ * Env√≠a una representaci√≥n plana de un documento a un flujo de salida
  * @param os Flujo de salida
  * @param d Documento
  */
@@ -79,11 +79,11 @@ vector<Doc> leeDocs(istream &is);
  * @param docs1 Primer vector de documentos
  * @param docs2 Segundo vector de documentos por modificar
  *
- * @return array con renumeraciÛn para el primer vector de documentos
+ * @return array con renumeraci√≥n para el primer vector de documentos
  * para que coincida con la segunda.
- * Adem·s de requerirse agrega a docs2 documentos de docs1 que
- * le hicieran falta o pone las fechas m·s antiguas en caso
- * de coincidientes (para asegurar actualizaciÛn si no hay sincronia).
+ * Adem√°s de requerirse agrega a docs2 documentos de docs1 que
+ * le hicieran falta o pone las fechas m√°s antiguas en caso
+ * de coincidientes (para asegurar actualizaci√≥n si no hay sincronia).
  */
 vector<int64_t> mezclaDocs(vector<Doc> &docs1, vector<Doc> &docs2);
 

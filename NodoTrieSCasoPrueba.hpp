@@ -2,8 +2,8 @@
  * Pruebas de unidad a NodoTrieS
  *
  * @package Mt77
- * @author Vladimir Támara Patiño. vtamara@pasosdeJesus.org
- * Dominio público. 2008. Sin garantías
+ * @author Vladimir TÃ¡mara PatiÃ±o. vtamara@pasosdeJesus.org
+ * Dominio pÃºblico. 2008. Sin garantÃ­as
  * http://creativecommons.org/licenses/publicdomain/
  * @version   $Id: NodoTrieSCasoPrueba.hpp,v 1.6 2010/03/08 12:02:40 vtamara Exp $
  */

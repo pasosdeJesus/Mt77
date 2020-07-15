@@ -1,9 +1,9 @@
 /** @file EliasCasoPrueba.hpp
- * Pruebas de unidad a algoritmos de compresión
+ * Pruebas de unidad a algoritmos de compresiÃ³n
  *
  * @package Mt77
- * @author Vladimir Támara Patiño. vtamara@pasosdeJesus.org
- * Dominio público. 2008. Sin garantías
+ * @author Vladimir TÃ¡mara PatiÃ±o. vtamara@pasosdeJesus.org
+ * Dominio pÃºblico. 2008. Sin garantÃ­as
  * http://creativecommons.org/licenses/publicdomain/
  * @version   $Id: EliasCasoPrueba.hpp,v 1.4 2010/01/06 04:19:25 vtamara Exp $
  */

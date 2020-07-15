@@ -3,8 +3,8 @@
  * Operaciones en RAM y Disco
  *
  * @package Mt77
- * @author Vladimir Támara Patiño. vtamara@pasosdeJesus.org
- * Dominio público. 2009.  Sin garantías
+ * @author Vladimir TÃ¡mara PatiÃ±o. vtamara@pasosdeJesus.org
+ * Dominio pÃºblico. 2009.  Sin garantÃ­as
  * http://creativecommons.org/licenses/publicdomain/
  * @version   $Id: RamDisco.hpp,v 1.11 2010/01/18 16:12:50 vtamara Exp $
  */
@@ -26,14 +26,14 @@
 using namespace std;
 
 /**
- * Calcula tamaño en bytes requerido para escribir nodo y hermanos
- * sin descendientes con función escribe 
+ * Calcula tamaÃ±o en bytes requerido para escribir nodo y hermanos
+ * sin descendientes con funciÃ³n escribe 
  */
 uint32_t
 precalcula_escribe_con_hermanos(NodoTrieS *n);
 
 /**
- * Calcula cuantos bytes requeriría el procedimiento escribe
+ * Calcula cuantos bytes requerirÃ­a el procedimiento escribe
  * para representar el nodo, sus hermanos y descendientes
  */
 uint32_t
@@ -44,13 +44,13 @@ precalcula_escribe(NodoTrieS *n);
  * Escribe en formato plano en un stream
  * Primero se escribe mayor con hermanos en una cadena:
  * MENOR nhermano_1 nhijo_1 {p1_1..p1_n} SIG {p2_1..p2_m} nhermano_2 nhijo_2... MAYOR 00000 nhijo_k {pk_1..pk_s}\n
- * Después hijos del menor al mayor.
+ * DespuÃ©s hijos del menor al mayor.
  **/
 void
 escribePlanoStream(NodoTrieS *n, std::ostream &os, uint32_t desp = 0);
 
 
-/** Lee un trieS de un stream donde está almacenado en formato
+/** Lee un trieS de un stream donde estÃ¡ almacenado en formato
  * extra-simple.
  * @param is Flujo de entrada
  * @return trieS que construye
@@ -62,40 +62,40 @@ leePlanoStream(std::istream &is) throw(string);
  * Escribe en formato plano en un archivo
  * @param t TrieS por escribir
  * @param docs Documentos referenciados en t
- * @param na nombre del archivo por generar con índice
- * @param nrel Nombre del archivo por generar con relación de documentos
+ * @param na nombre del archivo por generar con Ã­ndice
+ * @param nrel Nombre del archivo por generar con relaciÃ³n de documentos
  */
 void
 escribePlano(NodoTrieS &t, vector<Doc> &docs, const char *na, const char *nrel);
 
-/** Lee un trieS de un archivo de nombre na donde está almacenado.
+/** Lee un trieS de un archivo de nombre na donde estÃ¡ almacenado.
  * Retorna vector de documentos indexados en idocs.
- * @param na Nombre del archivo con índice
- * @param nrel Nombre del archivo con relación de documentos
- * @param docs Retorna en este relación de documentos indexados leido de nrel
+ * @param na Nombre del archivo con Ã­ndice
+ * @param nrel Nombre del archivo con relaciÃ³n de documentos
+ * @param docs Retorna en este relaciÃ³n de documentos indexados leido de nrel
  * @return TrieS leido de na
  */
 NodoTrieS *
 leePlano(char *na, char *nrel, vector<Doc> &docs);
 
 
-/** Elimina un documento de un índice.
- * Tanto en índice como en relación de documentos.
+/** Elimina un documento de un Ã­ndice.
+ * Tanto en Ã­ndice como en relaciÃ³n de documentos.
  *
- * @param na Nombre del índice
- * @param nrel Nombre de la relación
- * @param nd Número de documento por eliminar (>=1)
+ * @param na Nombre del Ã­ndice
+ * @param nrel Nombre de la relaciÃ³n
+ * @param nd NÃºmero de documento por eliminar (>=1)
  *
  * @return Cantidad de documentos que quedan indexados
 uint32_t
 eliminaUnDoc(char *na, char *nrel, uint64_t nd);
  */
 /**
- * Renumera último documento indexado y los que le siguen.
+ * Renumera Ãºltimo documento indexado y los que le siguen.
  *
- * @param na Nombre del índice
- * @param nrel Nombre de la relación
- * @param nd Nuevo índice para el último documento indexado.
+ * @param na Nombre del Ã­ndice
+ * @param nrel Nombre de la relaciÃ³n
+ * @param nd Nuevo Ã­ndice para el Ãºltimo documento indexado.
  *
  * @return Cantidad de documentos que quedan indexados
 uint32_t
@@ -108,17 +108,17 @@ renumeraUltimoDoc(char *na, char *nrel, uint64_t nd);
  * 	hermano menor
  * @param a2 2do trieS de entrada
  * @param saltacad Cuanto de la cadena de a2 debe saltarse
- * @param os salida, su cursor se espera al final --allí escribirá mezcla.
+ * @param os salida, su cursor se espera al final --allÃ­ escribirÃ¡ mezcla.
  * @param conHermanos1 procesar hermanos de is1
  * @param conHermanos2 procesar hermanos de a2
- * @param renum1 Renumeración a documentos de is1
- * @param renum2 Renumeración a documentos de a2
+ * @param renum1 RenumeraciÃ³n a documentos de is1
+ * @param renum2 RenumeraciÃ³n a documentos de a2
  *
  * Es un algoritmo similar al de escribeCopiaSubarbol:
  * 1. Escribe todos los hermanos del menor al mayor.  Para esto
  * 	recorre los hermanos de is1 y a2.
- * 2. Escribe todos los subárboles del menor al mayor. Para esto
- * 	recorre los subárboles necesarios  de is1 y a2
+ * 2. Escribe todos los subÃ¡rboles del menor al mayor. Para esto
+ * 	recorre los subÃ¡rboles necesarios  de is1 y a2
  */
 uint32_t
 mezclaDiscoRam(istream &is1, NodoTrieS *a2, int saltacad, iostream &os,
@@ -127,11 +127,11 @@ mezclaDiscoRam(istream &is1, NodoTrieS *a2, int saltacad, iostream &os,
 
 
 /**
- * Extrae subíndice correspondiente a un documento nd del índice en
- * disco is y lo agrega al índice en RAM t
+ * Extrae subÃ­ndice correspondiente a un documento nd del Ã­ndice en
+ * disco is y lo agrega al Ã­ndice en RAM t
  * @param is Indice en disco de entrada
  * @param t Indice en ram donde se agrega 
- * @param nd Número de documento por extraer de is
+ * @param nd NÃºmero de documento por extraer de is
  * @param pcad Prefijo (en la primera llamada no recursiva debe ser "")
  */
 void

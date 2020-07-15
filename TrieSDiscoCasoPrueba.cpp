@@ -1,10 +1,10 @@
 // vim: set expandtab tabstop=8 shiftwidth=8 foldmethod=marker:
 /** @file TrieSDiscoCasoPrueba.cpp
- * Pruebas de regresión a TrieSDisco.
+ * Pruebas de regresiÃ³n a TrieSDisco.
  *
  * @package Mt77
- * @author Vladimir Támara Patiño. vtamara@pasosdeJesus.org
- * Dominio público. 2009.  Sin garantías
+ * @author Vladimir TÃ¡mara PatiÃ±o. vtamara@pasosdeJesus.org
+ * Dominio pÃºblico. 2009.  Sin garantÃ­as
  * http://creativecommons.org/licenses/publicdomain/
  * @version   $Id: TrieSDiscoCasoPrueba.cpp,v 1.21 2010/01/18 16:12:50 vtamara Exp $
  */
@@ -57,7 +57,7 @@ void TrieSDiscoCasoPrueba::prueba_escribeNodo()
         //cout << "r=" << r << "  ss.str=" << ss.str() << " size=" << ss.str().size() << endl;
         CPPUNIT_ASSERT(r == 7 &&
                        ss.str() == ps3);
-        //cout << "Terminó prueba_escribeNodo" << endl;
+        //cout << "TerminÃ³ prueba_escribeNodo" << endl;
 
 }
 
@@ -364,7 +364,7 @@ void TrieSDiscoCasoPrueba::prueba_escribeCopiaSubarbol()
         //cout << "sis='"<< sis.str() << "', sos='"<<sos.str()<<"', r="<<r<<endl;
         CPPUNIT_ASSERT(sos.str() == ps4 );
 
-        //cout << "Probamos escribiendo en un sos no vacío";
+        //cout << "Probamos escribiendo en un sos no vacÃ­o";
         sos.clear();
         sos.str("");
         ;
@@ -387,7 +387,7 @@ void TrieSDiscoCasoPrueba::prueba_escribeCopiaSubarbol()
         //cout << endl << "Probamos renumerando a -1 es decir borrando" << endl;
         vector<int64_t> renum;
         renum.push_back(-1); // Borramos el primero
-        renum.push_back(-1); // Borramos el segundo también
+        renum.push_back(-1); // Borramos el segundo tambiÃ©n
 
         sos.clear();
         sos.str("");
@@ -428,7 +428,7 @@ void TrieSDiscoCasoPrueba::prueba_escribeCopiaSubarbol()
         //cout << "ps15 preorden " << l2->preorden() << endl;
         CPPUNIT_ASSERT(l2->preorden() == "JESUSORAMTAM" );
         set<Pos> cr=l2->busca("JESUS");
-        //cout << "buscó cr.size=" << cr.size() << endl;
+        //cout << "buscÃ³ cr.size=" << cr.size() << endl;
         CPPUNIT_ASSERT(cr.size() == 1);
         //cout << "si" << endl;
         cr.clear();
@@ -714,7 +714,7 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
 
         //cout<<"sos='"<<sos.str()<<"'"<<endl;
         CPPUNIT_ASSERT(sos.str() == sist.str());
-        delete na;  // Borra a nm también
+        delete na;  // Borra a nm tambiÃ©n
         delete nam;
 
 
@@ -727,7 +727,7 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         llena_ss(sis2, na);
 
         mezclaRec(sis1, sis2, sos, true, true, NULL, NULL);
-        delete na; // Borra también no
+        delete na; // Borra tambiÃ©n no
         delete nam;
 
         no = new NodoTrieS("o", NULL, NULL, set<Pos>());
@@ -949,7 +949,7 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         CPPUNIT_ASSERT(sos.str() == sis1.str());
 
 
-        // En un sos no vacío
+        // En un sos no vacÃ­o
 
         sos.clear();
         sos.str("");
@@ -1352,7 +1352,7 @@ void TrieSDiscoCasoPrueba::prueba_buscaPlanoStream()
         	set<Pos> *cpos = buscaPlano("prueba.idxtxt", "BUENO", idocs);
          
         	if (cpos==NULL) {
-        		cerr << "cpos no debería ser NULL" <<endl;
+        		cerr << "cpos no deberÃ­a ser NULL" <<endl;
         	}
         	else {
         		cout << cpos->size() << endl;

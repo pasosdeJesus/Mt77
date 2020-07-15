@@ -1,6 +1,6 @@
 // vim: set expandtab tabstop=8 shiftwidth=8 foldmethod=marker:
 /** @file Elias.cpp
- * Algoritmos de compresiÛn para n˙meros 
+ * Algoritmos de compresi√≥n para n√∫meros 
  *
  * Tomados de:
  * Compression and coding algorithms
@@ -9,8 +9,8 @@
  * http://books.google.com.co/books?id=czwqegW_NCAC&pg=PA42&lpg=PA42&dq=Binary+Interpolative+Coding&source=bl&ots=SJ0D8VHszl&sig=nkk2CIg4rpskJkCSh6NnRimC3eU&hl=es&ei=vYqWSteBLoyvtgfXiOy-Dg&sa=X&oi=book_result&ct=result&resnum=7#v=onepage&q=Binary%20Interpolative%20Coding&f=false
  *
  * @package Mt77
- * @author Vladimir T·mara PatiÒo. vtamara@pasosdeJesus.org
- * Dominio p˙blico. 2009.  Sin garantÌas
+ * @author Vladimir T√°mara Pati√±o. vtamara@pasosdeJesus.org
+ * Dominio p√∫blico. 2009.  Sin garant√≠as
  * http://creativecommons.org/licenses/publicdomain/
  * @version   $Id: Elias.cpp,v 1.6 2010/01/18 17:12:57 vtamara Exp $
  */
@@ -301,11 +301,11 @@ uint64_t decodifica_elias_gama(vector<bool> &vb)
 }
 
 /**
- * Lee de un stream un n˙mero en codificaciÛn gama de elias,
- * Lee hasta el ˙ltimo caracter que tenga bits del n˙mero, si hay m·s
- * se pierden porque esta funciÛn no los retorna.  
- * Es decir sirve para codificar de a un n˙mero en uno o m·s bytes,
- * Una secuencia de n˙meros quedar· cada numero comenzando en un byte.
+ * Lee de un stream un n√∫mero en codificaci√≥n gama de elias,
+ * Lee hasta el √∫ltimo caracter que tenga bits del n√∫mero, si hay m√°s
+ * se pierden porque esta funci√≥n no los retorna.  
+ * Es decir sirve para codificar de a un n√∫mero en uno o m√°s bytes,
+ * Una secuencia de n√∫meros quedar√° cada numero comenzando en un byte.
  */
 uint64_t
 lee_elias_gama(std::istream &is) throw (string)
@@ -340,7 +340,7 @@ lee_elias_gama(std::istream &is) throw (string)
                 //clog << "c= " << c << ", p2 =" << p2 << endl;
                 bit = (c & (short)p2) > 0 ? 1 : 0;
                 vb.push_back(bit);
-                //clog << "empujÛ =" << bit << ", c= " << c << endl;
+                //clog << "empuj√≥ =" << bit << ", c= " << c << endl;
         } while (bit == 1 && p2 > 1);
 
         uint32_t nb = vb.size();
@@ -375,7 +375,7 @@ lee_elias_gama(std::istream &is) throw (string)
         return lr;
 }
 
-/* Otra versiÛn de la funciÛn anterior, pero que se espera sea r·pida.
+/* Otra versi√≥n de la funci√≥n anterior, pero que se espera sea r√°pida.
  
   codifica_elias_gama(1, vb) da 0   ->     00000000 -> 000000
   codifica_elias_gama(2, vb) da 100 ->     10000000 -> 000000
@@ -411,7 +411,7 @@ lee_elias_gama(std::istream &is) throw (string)
 	CPPUNIT_ASSERT(ss.str()[3] == (char)B8(00000000));
 	CPPUNIT_ASSERT(ss.str()[4] == (char)B8(00000000));
  
-  M·ximo es representable en 31 bits i.e
+  M√°ximo es representable en 31 bits i.e
   escribe_elias_gama(ss, (uint32_t)(pot2(32)-1));
   que da
 	CPPUNIT_ASSERT(ss.str()[0] == (char)B8(11111111));
@@ -423,15 +423,15 @@ lee_elias_gama(std::istream &is) throw (string)
 	CPPUNIT_ASSERT(ss.str()[6] == (char)B8(11111111));
 	CPPUNIT_ASSERT(ss.str()[7] == (char)B8(11111110));
  
-	AsÌ que se leen entre 1 y 8 bytes.
-	1 si n est· entre 2^0=1 y 2^4-1=15
-	2 si n est· entre 2^4=16 y 2^8-1=255
-	3 si n est· entre 2^8=256 y 2^12-1=4095
-	4 si n est· entre 2^12=4096 y 2^16-1=65535
-	5 si n est· entre 2^16=65536 y 2^20-1
-	6 si n est· entre 2^20 y 2^24-1
-	7 si n est· entre 2^24 y 2^28-1
-	8 si n est· entre 2^28 y 2^32-1
+	As√≠ que se leen entre 1 y 8 bytes.
+	1 si n est√° entre 2^0=1 y 2^4-1=15
+	2 si n est√° entre 2^4=16 y 2^8-1=255
+	3 si n est√° entre 2^8=256 y 2^12-1=4095
+	4 si n est√° entre 2^12=4096 y 2^16-1=65535
+	5 si n est√° entre 2^16=65536 y 2^20-1
+	6 si n est√° entre 2^20 y 2^24-1
+	7 si n est√° entre 2^24 y 2^28-1
+	8 si n est√° entre 2^28 y 2^32-1
  
   */
 uint64_t
@@ -511,19 +511,19 @@ lee_elias_gama2(std::istream &is) throw (string)
                 c = is.get();
                 //clog << "OJO en tercer ciclo bl = " << bl << ", c=" << c << "=" << ulong2ascii(c, 8) << endl;
                 if ((nbits > 8) && (bl < nbits - 8)) {
-                        // Quedar·n m·s
+                        // Quedar√°n m√°s
                         ui <<= 8;
                         ui |= c;
                         bl += 8;
-                        //clog << "OJO quedar·n m·s ui = " << ui << ", bl=" << bl << endl;
+                        //clog << "OJO quedar√°n m√°s ui = " << ui << ", bl=" << bl << endl;
                 } else {
                         // Ultimo byte puede no estar totalmente lleno
                         ui <<= nbits - bl;
                         unsigned char cui = ((unsigned char)c) >> (8 - nbits + bl);
-                        //clog << "OJO ˙ltimo nbits=" << nbits << ", bl=" << bl << ", nbits-bl=" << nbits-bl << ", cui=" << (uint32_t)cui << " = " << ulong2ascii(cui, 8) << endl;
+                        //clog << "OJO √∫ltimo nbits=" << nbits << ", bl=" << bl << ", nbits-bl=" << nbits-bl << ", cui=" << (uint32_t)cui << " = " << ulong2ascii(cui, 8) << endl;
                         ui |= cui;
                         bl = nbits;
-                        //clog << "OJO ˙ltimo ui=" << ui << endl;
+                        //clog << "OJO √∫ltimo ui=" << ui << endl;
                 }
         }
 
@@ -533,10 +533,10 @@ lee_elias_gama2(std::istream &is) throw (string)
 }
 
 /**
- * Escribe al flujo os un entero en codificaciÛn gama de Elias.
+ * Escribe al flujo os un entero en codificaci√≥n gama de Elias.
  *
  * @param os Flujo de salida
- * @param n N˙mero por escribir 
+ * @param n N√∫mero por escribir 
  **/
 void
 escribe_elias_gama(std::ostream &os, uint32_t n)
@@ -643,9 +643,9 @@ escribe_elias_gama2(std::ostream &os, uint32_t n)
 
 
 /**
- * Retorna espacio que requerirÌa en un flujo codificar un n˙mero en 
- * codificaciÛn gama de ElÌas
- * @param n n˙mero
+ * Retorna espacio que requerir√≠a en un flujo codificar un n√∫mero en 
+ * codificaci√≥n gama de El√≠as
+ * @param n n√∫mero
  *
  * @return longitud
  */
