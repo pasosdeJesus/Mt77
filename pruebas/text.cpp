@@ -15,3 +15,53 @@
  * IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING
  * OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
+
+#include <iostream>
+
+static int text_is_ascii(u_char c)
+{
+	const char	cc[] = "\007\010\011\012\014\015\033";
+
+	if (c == '\0')
+		return (0);
+	if (strchr(cc, c) != NULL)
+		return (1);
+	return (c > 31 && c < 127);
+}
+
+static int text_is_latin1(u_char c)
+{
+	if (c >= 160)
+		return (1);
+	return (text_is_ascii(c));
+}
+
+static int text_is_extended(u_char c)
+{
+	if (c >= 128)
+		return (1);
+	return (text_is_ascii(c));
+}
+
+static int
+text_try_test(const std::string data, int (*f)(u_char))
+{
+    for (char c: data)
+    {
+		if (!f(c)) return (0);
+    }
+	return (1);
+}
+
+const char *
+text_get_type(const std::string base)
+{
+	if (text_try_test(base, text_is_ascii))
+		return ("ASCII");
+	if (text_try_test(base, text_is_latin1))
+		return ("ISO-8859");
+	if (text_try_test(base, text_is_extended))
+		return ("Non-ISO extended-ASCII");
+	return (NULL);
+}
+

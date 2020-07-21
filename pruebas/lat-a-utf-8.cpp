@@ -1,6 +1,59 @@
 #include <iostream>
-#include <string>
 #include <fstream>
+#include <stdio.h>
+#include <string.h>
+
+static int text_is_ascii(u_char c)
+{
+	const char	cc[] = "\007\010\011\012\014\015\033";
+
+	if (c == '\0')
+		return (0);
+	if (strchr(cc, c) != NULL)
+		return (1);
+	return (c > 31 && c < 127);
+}
+
+static int text_is_latin1(u_char c)
+{
+	if (c >= 160)
+		return (1);
+	return (text_is_ascii(c));
+}
+
+static int text_is_extended(u_char c)
+{
+	if (c >= 128)
+		return (1);
+	return (text_is_ascii(c));
+}
+
+static int
+text_try_test(const std::string data, int (*f)(u_char))
+{
+    for (char c: data)
+    {
+		if (!f(c))
+            return (0);
+    }
+	return (1);
+}
+
+// const std::string
+// los valores de retorno son temporales para las pruebas
+int text_get_type(const std::string base)
+{
+	if (text_try_test(base, text_is_ascii))
+        return 0;
+		// return ("ASCII");
+	if (text_try_test(base, text_is_latin1))
+        return 1;
+    // return ("ISO-8859");
+    if (text_try_test(base, text_is_extended))
+        return 2;
+    // return ("Non-ISO extended-ASCII");
+	return 0;
+}
 
 // en linux string ya reconoce automaticamente el uso de utf8
 std::string latin1_to_utf8(std::string &str)
@@ -22,7 +75,6 @@ std::string latin1_to_utf8(std::string &str)
     return strOut;
 }
 
-
 int main(int argc, char *argv[])
 {
     std::fstream file;
@@ -36,8 +88,12 @@ int main(int argc, char *argv[])
             file >> line;
             while(!file.eof())
             {
-                std::cout << line << " -> ";
-                std::cout << latin1_to_utf8( line ) << std::endl << std::endl;
+                int tipo = text_get_type(line);
+                std::cout << line << "  " << tipo << std::endl;
+                if (tipo == 1)
+                    std::cout << latin1_to_utf8( line ) << std::endl << std::endl;
+
+                // std::cout << line << " -> ";
                 file >> line;
             }
             file.close();
