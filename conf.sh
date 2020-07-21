@@ -53,7 +53,7 @@ do
 	    vbs="$vbs -v"
 	    ;;
       h)    HELP_FLAG=1;;		# display on-line help
-      \?)   echo "OpciÛn no reconocida: $OPTARG" >&2	# flag illegal switch 
+      \?)   echo "Opci√≥n no reconocida: $OPTARG" >&2	# flag illegal switch 
 	    OPT_FLAG=1;;
    esac
 done
@@ -61,10 +61,10 @@ OPT_COUNT=$(($OPTIND-1))
 shift $OPT_COUNT
 
 options_help="
-   -p prefijo	Prefijo de la ruta de instalaciÛn (por defecto /usr/local)
+   -p prefijo	Prefijo de la ruta de instalaci√≥n (por defecto /usr/local)
    -h           Presenta ayuda corta
-   -M           Presenta ayuda m·s completa
-   -v           Presenta informaciÛn de depuraciÛn durante ejecuciÛn"
+   -M           Presenta ayuda m√°s completa
+   -v           Presenta informaci√≥n de depuraci√≥n durante ejecuci√≥n"
  
 # check for man page request
 if (test "$MAN_FLAG" = "1" ) then {
@@ -84,30 +84,30 @@ NOMBRE
 	$USAGE
 
 
-DESCRIPCI”N
+DESCRIPCI√ìN
 
-	Establece el valor de las variables de configuraciÛn y genera
+	Establece el valor de las variables de configuraci√≥n y genera
 	archivos en diversos formatos empleados por las fuentes de 
 	$PROYECTO 
 	* $PRY_DESC
 	* $URLSITE
 
-	Las variables de configuraciÛn y sus valores por defecto est·n
+	Las variables de configuraci√≥n y sus valores por defecto est√°n
 	en confv.empty (debajo de cada variable hay un comentario con la 
-	descripciÛn).
+	descripci√≥n).
 	Este script genera los archivos
 		confv.sh, Make.inc, confv.ml y $confdoc
-	con las variables de configuraciÛn instanciadas.  
-	Para la instanciaciÛn este script puede:
+	con las variables de configuraci√≥n instanciadas.  
+	Para la instanciaci√≥n este script puede:
 
 	* Verificar el valor de algunas variables (por ejemplo que
-	  la versiÛn de un programa sea la requerida).
-	* Buscar valor para algunas variables (por ejemplo ubicaciÛn
-	  de alg˙n programa).
+	  la versi√≥n de un programa sea la requerida).
+	* Buscar valor para algunas variables (por ejemplo ubicaci√≥n
+	  de alg√∫n programa).
 	* Completar el valor de algunas variables (por ejemplo fecha actual)
 	* Dejar el valor por defecto configurado en confv.empty (por ejemplo 
-	  nombre del proyecto y versiÛn).
-	* Pedir informaciÛn al usuario en los casos que no logra instanciar
+	  nombre del proyecto y versi√≥n).
+	* Pedir informaci√≥n al usuario en los casos que no logra instanciar
 
 
 OPCIONES
@@ -118,37 +118,37 @@ $options_help
 EJEMPLOS
 
 	./conf.sh
-	Configura fuentes y deja como prefijo para la ruta de instalaciÛn 
+	Configura fuentes y deja como prefijo para la ruta de instalaci√≥n 
 	"/usr/local"
 
 	./conf.sh -p /usr/
-	Configura fuentes y deja como prefijo para la ruta de instalaciÛn
+	Configura fuentes y deja como prefijo para la ruta de instalaci√≥n
 	"/usr"
 
 
-EST¡NDARES
+EST√ÅNDARES
 	Este script pretende ser portable. Debe cumplir POSIX.
 
 
 FALLAS
 
 
-VER TAMBI…N
+VER TAMBI√âN
 	Para mejorar este script o hacer uno similar ver fuentes de 
 	herram/confaux.sh
 
 
-CR…DITOS Y DERECHOS DE REPRODUCCI”N 
+CR√âDITOS Y DERECHOS DE REPRODUCCI√ìN 
 
- 	Script de dominio p˙blico.  Sin garantÌas.
+ 	Script de dominio p√∫blico.  Sin garant√≠as.
 	Fuentes disponibles en: http://www.pasosdejesus.org/devel/confsh
 	Puede enviar reportes de problemas a 
 		structio-info@lists.sourceforge.net
 
-	Incluye porciones de cÛdigo dominio p˙blico escritas por:
+	Incluye porciones de c√≥digo dominio p√∫blico escritas por:
 	  Miembros de Structio http://structio.sourceforge.net
 	  WWWeb Tide Team http://www.ebbtide.com/Util/
-	Puede ver m·s detalles sobre los derechos y crÈditos de este script en
+	Puede ver m√°s detalles sobre los derechos y cr√©ditos de este script en
 	las fuentes.
 MANPAGE_HEREDOC
    exit 0;
@@ -156,7 +156,7 @@ MANPAGE_HEREDOC
 
 # check for help
 if (test "$HELP_FLAG" = "1" ) then {
-   echo " UtilizaciÛn: $USAGE"
+   echo " Utilizaci√≥n: $USAGE"
    cat << HLP_OP
 $options_help
 HLP_OP
@@ -165,13 +165,13 @@ HLP_OP
 
 # check for illegal switches
 if (test "$OPT_FLAG" = "1") then {
-   echo "$BASENAME: Se encontrÛ alguna opciÛn invalida" >&2
-   echo "UtilizaciÛn: $USAGE" >&2
+   echo "$BASENAME: Se encontr√≥ alguna opci√≥n invalida" >&2
+   echo "Utilizaci√≥n: $USAGE" >&2
    exit 1
 }
 elif (test "$#" != "$ARG_COUNT" ) then {
    echo "$BASENAME: se encontraron $# argumentos, pero se esperaban $ARG_COUNT." >&2
-   echo "UtilizaciÛn: $USAGE" >&2
+   echo "Utilizaci√≥n: $USAGE" >&2
    exit 1;
 } fi;
 
@@ -187,7 +187,7 @@ if (test "$prefix" != "") then {
 } fi;
 
 if (test "$VERBOSE_FLAG" -gt "0") then {
-	echo "Chequeando y detectando valor de variables de configuraciÛn";
+	echo "Chequeando y detectando valor de variables de configuraci√≥n";
 } fi;
 
 
@@ -232,7 +232,7 @@ changeVar MES_ACT 1;
 
 
 if (test "$VERBOSE_FLAG" -gt "0") then {
-	echo "Guardando variables de configuraciÛn"
+	echo "Guardando variables de configuraci√≥n"
 } fi;
 changeConfv;
 
@@ -253,10 +253,10 @@ addMakeConfv Make.inc;
 touch $confphp 2> /dev/null
 if (test "$?" = "0") then {
 
-	echo "<?php # Par·metros de configuraciÛn " > $confphp
-	echo "# Generado autom·ticamente por conf.sh.  No editar" >> $confphp
+	echo "<?php # Par√°metros de configuraci√≥n " > $confphp
+	echo "# Generado autom√°ticamente por conf.sh.  No editar" >> $confphp
 	if (test "$VERBOSE_FLAG" -gt "1") then {
-		echo "Agregando variables de configuraciÛn a $confphp";
+		echo "Agregando variables de configuraci√≥n a $confphp";
 	} fi;
 	addPHPConfv $confphp
 	echo "?>" >> $confphp
@@ -266,5 +266,5 @@ if (test "$confdoc" != "" -a ! -f "$confdoc") then {
 	cp $confdoc.plantilla $confdoc
 } fi;
 
-echo "ConfiguraciÛn completada";
+echo "Configuraci√≥n completada";
 

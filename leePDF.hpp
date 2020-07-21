@@ -1,10 +1,10 @@
 /**@file leePDF.hpp
  * Lee un archivo en formato PDF e incluye su 
- * informaciÛn a un Ìndice.
+ * informaci√≥n a un √≠ndice.
  *
  * @package Mt77
- * @author Vladimir T·mara PatiÒo. vtamara@pasosdeJesus.org
- * Dominio p˙blico. 2009.  Sin garantÌas
+ * @author Vladimir T√°mara Pati√±o. vtamara@pasosdeJesus.org
+ * Dominio p√∫blico. 2009.  Sin garant√≠as
  * http://creativecommons.org/licenses/publicdomain/
  * @version   $Id: leePDF.hpp,v 1.2 2010/01/06 10:09:30 vtamara Exp $
  */
@@ -19,11 +19,11 @@
 
 /**
  * Convierte un archivo en formato PDF  a texto plano y agrega las palabras del 
- * documento al ·rbol [t].
+ * documento al √°rbol [t].
  * @param na           Nombre del archivo
- * @param ndoc         N˙mero de documento que corresponde al archivo na
- * @param &t           ¡rbol al cual deben agregarse palabras y sus posiciones
- * @param normalizaPal Õndica si deben normalizarse o no las
+ * @param ndoc         N√∫mero de documento que corresponde al archivo na
+ * @param &t           √Årbol al cual deben agregarse palabras y sus posiciones
+ * @param normalizaPal √çndica si deben normalizarse o no las
  * palabras leidas
  *
  * @return void

@@ -1,21 +1,21 @@
 /**
  * TrieS en disco.
  *
- * El formato en disco consta de 2 archivos el primero con el Ìndice es:
+ * El formato en disco consta de 2 archivos el primero con el √≠ndice es:
  * marca\n
  * nodoshermanos\n
  * nodoshermanos\n
  * ...
  * nodoshermanos\n
  * 
- * El segundo con la relaciÛn de documentos es
+ * El segundo con la relaci√≥n de documentos es
  * marca\n
  * url\n
  * url\n
  * ...
  * url\n
  
- * El prime/r documento tiene indice 1
+ * El primer documento tiene indice 1
  *
  * nodoshermanos consta de una secuencia de nodos cada uno es
  * cadena posiciones phijos
@@ -23,13 +23,13 @@
  * posiciones es lista de posiciones en formato
  * n id_1 p_1 id_2 p_2 ... id_n p_n
  * donde n es cantidad de posiciones, id_i es indice del documento de
- * la i-esima ocurrencia y p_i es posiciÛn de la cadena en ese documento
+ * la i-esima ocurrencia y p_i es posici√≥n de la cadena en ese documento
  * phijos es desplazamiento en el archivo a un nodoshermanos que
  * corresponden a los hijos del nodo.  Si es 0 no tiene hijos.
  *
  * @package Mt77
- * @author Vladimir T·mara PatiÒo. vtamara@pasosdejesus.org
- * Dominio p˙blico.  2008. Sin Garantias.
+ * @author Vladimir T√°mara Pati√±o. vtamara@pasosdejesus.org
+ * Dominio p√∫blico.  2008. Sin Garantias.
  * http://creativecommons.org/licenses/publicdomain/ 
  * @version  $Id: TrieSDisco.hpp,v 1.17 2010/03/08 12:02:40 vtamara Exp $
  */
@@ -54,25 +54,25 @@ using namespace std;
 
 /**
  * Escribe un nodo, con cadena y posiciones donde aparece.
- * @param os Flujo de salido donde escribir, donde estÈ el "cursor"
- * @param c Cadena no vacÌa de m·ximo MAXCAD caracteres
- * @param cpos Conjunto de posiciones por escribir, NULL corresponde a vacÌo.
- * @param dhijos PosiciÛn en el archivo dond estar· nodo con hijos, no negativa.
- *        Por convenciÛn una posiciÛn 0 significa que no tiene hijos.
+ * @param os Flujo de salido donde escribir, donde est√© el "cursor"
+ * @param c Cadena no vac√≠a de m√°ximo MAXCAD caracteres
+ * @param cpos Conjunto de posiciones por escribir, NULL corresponde a vac√≠o.
+ * @param dhijos Posici√≥n en el archivo dond estar√° nodo con hijos, no negativa.
+ *        Por convenci√≥n una posici√≥n 0 significa que no tiene hijos.
  * @param desp Desplazamiento inicial
- * @return PosiciÛn donde escribe desplazamiento a hijos
+ * @return Posici√≥n donde escribe desplazamiento a hijos
  */
 uint32_t
 escribeNodo(iostream &os, string c, set<Pos> *cpos,
                     uint32_t dhijos, uint32_t desp = 0) ;
 
 /**
- * Calcula cuantos bytes requerirÌa almacenar un nodo con cadena
- * de longitud [longdad] y con un n˙mero [numpos] de posiciones
+ * Calcula cuantos bytes requerir√≠a almacenar un nodo con cadena
+ * de longitud [longdad] y con un n√∫mero [numpos] de posiciones
  * @param longcad Longitud de la cadena del nodo
  * @param cpos Posiciones
  *
- * @return Cantidad de bytes que requerirÌa su almacenamiento
+ * @return Cantidad de bytes que requerir√≠a su almacenamiento
  */
 uint32_t
 precalcula_escribe_actual(uint32_t longcad, set<Pos> *cpos);
@@ -81,20 +81,20 @@ precalcula_escribe_actual(uint32_t longcad, set<Pos> *cpos);
 /**
  * En flujo de salida escribe copia del primer nodo (sin hijos) de un flujo
  * de entrada.
- * Verifica que la posiciÛn del hijo sea posterior.
+ * Verifica que la posici√≥n del hijo sea posterior.
  * @param os flujo de salida, se espera que su "cursor" apunte al final 
  * @param is flujo de entrada, su "cursor" sobre cadena del nodo por copiar.
- * @param phijo posiciÛn del nodo hijo registrada en el flujo de entrada
+ * @param phijo posici√≥n del nodo hijo registrada en el flujo de entrada
  * @param renum Vector para renumerar
- *  	renum[0] tiene nuevo n˙mero menos 1 para documento 1, ... 
- *  	renum[n-1] nuevo n˙mero menos 1 para n-esimo documento.
- *	Si renum[i] es -1 no se incluir· en la respuesta el documento i+1 esimo
+ *  	renum[0] tiene nuevo n√∫mero menos 1 para documento 1, ... 
+ *  	renum[n-1] nuevo n√∫mero menos 1 para n-esimo documento.
+ *	Si renum[i] es -1 no se incluir√° en la respuesta el documento i+1 esimo
  *	que es como un borrado del subindice de ese documento, pero que deja
- *	todas las palabras del mismo en el TrieS --requerirÌa una
- *	optimizaciÛn posterior.
+ *	todas las palabras del mismo en el TrieS --requerir√≠a una
+ *	optimizaci√≥n posterior.
  
  *
- * @return PosiciÛn donde escribe desplazamiento a hijos o 0 si no hay
+ * @return Posici√≥n donde escribe desplazamiento a hijos o 0 si no hay
  * 	nodo en flujo de entrada.
  */
 uint32_t escribeCopiaNodo(iostream &os, istream &is, uint32_t &phijo,
@@ -102,14 +102,14 @@ uint32_t escribeCopiaNodo(iostream &os, istream &is, uint32_t &phijo,
 
 
 /**
- * En flujo de salida escribe copia de sub·rbol apuntado en el flujo de entrada.
+ * En flujo de salida escribe copia de sub√°rbol apuntado en el flujo de entrada.
  * A medida que copia realiza algunas verificaciones.
  * @param os flujo de salida, se espera que su "cursor" apunte al final 
  * @param is flujo de entrada, su "cursor" sobre cadena del nodo por copiar.
- * @param conHermanos si es true tambiÈn copia hermanos.
+ * @param conHermanos si es true tambi√©n copia hermanos.
  * @param renum Vector para renumerar. @see escribeCopiaNodo
  *
- * @return retorna la posiciÛn inicial de escritura en os 
+ * @return retorna la posici√≥n inicial de escritura en os 
  */
 uint32_t escribeCopiaSubarbol(iostream &os, istream &is, bool conHermanos,
                           vector<int64_t> *renum = NULL);
@@ -121,22 +121,22 @@ uint32_t escribeCopiaSubarbol(iostream &os, istream &is, bool conHermanos,
  * 	hermano menor
  * @param is2 2do archivo de entrada, su cursor se espera sobre cadena del 
  * 	hermano menor
- * @param os salida, su cursor se espera al final --allÌ escribir· mezcla.
+ * @param os salida, su cursor se espera al final --all√≠ escribir√° mezcla.
  * @param conHermanos1 Procesar hermanos de is1
  * @param conHermanos2 Procesar hermanos de is2
- * @param renum1 Especifica cambio en Ìndices en is1. A diferencia de 
+ * @param renum1 Especifica cambio en √≠ndices en is1. A diferencia de 
  * posiciones, los documentos se numeran comenzando en 0 --como renum1.
- * @param renum2 Especifica cambio en Ìndices en is2. A diferencia de 
+ * @param renum2 Especifica cambio en √≠ndices en is2. A diferencia de 
  * posiciones, los documentos se numeran comenzando en 0 --como renum2.
  *
- * @return retorna la posiciÛn inicial de escritura en os 
+ * @return retorna la posici√≥n inicial de escritura en os 
  *
  *
  * Es un algoritmo similar al de escribeCopiaSubarbol:
  * 1. Escribe todos los hermanos del menor al mayor.  Para esto
  * 	recorre los hermanos de is1 e is2.
- * 2. Escribe todos los sub·rboles del menor al mayor. Para esto
- * 	recorre los sub·rboles necesarios  de is1 e is2
+ * 2. Escribe todos los sub√°rboles del menor al mayor. Para esto
+ * 	recorre los sub√°rboles necesarios  de is1 e is2
  */
 uint32_t mezclaRec(istream &is1, istream &is2, iostream &os,
                bool conHermanos1, bool conHermanos2,
@@ -147,12 +147,12 @@ uint32_t mezclaRec(istream &is1, istream &is2, iostream &os,
  * @param is archivo de entrada, su cursor se espera sobre cadena del 
  * 	hermano menor
  * @param os salida, su cursor se espera al final -
- * @param n N˙mero de documento a eliminar
- * @param renum Vector que retorna con renumraciÛn por efectuar a
+ * @param n N√∫mero de documento a eliminar
+ * @param renum Vector que retorna con renumraci√≥n por efectuar a
  * documentos referenciados
  *
- * @return retorna la posiciÛn inicial de escritura en os 
- * 	recorre los sub·rboles necesarios  de is1 e is2
+ * @return retorna la posici√≥n inicial de escritura en os 
+ * 	recorre los sub√°rboles necesarios  de is1 e is2
  */
 uint32_t eliminaDoc(istream &is, iostream &os, uint32_t n, 
 		vector<int64_t> *renum);
@@ -160,24 +160,24 @@ uint32_t eliminaDoc(istream &is, iostream &os, uint32_t n,
 
 
 /**
- * Verifica marca de Ìndice en is y deja listo curso
- * @param is Flujo de entrada a un Ìndice
- * Si no logra verifica lanza excepciÛn con mensaje de error
+ * Verifica marca de √≠ndice en is y deja listo curso
+ * @param is Flujo de entrada a un √≠ndice
+ * Si no logra verifica lanza excepci√≥n con mensaje de error
  */
 void verificaIndice(istream &is);
 
-/** Buscan una palabra en un Ìndice
- * @param na Archivo con Ìndice
- * @param nrel Archivo con relaciÛn de documentos referenciadso en Ìndice
+/** Buscan una palabra en un √≠ndice
+ * @param na Archivo con √≠ndice
+ * @param nrel Archivo con relaci√≥n de documentos referenciadso en √≠ndice
  * @param pal Palabra por buscar
- * @param docs En esta retorna la relaciÛn de documentos indexados
+ * @param docs En esta retorna la relaci√≥n de documentos indexados
  * @return Conjunto de posiciones donde aparece la palabra
  */
 set<Pos> *buscaPlano(const char *na, const char *nrel, string pal, 
 		vector<Doc> &docs);
 
 
-/** Busca una palabra en un Ìndice ya abierto.
+/** Busca una palabra en un √≠ndice ya abierto.
  * @param is Flujo de entrada con cursor sobre cadena
  * @param pal Palabra por buscar
  * @return Conjunto de posiciones donde aparece la palabra
@@ -187,19 +187,19 @@ set<Pos> *buscaPlanoStream(std::istream &is, string pal) throw(string);
 
 
 /**
- * Lee relaciÛn de documentos indexados en un archivo
- * @param nrel Nombre de archivo con relaciÛn
+ * Lee relaci√≥n de documentos indexados en un archivo
+ * @param nrel Nombre de archivo con relaci√≥n
  * @param docs Vector que desocupa y usa para almacenar vector de documentos
  *
  * @return Cantidad de documentos leidos
- * Lanza excepciÛn si no puede leer archivo.
+ * Lanza excepci√≥n si no puede leer archivo.
  */
 uint32_t 
 leeRelacion(const char *nrel,  vector<Doc> &docs) throw(string);
 
 
 /**
- * Escribe relaciÛn de documentos indexados en un flujo.
+ * Escribe relaci√≥n de documentos indexados en un flujo.
  * @param nrel Nombre de archivo por crear o sobreescribir.
  * @param docs Vector de documentos
  * @param reord Si no es NULL es reordenamiento para vdoc que debe
@@ -210,7 +210,7 @@ void escribeRelacion(const char *nrel,  vector<Doc> &docs,
 
 
 /**
- * Calcula condensando de un flujo de Ìndice teniendo en cuenta palabras
+ * Calcula condensando de un flujo de √≠ndice teniendo en cuenta palabras
  * completas y las posiciones donde aparece.
  *
  * @param is       archivo que se lee ubicado al comienzo de un nodo
@@ -224,10 +224,10 @@ void condensadoFlujo(istream &is,  hash_state *md, string precad = "",
 
 
 /**
- * Calcula condensando de un Ìndice teniendo en cuenta palabras
+ * Calcula condensando de un √≠ndice teniendo en cuenta palabras
  * completas y las posiciones donde aparece.
  *
- * @param indice   Õndice
+ * @param indice   √çndice
  * @param depura   Si debe presentar datos a los que calcula SHA256
  * 
  * @return string 32 bytes hexadececimales

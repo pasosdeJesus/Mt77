@@ -1,5 +1,5 @@
 /**@file funzipuno.hpp
- * Funciones útiles para contenedores ZIP
+ * Funciones Ãºtiles para contenedores ZIP
  *
  * Basadas  en
  * - Archivo funzip incluido en unzip 5.12
@@ -9,12 +9,12 @@
  *   http://www.haxxed.com/belkin/download/tools/trx.c 
  * - Ideas de:
  * 	- Archivo funzip de versiones recientes de unzip (que no son de 
- * 		dominio público)
+ * 		dominio pÃºblico)
  * 	- Ejemplo miniunz incluido en zlib-1.2.3 
  * 	- examples/zpipe.c de zlib-1.2.3
  * @package Mt77
- * @author Vladimir Támara Patiño. vtamara@pasosdeJesus.org
- * Dominio público. 2009.  Sin garantías
+ * @author Vladimir TÃ¡mara PatiÃ±o. vtamara@pasosdeJesus.org
+ * Dominio pÃºblico. 2009.  Sin garantÃ­as
  * http://creativecommons.org/licenses/publicdomain/
  * @version   $Id: funzipuno.hpp,v 1.5 2010/01/18 16:12:50 vtamara Exp $
  */
@@ -83,15 +83,15 @@ static const uint32_t crc_32_tab[] =
 #define LOCFLG 4                /* desplazamiento del byte de banderas */
 #define CRPFLG 1               /*  bit de entrada encriptada */
 #define EXTFLG 8               /*  bit de encabezado extendido */
-#define LOCHOW 6                /* desplazamiento del método de compresión */
-#define LOCTIM 8                /* fecha de modificación (para desencriptar) */
+#define LOCHOW 6                /* desplazamiento del mÃ©todo de compresiÃ³n */
+#define LOCTIM 8                /* fecha de modificaciÃ³n (para desencriptar) */
 #define LOCCRC 12               /* desplazamiento del CRC */
-#define LOCSIZ 16               /* desplazamiento del tamaño comprimido */
+#define LOCSIZ 16               /* desplazamiento del tamaÃ±o comprimido */
 #define LOCLEN 20               /* desplazamiento de longitud deescomprimido */
 #define LOCFIL 24               /* desplazamiento del nombre del archivo */
 #define LOCEXT 26               /* desplazamiento del campo extra */
-#define LOCHDR 28               /* tamaño del encabezado loca, incluye LOCREM*/
-#define EXTHDR 16               /* tamaño del encabezado extendido con firma */
+#define LOCHDR 28               /* tamaÃ±o del encabezado loca, incluye LOCREM*/
+#define EXTHDR 16               /* tamaÃ±o del encabezado extendido con firma */
 
 /* Macros para tomar valores del encabezados de 2 y 4 bytes */
 #define SH(p) ((ush)(uch)((p)[0]) | ((ush)(uch)((p)[1]) << 8))
@@ -102,7 +102,7 @@ typedef unsigned short  ush;
 typedef uint64_t   ulg;
 typedef size_t	extent;
 
-#define	Z_STORED 0  // Otro método de almacenamiento que complementa Z_DEFLATED
+#define	Z_STORED 0  // Otro mÃ©todo de almacenamiento que complementa Z_DEFLATED
 
 
 

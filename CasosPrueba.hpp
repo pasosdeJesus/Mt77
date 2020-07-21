@@ -2,8 +2,8 @@
  * Ejemplos para pruebas de unidad
  *
  * @package Mt77
- * @author Vladimir Támara Patiño. vtamara@pasosdeJesus.org
- * Dominio público. 2009.  Sin garantías
+ * @author Vladimir TÃ¡mara PatiÃ±o. vtamara@pasosdeJesus.org
+ * Dominio pÃºblico. 2009.  Sin garantÃ­as
  * http://creativecommons.org/licenses/publicdomain/
  * @version $Id: CasosPrueba.hpp,v 1.4 2010/01/06 11:48:45 vtamara Exp $
  */
@@ -36,7 +36,7 @@ const string ps15=  MARCAIND + "\n" +
                    "RAM{0000}00000\xA0\x80}TAM{0000\21600000\x80\x80}\n";
 //13+1+ 13+1+ 18 = 46
 
-/** Auxiliar para llenar un stringstream con la representación plana
+/** Auxiliar para llenar un stringstream con la representaciÃ³n plana
  * de un NodoTrieS
  */
 inline void llena_ss(std::stringstream &ss, NodoTrieS *n, string pref = "")

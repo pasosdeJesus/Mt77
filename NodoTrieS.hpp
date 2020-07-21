@@ -2,12 +2,12 @@
  *
  * Trie especial en RAM. 
  * Apropiado para mantener posiciones de palabras en textos
- * en español  con codificación ISO-8859-1
+ * en espaÃ±ol  con codificaciÃ³n ISO-8859-1
  * Basado en http://www.pasosdejesus.org/vtamara/estinf2006-1/proy-s/index.html
  *
  * @package Mt77
- * @author Vladimir Támara Patiño. vtamara@pasosdejesus.org
- * Dominio público. 2008. Sin garantías
+ * @author Vladimir TÃ¡mara PatiÃ±o. vtamara@pasosdejesus.org
+ * Dominio pÃºblico. 2008. Sin garantÃ­as
  * http://creativecommons.org/licenses/publicdomain/
  * @version   $Id: NodoTrieS.hpp,v 1.18 2011/03/29 23:07:26 vtamara Exp $
  */
@@ -28,9 +28,9 @@ using namespace std;
 /**
  * Un nodo de un TrieS con apuntador a hermano menor e hijo mayor.
  *
- * Invariante: Arbol n-ario, hermanos ordenados lexicográficamente
+ * Invariante: Arbol n-ario, hermanos ordenados lexicogrÃ¡ficamente
  * de menor a mayor.
- * En lista de hermanos no hay 2 con prefijo común (i.e 
+ * En lista de hermanos no hay 2 con prefijo comÃºn (i.e 
  * todos comienzan por letra diferente)
  */
 class NodoTrieS
@@ -48,7 +48,7 @@ class NodoTrieS
                 friend uint32_t precalcula_escribe(NodoTrieS *n);
                 friend void escribePlanoStream (NodoTrieS *n,
                                                 iostream &os, 
-						uint32_t desp);
+						uint32_t desp /*= 0*/);
                 friend class TrieSDiscoCasoPrueba;
                 friend uint32_t escribeCopiaNodoRam(iostream &os, NodoTrieS *a,
                                                 NodoTrieS **phijo,
@@ -70,24 +70,24 @@ class NodoTrieS
         public:
                 /** Constructora.
                  * Responsabilidad de liberar hijo_menor y hermano_mayor pasa a
-                 * este nodo, esperando más eficiencia en mezclas. 
+                 * este nodo, esperando mÃ¡s eficiencia en mezclas. 
                 * @param cad Cadena
                 * @param hijo_menor Apuntador a Hijo menor
                 * @param hermano_mayor Apuntador a hermano mayor
-                * @param cpos conjunto de posiciones donde está la palabra
+                * @param cpos conjunto de posiciones donde estÃ¡ la palabra
                  **/
                 NodoTrieS(string cad = "", NodoTrieS *hijo_menor=NULL,
                           NodoTrieS *hermano_mayor = NULL,
                           set<Pos> cpos = set<Pos>());
 
-                /** Constructora que recibe una posición.
+                /** Constructora que recibe una posiciÃ³n.
                  * Responsabilidad de liberar hijo_menor y hermano_mayor pasa a
-                 * este nodo, esperando más eficiencia en mezclas. 
-                 * Inicializa conjunto de posiciones con una posición i.e. p.
+                 * este nodo, esperando mÃ¡s eficiencia en mezclas. 
+                 * Inicializa conjunto de posiciones con una posiciÃ³n i.e. p.
                 * @param cad Cadena
                 * @param hijo_menor Apuntador a Hijo menor
                 * @param hermano_mayor Apuntador a hermano mayor
-                * @param p posición inicial
+                * @param p posiciÃ³n inicial
                  **/
                 NodoTrieS(string cad, NodoTrieS *hijo_menor,
                           NodoTrieS *hermano_mayor, Pos p);
@@ -98,7 +98,7 @@ class NodoTrieS
                 ~NodoTrieS();
 
                 /**
-                 * Retorna copia de posiciones en palabra para depuración
+                 * Retorna copia de posiciones en palabra para depuraciÃ³n
                  */
                 set<Pos> depuracpos()
                 {
@@ -115,7 +115,7 @@ class NodoTrieS
                 /** Inserta una ocurrencia mas de la palabra pal, reportandola en
                  * posicion p.  
                 * @param pal Palabra por insertar
-                * @param p Posición donde aparece 
+                * @param p PosiciÃ³n donde aparece 
                  * @return Nueva raiz.
                  * @exception Memoria si la memoria se agota al insertar. En ese
                  * caso se garantiza que el arbol queda en un estado consistente.
@@ -125,14 +125,14 @@ class NodoTrieS
 		/** 
 		 * Inserta una palabra normalizandola antes si normaliza es true
 		 * @param pal Palabra por insertar 
-		 * @param numdoc Numero de documento en el que insertará
-		 * @param pini Posición inicial donde insertará
+		 * @param numdoc Numero de documento en el que insertarÃ¡
+		 * @param pini PosiciÃ³n inicial donde insertarÃ¡
 		 * @param normaliza Indica si debe o no normalizar
 		 */
 		void insertaNormalizando(string pal, uint32_t numdoc, 
 				uint32_t p, bool normalizaPal);
 
-                /** Inserta más ocurrencias de la palabra pal, reportandolas en
+                /** Inserta mÃ¡s ocurrencias de la palabra pal, reportandolas en
                  * posiciones npos.  
                 * @param pal Palabra por insertar
                 * @param npos Posiciones donde aparece
@@ -146,9 +146,9 @@ class NodoTrieS
 
                 /**
                  * Escribe representacion de TrieS como 
-                * árbol en el formato de dotty.
-                * @param os  Flujo donde escribirá
-                * @param pref Prefijo para indentación
+                * Ã¡rbol en el formato de dotty.
+                * @param os  Flujo donde escribirÃ¡
+                * @param pref Prefijo para indentaciÃ³n
                 * @param primero Si es el primer nodo
                 * @param mayor Si es el mayor de los hermanos del nivel
                  */
@@ -156,26 +156,26 @@ class NodoTrieS
                             bool primero = true, bool mayor = true) throw(string);
 
                 /**
-                 * Con propósitos de depuración, retorna cadena con 
-                * árbol en preorden.
+                 * Con propÃ³sitos de depuraciÃ³n, retorna cadena con 
+                * Ã¡rbol en preorden.
                  */
                 string preorden();
 
                 /** Renumera documentos referenciados en posiciones de trieS de
-                 * acuerdo a vector renum.   Una posición cuyo documento sea el
-                 * número p (>=1) pasará a ser el número renum[p-1] (>=1).
+                 * acuerdo a vector renum.   Una posiciÃ³n cuyo documento sea el
+                 * nÃºmero p (>=1) pasarÃ¡ a ser el nÃºmero renum[p-1] (>=1).
                 * @param renum Vector para renumerar
                  */
                 void renumeraDocs(vector<int64_t> renum);
 
                 /**
                  * Divide la cadena c en palabras e inserta cada una con 
-                * la etiqueta dada en el árbol, referenciando el documento 
-                * numdoc desde la posición inicial posini.
+                * la etiqueta dada en el Ã¡rbol, referenciando el documento 
+                * numdoc desde la posiciÃ³n inicial posini.
                  * @param c Cadena con palabras por insertar
                  * @param etiqueta Por agregar a cada palabra
-                 * @param numdoc Número de documento del cual provienen
-                 * @param pini Posición inicial en documento de la cadena c
+                 * @param numdoc NÃºmero de documento del cual provienen
+                 * @param pini PosiciÃ³n inicial en documento de la cadena c
                  */
                 void insertaConEtiqueta(string c, string etiqueta,
                                                    uint32_t numdoc, 
@@ -186,7 +186,7 @@ class NodoTrieS
 
 /** Construye un trieS a partir de un texto plano
  * @param na Archivo
- * @param ndoc Número de documento
+ * @param ndoc NÃºmero de documento
  * @param t Donde se leera trieS
  * @param normalizaPal Si debe o no normalizar cada palabra leida
  **/

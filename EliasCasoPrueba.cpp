@@ -1,10 +1,10 @@
 // vim: set expandtab tabstop=8 shiftwidth=8 foldmethod=marker:
 /** @file EliasCasoPrueba.cpp
- * Pruebas de unidad a algoritmos de compresión
+ * Pruebas de unidad a algoritmos de compresiÃ³n
  *
  * @package Mt77
- * @author Vladimir Támara Patiño. vtamara@pasosdeJesus.org
- * Dominio público. 2009.  Sin garantías
+ * @author Vladimir TÃ¡mara PatiÃ±o. vtamara@pasosdeJesus.org
+ * Dominio pÃºblico. 2009.  Sin garantÃ­as
  * http://creativecommons.org/licenses/publicdomain/
  * @version   $Id: EliasCasoPrueba.cpp,v 1.7 2010/01/18 16:12:50 vtamara Exp $
  */
@@ -250,11 +250,11 @@ void EliasCasoPrueba::prueba_long_elias_gama()
 
 
         // Teo: Si k es entero no negativo, el entero 2^4k requiere
-        // k+1 bytes en codificación gama de Elías.
-        // Dem: Este número requiere 4k bits binarios para representarse
-        // Por tanto la codificación unaria toma 4k bits, un 0 y otros 4k
+        // k+1 bytes en codificaciÃ³n gama de ElÃ­as.
+        // Dem: Este nÃºmero requiere 4k bits binarios para representarse
+        // Por tanto la codificaciÃ³n unaria toma 4k bits, un 0 y otros 4k
         // bits en 0 para un total de 8k+1 bits, los cuales en bytes
-        // requerirían techo(8k+1/8) k bytes.
+        // requerirÃ­an techo(8k+1/8) k bytes.
         // 2^0=1 requiere 1
         // 2^4=16 requiere 2
         // 2^8=256 requiere 3
@@ -263,12 +263,12 @@ void EliasCasoPrueba::prueba_long_elias_gama()
         // ...
         // 2^32 requiere 9
 
-        // Asi que este esquema es muy bueno para codificar números menores a
-        // 65535, para números mayores requiere más bytes que un long típico.
+        // Asi que este esquema es muy bueno para codificar nÃºmeros menores a
+        // 65535, para nÃºmeros mayores requiere mÃ¡s bytes que un long tÃ­pico.
         //
-        // Esto se traduce en recomendación para usuarios, los documentos pueden
-        // ser de cualquier tamaño, pero para facilitar compresión se recomienda
-        // que sean de máximo 64K
+        // Esto se traduce en recomendaciÃ³n para usuarios, los documentos pueden
+        // ser de cualquier tamaÃ±o, pero para facilitar compresiÃ³n se recomienda
+        // que sean de mÃ¡ximo 64K
 
 
 }

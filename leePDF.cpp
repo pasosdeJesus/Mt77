@@ -1,11 +1,11 @@
 // vim: set expandtab tabstop=8 shiftwidth=8 foldmethod=marker:
 /** @file leePDF.cpp
  * Lee un archivo en formato odt de Open Document Format e incluye su 
- * información a un índice.
+ * informaciÃ³n a un Ã­ndice.
  *
  * @package Mt77
- * @author Vladimir Támara Patiño. vtamara@pasosdeJesus.org
- * Dominio público. 2009.  Sin garantías
+ * @author Vladimir TÃ¡mara PatiÃ±o. vtamara@pasosdeJesus.org
+ * Dominio pÃºblico. 2009.  Sin garantÃ­as
  * http://creativecommons.org/licenses/publicdomain/
  * @version   $Id: leePDF.cpp,v 1.6 2010/01/20 18:54:18 vtamara Exp $
  */

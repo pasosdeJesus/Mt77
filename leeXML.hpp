@@ -3,8 +3,8 @@
  * Lee un XML y agrega datos con etiquetas.
  *
  * @package Mt77
- * @author Vladimir Támara Patiño. vtamara@pasosdejesus.org
- * Dominio público. 2009. Sin garantías
+ * @author Vladimir TÃ¡mara PatiÃ±o. vtamara@pasosdejesus.org
+ * Dominio pÃºblico. 2009. Sin garantÃ­as
  * http://creativecommons.org/licenses/publicdomain/
  * @version   $Id: leeXML.hpp,v 1.2 2010/01/06 10:09:30 vtamara Exp $
  */
@@ -22,7 +22,7 @@ using namespace std;
 
 /** Construye un trieS a partir de un XML
  * @param na Nombre del archivo
- * @param ndoc Número de documento
+ * @param ndoc NÃºmero de documento
  * @param t TrieS
  */
 void leeXML(const char *na, long ndoc, NodoTrieS &t);

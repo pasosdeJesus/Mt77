@@ -3,8 +3,8 @@
  *
  * @see Doc
  * @package Mt77
- * @author Vladimir Támara Patiño. vtamara@pasosdeJesus.org
- * Dominio público. 2009. Sin garantías
+ * @author Vladimir TÃ¡mara PatiÃ±o. vtamara@pasosdeJesus.org
+ * Dominio pÃºblico. 2009. Sin garantÃ­as
  * http://creativecommons.org/licenses/publicdomain/
  * @version   $Id: DocCasoPrueba.hpp,v 1.5 2010/01/06 04:19:25 vtamara Exp $
  */

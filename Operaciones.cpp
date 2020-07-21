@@ -1,10 +1,10 @@
 // vim: set expandtab tabstop=8 shiftwidth=8 foldmethod=marker:
 /** @file Operaciones.cpp
- * Realiza operaciones en un índice.
+ * Realiza operaciones en un Ã­ndice.
  *
  * @package Mt77
- * @author Vladimir Támara Patiño. vtamara@pasosdeJesus.org
- * Dominio público. 2009.  Sin garantías
+ * @author Vladimir TÃ¡mara PatiÃ±o. vtamara@pasosdeJesus.org
+ * Dominio pÃºblico. 2009.  Sin garantÃ­as
  * http://creativecommons.org/licenses/publicdomain/
  * @version   $Id: Operaciones.cpp,v 1.9 2010/01/18 16:12:50 vtamara Exp $
  */
@@ -179,7 +179,7 @@ eliminaDoc(char *noma, char *nomind, uint32_t nd) throw(string)
         is.close();
         os.close();
 
-        // Escribe relación sin el borrado
+        // Escribe relaciÃ³n sin el borrado
         escribeRelacion(nrel, sdocs);
 }
 
@@ -199,7 +199,7 @@ calcRenum(uint32_t td1, uint32_t td2, uint32_t nd, vector<int64_t> *reord,
 
         if (nd > 0 && nd <= td1) {
 
-                // renum2 0 -> 2, 1 -> 3 2 -> 4 y docs1 quedará a b c d e
+                // renum2 0 -> 2, 1 -> 3 2 -> 4 y docs1 quedarÃ¡ a b c d e
 
                 // queremos renum2 en
                 // 0 -> 1, 1 -> 2, 2 -> 3  i->i+(nd-1)
@@ -248,7 +248,7 @@ mezclaDosDisco(const char *indsal, const char *ind1, const char *ind2,
 
         vector<Doc> docs;
         vector<Doc> sdocs;
-        // Leer y mezclar relación de documentos 1 y 2
+        // Leer y mezclar relaciÃ³n de documentos 1 y 2
         vector<Doc> docs1;
         vector<Doc> docs2;
         uint32_t td1;
@@ -276,7 +276,7 @@ mezclaDosDisco(const char *indsal, const char *ind1, const char *ind2,
                 reord = new vector<int64_t>();
         }
         calcRenum(td1, docs2.size(), nd, reord, renum1, renum2);
-        //clog << "OJO después de calcRenum" << endl;
+        //clog << "OJO despuÃ©s de calcRenum" << endl;
         if (reord != NULL) {
                 //clog << "OJO reord.size=" << reord->size() << ", renum1.size=" << renum1->size() << ", renum2.size=" << renum2.size() << endl;
         }
@@ -285,26 +285,26 @@ mezclaDosDisco(const char *indsal, const char *ind1, const char *ind2,
         fstream is2(ind2, ios_base::in);
 
         verificaIndice(is1);
-        //clog << "OJO después de verificaIndice 1" << endl;
+        //clog << "OJO despuÃ©s de verificaIndice 1" << endl;
         is1.clear();
         verificaIndice(is2);
-        //clog << "OJO después de verificaIndice 2" << endl;
+        //clog << "OJO despuÃ©s de verificaIndice 2" << endl;
         is2.clear();
 
-        //clog << "OJO después de verificar" << endl;
+        //clog << "OJO despuÃ©s de verificar" << endl;
         os << MARCAIND << endl;
         mezclaRec(is1, is2, os, true, true, renum1, &renum2);
-        //clog << "OJO después de mezclaRec" << endl;
+        //clog << "OJO despuÃ©s de mezclaRec" << endl;
         is1.close();
         is2.close();
         os.close();
 
-        // Escribe relación de documentos de mezcla
+        // Escribe relaciÃ³n de documentos de mezcla
         escribeRelacion(nrel, docs1, reord);
 }
 
 /**
- * La funcionalidad de este ahora está incluida en indexador
+ * La funcionalidad de este ahora estÃ¡ incluida en indexador
  
 void
 agregaDoc(const char *indsal, const char *inden, const char *nom,
@@ -316,7 +316,7 @@ agregaDoc(const char *indsal, const char *inden, const char *nom,
         verificaNombre(indsal, nrel);
         verificaNombre(inden, nrel1);
 
-        // Leer y mezclar relación de documentos
+        // Leer y mezclar relaciÃ³n de documentos
         vector<Doc> docs1;
         vector<Doc> docs2;
         long td1 = 0;
@@ -368,7 +368,7 @@ agregaDoc(const char *indsal, const char *inden, const char *nom,
         is1.close();
         os.close();
 
-        // Escribe relación de documentos de mezcla
+        // Escribe relaciÃ³n de documentos de mezcla
         escribeRelacion(nrel, docs1, reord);
         //clog << "OJO tras escribeRelacion" << endl;
 }
@@ -385,7 +385,7 @@ subindice(const char *ind, const char *salida, uint32_t nd)
         verificaNombre(ind, nrel);
         verificaNombre(salida, nrelsal);
 
-        // Leer y mezclar relación de documentos
+        // Leer y mezclar relaciÃ³n de documentos
         vector<Doc> docs;
         vector<Doc> docsal;
         uint32_t td1 = 0;
