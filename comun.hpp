@@ -274,4 +274,18 @@ vector<string> estalla(const string &delimitador, const string &cad);
 string directorio_temp();
 
 
+static int text_is_ascii(u_char c);
+
+static int text_is_latin1(u_char c);
+
+static int text_is_extended(u_char c);
+
+static int text_try_test(const std::string data, int (*f)(u_char));
+
+int text_get_type(const std::string base);
+
+std::string latin1_to_utf8(std::string &str);
+
+
+
 #endif
