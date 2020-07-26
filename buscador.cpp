@@ -27,17 +27,18 @@ using namespace std;
 
 #include "Pos.hpp"
 #include "TrieSDisco.hpp"
-
+#include "comun.hpp"
 
 /**
  * Recibe consulta, la analiza y retorna un conjunto de cadenas por buscar con la función realizaBusqueda
  */
-set<string> analizaConsulta(char *consulta)
+set<string> analizaConsulta(string consulta)
 {
         string pnor;
         string petiqueta;
         set<string> ccad;
         if (consulta[0] == '\0') {
+                // std::cout << "vacio" << std::endl;
                 return ccad;
         }
         int estado = 0;
@@ -49,16 +50,33 @@ set<string> analizaConsulta(char *consulta)
         char pal[MAXCAD];
         int npal = 0;  // Número de caracteres escritos en pal
         uint32_t p = 0;
-        for (p = 0; p < strlen(consulta); p++) {
+        for (p = 0; p < consulta.length(); p++) {
+                // clog << "analizaConsulta ciclo, p="<< p <<", estado=" << estado << "\n";
                 if (estado == 0) {
-                        if (isalnum(consulta[p])) {
-                                estado = 1;
-                                npal = 0;
-                                pal[0] = consulta[p];
-                        } else if (consulta[p] == '"') {
+                        if (consulta[p] == '"') {
                                 estado = 2;
                                 npal = -1;
                                 //clog << "OJO De 0 a 2" << endl;
+                        } else if (!isspace(consulta[p])) {
+                                estado = 1;
+                                npal = 0;
+                                pal[0] = consulta[p];
+
+                                // estado = 1;
+                                // //pal[0] = consulta[p]
+                                // int i = 0;
+                                // unsigned char ucp = consulta[p];
+                                // if (ucp > 160) {
+                                //         // Caracter en LATIN1 toca convertirlo a UTF8
+                                //         clog << "convertitr a UTF8 " << (int)ucp << "\n";
+                                //         string t = caracter_latin1_a_utf8(consulta[p]);
+                                //         clog << "t=" << t << endl;
+                                //         for(; i < t.length(); i++) {
+                                //                 pal[i] = t[i];
+                                //         }
+                                //         clog << "pal=" << pal << endl;
+                                // }
+                                // npal = i - 1;
                         }
                 } else if (estado == 1) {
                         if (isspace(consulta[p])) {
@@ -481,6 +499,7 @@ string escapa(char *s)
 
 int main(int argc, char *argv[])
 {
+        std::setlocale(LC_ALL, "es_CO.UTF-8");
 
         uint32_t inicio = 1;
         uint32_t fin = 10;
@@ -492,7 +511,13 @@ int main(int argc, char *argv[])
         }
 
         vector<Doc> docs;
-        set<string> cons = analizaConsulta(argv[2]);
+
+        string query( argv[2] );
+        query = latin1_a_utf8(query);
+        set<string> cons = analizaConsulta(query);
+
+        std::cout << "cons=" << cons << " longitud=" << cons.size() << std::endl;
+
         //clog << "OJO analizaConsulta retornó conjunto de tamaño " << cons.size() << endl;
         /*	if (cons.size() == 0) {
         		cout << "Consulta vacía<br>" << endl;
@@ -531,7 +556,7 @@ int main(int argc, char *argv[])
         	} */
         /*	for (int i=0; i<docs.size(); i++) {
         	cerr << i << " " << docs[i] << endl;
-        	} 
+        	}
         	exit(1); */
 
         /*	if (vpos==NULL || vpos->size()==0) {

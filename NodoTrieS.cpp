@@ -172,6 +172,10 @@ NodoTrieS::inserta(string pal, Pos p)
 void
 NodoTrieS::inserta(string pal, set<Pos> *npos)
 {
+        // cambiar a utf-8 en caso de ser latin1
+        pal = latin1_a_utf8(pal);
+
+        // clog << "insertando la palabra: " << pal << std::endl;
         //cerr << "OJO " << "inserta("<< pal << ", "<< p << ")" << endl;
         if (pal == cad) {
                 //cerr << "  OJO pal == cad"<<endl;
@@ -514,23 +518,23 @@ void leeTexto(const char *na, uint32_t ndoc, NodoTrieS &t, bool normalizaPal)
         ASSERT(ndoc >= 0);
 
         string pal;
-        clog<<"Leyendo de "<<na<<endl;
+        // clog<<"Leyendo de "<<na<<endl;
         // Error si no existe
         ifstream fs(na);
 
         uint32_t p;
         do {
                 p = fs.tellg();
-                clog << "OJO p=" << p << endl;
+                // clog << "OJO p=" << p << endl;
                 fs >> pal;
                 if (pal.size() >= MAXCAD) {
                         pal = pal.substr(0, MAXCAD);
                 }
                 if (!fs.eof()) {
-                        clog<<"Leida "<<pal<<endl;
+                        // clog<<"Leida "<<pal<<endl;
                         if (p >= 0) {
                                 // tellg comienza en 0 toca + 1
-                                t.insertaNormalizando(pal, ndoc, p + 1, 
+                                t.insertaNormalizando(pal, ndoc, p + 1,
                                                 normalizaPal);
                        }
                 }
@@ -546,16 +550,16 @@ void leeTexto(const char *na, uint32_t ndoc, NodoTrieS &t, bool normalizaPal)
 bool es_signo_punt(unsigned char c)
 {
         if (c < '0' || (c > '9' && c < 'A') || (c > 'Z' && c < 'a')) {
-                clog << c << "si es signo de puntuación" << endl;
+                // clog << c << "si es signo de puntuación" << endl;
                 return true;
         }
 
         return false;
 }
 
-/** 
+/**
  * Inserta una palabra normalizandola antes si normaliza es true
- * @param pal Palabra por insertar 
+ * @param pal Palabra por insertar
  * @param numdoc Numero de documento en el que insertará
  * @param pini Posición inicial donde insertará
  * @param normaliza Indica si debe o no normalizar
@@ -572,7 +576,7 @@ NodoTrieS::insertaNormalizando(string pal, uint32_t numdoc, uint32_t p, bool
         }
         if (r.size()>0) {
                 inserta(r, Pos(numdoc, p));
-                clog<<"  Insertada"<<endl;
+                // clog<<"  Insertada"<<endl;
         }
 }
 
@@ -596,41 +600,41 @@ NodoTrieS::insertaConEtiqueta(string c, string etiqueta,
         string o = "";
         int p, inio;
         for (p = pini, inio = 0, i = c.begin(); i != c.end(); p++ , i++) {
-                clog << "insertaConEtiqueta: " << *i << endl;
+                // clog << "insertaConEtiqueta: " << *i << endl;
                 if (*i == '.') {
-                        clog << "OJO Punto: " << *i << endl;
+                        // clog << "OJO Punto: " << *i << endl;
                         if (o.length() > 0) {
                                 string ot =
                                         normaliza(etiqueta) + string(":") + o;
                                 if (ot.length() >= MAXCAD) {
                                         ot = ot.substr(0, MAXCAD);
-                                        clog << "OJO Cortamos 1" << endl;
+                                        // clog << "OJO Cortamos 1" << endl;
                                 }
-                                clog << o << endl;
+                                // clog << o << endl;
                                 inserta(ot, Pos(numdoc, p));
                         }
                         o += ".";
                         //inio = p + 1;
                         //o = "";
                 } else if (isspace(*i) || es_signo_punt(*i)) {
-                        clog << "Espacio o punct: " << *i << ", o.length()=" << o.length() << endl;
+                        // clog << "Espacio o punct: " << *i << ", o.length()=" << o.length() << endl;
                         if (o.length() > 0) {
                                 o = normaliza(etiqueta) + string(":") + o;
-                                clog << "tras unidr o.length()=" << o.length() << " y MAXCAD=" << MAXCAD << endl;
+                                // clog << "tras unidr o.length()=" << o.length() << " y MAXCAD=" << MAXCAD << endl;
 
                                 if (o.length() >= MAXCAD) {
                                         o = o.substr(0, MAXCAD);
-                                        clog << "OJO Cortamos" << endl;
+                                        // clog << "OJO Cortamos" << endl;
                                 }
-                                clog << o << endl;
+                                // clog << o << endl;
                                 inserta(o, Pos(numdoc, p));
                         }
                         inio = p + 1;
                         o = "";
                 } else if (o.length() < (MAXCAD - etiqueta.length() -1)) {
-                        clog << o << endl;
+                        // clog << o << endl;
                         o += normalizaCaracter(*i);
-                        clog << o << endl;
+                        // clog << o << endl;
                 }
         }
         if (o.length() > 0) {
@@ -639,7 +643,7 @@ NodoTrieS::insertaConEtiqueta(string c, string etiqueta,
                 if (o.length() >= MAXCAD) {
                         o = o.substr(0, MAXCAD);
                 }
-                clog << o << endl;
+                // clog << o << endl;
                 inserta(o, Pos(numdoc, p));
         }
 }
