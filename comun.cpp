@@ -415,75 +415,55 @@ directorio_temp()
 
 static int text_is_ascii(u_char c)
 {
-	const char	cc[] = "\007\010\011\012\014\015\033";
+        const char cc[] = "\007\010\011\012\014\015\033";
 
-	if (c == '\0')
-		return (0);
-	if (strchr(cc, c) != NULL)
-		return (1);
-	return (c > 31 && c < 127);
+        if (c == '\0')
+                return (0);
+        if (strchr(cc, c) != NULL)
+                return (1);
+        return (c > 31 && c < 127);
 }
 
 static int text_is_latin1(u_char c)
 {
-	if (c >= 160)
-		return (1);
-	return (text_is_ascii(c));
+        if (c >= 160)
+                return (1);
+        return (text_is_ascii(c));
 }
 
 static int text_is_extended(u_char c)
 {
-	if (c >= 128)
-		return (1);
-	return (text_is_ascii(c));
+        if (c >= 128)
+                return (1);
+        return (text_is_ascii(c));
 }
 
-static int
-text_try_test(const std::string data, int (*f)(u_char))
+static int text_try_test(const std::string data, int (*f)(u_char))
 {
-    for (char c: data)
-    {
-		if (!f(c))
-            return (0);
-    }
-	return (1);
-}
-
-// const std::string
-// los valores de retorno son temporales para las pruebas
-int text_get_type(const std::string base)
-{
-	if (text_try_test(base, text_is_ascii))
-        return 0;
-		// return ("ASCII");
-	if (text_try_test(base, text_is_latin1))
-        return 1;
-    // return ("ISO-8859");
-    if (text_try_test(base, text_is_extended))
-        return 2;
-    // return ("Non-ISO extended-ASCII");
-	return 0;
-}
-
-// en linux string ya reconoce automaticamente el uso de utf8
-std::string latin1_to_utf8(std::string &str)
-{
-    // if utf8? return str
-    int tipo = text_get_type(str);
-    if (tipo != 1)
-        return str;
-
-    std::string strOut;
-    for (std::string::iterator it = str.begin(); it != str.end(); ++it)
-    {
-        uint8_t ch = *it;
-        if (ch < 0x80) {
-            strOut.push_back(ch);
+        for (int i = 0 ; i < data.length(); i++)
+        {
+                if (!f(data[i]))
+                        return (0);
         }
-        else {
-            strOut.push_back(0xc0 | ch >> 6);
-            strOut.push_back(0x80 | (ch & 0x3f));
-        }
-    }
-    return strOut;
+        return (1);
 }
+
+std::string latin1_a_utf8(std::string &str)
+{
+        if (!text_try_test(str, text_is_latin1))
+                return str;
+
+        std::string salida;
+        for (uint8_t ch: str)
+        {
+                if (ch < 0x80) {
+                        salida.push_back(ch);
+                }
+                else {
+                        salida.push_back(0xc0 | ch >> 6);
+                        salida.push_back(0x80 | (ch & 0x3f));
+                }
+        }
+        return salida;
+}
+

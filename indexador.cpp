@@ -138,11 +138,11 @@ indexa(Doc &d, long numdoc, bool metainformacion, const char *pref,
  * http://pages.cs.wisc.edu/~colbster/cs302/examples/fileopen/fileopen.cpp
  */
 bool existe_archivo(string filename) {
-  ifstream fin;
-  fin.open (filename.c_str());
-  if (fin.fail()) return false;
-  fin.close();
-  return true;
+        ifstream fin;
+        fin.open (filename.c_str());
+        if (fin.fail()) return false;
+        fin.close();
+        return true;
 }
 
 uint32_t MAXG = 50000000;
@@ -151,6 +151,8 @@ bool metainformacion=true;
 
 int main(int argc, char *argv[])
 {
+        std::setlocale(LC_ALL, "es_CO.UTF-8");
+
         if (argc < 5) {
                 cerr<<"Se esperaban al menos 4 argumentos, el primero indice por crear o aumentar, indice temporal, dominio por agregar como prefijo y los siguientes textos por leer"<<endl;
                 exit(1);
