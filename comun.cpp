@@ -320,6 +320,8 @@ string noagregan[tamnoagregan] = {
  */
 string normaliza(string s)
 {
+        // TODO: ahora con utf-8 como se deberia hacer esto?
+        return s;
 
         string::iterator i;
         string o = "";

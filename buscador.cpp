@@ -50,8 +50,11 @@ set<string> analizaConsulta(string consulta)
         char pal[MAXCAD];
         int npal = 0;  // Número de caracteres escritos en pal
         uint32_t p = 0;
+
         for (p = 0; p < consulta.length(); p++) {
                 // clog << "analizaConsulta ciclo, p="<< p <<", estado=" << estado << "\n";
+                // clog << consulta[p] ;
+
                 if (estado == 0) {
                         if (consulta[p] == '"') {
                                 estado = 2;
@@ -85,6 +88,7 @@ set<string> analizaConsulta(string consulta)
                                 pal[npal] = '\0';
                                 pnor = normaliza(string(pal));
                                 if (pnor != "") {
+                                        // clog << " insertando cadena en estado 1 isspace" << endl;
                                         ccad.insert(pnor);
                                 }
                         } else if (consulta[p] == ':') {
@@ -115,6 +119,7 @@ set<string> analizaConsulta(string consulta)
                                         }
                                 }
                                 //clog << "OJO se insertará a la consulta '" << cres << "'" << endl;
+                                // clog << " insertando cadena en estado 2" << endl;
                                 ccad.insert(cres);
                         } else if (npal < (int)MAXCAD-3  && (!isspace(consulta[p]) ||
                                                              !isspace(consulta[p-1]))) {
@@ -133,6 +138,7 @@ set<string> analizaConsulta(string consulta)
                                 //cerr << "Tras normalizar pal=" << pal <<
                                 //	" dio pnor=" << pnor << endl;
                                 if (pnor != "") {
+                                        // clog << " insertando cadena en estado 2 isspace" << endl;
                                         ccad.insert(petiqueta+":"+pnor);
                                 }
                         } else if (npal < (int)(MAXCAD-2-petiqueta.length())) {
@@ -140,6 +146,9 @@ set<string> analizaConsulta(string consulta)
                                 npal++;
                         }
                 }
+
+                // clog << "  " << pal << endl;
+
         }
         if (estado == 1) {
                 npal++;
@@ -328,7 +337,8 @@ string nombra_resconsulta(set<string> &cons, char *ind)
 {
         string r("../indices/consultas/");
         for(char *p = ind; *p != '\0'; p++) {
-                if (isalnum(*p)) {
+                //if (isalnum(*p)) {
+                if (!isspace(*p)) {
                         r += *p;
                 } else {
                         r += '_';
@@ -496,6 +506,12 @@ string escapa(char *s)
         return t;
 }
 
+string escapa(string t)
+{
+        cad_remplaza("\"", "\\\"", t);
+        return t;
+}
+
 
 int main(int argc, char *argv[])
 {
@@ -512,11 +528,12 @@ int main(int argc, char *argv[])
 
         vector<Doc> docs;
 
-        string query( argv[2] );
-        query = latin1_a_utf8(query);
-        set<string> cons = analizaConsulta(query);
+        string busqueda( argv[2] );
+        busqueda = latin1_a_utf8(busqueda);
 
-        std::cout << "cons=" << cons << " longitud=" << cons.size() << std::endl;
+        set<string> cons = analizaConsulta(busqueda);
+
+        // std::cout << "cons=" << cons << " longitud=" << cons.size() << std::endl;
 
         //clog << "OJO analizaConsulta retornó conjunto de tamaño " << cons.size() << endl;
         /*	if (cons.size() == 0) {
@@ -592,7 +609,7 @@ int main(int argc, char *argv[])
 
 
         cout << "{" << endl;
-        cout << "  \"consulta\": \"" << escapa(argv[2]) << "\"," << endl;
+        cout << "  \"consulta\": \"" << escapa(busqueda) << "\"," << endl;
         cout << "  \"documentos\": " << vpos->size() << "," << endl;
         cout << "  \"inicio\": " << inicio << "," << endl;
         cout << "  \"fin\": " << fin << "," << endl;
