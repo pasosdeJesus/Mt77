@@ -53,16 +53,16 @@ void
 indexa(Doc &d, long numdoc, bool metainformacion, const char *pref,
        NodoTrieS &t, string &tipo, string &formato)
 {
-        clog << "OJO indexa(d.URL=" << d.URL << ", " << numdoc << ", " << metainformacion << ", " << pref << ", t," << tipo << "," << formato << ")" << endl;
+        // clog << "OJO indexa(d.URL=" << d.URL << ", " << numdoc << ", " << metainformacion << ", " << pref << ", t," << tipo << "," << formato << ")" << endl;
         ASSERT(numdoc >= 1);
         string sitio = prefijoASitio(pref);
-        clog << "OJO sitio=" << sitio << endl;
+        // clog << "OJO sitio=" << sitio << endl;
         tipo = "otro";
         char nom[MAXLURL];
         snprintf(nom, MAXLURL, "%s", d.URL.c_str());
         //Si es XML y/o relato emplear otra función
         formato = determinaFormato(nom);
-        clog << "OJO formato= "<< formato << endl;
+        // clog << "OJO formato= "<< formato << endl;
         try {
                 if (formato == "texto") {
                         leeTexto(nom, numdoc, t, metainformacion);
@@ -89,7 +89,7 @@ indexa(Doc &d, long numdoc, bool metainformacion, const char *pref,
                 } else if (formato == "jpg" || formato == "png" || formato == "gif") {
                         tipo = "imagen";
                 }
-                clog << "OJO tipo= "<< tipo<< endl;
+                // clog << "OJO tipo= "<< tipo<< endl;
                 if (metainformacion) {
                         // Insertamos titulo también como palabra
                         t.insertaConEtiqueta(nom, "titulo", numdoc, 1);
@@ -100,7 +100,7 @@ indexa(Doc &d, long numdoc, bool metainformacion, const char *pref,
                         // Insertamos la extensión como titulo
                         vector<string> bext = estalla(".", nom);
                         if (bext.size() > 1) {
-                                clog << "OJO Insertando extensión " << bext[bext.size() -1] << endl;
+                                // clog << "OJO Insertando extensión " << bext[bext.size() -1] << endl;
                                 t.insertaConEtiqueta(bext[bext.size() - 1],
                                                      "titulo", numdoc, 1);
                         }
@@ -118,7 +118,7 @@ indexa(Doc &d, long numdoc, bool metainformacion, const char *pref,
                          1900 + rel->tm_year,
                          rel->tm_mon + 1, rel->tm_mday);
                 string hash = sha256archivo(string(nom));
-                clog << "OJO hash= " << hash << endl;
+                // clog << "OJO hash= " << hash << endl;
                 d.cond = hash;
                 d.fecha = string(fecha);
                 if (d.URL.substr(0, ELIMPREF.size()) == ELIMPREF) {
@@ -198,7 +198,7 @@ int main(int argc, char *argv[])
                 leeRelacion(nomrel, sdocs);
         }
         long tamsdocsini = sdocs.size();
-        clog << "OJO Por aumentar indice con " << tamsdocsini << " documentos" << endl;
+        // clog << "OJO Por aumentar indice con " << tamsdocsini << " documentos" << endl;
 
         vector<uint32_t> grupo; // Índice donde termina cada grupo en idocs
         uint32_t tg = 0 ; // Tamaño del grupo actual
@@ -243,26 +243,26 @@ int main(int argc, char *argv[])
         try {
                 //para todos los archivos del grupo, llama indexa
                 for (uint32_t g = 0; g < grupo.size(); g++) {
-                        clog << "OJO indexando grupo g=" << g << " que termina en " << grupo[g] << endl;
+                        // clog << "OJO indexando grupo g=" << g << " que termina en " << grupo[g] << endl;
                         t = new NodoTrieS();
                         while (indice_documento_procesado <= grupo[g]) {
-                                clog << "OJO indexando indice_documento_procesado=" << indice_documento_procesado << " como " << tamsdocsini + indice_documento_procesado + 1 << endl;
+                                // clog << "OJO indexando indice_documento_procesado=" << indice_documento_procesado << " como " << tamsdocsini + indice_documento_procesado + 1 << endl;
                                 indexa(idocs[indice_documento_procesado], tamsdocsini + indice_documento_procesado + 1,
                                                 metainformacion, pref,
                                                 *t, tipo, formato);
                                 sdocs.push_back(idocs[indice_documento_procesado]);
                                 indice_documento_procesado++;
                         }
-                        clog<<"idocs.size="<<idocs.size()<<endl;
+                        // clog<<"idocs.size="<<idocs.size()<<endl;
 
 /*                        if (g == 0) {
-                                clog << "OJO escribiendo primer grupo en " << nomi[g % 2] << endl;
+                                // clog << "OJO escribiendo primer grupo en " << nomi[g % 2] << endl;
                                 fstream os(nomi[g % 2], ios_base::out);
                                 os << MARCAIND << endl;
                                 escribePlanoStream(t, os);
                                 os.close();
                         } else { */
-                        clog << "OJO escribiendo grupo g=" << g << " en " << nomi[g % 2] << endl;
+                        // clog << "OJO escribiendo grupo g=" << g << " en " << nomi[g % 2] << endl;
                         fstream os(nomi[g % 2], ios_base::out);
                         fstream is1(nomi[(g + 1) % 2], ios_base::in);
 
@@ -282,7 +282,7 @@ int main(int argc, char *argv[])
                         rename(indice_temporal, indice);
                 }
                 if (grupo.size() >= 0) {
-                        clog << "OJO escribiendo relacion de documentos" << endl;
+                        // clog << "OJO escribiendo relacion de documentos" << endl;
                         escribeRelacion(nomrel, sdocs, NULL);
                 }
 
