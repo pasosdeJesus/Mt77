@@ -151,8 +151,6 @@ bool metainformacion=true;
 
 int main(int argc, char *argv[])
 {
-        std::setlocale(LC_ALL, "es_CO.UTF-8");
-
         if (argc < 5) {
                 cerr<<"Se esperaban al menos 4 argumentos, el primero indice por crear o aumentar, indice temporal, dominio por agregar como prefijo y los siguientes textos por leer"<<endl;
                 exit(1);
