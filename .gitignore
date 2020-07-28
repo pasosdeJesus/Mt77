@@ -1,4 +1,9 @@
 *.o
+
+# ignorar todos los archivos *.indice
+**.indice
+**.relacion
+
 *~
 Make.inc
 
