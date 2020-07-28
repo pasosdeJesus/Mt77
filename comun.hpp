@@ -280,6 +280,6 @@ static int texto_es_latin1(u_char c);
 
 static int probar_text(const std::string data, int (*f)(u_char));
 
-std::string latin1_a_utf8(std::string &str);
+std::string latin1_a_utf8(std::string str);
 
 #endif
