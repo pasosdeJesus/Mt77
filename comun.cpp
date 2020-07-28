@@ -27,6 +27,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <map>
 
 // using namespace std;
 // La anterior comentada por poco portable
@@ -266,6 +267,55 @@ string normalizaCaracter(char c)
         return o;
 }
 
+string wchar_t_a_string(wchar_t wc)
+{
+        std::mbstate_t state {};
+        std::string mb(MB_CUR_MAX, '\0');
+        std::wcrtomb(&mb[0], wc, &state);
+        return mb;
+}
+
+wstring a_wstring(string arg)
+{
+        wchar_t* wchr = new wchar_t(arg.length());
+        mbstowcs(wchr, arg.c_str(), arg.length());
+        return wstring(wchr);
+}
+
+map<wchar_t, string> normCaracteres{
+        {L'Á', "A"},
+        {L'É', "E"},
+        {L'Í', "I"},
+        {L'Ó', "O"},
+        {L'Ú', "U"},
+        {L'Ü', "U"},
+        {L'Ñ', "N"},
+};
+
+
+string normalizaCaracter(wchar_t c)
+{
+        c = towupper(c);
+        // wcout << c << "  " << (int) c << endl;
+
+        string o = "";
+
+        if(normCaracteres[c] != "")
+        {
+                o += normCaracteres[c];
+        }
+        else if ( c > 127 )
+        {
+                o += wchar_t_a_string(c);
+        }
+        else
+        {
+                o += (int)c;
+        }
+
+        return o;
+}
+
 const int tamnoagregan = 40;
 string noagregan[tamnoagregan] = {
 
@@ -312,6 +362,59 @@ string noagregan[tamnoagregan] = {
                                  };
 
 
+static int text_is_ascii(u_char c)
+{
+        const char cc[] = "\007\010\011\012\014\015\033";
+
+        if (c == '\0')
+                return (0);
+        if (strchr(cc, c) != NULL)
+                return (1);
+        return (c > 31 && c < 127);
+}
+
+static int text_is_latin1(u_char c)
+{
+        if (c >= 160)
+                return (1);
+        return (text_is_ascii(c));
+}
+
+static int text_is_extended(u_char c)
+{
+        if (c >= 128)
+                return (1);
+        return (text_is_ascii(c));
+}
+
+static int text_try_test(const std::string data, int (*f)(u_char))
+{
+        for (int i = 0 ; i < data.length(); i++)
+        {
+                if (!f(data[i]))
+                        return (0);
+        }
+        return (1);
+}
+
+std::string latin1_a_utf8(std::string str)
+{
+        if (!text_try_test(str, text_is_latin1))
+                return str;
+
+        std::string salida;
+        for (uint8_t ch: str)
+        {
+                if (ch < 0x80) {
+                        salida.push_back(ch);
+                }
+                else {
+                        salida.push_back(0xc0 | ch >> 6);
+                        salida.push_back(0x80 | (ch & 0x3f));
+                }
+        }
+        return salida;
+}
 
 /** Retorna cadena normalizada. i.e siguiendo convenciones de:
  * - caracteres aceptables 
@@ -320,16 +423,17 @@ string noagregan[tamnoagregan] = {
  */
 string normaliza(string s)
 {
-        // TODO: ahora con utf-8 como se deberia hacer esto?
-        return s;
 
-        string::iterator i;
+        // cambiar a utf-8 en caso de ser latin1
+        wstring wstr = a_wstring(latin1_a_utf8(s));
+
+        wstring::iterator i;
         string o = "";
         int c;
-        for (c = 0, i = s.begin(); i != s.end() && c <= (int)MAXCAD;
-                        c++ , i++) {
-                if (*i == '.' && (i+1 != s.end()) &&
-                                (normalizaCaracter(*(i+1)) != "")) {
+
+        for (c = 0, i = wstr.begin(); i != wstr.end() && c <= (int)MAXCAD; c++ , i++) {
+                if (*i == '.' && (i+1 != wstr.end())
+                                && (normalizaCaracter(*(i+1)) != "")) {
                         o += ".";
                 } else {
                         o += normalizaCaracter(*i);
@@ -341,6 +445,7 @@ string normaliza(string s)
                         return string("");
                 }
         }
+        // clog << "palabra normalizada: " << o << " de " << s << endl;
 
         return o;
 }
@@ -414,58 +519,4 @@ directorio_temp()
 
 
 
-
-static int text_is_ascii(u_char c)
-{
-        const char cc[] = "\007\010\011\012\014\015\033";
-
-        if (c == '\0')
-                return (0);
-        if (strchr(cc, c) != NULL)
-                return (1);
-        return (c > 31 && c < 127);
-}
-
-static int text_is_latin1(u_char c)
-{
-        if (c >= 160)
-                return (1);
-        return (text_is_ascii(c));
-}
-
-static int text_is_extended(u_char c)
-{
-        if (c >= 128)
-                return (1);
-        return (text_is_ascii(c));
-}
-
-static int text_try_test(const std::string data, int (*f)(u_char))
-{
-        for (int i = 0 ; i < data.length(); i++)
-        {
-                if (!f(data[i]))
-                        return (0);
-        }
-        return (1);
-}
-
-std::string latin1_a_utf8(std::string &str)
-{
-        if (!text_try_test(str, text_is_latin1))
-                return str;
-
-        std::string salida;
-        for (uint8_t ch: str)
-        {
-                if (ch < 0x80) {
-                        salida.push_back(ch);
-                }
-                else {
-                        salida.push_back(0xc0 | ch >> 6);
-                        salida.push_back(0x80 | (ch & 0x3f));
-                }
-        }
-        return salida;
-}
 

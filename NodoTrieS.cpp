@@ -172,9 +172,6 @@ NodoTrieS::inserta(string pal, Pos p)
 void
 NodoTrieS::inserta(string pal, set<Pos> *npos)
 {
-        // cambiar a utf-8 en caso de ser latin1
-        pal = latin1_a_utf8(pal);
-
         // clog << "insertando la palabra: " << pal << std::endl;
         //cerr << "OJO " << "inserta("<< pal << ", "<< p << ")" << endl;
         if (pal == cad) {

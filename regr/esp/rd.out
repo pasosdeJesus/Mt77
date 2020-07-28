@@ -231,9 +231,9 @@ subgraph cluster9 {
 
 "CU" -> "CUAN"
 "CUAN" [label="AN {(4,544)}"]
-"CUMPLEAÑOS" [label="MPLEAÑOS {(4,226)}"]
+"CUMPLEAÃ‘OS" [label="MPLEAÃ‘OS {(4,226)}"]
 subgraph cluster10 {
-"CUAN" -> "CUMPLEAÑOS" [color="red"]
+"CUAN" -> "CUMPLEAÃ‘OS" [color="red"]
 }
 
 "D" -> "DA"
@@ -398,13 +398,13 @@ subgraph cluster30 {
 
 "NI" -> "NIOS"
 "NIOS" [label="OS {(4,9)}"]
-"NIÑO" [label="ÑO {(4,42), (4,121), (4,181), (4,269), (4,508), (4,670), (4,765)}"]
+"NIÃ‘O" [label="Ã‘O {(4,42), (4,121), (4,181), (4,269), (4,508), (4,670), (4,765)}"]
 subgraph cluster31 {
-"NIOS" -> "NIÑO" [color="red"]
+"NIOS" -> "NIÃ‘O" [color="red"]
 }
 
-"NIÑO" -> "NIÑOS"
-"NIÑOS" [label="S {(4,338), (4,434), (4,582), (4,843)}"]
+"NIÃ‘O" -> "NIÃ‘OS"
+"NIÃ‘OS" [label="S {(4,338), (4,434), (4,582), (4,843)}"]
 "NO" -> "NOS"
 "NOS" [label="S {(3,13)}"]
 "O" -> "ORAS"
@@ -425,11 +425,11 @@ subgraph cluster33 {
 "PO" -> "PU" [color="red"]
 }
 
-"PE" -> "PEQUEÑA"
-"PEQUEÑA" [label="QUEÑA {(4,743)}"]
+"PE" -> "PEQUEÃ‘A"
+"PEQUEÃ‘A" [label="QUEÃ‘A {(4,743)}"]
 "PERSONA" [label="RSONA {(4,376)}"]
 subgraph cluster34 {
-"PEQUEÑA" -> "PERSONA" [color="red"]
+"PEQUEÃ‘A" -> "PERSONA" [color="red"]
 }
 
 "PO" -> "PODRAS"

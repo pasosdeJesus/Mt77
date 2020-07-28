@@ -529,11 +529,9 @@ int main(int argc, char *argv[])
         vector<Doc> docs;
 
         string busqueda( argv[2] );
-        busqueda = latin1_a_utf8(busqueda);
-
         set<string> cons = analizaConsulta(busqueda);
 
-        // std::cout << "cons=" << cons << " longitud=" << cons.size() << std::endl;
+        // clog << "cons=" << cons << " longitud=" << cons.size() << std::endl;
 
         //clog << "OJO analizaConsulta retornó conjunto de tamaño " << cons.size() << endl;
         /*	if (cons.size() == 0) {
