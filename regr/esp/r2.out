@@ -1,5 +1,5 @@
 {
-  "consulta": "CONOCEREÕS",
+  "consulta": "CONOCERE√çS",
   "documentos": 0,
   "inicio": 1,
   "fin": 0,
@@ -18,7 +18,7 @@
   ]
 }
 {
-  "consulta": "UNIG…NITO",
+  "consulta": "UNIG√âNITO",
   "documentos": 1,
   "inicio": 1,
   "fin": 1,
@@ -72,13 +72,13 @@
 1 http://r/nombre%20con%20espacio.txt
 2 http://r/nombre%20con%20e%fffffff1e.txt
 NOMBRECONESPACIO.TXT 1
-NOMBRECONE—E.TXT 1
+NOMBRECONE√ëE.TXT 1
 SITIO:R 2
 TIPO:DOCUMENTO 2
 TITULO:CON 2
 TITULO:ESPACIO 1
 TITULO:ESPACIO.TXT 1
-TITULO:E—E 1
-TITULO:E—E.TXT 1
+TITULO:E√ëE 1
+TITULO:E√ëE.TXT 1
 TITULO:NOMBRE 2
 TITULO:TXT 2
