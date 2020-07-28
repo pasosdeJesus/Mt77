@@ -362,7 +362,9 @@ string noagregan[tamnoagregan] = {
                                  };
 
 
-static int text_is_ascii(u_char c)
+// tomado de text.c de la herramienta file de openbsd.
+// creado originalmente por Nicholas Marriott <nicm@openbsd.org>
+static int texto_es_ascii(u_char c)
 {
         const char cc[] = "\007\010\011\012\014\015\033";
 
@@ -373,21 +375,18 @@ static int text_is_ascii(u_char c)
         return (c > 31 && c < 127);
 }
 
-static int text_is_latin1(u_char c)
+// tomado de text.c de la herramienta file de openbsd.
+// creado originalmente por Nicholas Marriott <nicm@openbsd.org>
+static int texto_es_latin1(u_char c)
 {
         if (c >= 160)
                 return (1);
-        return (text_is_ascii(c));
+        return (texto_es_ascii(c));
 }
 
-static int text_is_extended(u_char c)
-{
-        if (c >= 128)
-                return (1);
-        return (text_is_ascii(c));
-}
-
-static int text_try_test(const std::string data, int (*f)(u_char))
+// tomado de text.c de la herramienta file de openbsd.
+// creado originalmente por Nicholas Marriott <nicm@openbsd.org>
+static int probar_texto(const std::string data, int (*f)(u_char))
 {
         for (int i = 0 ; i < data.length(); i++)
         {
@@ -399,7 +398,7 @@ static int text_try_test(const std::string data, int (*f)(u_char))
 
 std::string latin1_a_utf8(std::string str)
 {
-        if (!text_try_test(str, text_is_latin1))
+        if (!probar_texto(str, texto_es_latin1))
                 return str;
 
         std::string salida;

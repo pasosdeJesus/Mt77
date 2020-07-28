@@ -515,8 +515,6 @@ string escapa(string t)
 
 int main(int argc, char *argv[])
 {
-        std::setlocale(LC_ALL, "es_CO.UTF-8");
-
         uint32_t inicio = 1;
         uint32_t fin = 10;
         timespec t1;
