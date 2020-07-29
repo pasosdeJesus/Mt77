@@ -229,7 +229,7 @@ string n128b_c(uint64_t n) {
 
 /**
  * Convierte número de cadena usada en archivos a long
- 
+
 uint64_t c_n128b(string s) {
 	std::stringstream ss;
 	ss.str(s);
@@ -267,51 +267,39 @@ string normalizaCaracter(char c)
         return o;
 }
 
-string wchar_t_a_string(wchar_t wc)
-{
-        std::mbstate_t state {};
-        std::string mb(MB_CUR_MAX, '\0');
-        std::wcrtomb(&mb[0], wc, &state);
-        return mb;
-}
+map<string, string> normaCaracteres{
+        {"Á", "A"},
+        {"É", "E"},
+        {"Í", "I"},
+        {"Ó", "O"},
+        {"Ú", "U"},
+        {"Ü", "U"},
+        {"Ñ", "N"},
+        {"á", "A"},
+        {"é", "E"},
+        {"í", "I"},
+        {"ó", "O"},
+        {"ú", "U"},
+        {"ü", "U"},
+        {"ñ", "N"},
 
-wstring a_wstring(string arg)
-{
-        wchar_t* wchr = new wchar_t(arg.length());
-        mbstowcs(wchr, arg.c_str(), arg.length());
-        return wstring(wchr);
-}
-
-map<wchar_t, string> normCaracteres{
-        {L'Á', "A"},
-        {L'É', "E"},
-        {L'Í', "I"},
-        {L'Ó', "O"},
-        {L'Ú', "U"},
-        {L'Ü', "U"},
-        {L'Ñ', "N"},
 };
 
-
-string normalizaCaracter(wchar_t c)
+string normalizaCaracter(string c)
 {
-        c = towupper(c);
-        // wcout << c << "  " << (int) c << endl;
-
         string o = "";
+        // clog << "\n::" << c << endl;
 
-        if(normCaracteres[c] != "")
+        if(normaCaracteres[c] != "")
         {
-                o += normCaracteres[c];
-        }
-        else if ( c > 127 )
-        {
-                o += wchar_t_a_string(c);
+                o += normaCaracteres[c];
         }
         else
         {
-                o += (int)c;
+                o += c;
         }
+
+        // cout << o << endl;
 
         return o;
 }
@@ -396,7 +384,7 @@ static int probar_texto(const std::string data, int (*f)(u_char))
         return (1);
 }
 
-std::string latin1_a_utf8(std::string str)
+string cadena_latin1_a_utf8(string str)
 {
         if (!probar_texto(str, texto_es_latin1))
                 return str;
@@ -416,37 +404,33 @@ std::string latin1_a_utf8(std::string str)
 }
 
 /** Retorna cadena normalizada. i.e siguiendo convenciones de:
- * - caracteres aceptables 
+ * - caracteres aceptables
  * - longitud máxima
  * - palabras excluidas
  */
 string normaliza(string s)
 {
-
-        // cambiar a utf-8 en caso de ser latin1
-        wstring wstr = a_wstring(latin1_a_utf8(s));
-
-        wstring::iterator i;
-        string o = "";
-        int c;
-
-        for (c = 0, i = wstr.begin(); i != wstr.end() && c <= (int)MAXCAD; c++ , i++) {
-                if (*i == '.' && (i+1 != wstr.end())
-                                && (normalizaCaracter(*(i+1)) != "")) {
-                        o += ".";
+        s = cadena_latin1_a_utf8(s);
+        string resultado = "";
+        for(int i = 0, c = 0 ; i < s.length() && c <= (int)MAXCAD; i++, c++)
+        {
+                if(s[i] == '\303') { // inicio de caracteres con tilde
+                        resultado += normalizaCaracter(s.substr(i,2));
+                        i += 1;
                 } else {
-                        o += normalizaCaracter(*i);
+                        resultado += toupper(s[i]);
                 }
         }
+        // clog << resultado << endl;
 
         for (int i = 0; i < tamnoagregan; i++) {
-                if (o == noagregan[i]) {
+                if (resultado == noagregan[i]) {
                         return string("");
                 }
         }
-        // clog << "palabra normalizada: " << o << " de " << s << endl;
+        // clog << "palabra normalizada: " << resultado << " de " << s << endl;
 
-        return o;
+        return resultado;
 }
 
 
