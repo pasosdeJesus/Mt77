@@ -12,7 +12,7 @@ distribuida y de dominio público
   - Escrito en C++ siguiendo estándares, con pruebas de unidad
     (con make limpia; make prueba; make unidad) y de regresión (con make limpia; make prueba; make regr)
 
-2. Herramientas
+2. Herramientas que produce
 
 Consta de las siguientes herramientas:
 
@@ -22,3 +22,14 @@ Consta de las siguientes herramientas:
 - __txtdeodt__ extraer texto de un documento odt (Open Document Format)
 - __unzipuno__ extraer un sólo archivo de un conteneder ZIP
 - __tomsha256__ Calcula hash sha256 empleando rutina de libtomcrypt-1.16
+
+3. Herramientas para el desarrollo y estándares
+
+- `make doctec` Genera documentación de fuentes
+- `make unidad` Ejecuta pruebas de unidad. Pero sólo debe hacerse después de 
+  compilar con aserciones `make limpia prueba`
+- `make regr` Ejecuta pruebas de regresión (deben pasar tanto con como sin
+    aserciones).
+- `make cobertura` Verificar cobertura de las pruebas de unidad
+- `make desempeno` Análisis de desempeño
+

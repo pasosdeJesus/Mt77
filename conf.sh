@@ -1,24 +1,23 @@
 #!/bin/sh
 
-# This source is released to the public domain since 2001. No warranty.
-# Citation of the source is appreciated.
-# http://www.pasosdejesus.org/devel/conf
+# Fuente cedida al dominio público desde 2001. Sin garantias.
+# vtamara@pasosdeJesus.org
 
-# The command line management of this script is based on public
-# domain code of WWWeb Tide Team 
+# El manejo de la línea de ordenes se basa en código en el dominio
+# público de WWWeb Tide Team
 #    http://www.ebbtide.com/Util/ksh_parse.html 
 
-# Reading configuration variables
+# Leyendo variables de configuracion
 if (test ! -f confv.sh) then {
         cp confv.empty confv.sh
 } fi;
 . ./confv.sh
 
 
-# Reading functions to help in configuration
+# Leyendo funciones para ayudar en la configuración
 . herram/confaux.sh
 
-#Parsing options
+#Reconociendo opciones
 
 BASENAME=$(basename $0)
 USAGE="$BASENAME [-v] [-h] [-M] [-p prefijo]"
@@ -34,26 +33,26 @@ HELP_FLAG=0	# Default: no help required
 VERBOSE_FLAG=0 	# Default: no verbose
 WARNING=0 	# General purpose no fail warning flag
 
-# initialize local variables
+# inicializad variables locales
 vbs=""
 prefix="/usr/local"
 confdoc="" 
 confphp="portal/conf.php"
 
-# Parse command line options
+# Reconoce opciones en línea de ordenes
 while getopts :p:Mhv arguments 
 do
-   # remember treat r: switches with: R_VALE = $OPTARG ;;
+   # recordar tratar r: opciones con: R_VALE = $OPTARG ;;
    case $arguments in
       p)    prefix=$OPTARG;;
-      M)    MAN_FLAG=1 ;;		# Display man page
-      v)    # increment the verboseness count and...
+      M)    MAN_FLAG=1 ;;		# Mostrar página del manual
+      v)    # incrementar cuenta de verbosidad y ...
 	    VERBOSE_FLAG=$(($VERBOSE_FLAG+1))
-	    # gather up all "-v" switches
+	    # acumular opciones "-v"
 	    vbs="$vbs -v"
 	    ;;
-      h)    HELP_FLAG=1;;		# display on-line help
-      \?)   echo "Opción no reconocida: $OPTARG" >&2	# flag illegal switch 
+      h)    HELP_FLAG=1;;		# mostrar ayuda en línea
+      \?)   echo "Opción no reconocida: $OPTARG" >&2
 	    OPT_FLAG=1;;
    esac
 done
@@ -66,11 +65,11 @@ options_help="
    -M           Presenta ayuda más completa
    -v           Presenta información de depuración durante ejecución"
  
-# check for man page request
+# página del manual
 if (test "$MAN_FLAG" = "1" ) then {
 	if (test "$PAGER" = "" ) then {
 		if ( test "$VERBOSE_FLAG" -gt "0" ) then {
-			echo "$BASENAME: Resetting PAGER variable to more" >&2
+			echo "$BASENAME: Dejando variable PAGER en 'more'" >&2
 
 	       	} fi;
 	       	export PAGER=more;
@@ -154,7 +153,7 @@ MANPAGE_HEREDOC
    exit 0;
 } fi;
 
-# check for help
+# revisa ayuda
 if (test "$HELP_FLAG" = "1" ) then {
    echo " Utilización: $USAGE"
    cat << HLP_OP
@@ -163,7 +162,7 @@ HLP_OP
    exit 0
 } fi;
 
-# check for illegal switches
+# revisa opciones ilegales
 if (test "$OPT_FLAG" = "1") then {
    echo "$BASENAME: Se encontró alguna opción invalida" >&2
    echo "Utilización: $USAGE" >&2
@@ -240,12 +239,12 @@ if (test "$VERBOSE_FLAG" -gt "0") then {
 	echo "Generando Make.inc";
 } fi;
 
-echo "# Some variables for Makefile" > Make.inc;
-echo "# This file is generated automatically by conf.sh.  Don't edit" >> Make.inc;
+echo "# Algunas variables para Makefile" > Make.inc;
+echo "# Este archivo se genera automaticamente con conf.sh.  No editar" >> Make.inc;
 echo "" >> Make.inc
 
 if (test "$VERBOSE_FLAG" -gt "1") then {
-	echo "Adding configuration variables to Make.inc";
+	echo "Agregando variables de configuración a Make.inc";
 } fi;
 addMakeConfv Make.inc;
 

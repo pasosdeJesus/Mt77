@@ -1,23 +1,23 @@
-# Variables de configuraci髇
+# Variables de configuraci贸n
 
-# Las siguientes l韓eas definen variables de configuraci髇 que,
+# Las siguientes l铆neas definen variables de configuraci贸n que,
 # eventualmente, usted puede quedar cambiar para adaptar mejor estas fuentes
-# a sus necesidades --despu閟 de modificar este archivo ejecute conf.sh.  
+# a sus necesidades --despu茅s de modificar este archivo ejecute conf.sh.  
 
 # Note que la sintaxis de este archivo es apropiada para
-# ser usada por conf.sh, a continuaci髇 de cada variable debe haber
-# dos l韓eas con comentarios.  La primera describe la variable y la segunda
-# da una indicaci髇 de que hacer si ocurre alg鷑 problema.
+# ser usada por conf.sh, a continuaci贸n de cada variable debe haber
+# dos l铆neas con comentarios.  La primera describe la variable y la segunda
+# da una indicaci贸n de que hacer si ocurre alg煤n problema.
 
 PROYECTO="Mt77"
 # Configurador de fuentes
 #
 
 PRY_VERSION="1.0a1"
-# Versi髇
+# Versi贸n
 #
 
-PRY_DESC="Motor de b鷖queda veloz, preciso y apto para indexaci髇 distribuida"
+PRY_DESC="Motor de b煤squeda veloz, preciso y apto para indexaci贸n distribuida"
 # Descripcion corta
 #
 
@@ -29,23 +29,23 @@ URLSITE="http://mt77.pasosdejesus.org/"
 # Otras variables
 
 
-# M閠odos
+# M茅todos
 
 ACT_PROC="act-scp"
-# Regla para actualizar sitio de publicaci髇
+# Regla para actualizar sitio de publicaci贸n
 # Las que hay por defecto son act-scp y act-ncftpput
 
 
 # Variables empleadas en fuentes
 
-# Las siguientes variables ser醤 modificadas por conf.sh (normalmente no las debe editar)
+# Las siguientes variables ser谩n modificadas por conf.sh (normalmente no las debe editar)
 
 MES_ACT="enero de 2010"
-# Mes de actualizaci髇
+# Mes de actualizaci贸n
 #
 
 FECHA_ACT=""
-# Fecha de la actualizaci髇 m醩 reciente
+# Fecha de la actualizaci贸n m谩s reciente
 #
 
 # Programas
@@ -56,7 +56,7 @@ AWK=""
 
 CP=""
 # Para copiar archivos
-# Herramienta t韕ica en sistemas Unix.
+# Herramienta t铆pica en sistemas Unix.
 
 CVS=""
 # Para control de versiones
@@ -64,42 +64,42 @@ CVS=""
 
 ED=""
 # Editor orientado a linea.
-# Herramienta est醤dar en sistemas Unix
+# Herramienta est谩ndar en sistemas Unix
 
 FIND=""
 # Para ubicar archivos
-# Herramienta t韕ica en sistemas Unix.
+# Herramienta t铆pica en sistemas Unix.
 
 GZIP=""
 # Compresor gzip.
-# Herramienta t韕ica en sistemas Unix.
+# Herramienta t铆pica en sistemas Unix.
 
 MAKE=""
 # Ejecuta comandos requeridos
-# Herramienta est醤dar en sistemas Unix
+# Herramienta est谩ndar en sistemas Unix
 
 MKDIR=""
 # Crea directorios
-# Herramienta est醤dar en sistemas Unix
+# Herramienta est谩ndar en sistemas Unix
 
 MV=""
 # Mueve/renombra archivos
-# Herramienta est醤dar en sistemas Unix
+# Herramienta est谩ndar en sistemas Unix
 
 NCFTPPUT=""
-# Programa para transferir archivos desde l韓ea de comandos usando el protocolo FTP
+# Programa para transferir archivos desde l铆nea de comandos usando el protocolo FTP
 # Es una herramienta del paquete ncftp cliente http://www.ncftpd.com/
 
 PERL=""
 # Interprete del lenguaje Perl.
-# Herramienta t韕ica en sistemas Unix.  http://www.perl.org
+# Herramienta t铆pica en sistemas Unix.  http://www.perl.org
 
 RM=""
 # Para eliminar archivos
-# Herramienta t韕ica en sistemas Unix.
+# Herramienta t铆pica en sistemas Unix.
 
 SCP=""
-# Programa para transferir archivos desde la l韓ea de comandos usando SSH
+# Programa para transferir archivos desde la l铆nea de comandos usando SSH
 # Es una herramienta del paquete ssh  http://www.openssh.org
 
 SED=""
@@ -108,11 +108,11 @@ SED=""
 
 TAR=""
 # Empaquetador de archivos tar.
-# Herramienta t韕ica en sistemas Unix.
+# Herramienta t铆pica en sistemas Unix.
 
 TOUCH=""
 # touch
-# Herramienta t韕ica en sistemas Unix. 
+# Herramienta t铆pica en sistemas Unix. 
 
 W3M=""
 # Navegador de web en texto.
@@ -124,20 +124,20 @@ W3M_OPT=""
 
 ZIP=""
 # Compresor zip.
-# Herramienta t韕ica en sistemas Unix.
+# Herramienta t铆pica en sistemas Unix.
 
 
 
-# V韆s de instalaci髇
+# V铆as de instalaci贸n
 
 INSBIN="/usr/local/bin"
-# Directorio de instalaci髇 de binarios
+# Directorio de instalaci贸n de binarios
 #
 
 INSDOC="/usr/local/share/doc/$PROYECTO"
-# Directorio para instalaci髇 de documentaci髇
+# Directorio para instalaci贸n de documentaci贸n
 #
 
 INSDATA="/usr/local/share/$PROYECTO"
-# Directorio para instalaci髇 de datos del proyecto
+# Directorio para instalaci贸n de datos del proyecto
 #
