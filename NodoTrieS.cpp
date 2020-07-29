@@ -601,8 +601,7 @@ NodoTrieS::insertaConEtiqueta(string c, string etiqueta,
                 if (*i == '.') {
                         // clog << "OJO Punto: " << *i << endl;
                         if (o.length() > 0) {
-                                string ot =
-                                        normaliza(etiqueta) + string(":") + o;
+                                string ot = normaliza(etiqueta) + string(":") + o;
                                 if (ot.length() >= MAXCAD) {
                                         ot = ot.substr(0, MAXCAD);
                                         // clog << "OJO Cortamos 1" << endl;
