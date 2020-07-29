@@ -229,7 +229,7 @@ string n128b_c(uint64_t n) {
 
 /**
  * Convierte número de cadena usada en archivos a long
- 
+
 uint64_t c_n128b(string s) {
 	std::stringstream ss;
 	ss.str(s);
@@ -404,7 +404,7 @@ string cadena_latin1_a_utf8(string str)
 }
 
 /** Retorna cadena normalizada. i.e siguiendo convenciones de:
- * - caracteres aceptables 
+ * - caracteres aceptables
  * - longitud máxima
  * - palabras excluidas
  */
