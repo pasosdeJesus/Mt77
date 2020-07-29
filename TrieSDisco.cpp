@@ -641,15 +641,15 @@ buscaPlanoStream(std::istream &is, string pal) throw(string)
 
         cad = leeCad(is);
         //clog<<"OJO cad = "<<cad <<endl;
-        if (cad.size() == pal.size() && cad == pal) {
+        if (cad.size() == pal.size() && cad.compare(pal) == 0) {
                 //clog<<"OJO encontrado";
                 (void)leeNDesp(is);
                 (void)leeNDesp(is);
                 cpos = leePos(is, NULL);
                 return cpos;
-        } else if (cad != "" &&
+        } else if (cad.size() > 0 &&
                         cad.size() < pal.size() &&
-                        pal.substr(0, cad.size()) == cad) {
+                        cad.compare(pal.substr(0, cad.size())) == 0) {
                 leeNDesp(is); // hermano
                 uint32_t hijo = leeNDesp(is);
                 /*hijo = 0;
@@ -660,7 +660,7 @@ buscaPlanoStream(std::istream &is, string pal) throw(string)
                         is.seekg(hijo);
                         return buscaPlanoStream(is, pal.substr(cad.size()));
                 }
-        } else if (cad != "" && cad < pal) {
+        } else if (cad.size() > 0 && cad.compare(pal) < 0) {
                 //clog<<"OJO pasar a hermano mayor"<<endl;
                 // salta cpos e hijo
                 uint32_t hermano = leeNDesp(is);
@@ -680,7 +680,7 @@ void verificaIndice(istream &is)
         char rec[MAXLURL];
         is.seekg(0);
         is.getline(rec, MAXLURL);
-        if (rec != MARCAIND) {
+        if (MARCAIND.compare(rec) != 0) {
                 throw errorFormato(is, string("Se esperaba `") + MARCAIND + string("' pero se encontró ") + rec);
         }
 }
@@ -697,7 +697,7 @@ buscaPlano(const char *na, const char *nrel, string pal, vector<Doc> &docs)
         try {
                 r = buscaPlanoStream(is, pal);
                 //clog << "OJO buscado r=" << r << endl;
-                throw errorFormato(is, "OJO paso 2");
+                //throw errorFormato(is, "OJO paso 2");
         } catch (string m) {
                 throw errorFormato(is, m);
         }

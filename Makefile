@@ -1,5 +1,5 @@
 # Reglas
-# Dominio público. 2008. vtamara@pasosdeJesus.org
+# Dominio pÃºblico. 2008. vtamara@pasosdeJesus.org
 
 include Make.inc
 
@@ -197,7 +197,7 @@ htdocs/ccdoc.db : htdocs
 htdocs : ; @mkdir $@
 
 GENDIST=
-# Dependencias para generar distribución
+# Dependencias para generar distribuciÃ³n
 
 ACTHOST=sn2.pasosdejesus.org
 ACTDIR=/var/www/pasosdeJesus/Mt77
@@ -209,11 +209,11 @@ GENACT=doc/tecnica-$(PRY_VERSION).pdf distcvs
 FILESACT=$(PROYECTO)-$(PRY_VERSION).tar.gz portal/index.php portal/estilo.css portal/conf.php doc/tecnica-$(PRY_VERSION).pdf
 # Archivos que se debe actualizar en sitio de Internet
 
-# To crear distribución de fuentes y actualizar en Internet
+# To crear distribuciÃ³n de fuentes y actualizar en Internet
 include herram/comdist.mak
 
 
-# Elimina hasta configuración
+# Elimina hasta configuraciÃ³n
 limpiadist: limpiamas
 	rm -f confv.sh confv.ent Make.inc
 	rm confaux.sed confaux.tmp confv.bak depuraindice
