@@ -4,7 +4,7 @@
   "inicio": 1,
   "fin": 1,
   "resultados": [
-    { "url": "http://r/r1-latin1.txt",
+    { "url": "http://r/r1-utf8.txt",
     "frec": "1",
     }
   ]
@@ -15,7 +15,7 @@
   "inicio": 1,
   "fin": 1,
   "resultados": [
-    { "url": "http://r/r1-latin1.txt",
+    { "url": "http://r/r1-utf8.txt",
     "frec": "1",
     }
   ]
@@ -26,7 +26,7 @@
   "inicio": 1,
   "fin": 1,
   "resultados": [
-    { "url": "http://r/r1-latin1.txt",
+    { "url": "http://r/r1-utf8.txt",
     "frec": "1",
     }
   ]
@@ -45,7 +45,7 @@
   "inicio": 1,
   "fin": 1,
   "resultados": [
-    { "url": "http://r/r1-latin1.txt",
+    { "url": "http://r/r1-utf8.txt",
     "frec": "2",
     }
   ]
@@ -64,7 +64,7 @@
   "inicio": 1,
   "fin": 1,
   "resultados": [
-    { "url": "http://r/r1-latin1.txt",
+    { "url": "http://r/r1-utf8.txt",
     "frec": "2",
     }
   ]
@@ -75,7 +75,7 @@
   "inicio": 1,
   "fin": 1,
   "resultados": [
-    { "url": "http://r/r1-latin1.txt",
+    { "url": "http://r/r1-utf8.txt",
     "frec": "1",
     }
   ]
@@ -86,7 +86,7 @@
   "inicio": 1,
   "fin": 1,
   "resultados": [
-    { "url": "http://r/r1-latin1.txt",
+    { "url": "http://r/r1-utf8.txt",
     "frec": "1",
     }
   ]
@@ -97,7 +97,7 @@
   "inicio": 1,
   "fin": 1,
   "resultados": [
-    { "url": "http://r/r1-latin1.txt",
+    { "url": "http://r/r1-utf8.txt",
     "frec": "1",
     }
   ]
@@ -108,7 +108,7 @@
   "inicio": 1,
   "fin": 1,
   "resultados": [
-    { "url": "http://r/r1-latin1.txt",
+    { "url": "http://r/r1-utf8.txt",
     "frec": "1",
     }
   ]
@@ -119,7 +119,7 @@
   "inicio": 1,
   "fin": 1,
   "resultados": [
-    { "url": "http://r/r1-latin1.txt",
+    { "url": "http://r/r1-utf8.txt",
     "frec": "1",
     }
   ]
@@ -132,16 +132,16 @@
   "resultados": [
   ]
 }
-1 http://r/r1-latin1.txt
+1 http://r/r1-utf8.txt
 CONOCEREIS 1
 HARA 1
 LIBRES 1
 OS 1
-R1-LATIN1.TXT 1
+R1-UTF8.TXT 1
 SITIO:R 1
 TIPO:DOCUMENTO 1
-TITULO:LATIN1 1
-TITULO:LATIN1.TXT 1
 TITULO:R1 1
 TITULO:TXT 1
+TITULO:UTF8 1
+TITULO:UTF8.TXT 1
 VERDAD 2

@@ -4,7 +4,7 @@
 
 #function x {
 
-echo "Ìndice vacio:"
+echo "Índice vacio:"
 rm -rf r0.indice; ../indexador r0.indice t.indice "http://r" "" > r0.out 2>&1
 ../buscador r0.indice LA 1 0 sincopiarecientes >> r0.out 2>&1
 ../operaindice lista r0.indice >> r0.out 2>&1
@@ -19,22 +19,27 @@ cmp r0.out esp/r0.out
 if (test "$?" != "0") then {
 	echo "** ERROR: r0 falló";
 } fi;
-echo "Creación de índices";
-rm -f r1.indice; ../indexador r1.indice t.indice "http://r/" r1.txt 
-rm -f verdad.indice; ../indexador verdad.indice t.indice "http://pasosdeJesus/" verdad.txt 
+
+echo "Creación de índice r1 a partir de texto LATIN1";
+rm -f r1.indice; ../indexador r1.indice t.indice "http://r/" r1-latin1.txt 
+#rm -f verdad.indice; ../indexador verdad.indice t.indice "http://pasosdeJesus/" verdad-latin1.txt 
 
 #function t {
 
-echo "Búsqueda sobre índice"
+echo "Búsqueda sobre índice r1"
 conocereis_l1=`cat conocereis-latin1.txt`
 hara_l1=`cat hara-latin1.txt`
 (../buscador r1.indice $conocereis_l1 1 0 sincopiarecientes;
+../buscador r1.indice CONOCEREIS 1 0 sincopiarecientes;
+../buscador r1.indice CONOCEREÍS 1 0 sincopiarecientes;
 ../buscador r1.indice LA 1 0 sincopiarecientes ;
 ../buscador r1.indice VERDAD 1 0 sincopiarecientes ;
 ../buscador r1.indice Y  1 0 sincopiarecientes;
 ../buscador r1.indice VERDAD 1 0 sincopiarecientes ;
 ../buscador r1.indice OS 1 0 sincopiarecientes ;
 ../buscador r1.indice $hara_l1 1 0 sincopiarecientes ;
+../buscador r1.indice HARA 1 0 sincopiarecientes ;
+../buscador r1.indice HARÁ 1 0 sincopiarecientes ;
 ../buscador r1.indice LIBRES 1 0 sincopiarecientes ;
 ../buscador r1.indice INEXISTENTE 1 0 sincopiarecientes;
 ../operaindice lista r1.indice ) | grep -v "\"fecha\":" > r1.out 2>&1
@@ -44,7 +49,7 @@ if (test "$?" != "0") then {
 	echo "** ERROR: r1 falló";
 } fi;
 
-echo "Búsqueda de metainformación"
+echo "Búsqueda de metainformación sobre r1"
 (../buscador r1.indice sitio:r 1 0 sincopiarecientes;
 ../buscador r1.indice sitio:s 1 0 sincopiarecientes;
 ../buscador r1.indice tipo:texto 1 0 sincopiarecientes;
@@ -57,6 +62,45 @@ cmp r1m.out esp/r1m.out
 if (test "$?" != "0") then {
 	echo "** ERROR: r1m falló";
 } fi;
+
+echo "Crea1ión de índices r1-u8 a partir de texto UTF-8";
+rm -f r1-u8.indice; ../indexador r1-u8.indice t.indice "http://r/" r1-utf8.txt 
+
+echo "Búsqueda sobre índice r1-u8"
+(../buscador r1-u8.indice $conocereis_l1 1 0 sincopiarecientes;
+../buscador r1-u8.indice CONOCEREIS 1 0 sincopiarecientes;
+../buscador r1-u8.indice CONOCEREÍS 1 0 sincopiarecientes;
+../buscador r1-u8.indice LA 1 0 sincopiarecientes ;
+../buscador r1-u8.indice VERDAD 1 0 sincopiarecientes ;
+../buscador r1-u8.indice Y  1 0 sincopiarecientes;
+../buscador r1-u8.indice VERDAD 1 0 sincopiarecientes ;
+../buscador r1-u8.indice OS 1 0 sincopiarecientes ;
+../buscador r1-u8.indice $hara_l1 1 0 sincopiarecientes ;
+../buscador r1-u8.indice HARA 1 0 sincopiarecientes ;
+../buscador r1-u8.indice HARÁ 1 0 sincopiarecientes ;
+../buscador r1-u8.indice LIBRES 1 0 sincopiarecientes ;
+../buscador r1-u8.indice INEXISTENTE 1 0 sincopiarecientes;
+../operaindice lista r1-u8.indice ) | grep -v "\"fecha\":" > r1-u8.out 2>&1
+
+cmp r1-u8.out esp/r1-u8.out
+if (test "$?" != "0") then {
+	echo "** ERROR: r1-u8 falló";
+} fi;
+
+echo "Búsqueda de metainformación sobre r1-u8"
+(../buscador r1-u8.indice sitio:r 1 0 sincopiarecientes;
+../buscador r1-u8.indice sitio:s 1 0 sincopiarecientes;
+../buscador r1-u8.indice tipo:texto 1 0 sincopiarecientes;
+../buscador r1-u8.indice tipo:xrlt 1 0 sincopiarecientes;
+../buscador r1-u8.indice titulo:r1 1 0 sincopiarecientes;
+../buscador r1-u8.indice titulo:s 1 0 sincopiarecientes;
+../buscador r1-u8.indice titulo:txt 1 0 sincopiarecientes ) | grep -v "fecha\":" > r1m-u8.out 2>&1
+
+cmp r1m-u8.out esp/r1m-u8.out
+if (test "$?" != "0") then {
+	echo "** ERROR: r1m-u8 falló";
+} fi;
+
 
 
 echo "Caso vacío";
@@ -123,7 +167,7 @@ if (test "$?" != "0") then {
 
 echo "Otra mezcla"
 
-rm -f ro.indice; ../indexador ro.indice t.indice "http://r/" r1.txt r2.txt 
+rm -f ro.indice; ../indexador ro.indice t.indice "http://r/" r1-latin1.txt r2.txt 
 
 cmp ro.indice rm.indice
 if (test "$?" != "0") then {
@@ -229,7 +273,7 @@ if (test "$?" != "0") then {
 
 echo "Elimina un documento"
 
-rm -f ro.indice; ../indexador ro.indice t.indice "http://r/" r1.txt r2.txt 
+rm -f ro.indice; ../indexador ro.indice t.indice "http://r/" r1-latin1.txt r2.txt 
 ../buscador ro.indice "$conocereis_l1" 1 0 sincopiarecientes | grep -v "fecha\":" > ro2.out 2>&1;
 ../operaindice eliminadoc ro2.indice ro.indice 1 
 ../buscador ro2.indice "$conocereis_l1" 1 0 sincopiarecientes | grep -v "fecha\":" >> ro2.out 
@@ -241,14 +285,14 @@ if (test "$?" != "0") then {
 
 
 echo "Mezcla indices no necesariamente al final"
-rm -f ra1.indice; ../indexador ra1.indice t.indice "http://r/" r1.txt
+rm -f ra1.indice; ../indexador ra1.indice t.indice "http://r/" r1-latin1.txt
 rm -f ra2.indice; ../indexador ra2.indice t.indice "http://r/" r2.txt
 ../operaindice mezcladisco ra3.indice ra1.indice ra2.indice 1
 ../operaindice mezcladisco ra4.indice ra1.indice ra2.indice 2
 ../operaindice grafo ra3.indice > ra.out #| awk '/.*/ { n = n + 1; if (n>2) { print $0; }}' > /tmp/z1
 ../operaindice grafo ra4.indice >> ra.out
 
-rm -f ra5.indice; ../indexador ra5.indice t.indice "http://pasosdeJesus/" verdad.txt 
+rm -f ra5.indice; ../indexador ra5.indice t.indice "http://pasosdeJesus/" verdad-latin1.txt 
 rm -f ra6.indice; ../operaindice mezcladisco ra6.indice ra4.indice ra5.indice 1
 ../operaindice grafo ra6.indice >> ra.out
 ../operaindice mezcladisco ra7.indice ra4.indice ra5.indice 2
@@ -266,7 +310,7 @@ cp r1.indice rd1.indice; cp r1.relacion rd1.relacion
 ../indexador rd1.indice t.indice "http://r/" r2.txt
 ../operaindice grafo rd1.indice > rd.out #| awk '/.*/ { n = n + 1; if (n>2) { print $0; }}' > /tmp/z1
 
-../indexador rd1.indice t.indice "http://r/" verdad.txt poema_ser_como_ninos.odt
+../indexador rd1.indice t.indice "http://r/" verdad-latin1.txt poema_ser_como_ninos.odt
 ../operaindice grafo rd1.indice >> rd.out #| awk '/.*/ { n = n + 1; if (n>2) { print $0; }}' > /tmp/z1
 
 cmp rd.out esp/rd.out
@@ -295,11 +339,11 @@ if (test "$?" != "0") then {
 
 echo "Comparando indexado en grupos"
 rm -f -f t.indice 
-rm -f rg1.indice; MT77MAXG=120 ../indexador rg1.indice t.indice "http://r/" r1.txt r2.txt 
+rm -f rg1.indice; MT77MAXG=120 ../indexador rg1.indice t.indice "http://r/" r1-latin1.txt r2.txt 
 if (test ! -f t.indice) then {
 	echo "No se uso temporal t.indice";
 } fi;
-rm -f rgt1.indice; ../indexador rgt1.indice t.indice "http://r/" r1.txt r2.txt 
+rm -f rgt1.indice; ../indexador rgt1.indice t.indice "http://r/" r1-latin1.txt r2.txt 
 cmp rg1.indice rgt1.indice
 if (test "$?" != "0") then {
 	echo "** ERROR: rg1 y rgt1 deberían ser identicos";
