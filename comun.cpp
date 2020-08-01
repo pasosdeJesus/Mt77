@@ -412,7 +412,7 @@ string normaliza(string s)
 {
         s = cadena_latin1_a_utf8(s);
         string resultado = "";
-        for(int i = 0, c = 0 ; i < s.length() && c <= (int)MAXCAD; i++, c++)
+        for(int i = 0 ; i < s.length() && i <= (int)MAXCAD; i++)
         {
                 if(s[i] == '\303') { // inicio de caracteres con tilde
                         resultado += normalizaCaracter(s.substr(i,2));

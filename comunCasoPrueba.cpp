@@ -228,10 +228,17 @@ void comunCasoPrueba::prueba_normalizaCaracter()
 
 void comunCasoPrueba::prueba_normaliza()
 {
-        //CPPUNIT_ASSERT(normaliza("aBáÁñÉíóúü") == string("ABAAÑEIOUU"));
-        CPPUNIT_ASSERT(normaliza("aB\xE1\xC1\xF1\xC9\xED\xF3\xFA\xFC") == string("ABAA\xD1" "EIOUU"));
-        CPPUNIT_ASSERT(normaliza("      ") == "");
-        CPPUNIT_ASSERT(normaliza("titulo:nombre") == "TITULONOMBRE");
+        CPPUNIT_ASSERT(normaliza("aBáÁñÉíóúü") == string("ABAANEIOUU"));
+        // CPPUNIT_ASSERT(
+        //     normaliza("aB\xE1\xC1\xF1\xC9\xED\xF3\xFA\xFC") == string("ABAANEIOUU")
+        //     );
+
+        // la separacion de las frases se hace afuera de normaliza
+        // CPPUNIT_ASSERT(normaliza("      ") == "");
+
+        // el ':' usualmente es eliminado antes de usar normaliza,
+        // pero normaliza no lo afecta
+        CPPUNIT_ASSERT(normaliza("titulo:nombre") == "TITULO:NOMBRE");
         CPPUNIT_ASSERT(normaliza("con") == "");
         CPPUNIT_ASSERT(normaliza("con.punto") == "CON.PUNTO");
 }
