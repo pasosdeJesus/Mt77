@@ -414,11 +414,14 @@ string normaliza(string s)
         string resultado = "";
         for(int i = 0 ; i < s.length() && i <= (int)MAXCAD; i++)
         {
-                if(s[i] == '\303') { // inicio de caracteres con tilde
-                        resultado += normalizaCaracter(s.substr(i,2));
-                        i += 1;
-                } else {
-                        resultado += toupper(s[i]);
+                if(s[i] != ' ' && s[i] != ':')
+                {
+                        if(s[i] == '\303') { // inicio de caracteres con tilde
+                                resultado += normalizaCaracter(s.substr(i,2));
+                                i += 1;
+                        } else {
+                                resultado += toupper(s[i]);
+                        }
                 }
         }
         // clog << resultado << endl;
