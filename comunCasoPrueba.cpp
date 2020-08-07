@@ -228,8 +228,11 @@ void comunCasoPrueba::prueba_normalizaCaracter()
 
 void comunCasoPrueba::prueba_normaliza()
 {
-        //CPPUNIT_ASSERT(normaliza("aBáÁñÉíóúü") == string("ABAAÑEIOUU"));
-        CPPUNIT_ASSERT(normaliza("aB\xE1\xC1\xF1\xC9\xED\xF3\xFA\xFC") == string("ABAA\xD1" "EIOUU"));
+        CPPUNIT_ASSERT(normaliza("aBáÁñÉíóúü") == string("ABAANEIOUU"));
+        CPPUNIT_ASSERT(
+            normaliza("aB\xE1\xC1\xF1\xC9\xED\xF3\xFA\xFC") == string("ABAANEIOUU")
+            );
+
         CPPUNIT_ASSERT(normaliza("      ") == "");
         CPPUNIT_ASSERT(normaliza("titulo:nombre") == "TITULONOMBRE");
         CPPUNIT_ASSERT(normaliza("con") == "");
