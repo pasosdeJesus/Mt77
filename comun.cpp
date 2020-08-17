@@ -256,7 +256,7 @@ string normalizaCaracter(char c)
                 o += 'U';
         } else if (c == '\xfc' || c == '\xdc') { // Dieresis
                 o += 'U';
-        } else if (c == '\xf1') {
+        } else if (c == '\xf1') { // Eñe minúscula pasa a mayúscula
                 o += '\xd1';
         }
         // Lo demás se ignora

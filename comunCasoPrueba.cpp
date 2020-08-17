@@ -233,7 +233,9 @@ void comunCasoPrueba::prueba_normaliza()
         CPPUNIT_ASSERT(normaliza("      ") == "");
         CPPUNIT_ASSERT(normaliza("titulo:nombre") == "TITULONOMBRE");
         CPPUNIT_ASSERT(normaliza("con") == "");
-        CPPUNIT_ASSERT(normaliza("con.punto") == "CON.PUNTO");
+        CPPUNIT_ASSERT(normaliza("con.puntointermedio") == "CON.PUNTOINTERMEDIO");
+        CPPUNIT_ASSERT(normaliza("sinpuntofinal.") == "SINPUNTOFINAL");
+        CPPUNIT_ASSERT(normaliza("con-gui\xF3" "n") == "CONGUION");
 }
 
 void comunCasoPrueba::prueba_car_utf8_a_latin1()
