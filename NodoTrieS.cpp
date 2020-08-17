@@ -116,7 +116,7 @@ set<Pos>
 }
 
 
-/** Retorna nueva raíz.
+/** Retorna nueva raíz tras insertar pal (posiblemente ya normalizada en UTF-8).
  * Pensando en siguiente arbol
  * 	BUEN -> PODEROSO
  * 	 |
@@ -149,7 +149,7 @@ NodoTrieS::inserta(string pal, Pos p)
         delete npos;
 }
 
-/** Retorna nueva raíz.
+/** Retorna nueva raíz tras insertar pal (posiblemente ya normalizada en UTF-8).
  * Pensando en siguiente arbol
  * 	BUEN -> PODEROSO
  * 	 |
@@ -509,15 +509,20 @@ NodoTrieS::renumeraDocs(vector<int64_t> renum)
 
 
 /** Construye un trieS a partir de un texto plano */
-void leeTexto(const char *na, uint32_t ndoc, NodoTrieS &t, bool normalizaPal)
+void leeTexto(const char *na, uint32_t ndoc, NodoTrieS &t, bool normalizaPal,
+                bool latin1)
 {
         ASSERT(na!=NULL && na[0] != '\0' && strlen(na)<FILENAME_MAX);
         ASSERT(ndoc >= 0);
 
         string pal;
         // clog<<"Leyendo de "<<na<<endl;
+        //
         // Error si no existe
         ifstream fs(na);
+        if (!fs.is_open()) {
+                return;
+        }
 
         uint32_t p;
         do {
@@ -532,7 +537,7 @@ void leeTexto(const char *na, uint32_t ndoc, NodoTrieS &t, bool normalizaPal)
                         if (p >= 0) {
                                 // tellg comienza en 0 toca + 1
                                 t.insertaNormalizando(pal, ndoc, p + 1,
-                                                normalizaPal);
+                                                normalizaPal, latin1);
                        }
                 }
         } while (!fs.eof());
@@ -560,14 +565,15 @@ bool es_signo_punt(unsigned char c)
  * @param numdoc Numero de documento en el que insertará
  * @param pini Posición inicial donde insertará
  * @param normaliza Indica si debe o no normalizar
+ * @param latin1 Indica si pal está en codificación LATIN1
  */
 void
 NodoTrieS::insertaNormalizando(string pal, uint32_t numdoc, uint32_t p, bool
-                normalizaPal)
+                normalizaPal, bool latin1)
 {
         string r;
         if (normalizaPal) {
-                r = normaliza(pal);
+                r = normaliza(pal, latin1);
         } else {
                 r = pal;
         }
@@ -585,23 +591,24 @@ NodoTrieS::insertaNormalizando(string pal, uint32_t numdoc, uint32_t p, bool
  * @param etiqueta Por agregar a cada palabra
  * @param numdoc Número de documento del cual provienen
  * @param pini Posición inicial en documento de la cadena c
+ * @param latin1 Lo que se agregará está en codificacíon LATIN1
  */
 void
 NodoTrieS::insertaConEtiqueta(string c, string etiqueta,
-                              uint32_t numdoc, uint32_t pini)
+                              uint32_t numdoc, uint32_t pini, bool latin1)
 
 {
         ASSERT(c != "");
         ASSERT(etiqueta != "");
-        string::iterator i;
+        int i;
         string o = "";
         int p, inio;
-        for (p = pini, inio = 0, i = c.begin(); i != c.end(); p++ , i++) {
-                // clog << "insertaConEtiqueta: " << *i << endl;
-                if (*i == '.') {
-                        // clog << "OJO Punto: " << *i << endl;
+        for (p = pini, inio = 0, i = 0; i < c.length(); p++ , i++) {
+                // clog << "insertaConEtiqueta: " << c[i] << endl;
+                if (c[i] == '.') {
+                        // clog << "OJO Punto: " << c[i] << endl;
                         if (o.length() > 0) {
-                                string ot = normaliza(etiqueta) + string(":") + o;
+                                string ot = normaliza(etiqueta, latin1) + string(":") + o;
                                 if (ot.length() >= MAXCAD) {
                                         ot = ot.substr(0, MAXCAD);
                                         // clog << "OJO Cortamos 1" << endl;
@@ -612,10 +619,10 @@ NodoTrieS::insertaConEtiqueta(string c, string etiqueta,
                         o += ".";
                         //inio = p + 1;
                         //o = "";
-                } else if (isspace(*i) || es_signo_punt(*i)) {
+                } else if (isspace(c[i]) || es_signo_punt(c[i])) {
                         // clog << "Espacio o punct: " << *i << ", o.length()=" << o.length() << endl;
                         if (o.length() > 0) {
-                                o = normaliza(etiqueta) + string(":") + o;
+                                o = normaliza(etiqueta, latin1) + string(":") + o;
                                 // clog << "tras unidr o.length()=" << o.length() << " y MAXCAD=" << MAXCAD << endl;
 
                                 if (o.length() >= MAXCAD) {
@@ -629,13 +636,17 @@ NodoTrieS::insertaConEtiqueta(string c, string etiqueta,
                         o = "";
                 } else if (o.length() < (MAXCAD - etiqueta.length() -1)) {
                         // clog << o << endl;
-                        o += normalizaCaracter(*i);
+                        std::string temps;
+                        temps = c.substr(i);
+                        int inc = 0;
+                        o += normalizaCaracter(temps, inc);
+                        i += (inc - 1);
                         // clog << o << endl;
                 }
         }
         if (o.length() > 0) {
                 // Insertar palabra anterior si hay
-                o = normaliza(etiqueta) + string(":") + o;
+                o = normaliza(etiqueta, latin1) + string(":") + o;
                 if (o.length() >= MAXCAD) {
                         o = o.substr(0, MAXCAD);
                 }

@@ -86,7 +86,7 @@ void verificaNombre(const char *na, char *nrel) throw(string)
                 << MAXLURL - 3 << " caracteres" ;
                 throw ss.str();
         }
-        strlcpy(nrel, na, strlen(na) - 6);
+        strlcpy(nrel, na, min((size_t)MAXLURL, (size_t)(strlen(na) - 6)));
         strlcat(nrel, ".relacion", MAXLURL);
 }
 
@@ -239,67 +239,48 @@ uint64_t c_n128b(string s) {
  */
 
 
-string normalizaCaracter(char c)
-{
-        string o = "";
-        if ((c >= 'A' && c <= 'Z') ||
-                        (c >= '0' && c <= '9') ) { //Mayúsculas
-                o += c;
-        }
-        if (c >= 'a' && c <= 'z') { //Minúsculas pasan a mayúsculas
-                o += (c - ('a' - 'A'));
-        } else if (c == '\xe1' || c == '\xc1') { // Tildes
-                o += 'A';
-        } else if (c == '\xe9' || c == '\xc9') { // Tildes
-                o += 'E';
-        } else if (c == '\xed' || c == '\xCD') { // Tildes
-                o += 'I';
-        } else if (c == '\xf3' || c == '\xd3') { // Tildes
-                o += 'O';
-        } else if (c == '\xfa' || c == '\xda') { // Tildes
-                o += 'U';
-        } else if (c == '\xfc' || c == '\xdc') { // Dieresis
-                o += 'U';
-        } else if (c == '\xf1') {
-                o += '\xd1';
-        }
-        // Lo demás se ignora
-        return o;
-}
-
-map<string, string> normaCaracteres{
+map<string, string> normaCaracteres2bytes {
         {"Á", "A"},
-        {"É", "E"},
-        {"Í", "I"},
-        {"Ó", "O"},
-        {"Ú", "U"},
-        {"Ü", "U"},
-        {"Ñ", "N"},
         {"á", "A"},
+        {"É", "E"},
         {"é", "E"},
+        {"Í", "I"},
         {"í", "I"},
+        {"Ñ", "Ñ"},
+        {"ñ", "Ñ"},
+        {"Ó", "O"},
         {"ó", "O"},
+        {"Ú", "U"},
         {"ú", "U"},
-        {"ü", "U"},
-        {"ñ", "N"},
-
+        {"Ü", "U"},
+        {"ü", "U"}
 };
 
-string normalizaCaracter(string c)
+// Normaliza primer caracter del español de una cadena en UTF-8
+// @param c Cadena cuyo primer caracter se normaliza
+// @param inc Cuantos caracteres normalizó (0, 1  o 2 dependiendo de
+//   longitud del primer caracter UTF-8)
+// @return Primer caracter normalizado e inc con cantidad empleada de c
+string normalizaCaracter(string c, int &inc)
 {
         string o = "";
-        // clog << "\n::" << c << endl;
-
-        if(normaCaracteres[c] != "")
-        {
-                o += normaCaracteres[c];
+        inc = 0;
+        //clog << "\n::" << c << endl;
+        if (c.length() == 0) {
+                return "";
         }
-        else
-        {
-                o += c;
+        inc = 1;
+        if ((c[0] >= 'A' && c[0] <= 'Z') ||
+                        (c[0] >= '0' && c[0] <= '9') ) { //Mayúsculas
+                o += c[0];
+        } else if (c[0] >= 'a' && c[0] <= 'z') { //Minúsculas pasan a mayúsculas
+                o += toupper(c[0]);
+        } else if (normaCaracteres2bytes[c.substr(0,2)].length() > 0) {  
+                // Otros caracteres del español que ocupan 2 bytes
+                o += normaCaracteres2bytes[c.substr(0,2)];
+                inc = 2;
         }
-
-        // cout << o << endl;
+        //clog << o << endl;
 
         return o;
 }
@@ -307,88 +288,50 @@ string normalizaCaracter(string c)
 const int tamnoagregan = 40;
 string noagregan[tamnoagregan] = {
 
-                                         "Y",  // Conjunciones
-                                         "O",
-                                         "EL", // Artículos
-                                         "LA",
-                                         "LOS",
-                                         "LAS",
-                                         "UN",
-                                         "UNA",
-                                         "UNOS",
-                                         "UNAS",
-                                         "A", // Preposiciones http://www.apoyolingua.com/LASPREPOSICIONES.htm
-                                         "ANTE",
-                                         "BAJO",
-                                         "CON",
-                                         "CONTRA",
-                                         "DE",
-                                         "DESDE",
-                                         "DURANTE",
-                                         "EN",
-                                         "ENTRE",
-                                         "HACIA",
-                                         "HASTA",
-                                         "MEDIANTE",
-                                         "PARA",
-                                         "POR",
-                                         "SEGUN",
-                                         "SIN",
-                                         "SOBRE",
-                                         "TRAS",
-                                         "QUE", //Otros
-                                         "LE",
-                                         "LES",
-                                         "DEL",
-                                         "AL",
-                                         "CUANDO",
-                                         "SU",
-                                         "SUS",
-                                         "COMO",
-                                         "O",
-                                         "MAS"
-                                 };
-
-
-// tomado de text.c de la herramienta file de openbsd.
-// creado originalmente por Nicholas Marriott <nicm@openbsd.org>
-static int texto_es_ascii(u_char c)
-{
-        const char cc[] = "\007\010\011\012\014\015\033";
-
-        if (c == '\0')
-                return (0);
-        if (strchr(cc, c) != NULL)
-                return (1);
-        return (c > 31 && c < 127);
-}
-
-// tomado de text.c de la herramienta file de openbsd.
-// creado originalmente por Nicholas Marriott <nicm@openbsd.org>
-static int texto_es_latin1(u_char c)
-{
-        if (c >= 160)
-                return (1);
-        return (texto_es_ascii(c));
-}
-
-// tomado de text.c de la herramienta file de openbsd.
-// creado originalmente por Nicholas Marriott <nicm@openbsd.org>
-static int probar_texto(const std::string data, int (*f)(u_char))
-{
-        for (int i = 0 ; i < data.length(); i++)
-        {
-                if (!f(data[i]))
-                        return (0);
-        }
-        return (1);
-}
+        "Y",  // Conjunciones
+        "O",
+        "EL", // Artículos
+        "LA",
+        "LOS",
+        "LAS",
+        "UN",
+        "UNA",
+        "UNOS",
+        "UNAS",
+        "A", // Preposiciones http://www.apoyolingua.com/LASPREPOSICIONES.htm
+        "ANTE",
+        "BAJO",
+        "CON",
+        "CONTRA",
+        "DE",
+        "DESDE",
+        "DURANTE",
+        "EN",
+        "ENTRE",
+        "HACIA",
+        "HASTA",
+        "MEDIANTE",
+        "PARA",
+        "POR",
+        "SEGUN",
+        "SIN",
+        "SOBRE",
+        "TRAS",
+        "QUE", //Otros
+        "LE",
+        "LES",
+        "DEL",
+        "AL",
+        "CUANDO",
+        "SU",
+        "SUS",
+        "COMO",
+        "O",
+        "MAS"
+};
 
 string cadena_latin1_a_utf8(string str)
 {
-        if (!probar_texto(str, texto_es_latin1))
-                return str;
-
         std::string salida;
         for (uint8_t ch: str)
         {
@@ -404,24 +347,30 @@ string cadena_latin1_a_utf8(string str)
 }
 
 /** Retorna cadena normalizada. i.e siguiendo convenciones de:
+ * - guarda en UTF-8
  * - caracteres aceptables
  * - longitud máxima
  * - palabras excluidas
  */
-string normaliza(string s)
+string normaliza(string s, bool latin1)
 {
-        s = cadena_latin1_a_utf8(s);
+        if (latin1) {
+                s = cadena_latin1_a_utf8(s);
+        }
         string resultado = "";
         for(int i = 0 ; i < s.length() && i <= (int)MAXCAD; i++)
         {
-                if(s[i] != ' ' && s[i] != ':')
-                {
-                        if(s[i] == '\303') { // inicio de caracteres con tilde
-                                resultado += normalizaCaracter(s.substr(i,2));
-                                i += 1;
-                        } else {
-                                resultado += toupper(s[i]);
-                        }
+                int inc = 0;
+                if (s[i] == '.' && (i+1 < s.length()) &&
+                                (s[i+1] == '\303' || 
+                                 normalizaCaracter(s.substr(i+1), inc) != "")) {
+                        resultado += ".";
+                //} else if(s[i] == '\303') { // inicio de caracteres del español
+                // &&       resultado += normalizaCaracter(s.substr(i), inc);
+                //        i += 1;
+                } else {
+                        resultado += normalizaCaracter(s.substr(i), inc);
+                        i += (inc-1); // El ciclo for incrementará otro más
                 }
         }
         // clog << resultado << endl;

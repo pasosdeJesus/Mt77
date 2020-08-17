@@ -219,18 +219,21 @@ longNDesp(uint32_t n)
 
 
 /**
- * Normaliza caracter
- * @param c Caracter
- * @return Cadena que corresponde (tipicamente mayúscula o vacío)
+ * Normaliza primer caracter de cadena en UTF-8
+ * @param c Cadena cuyo primer caracter se normaliza
+ * @param inc Cantidad de bytes de primer caracter normalizado
+ * @return Cadena que corresponde a primer caracter de c normalizado
+ *   (tipicamente mayúscula o vacío)
  */
-string normalizaCaracter(char c);
+string normalizaCaracter(string c, int &inc);
 
 /**
- * Normaliza cadena
+ * Normaliza cadena 
  * @param s Cadena por normalizar
- * @return Cadena normalizada
+ * @param latin1 Indica si c está en codificación LATIN1 dlc es UTF-8
+ * @return Cadena normalizada y convertida a UTF-8 si hacía falta
  **/
-string normaliza(string s);
+string normaliza(string s, bool latin1 = false);
 
 /**
  * Convierte primer caracter de cadena u8 con codificación UTF-8 al
@@ -273,12 +276,6 @@ vector<string> estalla(const string &delimitador, const string &cad);
  */
 string directorio_temp();
 
-
-static int texto_es_ascii(u_char c);
-
-static int texto_es_latin1(u_char c);
-
-static int probar_text(const std::string data, int (*f)(u_char));
 
 // string cadena_latin1_a_utf8(string &str);
 
