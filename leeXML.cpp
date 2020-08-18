@@ -111,7 +111,7 @@ charHandler(void *userData, const char *s, int len)
                 free(cad); */
                 if (len > 0) {
                         //string pal = utf8_a_latin1(s, len);
-                        string pal = string(s);
+                        string pal = string(s, len);
                         if (ultpal == "") {
                                 long pa = XML_GetCurrentByteIndex(parser);
                                 inipal = pa;
