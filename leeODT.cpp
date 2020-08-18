@@ -85,7 +85,7 @@ aplicaXSLT(string dt, string arch, string nomsal)
                 "	xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n"
                 "	exclude-result-prefixes=\"office style text table draw fo xlink dc meta number svg chart dr3d math form script ooo ooow oooc dom xforms xsd xsi\">\n"
                 "\n"
-                "<xsl:output method=\"text\" encoding=\"ISO-8859-1\" />\n"
+                "<xsl:output method=\"text\" encoding=\"UTF-8\" />\n"
                 "\n"
                 "<xsl:template match=\"office:document-contet\">\n"
                 "	<xsl:apply-templates select=\".//office:body\"/>\n"
