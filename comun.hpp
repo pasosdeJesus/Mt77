@@ -65,11 +65,11 @@ const uint32_t MAXCAD = 32;
 using namespace std;
 
 /** Marca en índice */
-const string MARCAIND = "Mt77:\xedndiceP5";
+const string MARCAIND = "Mt77:\xedndiceP6";
 
 
 /** Marca en relación de documentos */
-const string MARCAREL = "Mt77:relaci\xf3nP5";
+const string MARCAREL = "Mt77:relaci\xf3nP6";
 
 
 /** Caracter que marca final de una cadena en archivo */
