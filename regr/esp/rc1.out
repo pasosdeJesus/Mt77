@@ -37,17 +37,17 @@
   "inicio": 1,
   "fin": 4,
   "resultados": [
-    { "url": "./marcos-utf8.txt",
-    "frec": "97",
-    }, 
-    { "url": "./mateo-utf8.txt",
-    "frec": "158",
-    }, 
     { "url": "./lucas-utf8.txt",
     "frec": "284",
     }, 
     { "url": "./juan-utf8.txt",
     "frec": "166",
+    }, 
+    { "url": "./mateo-utf8.txt",
+    "frec": "158",
+    }, 
+    { "url": "./marcos-utf8.txt",
+    "frec": "97",
     }
   ]
 }
@@ -57,17 +57,17 @@
   "inicio": 1,
   "fin": 4,
   "resultados": [
-    { "url": "./marcos-utf8.txt",
-    "frec": "4",
+    { "url": "./juan-utf8.txt",
+    "frec": "11",
     }, 
     { "url": "./mateo-utf8.txt",
     "frec": "9",
     }, 
-    { "url": "./juan-utf8.txt",
-    "frec": "11",
-    }, 
     { "url": "./lucas-utf8.txt",
     "frec": "5",
+    }, 
+    { "url": "./marcos-utf8.txt",
+    "frec": "4",
     }
   ]
 }

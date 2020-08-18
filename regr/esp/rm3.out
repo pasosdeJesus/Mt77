@@ -4,17 +4,17 @@
   "inicio": 1,
   "fin": 4,
   "resultados": [
-    { "url": "./marcos-utf8.txt",
-    "frec": "1",
+    { "url": "./juan-utf8.txt",
+    "frec": "44",
     }, 
     { "url": "./mateo-utf8.txt",
     "frec": "14",
     }, 
-    { "url": "./juan-utf8.txt",
-    "frec": "44",
-    }, 
     { "url": "./lucas-utf8.txt",
     "frec": "7",
+    }, 
+    { "url": "./marcos-utf8.txt",
+    "frec": "1",
     }
   ]
 }
@@ -24,17 +24,17 @@
   "inicio": 1,
   "fin": 4,
   "resultados": [
-    { "url": "./marcos-utf8.txt",
-    "frec": "39",
+    { "url": "./lucas-utf8.txt",
+    "frec": "149",
     }, 
     { "url": "./mateo-utf8.txt",
     "frec": "84",
     }, 
-    { "url": "./lucas-utf8.txt",
-    "frec": "149",
-    }, 
     { "url": "./juan-utf8.txt",
     "frec": "65",
+    }, 
+    { "url": "./marcos-utf8.txt",
+    "frec": "39",
     }
   ]
 }
@@ -44,17 +44,17 @@
   "inicio": 1,
   "fin": 4,
   "resultados": [
-    { "url": "./marcos-utf8.txt",
-    "frec": "58",
-    }, 
-    { "url": "./mateo-utf8.txt",
-    "frec": "74",
-    }, 
     { "url": "./lucas-utf8.txt",
     "frec": "135",
     }, 
     { "url": "./juan-utf8.txt",
     "frec": "101",
+    }, 
+    { "url": "./mateo-utf8.txt",
+    "frec": "74",
+    }, 
+    { "url": "./marcos-utf8.txt",
+    "frec": "58",
     }
   ]
 }
