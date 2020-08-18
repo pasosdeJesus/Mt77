@@ -22,9 +22,9 @@ if (test "$?" != "0") then {
 
 echo "Creación de índice r1 a partir de texto LATIN1";
 rm -f r1.indice; ../indexador -l r1.indice t.indice "http://r/" r1-latin1.txt > r1.out
-#rm -f verdad.indice; ../indexador verdad.indice t.indice "http://pasosdeJesus/" verdad-latin1.txt 
+#rm -f verdad.indice; ../indexador -l verdad.indice t.indice "http://pasosdeJesus/" verdad-latin1.txt 
 
-function t {
+#function t {
 
 echo "Búsqueda sobre índice r1"
 conocereis_l1=`cat conocereis-latin1.txt`
@@ -118,7 +118,7 @@ if (test "$?" != "0") then {
 
 
 echo "Creación de otro índice";
-rm -f r4.indice; ../indexador r4.indice t.indice "http://r/" r4.txt 
+rm -f r4.indice; ../indexador -l r4.indice t.indice "http://r/" r4-latin1.txt 
 
 
 cmp r1.out esp/r1.out
@@ -177,10 +177,10 @@ if (test "$?" != "0") then {
 
 
 echo "Comparando mezcla en memoria con mezcla en disco"
-rm -f mateo.indice; ../indexador mateo.indice t.indice ./ mateo.txt
-rm -f marcos.indice; ../indexador marcos.indice t.indice ./ marcos.txt
-rm -f lucas.indice; ../indexador lucas.indice t.indice ./ lucas.txt
-rm -f juan.indice; ../indexador juan.indice t.indice ./ juan.txt
+rm -f mateo.indice; ../indexador mateo.indice t.indice ./ mateo-utf8.txt
+rm -f marcos.indice; ../indexador marcos.indice t.indice ./ marcos-utf8.txt
+rm -f lucas.indice; ../indexador lucas.indice t.indice ./ lucas-utf8.txt
+rm -f juan.indice; ../indexador juan.indice t.indice ./ juan-utf8.txt
 
 ../operaindice mezclaram mm.indice marcos.indice mateo.indice
 ../operaindice mezcladisco md.indice marcos.indice mateo.indice
@@ -248,7 +248,7 @@ if (test "$?" != "0") then {
 	echo "** ERROR: rx fallo";
 } fi;
 
-} ; # function t
+#} ; # function t
 
 echo "En XML BDC2009"
 rm -f bdc-ene2009.indice; ../indexador bdc-ene2009.indice t.indice http://127.0.0.1:17443/ bdc-ene2009.xrlat > bdc.out
@@ -276,10 +276,10 @@ if (test "$?" != "0") then {
 
 echo "Elimina un documento"
 
-rm -f ro.indice; ../indexador ro.indice t.indice "http://r/" r1-latin1.txt r2.txt 
-../buscador ro.indice "$conocereis_l1" 1 0 | grep -v "fecha\":" > ro2.out 2>&1;
+rm -f ro.indice; ../indexador -l ro.indice t.indice "http://r/" r1-latin1.txt r2-latin1.txt 
+../buscador -l ro.indice "$conocereis_l1" 1 0 | grep -v "fecha\":" > ro2.out 2>&1;
 ../operaindice eliminadoc ro2.indice ro.indice 1 
-../buscador ro2.indice "$conocereis_l1" 1 0 | grep -v "fecha\":" >> ro2.out 
+../buscador -l ro2.indice "$conocereis_l1" 1 0 | grep -v "fecha\":" >> ro2.out 
 ../operaindice lista ro2.indice >> ro2.out 
 cmp ro2.out esp/ro2.out
 if (test "$?" != "0") then {
@@ -288,14 +288,14 @@ if (test "$?" != "0") then {
 
 
 echo "Mezcla indices no necesariamente al final"
-rm -f ra1.indice; ../indexador ra1.indice t.indice "http://r/" r1-latin1.txt
-rm -f ra2.indice; ../indexador ra2.indice t.indice "http://r/" r2.txt
+rm -f ra1.indice; ../indexador -l ra1.indice t.indice "http://r/" r1-latin1.txt
+rm -f ra2.indice; ../indexador -l ra2.indice t.indice "http://r/" r2-latin1.txt
 ../operaindice mezcladisco ra3.indice ra1.indice ra2.indice 1
 ../operaindice mezcladisco ra4.indice ra1.indice ra2.indice 2
 ../operaindice grafo ra3.indice > ra.out #| awk '/.*/ { n = n + 1; if (n>2) { print $0; }}' > /tmp/z1
 ../operaindice grafo ra4.indice >> ra.out
 
-rm -f ra5.indice; ../indexador ra5.indice t.indice "http://pasosdeJesus/" verdad-latin1.txt 
+rm -f ra5.indice; ../indexador -l ra5.indice t.indice "http://pasosdeJesus/" verdad-latin1.txt 
 rm -f ra6.indice; ../operaindice mezcladisco ra6.indice ra4.indice ra5.indice 1
 ../operaindice grafo ra6.indice >> ra.out
 ../operaindice mezcladisco ra7.indice ra4.indice ra5.indice 2
@@ -310,10 +310,10 @@ if (test "$?" != "0") then {
 
 echo "Agrega documentos a un índice"
 cp r1.indice rd1.indice; cp r1.relacion rd1.relacion
-../indexador rd1.indice t.indice "http://r/" r2.txt
+../indexador -l rd1.indice t.indice "http://r/" r2-latin1.txt
 ../operaindice grafo rd1.indice > rd.out #| awk '/.*/ { n = n + 1; if (n>2) { print $0; }}' > /tmp/z1
 
-../indexador rd1.indice t.indice "http://r/" verdad-latin1.txt poema_ser_como_ninos.odt
+../indexador -l rd1.indice t.indice "http://r/" verdad-latin1.txt poema_ser_como_ninos.odt
 ../operaindice grafo rd1.indice >> rd.out #| awk '/.*/ { n = n + 1; if (n>2) { print $0; }}' > /tmp/z1
 
 cmp rd.out esp/rd.out
@@ -324,16 +324,16 @@ if (test "$?" != "0") then {
 
 echo "Comparando mezcla en disco con agregar documento en disco"
 
-rm -f marcos.indice; ../indexador marcos.indice t.indice ./ marcos.txt
-time (rm -f juan.indice; ../indexador juan.indice t.indice ./ juan.txt; ../operaindice mezcladisco mmj.indice marcos.indice juan.indice)
-time (cp marcos.indice mmja.indice; cp marcos.relacion mmja.relacion; ../indexador mmja.indice t.indice "./" juan.txt)
+rm -f marcos.indice; ../indexador marcos.indice t.indice ./ marcos-utf8.txt
+time (rm -f juan.indice; ../indexador juan.indice t.indice ./ juan-utf8.txt; ../operaindice mezcladisco mmj.indice marcos.indice juan.indice)
+time (cp marcos.indice mmja.indice; cp marcos.relacion mmja.relacion; ../indexador mmja.indice t.indice "./" juan-utf8.txt)
 cmp mmj.indice mmja.indice
 if (test "$?" != "0") then {
 	echo "** ERROR: mmj y mmja deberían ser identicos";
 } fi;
 
-time (rm -f mateo.indice; ../indexador mateo.indice t.indice ./ mateo.txt; ../operaindice mezcladisco mmj.indice juan.indice mateo.indice; rm -f marcos.indice; ../indexador marcos.indice t.indice ./ marcos.txt; ../operaindice mezcladisco mmj2.indice mmj.indice marcos.indice; rm -f lucas.indice; ../indexador lucas.indice t.indice ./ lucas.txt; ../operaindice mezcladisco mmj.indice mmj2.indice lucas.indice;)
-time (cp juan.indice mmja.indice; cp juan.relacion mmja.relacion; ../indexador mmja.indice t.indice "./" mateo.txt marcos.txt lucas.txt)
+time (rm -f mateo.indice; ../indexador mateo.indice t.indice ./ mateo-utf8.txt; ../operaindice mezcladisco mmj.indice juan.indice mateo.indice; rm -f marcos.indice; ../indexador marcos.indice t.indice ./ marcos-utf8.txt; ../operaindice mezcladisco mmj2.indice mmj.indice marcos.indice; rm -f lucas.indice; ../indexador lucas.indice t.indice ./ lucas-utf8.txt; ../operaindice mezcladisco mmj.indice mmj2.indice lucas.indice;)
+time (cp juan.indice mmja.indice; cp juan.relacion mmja.relacion; ../indexador mmja.indice t.indice "./" mateo-utf8.txt marcos-utf8.txt lucas-utf8.txt)
 cmp mmj.indice mmja.indice
 if (test "$?" != "0") then {
 	echo "** ERROR: mmj y mmja deberían ser identicos";
@@ -342,11 +342,11 @@ if (test "$?" != "0") then {
 
 echo "Comparando indexado en grupos"
 rm -f -f t.indice 
-rm -f rg1.indice; MT77MAXG=120 ../indexador rg1.indice t.indice "http://r/" r1-latin1.txt r2.txt 
+rm -f rg1.indice; MT77MAXG=120 ../indexador -l rg1.indice t.indice "http://r/" r1-latin1.txt r2-latin1.txt 
 if (test ! -f t.indice) then {
 	echo "No se uso temporal t.indice";
 } fi;
-rm -f rgt1.indice; ../indexador rgt1.indice t.indice "http://r/" r1-latin1.txt r2.txt 
+rm -f rgt1.indice; ../indexador -l rgt1.indice t.indice "http://r/" r1-latin1.txt r2-latin1.txt 
 cmp rg1.indice rgt1.indice
 if (test "$?" != "0") then {
 	echo "** ERROR: rg1 y rgt1 deberían ser identicos";
@@ -354,7 +354,7 @@ if (test "$?" != "0") then {
 
 
 echo "Búsqueda de cadenas"
-(../buscador r1.indice "$conocereis_l1"  ;
+(../buscador -l r1.indice "$conocereis_l1"  ;
 ../buscador r1.indice "CONOCEREIS LA VERDAD" ;
 ../buscador -l r1.indice "\"Y LA VERDAD OS $hara_l1 LIBRES\"" 
 ../buscador md3.indice "HIJO DE DIOS" 
