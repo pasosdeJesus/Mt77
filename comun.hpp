@@ -46,12 +46,12 @@ const uint32_t MAXLCONDENSADO = 64;
 const uint32_t MAXLHEX = 8;
 
 /** Máxima longitud de un 128b (número en base 128).  Por usar en
- * índice de documento, posición, ``apuntadores'' al archivo 
+ * índice de documento, posición, ``apuntadores'' al archivo
  */
 const int MAXL128B = 5;
 
 /**
- * Máxima longitud de un número en formato escogido para archivo 
+ * Máxima longitud de un número en formato escogido para archivo
  **/
 const int MAXLNUMERO = MAXL128B;
 
@@ -116,7 +116,7 @@ string prefijo_comun_mas_largo(string a, string b);
 /**
  * Retorna cadena de error con posición de is
  * @param is Flujo de entrada
- * @param m Cadena con error 
+ * @param m Cadena con error
  * @return Cadena con mensaje de error precedido de posición en is
  **/
 std::string errorFormato(std::istream &is, string m);
@@ -128,7 +128,7 @@ std::string errorFormato(std::istream &is, string m);
 string leeCad(istream &is) throw(string);
 
 /**
- * Lee un número hexadecimal 
+ * Lee un número hexadecimal
  * @param is flujo de entrada
  **/
 long leeHex(std::istream &is) throw(string);
@@ -144,7 +144,7 @@ void escribeHex(std::ostream &os, uint32_t n);
 /**
  * Lee un número en base 128.
  * Cada digito es un caracter entre '0' (ASCII 48) y el de ASCII 175.
- * Con 5 dígitos de estos puede representarse más de 4294967295 = 0xFFFFFFFF 
+ * Con 5 dígitos de estos puede representarse más de 4294967295 = 0xFFFFFFFF
  * @param is flujo de entrada
  **/
 long lee128b(std::istream &is) throw(string);
@@ -199,7 +199,7 @@ leeNDesp(std::istream &is) throw (std::string)
 /**
  * Escribe un número en el formato escogido para desplazamientos
  * @param os Flujo de salida
- * @param n Número por escribir 
+ * @param n Número por escribir
  **/
 inline void
 escribeNDesp(std::ostream &os, uint32_t n)
@@ -219,24 +219,27 @@ longNDesp(uint32_t n)
 
 
 /**
- * Normaliza caracter
- * @param c Caracter 
- * @return Cadena que corresponde (tipicamente mayúscula o vacío)
+ * Normaliza primer caracter de cadena en UTF-8
+ * @param c Cadena cuyo primer caracter se normaliza
+ * @param inc Cantidad de bytes de primer caracter normalizado
+ * @return Cadena que corresponde a primer caracter de c normalizado
+ *   (tipicamente mayúscula o vacío)
  */
-string normalizaCaracter(char c);
+string normalizaCaracter(string c, int &inc);
 
 /**
- * Normaliza cadena
+ * Normaliza cadena 
  * @param s Cadena por normalizar
- * @return Cadena normalizada
+ * @param latin1 Indica si c está en codificación LATIN1 dlc es UTF-8
+ * @return Cadena normalizada y convertida a UTF-8 si hacía falta
  **/
-string normaliza(string s);
+string normaliza(string s, bool latin1 = false);
 
 /**
  * Convierte primer caracter de cadena u8 con codificación UTF-8 al
  * caracter que le corresponde en codificación latin1.
- * Inspirado en 
- * - utf8_decode de 
+ * Inspirado en
+ * - utf8_decode de
  * http://svn.apache.org/repos/asf/stdcxx/branches/4.1.3/util/charmap.cpp
  * - latin1_toUtf8 de expat
  *
@@ -252,7 +255,7 @@ int car_utf8_a_latin1(const char *u8, char *latin1);
  * @param u8 Cadena en UTF-8
  * @param len Longitud de u8
  * @return Cadena convertida
- * 
+ *
  */
 string utf8_a_latin1(const char *u8, int len);
 
@@ -261,7 +264,7 @@ string utf8_a_latin1(const char *u8, int len);
  * @param delimitador subcadena que marca donde dividir
  * @param cad Cadena por dividir
  *
- * @return Vector de subcadenas 
+ * @return Vector de subcadenas
  */
 vector<string> estalla(const string &delimitador, const string &cad);
 
@@ -273,5 +276,7 @@ vector<string> estalla(const string &delimitador, const string &cad);
  */
 string directorio_temp();
 
+
+string cadena_latin1_a_utf8(string str);
 
 #endif

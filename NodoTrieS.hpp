@@ -128,9 +128,11 @@ class NodoTrieS
 		 * @param numdoc Numero de documento en el que insertará
 		 * @param pini Posición inicial donde insertará
 		 * @param normaliza Indica si debe o no normalizar
+		 * @param latin Indica si pal está en codificación LATIN1
 		 */
 		void insertaNormalizando(string pal, uint32_t numdoc, 
-				uint32_t p, bool normalizaPal);
+				uint32_t p, bool normalizaPal, 
+                                bool latin1 = false);
 
                 /** Inserta más ocurrencias de la palabra pal, reportandolas en
                  * posiciones npos.  
@@ -176,10 +178,12 @@ class NodoTrieS
                  * @param etiqueta Por agregar a cada palabra
                  * @param numdoc Número de documento del cual provienen
                  * @param pini Posición inicial en documento de la cadena c
+                 * @param latin1 Lo que se agregara está en LATIN1
                  */
                 void insertaConEtiqueta(string c, string etiqueta,
                                                    uint32_t numdoc, 
-						   uint32_t pini);
+						   uint32_t pini,
+                                                   bool latin1 = false);
 
 };
 
@@ -189,9 +193,10 @@ class NodoTrieS
  * @param ndoc Número de documento
  * @param t Donde se leera trieS
  * @param normalizaPal Si debe o no normalizar cada palabra leida
+ * @param latin1 Si el texto está en codificación LATIN1 dlc es UTF-8
  **/
 void leeTexto(const char *na, uint32_t ndoc, NodoTrieS &t,
-              bool normalizaPal = true);
+              bool normalizaPal = true, bool latin1 = false);
 
 
 #endif

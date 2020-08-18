@@ -25,6 +25,10 @@
 #include <errno.h>
 #include <stdint.h>
 
+#include <stdio.h>
+#include <string.h>
+#include <map>
+
 // using namespace std;
 // La anterior comentada por poco portable
 
@@ -82,7 +86,7 @@ void verificaNombre(const char *na, char *nrel) throw(string)
                 << MAXLURL - 3 << " caracteres" ;
                 throw ss.str();
         }
-        strlcpy(nrel, na, strlen(na) - 6);
+        strlcpy(nrel, na, min((size_t)MAXLURL, (size_t)(strlen(na) - 6)));
         strlcat(nrel, ".relacion", MAXLURL);
 }
 
@@ -225,7 +229,7 @@ string n128b_c(uint64_t n) {
 
 /**
  * Convierte número de cadena usada en archivos a long
- 
+
 uint64_t c_n128b(string s) {
 	std::stringstream ss;
 	ss.str(s);
@@ -235,109 +239,150 @@ uint64_t c_n128b(string s) {
  */
 
 
-string normalizaCaracter(char c)
+map<string, string> normaCaracteres2bytes {
+        {"Á", "A"},
+        {"á", "A"},
+        {"É", "E"},
+        {"é", "E"},
+        {"Í", "I"},
+        {"í", "I"},
+        {"Ñ", "Ñ"},
+        {"ñ", "Ñ"},
+        {"Ó", "O"},
+        {"ó", "O"},
+        {"Ú", "U"},
+        {"ú", "U"},
+        {"Ü", "U"},
+        {"ü", "U"}
+};
+
+// Normaliza primer caracter del español de una cadena en UTF-8
+// @param c Cadena cuyo primer caracter se normaliza
+// @param inc Cuantos caracteres normalizó (0, 1  o 2 dependiendo de
+//   longitud del primer caracter UTF-8)
+// @return Primer caracter normalizado e inc con cantidad empleada de c
+string normalizaCaracter(string c, int &inc)
 {
         string o = "";
-        if ((c >= 'A' && c <= 'Z') ||
-                        (c >= '0' && c <= '9') ) { //Mayúsculas
-                o += c;
+        inc = 0;
+        //clog << "\n::" << c << endl;
+        if (c.length() == 0) {
+                return "";
         }
-        if (c >= 'a' && c <= 'z') { //Minúsculas pasan a mayúsculas
-                o += (c - ('a' - 'A'));
-        } else if (c == '\xe1' || c == '\xc1') { // Tildes
-                o += 'A';
-        } else if (c == '\xe9' || c == '\xc9') { // Tildes
-                o += 'E';
-        } else if (c == '\xed' || c == '\xCD') { // Tildes
-                o += 'I';
-        } else if (c == '\xf3' || c == '\xd3') { // Tildes
-                o += 'O';
-        } else if (c == '\xfa' || c == '\xda') { // Tildes
-                o += 'U';
-        } else if (c == '\xfc' || c == '\xdc') { // Dieresis
-                o += 'U';
-        } else if (c == '\xf1') { // Eñe minúscula pasa a mayúscula
-                o += '\xd1';
+        inc = 1;
+        if ((c[0] >= 'A' && c[0] <= 'Z') ||
+                        (c[0] >= '0' && c[0] <= '9') ) { //Mayúsculas
+                o += c[0];
+        } else if (c[0] >= 'a' && c[0] <= 'z') { //Minúsculas pasan a mayúsculas
+                o += toupper(c[0]);
+        } else if (normaCaracteres2bytes[c.substr(0,2)].length() > 0) {  
+                // Otros caracteres del español que ocupan 2 bytes
+                o += normaCaracteres2bytes[c.substr(0,2)];
+                inc = 2;
         }
-        // Lo demás se ignora
+        //clog << o << endl;
+
         return o;
 }
 
 const int tamnoagregan = 40;
 string noagregan[tamnoagregan] = {
 
-                                         "Y",  // Conjunciones
-                                         "O",
-                                         "EL", // Artículos
-                                         "LA",
-                                         "LOS",
-                                         "LAS",
-                                         "UN",
-                                         "UNA",
-                                         "UNOS",
-                                         "UNAS",
-                                         "A", // Preposiciones http://www.apoyolingua.com/LASPREPOSICIONES.htm
-                                         "ANTE",
-                                         "BAJO",
-                                         "CON",
-                                         "CONTRA",
-                                         "DE",
-                                         "DESDE",
-                                         "DURANTE",
-                                         "EN",
-                                         "ENTRE",
-                                         "HACIA",
-                                         "HASTA",
-                                         "MEDIANTE",
-                                         "PARA",
-                                         "POR",
-                                         "SEGUN",
-                                         "SIN",
-                                         "SOBRE",
-                                         "TRAS",
-                                         "QUE", //Otros
-                                         "LE",
-                                         "LES",
-                                         "DEL",
-                                         "AL",
-                                         "CUANDO",
-                                         "SU",
-                                         "SUS",
-                                         "COMO",
-                                         "O",
-                                         "MAS"
-                                 };
+        "Y",  // Conjunciones
+        "O",
+        "EL", // Artículos
+        "LA",
+        "LOS",
+        "LAS",
+        "UN",
+        "UNA",
+        "UNOS",
+        "UNAS",
+        "A", // Preposiciones http://www.apoyolingua.com/LASPREPOSICIONES.htm
+        "ANTE",
+        "BAJO",
+        "CON",
+        "CONTRA",
+        "DE",
+        "DESDE",
+        "DURANTE",
+        "EN",
+        "ENTRE",
+        "HACIA",
+        "HASTA",
+        "MEDIANTE",
+        "PARA",
+        "POR",
+        "SEGUN",
+        "SIN",
+        "SOBRE",
+        "TRAS",
+        "QUE", //Otros
+        "LE",
+        "LES",
+        "DEL",
+        "AL",
+        "CUANDO",
+        "SU",
+        "SUS",
+        "COMO",
+        "O",
+        "MAS"
+};
 
-
+string cadena_latin1_a_utf8(string str)
+{
+        std::string salida;
+        for (uint8_t ch: str)
+        {
+                if (ch < 0x80) {
+                        salida.push_back(ch);
+                }
+                else {
+                        salida.push_back(0xc0 | ch >> 6);
+                        salida.push_back(0x80 | (ch & 0x3f));
+                }
+        }
+        return salida;
+}
 
 /** Retorna cadena normalizada. i.e siguiendo convenciones de:
- * - caracteres aceptables 
+ * - guarda en UTF-8
+ * - caracteres aceptables
  * - longitud máxima
  * - palabras excluidas
  */
-string normaliza(string s)
+string normaliza(string s, bool latin1)
 {
-
-        string::iterator i;
-        string o = "";
-        int c;
-        for (c = 0, i = s.begin(); i != s.end() && c <= (int)MAXCAD;
-                        c++ , i++) {
-                if (*i == '.' && (i+1 != s.end()) &&
-                                (normalizaCaracter(*(i+1)) != "")) {
-                        o += ".";
+        if (latin1) {
+                s = cadena_latin1_a_utf8(s);
+        }
+        string resultado = "";
+        for(int i = 0 ; i < s.length() && i <= (int)MAXCAD; i++)
+        {
+                int inc = 0;
+                if (s[i] == '.' && (i+1 < s.length()) &&
+                                (s[i+1] == '\303' || 
+                                 normalizaCaracter(s.substr(i+1), inc) != "")) {
+                        resultado += ".";
+                //} else if(s[i] == '\303') { // inicio de caracteres del español
+                // &&       resultado += normalizaCaracter(s.substr(i), inc);
+                //        i += 1;
                 } else {
-                        o += normalizaCaracter(*i);
+                        resultado += normalizaCaracter(s.substr(i), inc);
+                        i += (inc-1); // El ciclo for incrementará otro más
                 }
         }
+        // clog << resultado << endl;
 
         for (int i = 0; i < tamnoagregan; i++) {
-                if (o == noagregan[i]) {
+                if (resultado == noagregan[i]) {
                         return string("");
                 }
         }
+        // clog << "palabra normalizada: " << resultado << " de " << s << endl;
 
-        return o;
+        return resultado;
 }
 
 
@@ -405,6 +450,8 @@ directorio_temp()
         }
         return string(sfn);
 }
+
+
 
 
 

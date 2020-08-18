@@ -1,2 +1,2 @@
 limpia:
-	rm -f *indice *out *~
+	rm -f *indice *out *~ *relacion

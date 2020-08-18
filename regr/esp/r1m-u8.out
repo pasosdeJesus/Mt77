@@ -4,7 +4,7 @@
   "inicio": 1,
   "fin": 1,
   "resultados": [
-    { "url": "http://r/r1-latin1.txt",
+    { "url": "http://r/r1-utf8.txt",
     "frec": "1",
     }
   ]
@@ -39,7 +39,7 @@
   "inicio": 1,
   "fin": 1,
   "resultados": [
-    { "url": "http://r/r1-latin1.txt",
+    { "url": "http://r/r1-utf8.txt",
     "frec": "1",
     }
   ]
@@ -58,7 +58,7 @@
   "inicio": 1,
   "fin": 1,
   "resultados": [
-    { "url": "http://r/r1-latin1.txt",
+    { "url": "http://r/r1-utf8.txt",
     "frec": "1",
     }
   ]

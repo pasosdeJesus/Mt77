@@ -21,23 +21,28 @@
 #include <sys/time.h>
 #include <sys/stat.h>
 #include <stdint.h>
+#include <unistd.h>
 
 
 using namespace std;
 
 #include "Pos.hpp"
 #include "TrieSDisco.hpp"
-
+#include "comun.hpp"
 
 /**
- * Recibe consulta, la analiza y retorna un conjunto de cadenas por buscar con la función realizaBusqueda
+ * Recibe consulta, la analiza y retorna un conjunto de cadenas por
+ * buscar con la función realizaBusqueda
+ *
+ * Para el análisis emplea un automata finitos con 4 estados.
  */
-set<string> analizaConsulta(char *consulta)
+set<string> analizaConsulta(string consulta, bool latin1 = false)
 {
         string pnor;
         string petiqueta;
         set<string> ccad;
         if (consulta[0] == '\0') {
+                // std::cout << "vacio" << std::endl;
                 return ccad;
         }
         int estado = 0;
@@ -49,31 +54,36 @@ set<string> analizaConsulta(char *consulta)
         char pal[MAXCAD];
         int npal = 0;  // Número de caracteres escritos en pal
         uint32_t p = 0;
-        for (p = 0; p < strlen(consulta); p++) {
+
+        for (p = 0; p < consulta.length(); p++) {
+                // clog << "analizaConsulta ciclo, p="<< p <<", estado=" << estado << "\n";
+                // clog << consulta[p] ;
+
                 if (estado == 0) {
-                        if (isalnum(consulta[p])) {
-                                estado = 1;
-                                npal = 0;
-                                pal[0] = consulta[p];
-                        } else if (consulta[p] == '"') {
+                        if (consulta[p] == '"') {
                                 estado = 2;
                                 npal = -1;
                                 //clog << "OJO De 0 a 2" << endl;
+                        } else if (!isspace(consulta[p])) {
+                                estado = 1;
+                                npal = 0;
+                                pal[0] = consulta[p];
                         }
                 } else if (estado == 1) {
                         if (isspace(consulta[p])) {
                                 estado = 0;
                                 npal++;
                                 pal[npal] = '\0';
-                                pnor = normaliza(string(pal));
+                                pnor = normaliza(string(pal), latin1);
                                 if (pnor != "") {
+                                        // clog << " insertando cadena en estado 1 isspace" << endl;
                                         ccad.insert(pnor);
                                 }
                         } else if (consulta[p] == ':') {
                                 estado = 3;
                                 npal++;
                                 pal[npal] = '\0';
-                                petiqueta = normaliza(string(pal));
+                                petiqueta = normaliza(string(pal), latin1);
                                 npal = 0;
                         } else if (npal <(int)MAXCAD-2) {
                                 npal++;
@@ -89,7 +99,8 @@ set<string> analizaConsulta(char *consulta)
                                 vector<string> partes = estalla(" ", pal);
                                 string sep = "", cres = "";
                                 for(uint32_t np = 0; np < partes.size(); np++) {
-                                        pnor = normaliza(string(partes[np]));
+                                        pnor = normaliza(string(partes[np]),
+                                                        latin1);
                                         //clog << "OJO Tras normalizar partes[" << np << "]=" << partes[np] << " dio pnor=" << pnor << endl;
                                         if (pnor != "") {
                                                 cres += sep + pnor;
@@ -97,9 +108,11 @@ set<string> analizaConsulta(char *consulta)
                                         }
                                 }
                                 //clog << "OJO se insertará a la consulta '" << cres << "'" << endl;
+                                // clog << " insertando cadena en estado 2" << endl;
                                 ccad.insert(cres);
-                        } else if (npal < (int)MAXCAD-3  && (!isspace(consulta[p]) ||
-                                                             !isspace(consulta[p-1]))) {
+                        } else if (npal < (int)MAXCAD-3  &&
+                                        (!isspace(consulta[p]) ||
+                                         !isspace(consulta[p-1]))) {
                                 npal++;
                                 pal[npal] = consulta[p];
                                 //clog << "aumentando pal a " << npal << ", pal[npal]=" << pal[npal] << endl;
@@ -111,10 +124,11 @@ set<string> analizaConsulta(char *consulta)
                                 estado = 0;
                                 pal[npal] = '\0';
                                 npal++;
-                                pnor = normaliza(string(pal));
+                                pnor = normaliza(string(pal), latin1);
                                 //cerr << "Tras normalizar pal=" << pal <<
-                                //	" dio pnor=" << pnor << endl;
+                                //" dio pnor=" << pnor << endl;
                                 if (pnor != "") {
+                                        // clog << " insertando cadena en estado 2 isspace" << endl;
                                         ccad.insert(petiqueta+":"+pnor);
                                 }
                         } else if (npal < (int)(MAXCAD-2-petiqueta.length())) {
@@ -122,12 +136,15 @@ set<string> analizaConsulta(char *consulta)
                                 npal++;
                         }
                 }
+
+                // clog << "  " << pal << endl;
+
         }
         if (estado == 1) {
                 npal++;
                 ASSERT(npal<=(int)MAXCAD-1);
                 pal[npal] = '\0';
-                pnor = normaliza(string(pal));
+                pnor = normaliza(string(pal), latin1);
                 if (pnor != "") {
                         ccad.insert(pnor);
                 }
@@ -137,16 +154,16 @@ set<string> analizaConsulta(char *consulta)
                 pal[npal] = '"';
                 npal++;
                 pal[npal] = '\0';
-                pnor = normaliza(string(pal));
+                pnor = normaliza(string(pal), latin1);
                 if (pnor != "") {
                         ccad.insert(pnor);
                 }
         } else if (estado == 3) {
                 pal[npal] = '\0';
                 npal++;
-                pnor = normaliza(string(pal));
+                pnor = normaliza(string(pal), latin1);
                 if (pnor != "") {
-                        //			//clog << "OJO por insertar " << petiqueta << ":" << pnor << endl;
+                        //clog << "OJO por insertar " << petiqueta << ":" << pnor << endl;
                         ccad.insert(petiqueta+":"+pnor);
                 }
         }
@@ -310,7 +327,8 @@ string nombra_resconsulta(set<string> &cons, char *ind)
 {
         string r("../indices/consultas/");
         for(char *p = ind; *p != '\0'; p++) {
-                if (isalnum(*p)) {
+                //if (isalnum(*p)) {
+                if (!isspace(*p)) {
                         r += *p;
                 } else {
                         r += '_';
@@ -478,69 +496,96 @@ string escapa(char *s)
         return t;
 }
 
+string escapa(string t)
+{
+        cad_remplaza("\"", "\\\"", t);
+        return t;
+}
+
+void uso()
+{
+        cerr << "buscador [-l] indice texto [inicio] [fin]" << endl;
+        cerr << "       -l indica que la cadena búscada están en LATIN1 (por omisión se supone que está en UTF-8)" << endl;
+        cerr << "inicio es posición inicial a partir de la cual buscar" << endl;
+        cerr << "fin es posición final hasta la cual buscar o 0 indica hasta la última" << endl;
+        exit(1);
+}
+
 
 int main(int argc, char *argv[])
 {
-
         uint32_t inicio = 1;
         uint32_t fin = 10;
         timespec t1;
         clock_gettime(CLOCK_REALTIME, &t1);
-        if (argc < 3) {
-                cerr<<"Se esperaban al menos 2 argumentos, el primero indice por leer y el segundo consulta. 3ero número de resultado inicial"<<endl;
-                exit(1);
+
+        bool latin1 = false;
+        int ch;
+        while ((ch = getopt(argc, argv, "l")) != -1) {
+                switch (ch) {
+                        case 'l':
+                                latin1 = true;
+                                break;
+
+                        default:
+                                uso();
+                }
+        }
+        if (argc - optind < 2) {
+                cerr<<"Se esperaban al menos 2 argumentos. " << endl << endl;
+                uso();
         }
 
         vector<Doc> docs;
-        set<string> cons = analizaConsulta(argv[2]);
+
+        string busqueda( argv[optind+1] );
+        set<string> cons = analizaConsulta(busqueda, latin1);
+
+        // clog << "cons=" << cons << " longitud=" << cons.size() << std::endl;
+
         //clog << "OJO analizaConsulta retornó conjunto de tamaño " << cons.size() << endl;
-        /*	if (cons.size() == 0) {
-        		cout << "Consulta vacía<br>" << endl;
-        		exit(1);
-        	} */
+        /*if (cons.size() == 0) {
+        cout << "Consulta vacía<br>" << endl;
+        exit(1);
+        } */
         char *f;
-        if ((f = strstr(argv[1], ".indice")) == NULL ||
-                        (uint32_t)(f - argv[1]) != (strlen(argv[1]) - 7) ) {
+        if ((f = strstr(argv[optind], ".indice")) == NULL ||
+                        (uint32_t)(f - argv[optind]) != (strlen(argv[optind]) - 7) ) {
                 cerr << "se esperaba extensión .indice. "
-                << argv[1] << endl;
+                << argv[optind] << endl;
                 exit(1);
         }
 
-        string nc = nombra_resconsulta(cons, argv[1]);
+        string nc = nombra_resconsulta(cons, argv[optind]);
         //clog << "nc = " << nc << endl;
         vector<uint32_t> *vpos = NULL;
 
-        bool sincopiarec = false;  // Sin tener en cuenta copia de result. recientes
-        if (argc >= 6 && strcmp(argv[5], "sincopiarecientes")) {
-                sincopiarec = true;
-        }
-
-        //	if (!resconsulta_reciente(nc) || sincopiarec) {
-        //cerr << "No es reciente " << argv[1] << endl;
-        set<uint32_t> *cpos = realizaBusqueda(argv[1], cons, docs);
+        //if (!resconsulta_reciente(nc) || sincopiarec) {
+        //cerr << "No es reciente " << argv[optind] << endl;
+        set<uint32_t> *cpos = realizaBusqueda(argv[optind], cons, docs);
         //clog << "OJO realizaBusqueda retornó conjunto de tamaño " << cpos->size() << endl;
         vpos = escalafon(cpos, &docs);
         ASSERT(cpos->size() == vpos->size());
-        /*		guarda_resconsulta(nc, vpos);
-        	} else {
-        		//cerr << "Si es reciente" << argv[1] << endl;
-        		char relacion[MAXLURL];
-        		verificaNombre(argv[1], relacion);
-        		leeRelacion(relacion, docs);
-        		vpos = lee_resconsulta(nc);
-        	} */
-        /*	for (int i=0; i<docs.size(); i++) {
-        	cerr << i << " " << docs[i] << endl;
-        	} 
-        	exit(1); */
+        /*guarda_resconsulta(nc, vpos);
+        } else {
+        //cerr << "Si es reciente" << argv[optind] << endl;
+        char relacion[MAXLURL];
+        verificaNombre(argv[optind], relacion);
+        leeRelacion(relacion, docs);
+        vpos = lee_resconsulta(nc);
+        } */
+        /*for (int i=0; i<docs.size(); i++) {
+        cerr << i << " " << docs[i] << endl;
+        }
+        exit(1); */
 
-        /*	if (vpos==NULL || vpos->size()==0) {
-        		clog <<"<p>No se encontraron coincidencias</p>"<<endl;
-        		return 1;
-        	} */
+        /*if (vpos==NULL || vpos->size()==0) {
+        clog <<"<p>No se encontraron coincidencias</p>"<<endl;
+        return 1;
+        } */
 
-        if (argc >= 4) {
-                inicio = atoi(argv[3]);
+        if (argc - optind >= 3) {
+                inicio = atoi(argv[optind+2]);
                 if (inicio >= vpos->size() ) {
                         inicio = vpos->size();
                 }
@@ -548,8 +593,8 @@ int main(int argc, char *argv[])
                         inicio = 1;
                 }
         }
-        if (argc >= 5) {  // Convención fin en 0 significa todos
-                fin = atoi(argv[4]);
+        if (argc - optind >= 4) {  // Convención fin en 0 significa todos
+                fin = atoi(argv[optind+3]);
                 if (fin == 0) {
                         fin = vpos->size();
                 }
@@ -565,9 +610,15 @@ int main(int argc, char *argv[])
 
 
 
+        string busqesc;
+        if (latin1) {
+                busqesc = escapa(cadena_latin1_a_utf8(busqueda));
+        } else {
+                busqesc = escapa(busqueda);
+        }
 
         cout << "{" << endl;
-        cout << "  \"consulta\": \"" << escapa(argv[2]) << "\"," << endl;
+        cout << "  \"consulta\": \"" << busqesc << "\"," << endl;
         cout << "  \"documentos\": " << vpos->size() << "," << endl;
         cout << "  \"inicio\": " << inicio << "," << endl;
         cout << "  \"fin\": " << fin << "," << endl;
@@ -597,7 +648,7 @@ int main(int argc, char *argv[])
 
 
         cout << "  ]" << endl; // resultados
-        //	cout << "  \"tiempons\": " << tiempo << endl;
+        //cout << "  \"tiempons\": " << tiempo << endl;
         cout << "}" << endl; // objeto
 
         return 0;

@@ -24,16 +24,7 @@ void insertaNormalizada(string pal, long ndoc, long p, NodoTrieS &t,
         }
         //clog<<"Leida "<<pal<<endl;
         if (p >= 0) {
-                string r;
-                if (normalizaPal) {
-                        r = normaliza(pal);
-                } else {
-                        r = pal;
-                }
-                if (r.size()>0) {
-                        t.inserta(r, Pos(ndoc, p));
-                        //clog<<"  Insertada"<<endl;
-                }
+                t.insertaNormalizando(pal, ndoc, p, normalizaPal);
         }
 }
 

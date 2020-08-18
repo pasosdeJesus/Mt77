@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE relatos PUBLIC "-//SINCODH/DTD relatos 0.9" "relatos.dtd">
 <relatos><relato>
-  <organizacion_responsable>Pasos de Jesús</organizacion_responsable>
-  <derechos>Dominio público</derechos>
+  <organizacion_responsable>Pasos de JesÃºs</organizacion_responsable>
+  <derechos>Dominio pÃºblico</derechos>
   <id_relato>pJ1</id_relato>
   <forma_compartir>privado</forma_compartir>
   <titulo>titulo</titulo>
@@ -34,7 +34,7 @@
     <observaciones tipo="id_antecedente">AMNISTIA - INDULTO, ATENTADO</observaciones>
     <observaciones tipo="id_filiacion">ALIANZAS TRADICIONALES, CIVICO POLITICOS ELECTORA</observaciones>
     <observaciones tipo="id_organizacion">AMBIENTALISTA, CAMPESINA</observaciones>
-    <observaciones tipo="id_rango">De 26 a 45 Años, De 46 a 60</observaciones>
+    <observaciones tipo="id_rango">De 26 a 45 AÃ±os, De 46 a 60</observaciones>
   </grupo>
   <!-- Presuntos responsables -->
   <grupo>
@@ -44,8 +44,8 @@
     <observaciones tipo="bloque">bloque</observaciones>
     <observaciones tipo="frente">frente</observaciones>
     <observaciones tipo="brigada">brigada</observaciones>
-    <observaciones tipo="batallon">batallón</observaciones>
-    <observaciones tipo="division">división</observaciones>
+    <observaciones tipo="batallon">batallÃ³n</observaciones>
+    <observaciones tipo="division">divisiÃ³n</observaciones>
     <observaciones tipo="otro">otro</observaciones>
   </grupo>
   <!-- Victima Individual -->
@@ -55,20 +55,20 @@
     <sector_condicion>PROFESIONAL</sector_condicion>
     <organizacion>RELIGIOSA</organizacion>
     <observaciones tipo="hijos">2</observaciones>
-    <observaciones tipo="id_rango_edad">De 0 a 15 Años</observaciones>
-    <observaciones tipo="id_filiacion">POLO DEMOCRÁTICO</observaciones>
+    <observaciones tipo="id_rango_edad">De 0 a 15 AÃ±os</observaciones>
+    <observaciones tipo="id_filiacion">POLO DEMOCRÃTICO</observaciones>
     <observaciones tipo="id_vinculo_estado">SECRETARIAS MPALES.</observaciones>
     <observaciones tipo="id_organizacion_armada">FUERZA PUBLICA</observaciones>
   </victima>
   <!-- Victima Combatiente-->
   <victima>
     <id_persona>pJ_vc_1</id_persona>
-    <ocupacion>SIN INFORMACIÓN</ocupacion>
+    <ocupacion>SIN INFORMACIÃ“N</ocupacion>
     <sector_condicion>PROFESIONAL</sector_condicion>
     <organizacion>SINDICAL</organizacion>
     <observaciones tipo="alias">al</observaciones>
     <observaciones tipo="id_resultado_agresion">HERIDO</observaciones>
-    <observaciones tipo="id_rango_edad">De 0 a 15 Años</observaciones>
+    <observaciones tipo="id_rango_edad">De 0 a 15 AÃ±os</observaciones>
     <observaciones tipo="id_filiacion">CONSERVADOR</observaciones>
     <observaciones tipo="id_vinculo_estado">SECRETARIAS MPALES.</observaciones>
     <observaciones tipo="id_organizacion_armada">SIJIN</observaciones>

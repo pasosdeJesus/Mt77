@@ -46,12 +46,14 @@ int examina(istream &is, long p)
 
         do {
                 is.seekg(p);
+                cout << "Posición: " << p << endl;
                 cad = leeCad(is);
                 if (cad.size() > 0) {
                         hermano = leeNDesp(is);
                         hijo = leeNDesp(is);
                         cpos = leePos(is);
-                        cout << "Cadena: " << cad << endl;
+                        cout << "Cadena: " << cad << 
+                                "(" << cad.length() << ")" << endl;
                         cout << "Hijo menor: " << hijo << endl;
                         cout << "Hermano mayor: " << hermano << endl;
                         cout << "Posiciones: " << *cpos << endl;
@@ -99,6 +101,7 @@ int main(int argc, char *argv[])
         //cerr << "argv[0]" << argv[0] << endl;
         vector<Doc> docs;
         char relacion[MAXLURL];
+        clog << "Verificando archivo " << argv[0] << endl;
         verificaNombre(argv[0], relacion);
 
         if (calcondensado) {
@@ -106,7 +109,9 @@ int main(int argc, char *argv[])
                 cout << c << endl;
         } else {
                 fstream is(argv[0], ios_base::in);
+                clog << "Verificando que es indice" << endl;
                 verificaIndice(is);
+                clog << "Examinando" << endl;
                 examina(is, is.tellg());
                 is.close();
         }

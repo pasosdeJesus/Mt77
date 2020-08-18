@@ -54,11 +54,11 @@ subgraph cluster4 {
 
 "HA" -> "HARA"
 "HARA" [label="RA {(1,36)}"]
-"R" -> "R1.TXT"
-"R1.TXT" [label="1.TXT {(1,1)}"]
-"R2.TXT" [label="2.TXT {(2,1)}"]
+"R" -> "R1LATIN1.TXT"
+"R1LATIN1.TXT" [label="1LATIN1.TXT {(1,1)}"]
+"R2LATIN1.TXT" [label="2LATIN1.TXT {(2,1)}"]
 subgraph cluster5 {
-"R1.TXT" -> "R2.TXT" [color="red"]
+"R1LATIN1.TXT" -> "R2LATIN1.TXT" [color="red"]
 }
 
 "S" -> "SE"
@@ -84,13 +84,17 @@ subgraph cluster8 {
 "TIPO:DOCUMENTO" -> "TITULO:" [color="red"]
 }
 
-"TITULO:" -> "TITULO:R"
+"TITULO:" -> "TITULO:LATIN1"
+"TITULO:LATIN1" [label="LATIN1 {(1,10), (2,10)}"]
 "TITULO:R" [label="R {}"]
 "TITULO:TXT" [label="TXT {(1,4), (2,4)}"]
 subgraph cluster9 {
+"TITULO:LATIN1" -> "TITULO:R" [color="red"]
 "TITULO:R" -> "TITULO:TXT" [color="red"]
 }
 
+"TITULO:LATIN1" -> "TITULO:LATIN1.TXT"
+"TITULO:LATIN1.TXT" [label=".TXT {(1,14), (2,14)}"]
 "TITULO:R" -> "TITULO:R1"
 "TITULO:R1" [label="1 {(1,3)}"]
 "TITULO:R2" [label="2 {(2,3)}"]
@@ -98,10 +102,6 @@ subgraph cluster10 {
 "TITULO:R1" -> "TITULO:R2" [color="red"]
 }
 
-"TITULO:R1" -> "TITULO:R1.TXT"
-"TITULO:R1.TXT" [label=".TXT {(1,7)}"]
-"TITULO:R2" -> "TITULO:R2.TXT"
-"TITULO:R2.TXT" [label=".TXT {(2,7)}"]
 "V" -> "VERDAD"
 "VERDAD" [label="ERDAD {(1,14), (1,26)}"]
 "VIDA" [label="IDA {(2,93)}"]
@@ -113,16 +113,15 @@ subgraph cluster11 {
 digraph "rdsgc" {
 
     rankdir=LR;
-"822" [label="822 {}"]
 "A" [label="A {}"]
-"BUENO" [label="BUENO {(4,549)}"]
+"BUENO" [label="BUENO {(4,572)}"]
 "C" [label="C {}"]
 "D" [label="D {}"]
 "E" [label="E {}"]
 "F" [label="F {}"]
-"GRANDE" [label="GRANDE {(4,202), (4,603)}"]
+"GRANDE" [label="GRANDE {(4,210), (4,628)}"]
 "H" [label="H {}"]
-"ILUSION" [label="ILUSION {(4,167)}"]
+"ILUSION" [label="ILUSION {(4,172)}"]
 "L" [label="L {}"]
 "M" [label="M {}"]
 "N" [label="N {}"]
@@ -134,7 +133,6 @@ digraph "rdsgc" {
 "UNIGENITO" [label="UNIGENITO {(2,25)}"]
 "V" [label="V {}"]
 subgraph cluster1 {
-"822" -> "A" [color="red"]
 "A" -> "BUENO" [color="red"]
 "BUENO" -> "C" [color="red"]
 "C" -> "D" [color="red"]
@@ -155,21 +153,14 @@ subgraph cluster1 {
 "UNIGENITO" -> "V" [color="red"]
 }
 
-"822" -> "8220"
-"8220" [label="0 {(4,894)}"]
-"8221" [label="1 {(4,1074)}"]
-subgraph cluster2 {
-"8220" -> "8221" [color="red"]
-}
-
 "A" -> "ABRAZAS"
-"ABRAZAS" [label="BRAZAS {(4,565)}"]
-"ACREDITA" [label="CREDITA {(4,1044)}"]
+"ABRAZAS" [label="BRAZAS {(4,588)}"]
+"ACREDITA" [label="CREDITA {(4,1074)}"]
 "AL" [label="L {}"]
 "AM" [label="M {}"]
 "AQU" [label="QU {}"]
 "AUTOR" [label="UTOR {}"]
-subgraph cluster3 {
+subgraph cluster2 {
 "ABRAZAS" -> "ACREDITA" [color="red"]
 "ACREDITA" -> "AL" [color="red"]
 "AL" -> "AM" [color="red"]
@@ -178,50 +169,50 @@ subgraph cluster3 {
 }
 
 "AL" -> "ALEGRIA"
-"ALEGRIA" [label="EGRIA {(4,287)}"]
-"ALMA" [label="MA {(4,735)}"]
-subgraph cluster4 {
+"ALEGRIA" [label="EGRIA {(4,299)}"]
+"ALMA" [label="MA {(4,763)}"]
+subgraph cluster3 {
 "ALEGRIA" -> "ALMA" [color="red"]
 }
 
 "ALMA" -> "ALMAS"
-"ALMAS" [label="S {(4,830)}"]
+"ALMAS" [label="S {(4,861)}"]
 "AM" -> "AMI"
 "AMI" [label="I {}"]
-"AMOR" [label="OR {(4,88), (4,642)}"]
-subgraph cluster5 {
+"AMOR" [label="OR {(4,91), (4,667)}"]
+subgraph cluster4 {
 "AMI" -> "AMOR" [color="red"]
 }
 
 "AMI" -> "AMIGOS"
-"AMIGOS" [label="GOS {(4,459)}"]
-"AMISTAD" [label="STAD {(4,419)}"]
-subgraph cluster6 {
+"AMIGOS" [label="GOS {(4,478)}"]
+"AMISTAD" [label="STAD {(4,436)}"]
+subgraph cluster5 {
 "AMIGOS" -> "AMISTAD" [color="red"]
 }
 
 "AQU" -> "AQUEL"
 "AQUEL" [label="EL {(2,49)}"]
-"AQUI" [label="I {(4,936)}"]
-subgraph cluster7 {
+"AQUI" [label="I {(4,964)}"]
+subgraph cluster6 {
 "AQUEL" -> "AQUI" [color="red"]
 }
 
 "AUTOR" -> "AUTORES"
-"AUTORES" [label="ES {(4,970)}"]
-"AUTORIA" [label="IA {(4,1056)}"]
-subgraph cluster8 {
+"AUTORES" [label="ES {(4,1000)}"]
+"AUTORIA" [label="IA {(4,1086)}"]
+subgraph cluster7 {
 "AUTORES" -> "AUTORIA" [color="red"]
 }
 
 "C" -> "CANTAS"
-"CANTAS" [label="ANTAS {(4,308)}"]
-"CELEBRAS" [label="ELEBRAS {(4,214)}"]
-"CIELOS" [label="IELOS {(4,801)}"]
+"CANTAS" [label="ANTAS {(4,321)}"]
+"CELEBRAS" [label="ELEBRAS {(4,222)}"]
+"CIELOS" [label="IELOS {(4,832)}"]
 "CONOCEREIS" [label="ONOCEREIS {(1,1)}"]
 "CREA" [label="REA {(2,65)}"]
 "CU" [label="U {}"]
-subgraph cluster9 {
+subgraph cluster8 {
 "CANTAS" -> "CELEBRAS" [color="red"]
 "CELEBRAS" -> "CIELOS" [color="red"]
 "CIELOS" -> "CONOCEREIS" [color="red"]
@@ -230,18 +221,18 @@ subgraph cluster9 {
 }
 
 "CU" -> "CUAN"
-"CUAN" [label="AN {(4,544)}"]
-"CUMPLEA�OS" [label="MPLEA�OS {(4,226)}"]
-subgraph cluster10 {
-"CUAN" -> "CUMPLEA�OS" [color="red"]
+"CUAN" [label="AN {(4,566)}"]
+"CUMPLEAÑOS" [label="MPLEAÑOS {(4,234)}"]
+subgraph cluster9 {
+"CUAN" -> "CUMPLEAÑOS" [color="red"]
 }
 
 "D" -> "DA"
 "DA" [label="A {}"]
 "DE" [label="E {}"]
 "DIOS" [label="IOS {(2,2)}"]
-"DOMINIO" [label="OMINIO {(4,949)}"]
-subgraph cluster11 {
+"DOMINIO" [label="OMINIO {(4,977)}"]
+subgraph cluster10 {
 "DA" -> "DE" [color="red"]
 "DE" -> "DIOS" [color="red"]
 "DIOS" -> "DOMINIO" [color="red"]
@@ -249,33 +240,33 @@ subgraph cluster11 {
 
 "DA" -> "DADO"
 "DADO" [label="DO {(2,10)}"]
-"DARAS" [label="RAS {(4,48)}"]
-subgraph cluster12 {
+"DARAS" [label="RAS {(4,50)}"]
+subgraph cluster11 {
 "DADO" -> "DARAS" [color="red"]
 }
 
 "DE" -> "DECORAS"
-"DECORAS" [label="CORAS {(4,239)}"]
+"DECORAS" [label="CORAS {(4,248)}"]
 "DES" [label="S {}"]
-subgraph cluster13 {
+subgraph cluster12 {
 "DECORAS" -> "DES" [color="red"]
 }
 
 "DES" -> "DESCONOCIDOS"
-"DESCONOCIDOS" [label="CONOCIDOS {(4,978)}"]
-"DESINTERESADO" [label="INTERESADO {(4,611)}"]
-subgraph cluster14 {
+"DESCONOCIDOS" [label="CONOCIDOS {(4,1008)}"]
+"DESINTERESADO" [label="INTERESADO {(4,636)}"]
+subgraph cluster13 {
 "DESCONOCIDOS" -> "DESINTERESADO" [color="red"]
 }
 
 "E" -> "ELLO"
-"ELLO" [label="LLO {(4,633)}"]
+"ELLO" [label="LLO {(4,658)}"]
 "EN" [label="N {}"]
-"ERES" [label="RES {(4,368), (4,555)}"]
-"ES" [label="S {(4,740)}"]
+"ERES" [label="RES {(4,384), (4,578)}"]
+"ES" [label="S {(4,768)}"]
 "ETERNA" [label="TERNA {(2,98)}"]
 "EX" [label="X {}"]
-subgraph cluster15 {
+subgraph cluster14 {
 "ELLO" -> "EN" [color="red"]
 "EN" -> "ERES" [color="red"]
 "ERES" -> "ES" [color="red"]
@@ -284,68 +275,68 @@ subgraph cluster15 {
 }
 
 "EN" -> "ENSEGUIDA"
-"ENSEGUIDA" [label="SEGUIDA {(4,694)}"]
-"ENTRAR" [label="TRAR {(4,778)}"]
-subgraph cluster16 {
+"ENSEGUIDA" [label="SEGUIDA {(4,721)}"]
+"ENTRAR" [label="TRAR {(4,809)}"]
+subgraph cluster15 {
 "ENSEGUIDA" -> "ENTRAR" [color="red"]
 }
 
 "ES" -> "ESPECIFICADO"
-"ESPECIFICADO" [label="PECIFICADO {(4,1008)}"]
-"ESTOS" [label="TOS {(4,1067)}"]
-subgraph cluster17 {
+"ESPECIFICADO" [label="PECIFICADO {(4,1038)}"]
+"ESTOS" [label="TOS {(4,1098)}"]
+subgraph cluster16 {
 "ESPECIFICADO" -> "ESTOS" [color="red"]
 }
 
 "EX" -> "EXIGIRAS"
-"EXIGIRAS" [label="IGIRAS {(4,444)}"]
+"EXIGIRAS" [label="IGIRAS {(4,462)}"]
 "EXP" [label="P {}"]
-subgraph cluster18 {
+subgraph cluster17 {
 "EXIGIRAS" -> "EXP" [color="red"]
 }
 
 "EXP" -> "EXPRES"
 "EXPRES" [label="RES {}"]
-"EXPUESTAS" [label="UESTAS {(4,926)}"]
-subgraph cluster19 {
+"EXPUESTAS" [label="UESTAS {(4,954)}"]
+subgraph cluster18 {
 "EXPRES" -> "EXPUESTAS" [color="red"]
 }
 
 "EXPRES" -> "EXPRESAR"
-"EXPRESAR" [label="AR {(4,355)}"]
-"EXPRESIONES" [label="IONES {(4,73)}"]
-subgraph cluster20 {
+"EXPRESAR" [label="AR {(4,371)}"]
+"EXPRESIONES" [label="IONES {(4,76)}"]
+subgraph cluster19 {
 "EXPRESAR" -> "EXPRESIONES" [color="red"]
 }
 
 "F" -> "FELIZ"
-"FELIZ" [label="ELIZ {(4,388)}"]
-"FUERTE" [label="UERTE {(4,322), (4,595)}"]
-subgraph cluster21 {
+"FELIZ" [label="ELIZ {(4,405)}"]
+"FUERTE" [label="UERTE {(4,336), (4,620)}"]
+subgraph cluster20 {
 "FELIZ" -> "FUERTE" [color="red"]
 }
 
 "H" -> "HA"
 "HA" [label="A {(2,7)}"]
 "HIJO" [label="IJO {(2,20)}"]
-"HTTPLLUVIADEROSAS.COMREFLEXI" [label="TTPLLUVIADEROSAS.COMREFLEXI {(4,850)}"]
-subgraph cluster22 {
+"HTTPLLUVIADEROSAS.COMREFLEXI" [label="TTPLLUVIADEROSAS.COMREFLEXI {(4,882)}"]
+subgraph cluster21 {
 "HA" -> "HIJO" [color="red"]
 "HIJO" -> "HTTPLLUVIADEROSAS.COMREFLEXI" [color="red"]
 }
 
 "HA" -> "HABITACION"
-"HABITACION" [label="BITACION {(4,250)}"]
+"HABITACION" [label="BITACION {(4,259)}"]
 "HARA" [label="RA {(1,36)}"]
-subgraph cluster23 {
+subgraph cluster22 {
 "HABITACION" -> "HARA" [color="red"]
 }
 
 "L" -> "LEVANTARTE"
-"LEVANTARTE" [label="EVANTARTE {(4,683)}"]
+"LEVANTARTE" [label="EVANTARTE {(4,710)}"]
 "LIB" [label="IB {}"]
 "LL" [label="L {}"]
-subgraph cluster24 {
+subgraph cluster23 {
 "LEVANTARTE" -> "LIB" [color="red"]
 "LIB" -> "LL" [color="red"]
 }
@@ -353,64 +344,57 @@ subgraph cluster24 {
 "LIB" -> "LIBERARA"
 "LIBERARA" [label="ERARA {(3,17)}"]
 "LIBRES" [label="RES {(1,41)}"]
-subgraph cluster25 {
+subgraph cluster24 {
 "LIBERARA" -> "LIBRES" [color="red"]
 }
 
 "LL" -> "LLE"
 "LLE" [label="E {}"]
-"LLUVIA" [label="UVIA {(4,1022)}"]
-subgraph cluster26 {
+"LLUVIA" [label="UVIA {(4,1052)}"]
+subgraph cluster25 {
 "LLE" -> "LLUVIA" [color="red"]
 }
 
 "LLE" -> "LLEGARAS"
-"LLEGARAS" [label="GARAS {(4,187)}"]
-"LLENARAS" [label="NARAS {(4,275)}"]
-subgraph cluster27 {
+"LLEGARAS" [label="GARAS {(4,194)}"]
+"LLENARAS" [label="NARAS {(4,286)}"]
+subgraph cluster26 {
 "LLEGARAS" -> "LLENARAS" [color="red"]
 }
 
 "M" -> "MAYORES"
-"MAYORES" [label="AYORES {(4,65)}"]
+"MAYORES" [label="AYORES {(4,68)}"]
 "ME" [label="E {}"]
-"MIRADA" [label="IRADA {(4,108)}"]
-"MUNDO" [label="UNDO {(4,398), (4,534)}"]
-subgraph cluster28 {
+"MIRADA" [label="IRADA {(4,111)}"]
+"MUNDO" [label="UNDO {(4,415), (4,556)}"]
+subgraph cluster27 {
 "MAYORES" -> "ME" [color="red"]
 "ME" -> "MIRADA" [color="red"]
 "MIRADA" -> "MUNDO" [color="red"]
 }
 
 "ME" -> "MEJORES"
-"MEJORES" [label="JORES {(4,475)}"]
-"MENOS" [label="NOS {(4,994)}"]
-subgraph cluster29 {
+"MEJORES" [label="JORES {(4,494)}"]
+"MENOS" [label="NOS {(4,1024)}"]
+subgraph cluster28 {
 "MEJORES" -> "MENOS" [color="red"]
 }
 
-"N" -> "NI"
-"NI" [label="I {}"]
-"NO" [label="O {(2,70), (4,441), (4,514), (4,1038)}"]
-subgraph cluster30 {
-"NI" -> "NO" [color="red"]
+"N" -> "NIÑO"
+"NIÑO" [label="IÑO {(4,43), (4,124), (4,187), (4,279), (4,528), (4,695), (4,794)}"]
+"NO" [label="O {(2,70), (4,459), (4,535), (4,1068)}"]
+subgraph cluster29 {
+"NIÑO" -> "NO" [color="red"]
 }
 
-"NI" -> "NIOS"
-"NIOS" [label="OS {(4,9)}"]
-"NI�O" [label="�O {(4,42), (4,121), (4,181), (4,269), (4,508), (4,670), (4,765)}"]
-subgraph cluster31 {
-"NIOS" -> "NI�O" [color="red"]
-}
-
-"NI�O" -> "NI�OS"
-"NI�OS" [label="S {(4,338), (4,434), (4,582), (4,843)}"]
+"NIÑO" -> "NIÑOS"
+"NIÑOS" [label="S {(4,9), (4,352), (4,451), (4,605), (4,874)}"]
 "NO" -> "NOS"
 "NOS" [label="S {(3,13)}"]
 "O" -> "ORAS"
-"ORAS" [label="RAS {(4,495)}"]
+"ORAS" [label="RAS {(4,515)}"]
 "OS" [label="S {(1,33)}"]
-subgraph cluster32 {
+subgraph cluster30 {
 "ORAS" -> "OS" [color="red"]
 }
 
@@ -419,93 +403,93 @@ subgraph cluster32 {
 "PIERDA" [label="IERDA {(2,76)}"]
 "PO" [label="O {}"]
 "PU" [label="U {}"]
-subgraph cluster33 {
+subgraph cluster31 {
 "PE" -> "PIERDA" [color="red"]
 "PIERDA" -> "PO" [color="red"]
 "PO" -> "PU" [color="red"]
 }
 
-"PE" -> "PEQUE�A"
-"PEQUE�A" [label="QUE�A {(4,743)}"]
-"PERSONA" [label="RSONA {(4,376)}"]
-subgraph cluster34 {
-"PEQUE�A" -> "PERSONA" [color="red"]
+"PE" -> "PEQUEÑA"
+"PEQUEÑA" [label="QUEÑA {(4,771)}"]
+"PERSONA" [label="RSONA {(4,392)}"]
+subgraph cluster32 {
+"PEQUEÑA" -> "PERSONA" [color="red"]
 }
 
 "PO" -> "PODRAS"
-"PODRAS" [label="DRAS {(4,676), (4,771)}"]
+"PODRAS" [label="DRAS {(4,702), (4,801)}"]
 "POEMASERCOMONINOS.ODT" [label="EMASERCOMONINOS.ODT {(4,1)}"]
-subgraph cluster35 {
+subgraph cluster33 {
 "PODRAS" -> "POEMASERCOMONINOS.ODT" [color="red"]
 }
 
 "PU" -> "PUBLICO"
-"PUBLICO" [label="BLICO {(4,957)}"]
-"PURA" [label="RA {(4,147)}"]
-subgraph cluster36 {
+"PUBLICO" [label="BLICO {(4,985)}"]
+"PURA" [label="RA {(4,152)}"]
+subgraph cluster34 {
 "PUBLICO" -> "PURA" [color="red"]
 }
 
-"R" -> "R1.TXT"
-"R1.TXT" [label="1.TXT {(1,1)}"]
-"R2.TXT" [label="2.TXT {(2,1)}"]
+"R" -> "R1LATIN1.TXT"
+"R1LATIN1.TXT" [label="1LATIN1.TXT {(1,1)}"]
+"R2LATIN1.TXT" [label="2LATIN1.TXT {(2,1)}"]
 "RE" [label="E {}"]
-"RIES" [label="IES {(4,317)}"]
-"ROSAS" [label="OSAS {(4,1032)}"]
-subgraph cluster37 {
-"R1.TXT" -> "R2.TXT" [color="red"]
-"R2.TXT" -> "RE" [color="red"]
+"RIES" [label="IES {(4,330)}"]
+"ROSAS" [label="OSAS {(4,1062)}"]
+subgraph cluster35 {
+"R1LATIN1.TXT" -> "R2LATIN1.TXT" [color="red"]
+"R2LATIN1.TXT" -> "RE" [color="red"]
 "RE" -> "RIES" [color="red"]
 "RIES" -> "ROSAS" [color="red"]
 }
 
 "RE" -> "REFLEXIONES"
-"REFLEXIONES" [label="FLEXIONES {(4,914)}"]
-"REINO" [label="INO {(4,788)}"]
-subgraph cluster38 {
+"REFLEXIONES" [label="FLEXIONES {(4,942)}"]
+"REINO" [label="INO {(4,819)}"]
+subgraph cluster36 {
 "REFLEXIONES" -> "REINO" [color="red"]
 }
 
 "S" -> "SE"
-"SE" [label="E {(2,73), (4,1041)}"]
-"SI" [label="I {(3,10), (3,27), (4,15), (4,94), (4,153), (4,210), (4,304), (4,405), (4,491), (4,561), (4,648), (4,728)}"]
-"SON" [label="ON {(4,942)}"]
-subgraph cluster39 {
+"SE" [label="E {(2,73), (4,1071)}"]
+"SI" [label="I {(3,10), (3,27), (4,16), (4,97), (4,158), (4,218), (4,317), (4,422), (4,511), (4,584), (4,673), (4,756)}"]
+"SON" [label="ON {(4,970)}"]
+subgraph cluster37 {
 "SE" -> "SI" [color="red"]
 "SI" -> "SON" [color="red"]
 }
 
 "SE" -> "SEA"
-"SEA" [label="A {(4,1004)}"]
-"SENTIR" [label="NTIR {(4,710)}"]
-"SER" [label="R {(4,1), (4,198)}"]
-subgraph cluster40 {
+"SEA" [label="A {(4,1034)}"]
+"SENTIR" [label="NTIR {(4,737)}"]
+"SER" [label="R {(4,1), (4,206)}"]
+subgraph cluster38 {
 "SEA" -> "SENTIR" [color="red"]
 "SENTIR" -> "SER" [color="red"]
 }
 
 "SEA" -> "SEAN"
-"SEAN" [label="N {(4,470)}"]
+"SEAN" [label="N {(4,489)}"]
 "SER" -> "SERA"
-"SERA" [label="A {(4,345), (4,517)}"]
+"SERA" [label="A {(4,360), (4,538)}"]
 "SERA" -> "SERAS"
-"SERAS" [label="S {(4,127), (4,589)}"]
+"SERAS" [label="S {(4,131), (4,613)}"]
 "SI" -> "SIMPLEMENTE"
-"SIMPLEMENTE" [label="MPLEMENTE {(4,809)}"]
+"SIMPLEMENTE" [label="MPLEMENTE {(4,840)}"]
 "SITIO:R" [label="TIO:R {(1,2), (2,2), (3,2), (4,2)}"]
-subgraph cluster41 {
+subgraph cluster39 {
 "SIMPLEMENTE" -> "SITIO:R" [color="red"]
 }
 
 "SON" -> "SONRISA"
-"SONRISA" [label="RISA {(4,28)}"]
+"SONRISA" [label="RISA {(4,29)}"]
 "T" -> "TE"
 "TE" [label="E {}"]
 "TI" [label="I {}"]
-"TODO" [label="ODO {(2,44), (4,628)}"]
+"TODO" [label="ODO {(2,44), (4,653)}"]
 "TR" [label="R {}"]
-"TU" [label="U {(4,223), (4,247), (4,295), (4,487), (4,732)}"]
-subgraph cluster42 {
+"TU" [label="U {(4,231), (4,256), (4,308), (4,506), (4,760)}"]
+subgraph cluster40 {
 "TE" -> "TI" [color="red"]
 "TI" -> "TODO" [color="red"]
 "TODO" -> "TR" [color="red"]
@@ -513,23 +497,24 @@ subgraph cluster42 {
 }
 
 "TE" -> "TEMAS"
-"TEMAS" [label="MAS {(4,906)}"]
+"TEMAS" [label="MAS {(4,934)}"]
 "TENGA" [label="NGA {(2,87)}"]
-subgraph cluster43 {
+subgraph cluster41 {
 "TEMAS" -> "TENGA" [color="red"]
 }
 
 "TI" -> "TIENES"
-"TIENES" [label="ENES {(4,18), (4,98), (4,157), (4,409)}"]
+"TIENES" [label="ENES {(4,19), (4,101), (4,162), (4,426)}"]
 "TIPO:DOCUMENTO" [label="PO:DOCUMENTO {(1,10), (2,10), (3,10), (4,10)}"]
 "TITULO:" [label="TULO: {}"]
-subgraph cluster44 {
+subgraph cluster42 {
 "TIENES" -> "TIPO:DOCUMENTO" [color="red"]
 "TIPO:DOCUMENTO" -> "TITULO:" [color="red"]
 }
 
 "TITULO:" -> "TITULO:COMO"
 "TITULO:COMO" [label="COMO {(4,15)}"]
+"TITULO:LATIN1" [label="LATIN1 {(1,10), (2,10), (3,14)}"]
 "TITULO:NINOS" [label="NINOS {(4,21)}"]
 "TITULO:ODT" [label="ODT {(4,4)}"]
 "TITULO:POEMA" [label="POEMA {(4,6)}"]
@@ -537,8 +522,9 @@ subgraph cluster44 {
 "TITULO:SER" [label="SER {(4,10)}"]
 "TITULO:TXT" [label="TXT {(1,4), (2,4), (3,4)}"]
 "TITULO:VERDAD" [label="VERDAD {(3,7)}"]
-subgraph cluster45 {
-"TITULO:COMO" -> "TITULO:NINOS" [color="red"]
+subgraph cluster43 {
+"TITULO:COMO" -> "TITULO:LATIN1" [color="red"]
+"TITULO:LATIN1" -> "TITULO:NINOS" [color="red"]
 "TITULO:NINOS" -> "TITULO:ODT" [color="red"]
 "TITULO:ODT" -> "TITULO:POEMA" [color="red"]
 "TITULO:POEMA" -> "TITULO:R" [color="red"]
@@ -547,51 +533,47 @@ subgraph cluster45 {
 "TITULO:TXT" -> "TITULO:VERDAD" [color="red"]
 }
 
+"TITULO:LATIN1" -> "TITULO:LATIN1.TXT"
+"TITULO:LATIN1.TXT" [label=".TXT {(1,14), (2,14), (3,18)}"]
 "TITULO:NINOS" -> "TITULO:NINOS.ODT"
 "TITULO:NINOS.ODT" [label=".ODT {(4,25)}"]
 "TITULO:R" -> "TITULO:R1"
 "TITULO:R1" [label="1 {(1,3)}"]
 "TITULO:R2" [label="2 {(2,3)}"]
-subgraph cluster46 {
+subgraph cluster44 {
 "TITULO:R1" -> "TITULO:R2" [color="red"]
 }
 
-"TITULO:R1" -> "TITULO:R1.TXT"
-"TITULO:R1.TXT" [label=".TXT {(1,7)}"]
-"TITULO:R2" -> "TITULO:R2.TXT"
-"TITULO:R2.TXT" [label=".TXT {(2,7)}"]
-"TITULO:VERDAD" -> "TITULO:VERDAD.TXT"
-"TITULO:VERDAD.TXT" [label=".TXT {(3,11)}"]
 "TR" -> "TRANSPARENCIA"
-"TRANSPARENCIA" [label="ANSPARENCIA {(4,133)}"]
-"TROPIEZAS" [label="OPIEZAS {(4,652)}"]
-subgraph cluster47 {
+"TRANSPARENCIA" [label="ANSPARENCIA {(4,138)}"]
+"TROPIEZAS" [label="OPIEZAS {(4,677)}"]
+subgraph cluster45 {
 "TRANSPARENCIA" -> "TROPIEZAS" [color="red"]
 }
 
 "TU" -> "TUS"
-"TUS" [label="S {(4,455)}"]
+"TUS" [label="S {(4,474)}"]
 "V" -> "VE"
 "VE" [label="E {}"]
-"VIDA" [label="IDA {(2,93), (4,298)}"]
-subgraph cluster48 {
+"VIDA" [label="IDA {(2,93), (4,311)}"]
+subgraph cluster46 {
 "VE" -> "VIDA" [color="red"]
 }
 
 "VE" -> "VEA"
-"VEA" [label="A {(4,540)}"]
+"VEA" [label="A {(4,562)}"]
 "VER" [label="R {}"]
-subgraph cluster49 {
+subgraph cluster47 {
 "VEA" -> "VER" [color="red"]
 }
 
 "VER" -> "VERDAD"
 "VERDAD" [label="DAD {(1,14), (1,26), (3,3)}"]
-"VERGUENZA" [label="GUENZA {(4,717)}"]
-subgraph cluster50 {
+"VERGUENZA" [label="GUENZA {(4,744)}"]
+subgraph cluster48 {
 "VERDAD" -> "VERGUENZA" [color="red"]
 }
 
-"VERDAD" -> "VERDAD.TXT"
-"VERDAD.TXT" [label=".TXT {(3,1)}"]
+"VERDAD" -> "VERDADLATIN1.TXT"
+"VERDADLATIN1.TXT" [label="LATIN1.TXT {(3,1)}"]
 }

@@ -54,11 +54,11 @@ subgraph cluster4 {
 
 "HA" -> "HARA"
 "HARA" [label="RA {(2,36)}"]
-"R" -> "R1.TXT"
-"R1.TXT" [label="1.TXT {(2,1)}"]
-"R2.TXT" [label="2.TXT {(1,1)}"]
+"R" -> "R1LATIN1.TXT"
+"R1LATIN1.TXT" [label="1LATIN1.TXT {(2,1)}"]
+"R2LATIN1.TXT" [label="2LATIN1.TXT {(1,1)}"]
 subgraph cluster5 {
-"R1.TXT" -> "R2.TXT" [color="red"]
+"R1LATIN1.TXT" -> "R2LATIN1.TXT" [color="red"]
 }
 
 "S" -> "SE"
@@ -84,13 +84,17 @@ subgraph cluster8 {
 "TIPO:DOCUMENTO" -> "TITULO:" [color="red"]
 }
 
-"TITULO:" -> "TITULO:R"
+"TITULO:" -> "TITULO:LATIN1"
+"TITULO:LATIN1" [label="LATIN1 {(1,10), (2,10)}"]
 "TITULO:R" [label="R {}"]
 "TITULO:TXT" [label="TXT {(1,4), (2,4)}"]
 subgraph cluster9 {
+"TITULO:LATIN1" -> "TITULO:R" [color="red"]
 "TITULO:R" -> "TITULO:TXT" [color="red"]
 }
 
+"TITULO:LATIN1" -> "TITULO:LATIN1.TXT"
+"TITULO:LATIN1.TXT" [label=".TXT {(1,14), (2,14)}"]
 "TITULO:R" -> "TITULO:R1"
 "TITULO:R1" [label="1 {(2,3)}"]
 "TITULO:R2" [label="2 {(1,3)}"]
@@ -98,10 +102,6 @@ subgraph cluster10 {
 "TITULO:R1" -> "TITULO:R2" [color="red"]
 }
 
-"TITULO:R1" -> "TITULO:R1.TXT"
-"TITULO:R1.TXT" [label=".TXT {(2,7)}"]
-"TITULO:R2" -> "TITULO:R2.TXT"
-"TITULO:R2.TXT" [label=".TXT {(1,7)}"]
 "V" -> "VERDAD"
 "VERDAD" [label="ERDAD {(2,14), (2,26)}"]
 "VIDA" [label="IDA {(1,93)}"]
@@ -166,11 +166,11 @@ subgraph cluster4 {
 
 "HA" -> "HARA"
 "HARA" [label="RA {(1,36)}"]
-"R" -> "R1.TXT"
-"R1.TXT" [label="1.TXT {(1,1)}"]
-"R2.TXT" [label="2.TXT {(2,1)}"]
+"R" -> "R1LATIN1.TXT"
+"R1LATIN1.TXT" [label="1LATIN1.TXT {(1,1)}"]
+"R2LATIN1.TXT" [label="2LATIN1.TXT {(2,1)}"]
 subgraph cluster5 {
-"R1.TXT" -> "R2.TXT" [color="red"]
+"R1LATIN1.TXT" -> "R2LATIN1.TXT" [color="red"]
 }
 
 "S" -> "SE"
@@ -196,13 +196,17 @@ subgraph cluster8 {
 "TIPO:DOCUMENTO" -> "TITULO:" [color="red"]
 }
 
-"TITULO:" -> "TITULO:R"
+"TITULO:" -> "TITULO:LATIN1"
+"TITULO:LATIN1" [label="LATIN1 {(1,10), (2,10)}"]
 "TITULO:R" [label="R {}"]
 "TITULO:TXT" [label="TXT {(1,4), (2,4)}"]
 subgraph cluster9 {
+"TITULO:LATIN1" -> "TITULO:R" [color="red"]
 "TITULO:R" -> "TITULO:TXT" [color="red"]
 }
 
+"TITULO:LATIN1" -> "TITULO:LATIN1.TXT"
+"TITULO:LATIN1.TXT" [label=".TXT {(1,14), (2,14)}"]
 "TITULO:R" -> "TITULO:R1"
 "TITULO:R1" [label="1 {(1,3)}"]
 "TITULO:R2" [label="2 {(2,3)}"]
@@ -210,10 +214,6 @@ subgraph cluster10 {
 "TITULO:R1" -> "TITULO:R2" [color="red"]
 }
 
-"TITULO:R1" -> "TITULO:R1.TXT"
-"TITULO:R1.TXT" [label=".TXT {(1,7)}"]
-"TITULO:R2" -> "TITULO:R2.TXT"
-"TITULO:R2.TXT" [label=".TXT {(2,7)}"]
 "V" -> "VERDAD"
 "VERDAD" [label="ERDAD {(1,14), (1,26)}"]
 "VIDA" [label="IDA {(2,93)}"]
@@ -287,11 +287,11 @@ subgraph cluster5 {
 
 "NO" -> "NOS"
 "NOS" [label="S {(1,13)}"]
-"R" -> "R1.TXT"
-"R1.TXT" [label="1.TXT {(2,1)}"]
-"R2.TXT" [label="2.TXT {(3,1)}"]
+"R" -> "R1LATIN1.TXT"
+"R1LATIN1.TXT" [label="1LATIN1.TXT {(2,1)}"]
+"R2LATIN1.TXT" [label="2LATIN1.TXT {(3,1)}"]
 subgraph cluster6 {
-"R1.TXT" -> "R2.TXT" [color="red"]
+"R1LATIN1.TXT" -> "R2LATIN1.TXT" [color="red"]
 }
 
 "S" -> "SE"
@@ -326,15 +326,19 @@ subgraph cluster10 {
 "TIPO:DOCUMENTO" -> "TITULO:" [color="red"]
 }
 
-"TITULO:" -> "TITULO:R"
+"TITULO:" -> "TITULO:LATIN1"
+"TITULO:LATIN1" [label="LATIN1 {(1,14), (2,10), (3,10)}"]
 "TITULO:R" [label="R {}"]
 "TITULO:TXT" [label="TXT {(1,4), (2,4), (3,4)}"]
 "TITULO:VERDAD" [label="VERDAD {(1,7)}"]
 subgraph cluster11 {
+"TITULO:LATIN1" -> "TITULO:R" [color="red"]
 "TITULO:R" -> "TITULO:TXT" [color="red"]
 "TITULO:TXT" -> "TITULO:VERDAD" [color="red"]
 }
 
+"TITULO:LATIN1" -> "TITULO:LATIN1.TXT"
+"TITULO:LATIN1.TXT" [label=".TXT {(1,18), (2,14), (3,14)}"]
 "TITULO:R" -> "TITULO:R1"
 "TITULO:R1" [label="1 {(2,3)}"]
 "TITULO:R2" [label="2 {(3,3)}"]
@@ -342,12 +346,6 @@ subgraph cluster12 {
 "TITULO:R1" -> "TITULO:R2" [color="red"]
 }
 
-"TITULO:R1" -> "TITULO:R1.TXT"
-"TITULO:R1.TXT" [label=".TXT {(2,7)}"]
-"TITULO:R2" -> "TITULO:R2.TXT"
-"TITULO:R2.TXT" [label=".TXT {(3,7)}"]
-"TITULO:VERDAD" -> "TITULO:VERDAD.TXT"
-"TITULO:VERDAD.TXT" [label=".TXT {(1,11)}"]
 "V" -> "VERDAD"
 "VERDAD" [label="ERDAD {(1,3), (2,14), (2,26)}"]
 "VIDA" [label="IDA {(3,93)}"]
@@ -355,8 +353,8 @@ subgraph cluster13 {
 "VERDAD" -> "VIDA" [color="red"]
 }
 
-"VERDAD" -> "VERDAD.TXT"
-"VERDAD.TXT" [label=".TXT {(1,1)}"]
+"VERDAD" -> "VERDADLATIN1.TXT"
+"VERDADLATIN1.TXT" [label="LATIN1.TXT {(1,1)}"]
 }
 digraph "rdsgc" {
 
@@ -423,11 +421,11 @@ subgraph cluster5 {
 
 "NO" -> "NOS"
 "NOS" [label="S {(2,13)}"]
-"R" -> "R1.TXT"
-"R1.TXT" [label="1.TXT {(1,1)}"]
-"R2.TXT" [label="2.TXT {(3,1)}"]
+"R" -> "R1LATIN1.TXT"
+"R1LATIN1.TXT" [label="1LATIN1.TXT {(1,1)}"]
+"R2LATIN1.TXT" [label="2LATIN1.TXT {(3,1)}"]
 subgraph cluster6 {
-"R1.TXT" -> "R2.TXT" [color="red"]
+"R1LATIN1.TXT" -> "R2LATIN1.TXT" [color="red"]
 }
 
 "S" -> "SE"
@@ -462,15 +460,19 @@ subgraph cluster10 {
 "TIPO:DOCUMENTO" -> "TITULO:" [color="red"]
 }
 
-"TITULO:" -> "TITULO:R"
+"TITULO:" -> "TITULO:LATIN1"
+"TITULO:LATIN1" [label="LATIN1 {(1,10), (2,14), (3,10)}"]
 "TITULO:R" [label="R {}"]
 "TITULO:TXT" [label="TXT {(1,4), (2,4), (3,4)}"]
 "TITULO:VERDAD" [label="VERDAD {(2,7)}"]
 subgraph cluster11 {
+"TITULO:LATIN1" -> "TITULO:R" [color="red"]
 "TITULO:R" -> "TITULO:TXT" [color="red"]
 "TITULO:TXT" -> "TITULO:VERDAD" [color="red"]
 }
 
+"TITULO:LATIN1" -> "TITULO:LATIN1.TXT"
+"TITULO:LATIN1.TXT" [label=".TXT {(1,14), (2,18), (3,14)}"]
 "TITULO:R" -> "TITULO:R1"
 "TITULO:R1" [label="1 {(1,3)}"]
 "TITULO:R2" [label="2 {(3,3)}"]
@@ -478,12 +480,6 @@ subgraph cluster12 {
 "TITULO:R1" -> "TITULO:R2" [color="red"]
 }
 
-"TITULO:R1" -> "TITULO:R1.TXT"
-"TITULO:R1.TXT" [label=".TXT {(1,7)}"]
-"TITULO:R2" -> "TITULO:R2.TXT"
-"TITULO:R2.TXT" [label=".TXT {(3,7)}"]
-"TITULO:VERDAD" -> "TITULO:VERDAD.TXT"
-"TITULO:VERDAD.TXT" [label=".TXT {(2,11)}"]
 "V" -> "VERDAD"
 "VERDAD" [label="ERDAD {(1,14), (1,26), (2,3)}"]
 "VIDA" [label="IDA {(3,93)}"]
@@ -491,8 +487,8 @@ subgraph cluster13 {
 "VERDAD" -> "VIDA" [color="red"]
 }
 
-"VERDAD" -> "VERDAD.TXT"
-"VERDAD.TXT" [label=".TXT {(2,1)}"]
+"VERDAD" -> "VERDADLATIN1.TXT"
+"VERDADLATIN1.TXT" [label="LATIN1.TXT {(2,1)}"]
 }
 digraph "rdsgc" {
 
@@ -559,11 +555,11 @@ subgraph cluster5 {
 
 "NO" -> "NOS"
 "NOS" [label="S {(3,13)}"]
-"R" -> "R1.TXT"
-"R1.TXT" [label="1.TXT {(1,1)}"]
-"R2.TXT" [label="2.TXT {(2,1)}"]
+"R" -> "R1LATIN1.TXT"
+"R1LATIN1.TXT" [label="1LATIN1.TXT {(1,1)}"]
+"R2LATIN1.TXT" [label="2LATIN1.TXT {(2,1)}"]
 subgraph cluster6 {
-"R1.TXT" -> "R2.TXT" [color="red"]
+"R1LATIN1.TXT" -> "R2LATIN1.TXT" [color="red"]
 }
 
 "S" -> "SE"
@@ -598,15 +594,19 @@ subgraph cluster10 {
 "TIPO:DOCUMENTO" -> "TITULO:" [color="red"]
 }
 
-"TITULO:" -> "TITULO:R"
+"TITULO:" -> "TITULO:LATIN1"
+"TITULO:LATIN1" [label="LATIN1 {(1,10), (2,10), (3,14)}"]
 "TITULO:R" [label="R {}"]
 "TITULO:TXT" [label="TXT {(1,4), (2,4), (3,4)}"]
 "TITULO:VERDAD" [label="VERDAD {(3,7)}"]
 subgraph cluster11 {
+"TITULO:LATIN1" -> "TITULO:R" [color="red"]
 "TITULO:R" -> "TITULO:TXT" [color="red"]
 "TITULO:TXT" -> "TITULO:VERDAD" [color="red"]
 }
 
+"TITULO:LATIN1" -> "TITULO:LATIN1.TXT"
+"TITULO:LATIN1.TXT" [label=".TXT {(1,14), (2,14), (3,18)}"]
 "TITULO:R" -> "TITULO:R1"
 "TITULO:R1" [label="1 {(1,3)}"]
 "TITULO:R2" [label="2 {(2,3)}"]
@@ -614,12 +614,6 @@ subgraph cluster12 {
 "TITULO:R1" -> "TITULO:R2" [color="red"]
 }
 
-"TITULO:R1" -> "TITULO:R1.TXT"
-"TITULO:R1.TXT" [label=".TXT {(1,7)}"]
-"TITULO:R2" -> "TITULO:R2.TXT"
-"TITULO:R2.TXT" [label=".TXT {(2,7)}"]
-"TITULO:VERDAD" -> "TITULO:VERDAD.TXT"
-"TITULO:VERDAD.TXT" [label=".TXT {(3,11)}"]
 "V" -> "VERDAD"
 "VERDAD" [label="ERDAD {(1,14), (1,26), (3,3)}"]
 "VIDA" [label="IDA {(2,93)}"]
@@ -627,6 +621,6 @@ subgraph cluster13 {
 "VERDAD" -> "VIDA" [color="red"]
 }
 
-"VERDAD" -> "VERDAD.TXT"
-"VERDAD.TXT" [label=".TXT {(3,1)}"]
+"VERDAD" -> "VERDADLATIN1.TXT"
+"VERDADLATIN1.TXT" [label="LATIN1.TXT {(3,1)}"]
 }

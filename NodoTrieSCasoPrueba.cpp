@@ -187,18 +187,27 @@ void NodoTrieSCasoPrueba::prueba_renumeraDocs()
 void NodoTrieSCasoPrueba::prueba_leeTexto()
 {
         NodoTrieS t;
-        leeTexto("verdad.txt", 1, t, false);
-        //clog << "t=" << t.preorden() << endl;
-        CPPUNIT_ASSERT(t.preorden() == "LAIBERAR\xC1NOSSIVERDAD");
+        leeTexto("regr/verdad-latin1.txt", 1, t, false, true);
+        CPPUNIT_ASSERT(t.preorden() == "LAIBERAR\xC1,NOSSIVERDAD");
+
         NodoTrieS u;
-        leeTexto("verdadlarga.txt", 1, u, false);
+        leeTexto("regr/verdadlarga-latin1.txt", 1, u, false, true);
         //clog << "u=" << u.preorden() << endl;
         CPPUNIT_ASSERT(u.preorden() == "LAVERDADSINOSLIBERAR\xC1SIABCDEFGHI");
 
         NodoTrieS v;
-        leeTexto("verdad.txt", 1, v, true);
+        leeTexto("regr/verdad-latin1.txt", 1, v, true, true);
         //clog << "v=" << v.preorden() << endl;
         CPPUNIT_ASSERT(v.preorden() == "LIBERARANOSSIVERDAD");
+
+        NodoTrieS w;
+        leeTexto("regr/verdad-utf8.txt", 1, w, false, false);
+        CPPUNIT_ASSERT(w.preorden() == "LAIBERARÁ,NOSSIVERDAD");
+        
+        NodoTrieS x;
+        leeTexto("regr/verdad-utf8.txt", 1, x, true, false);
+        clog << endl << "x=" << x.preorden() << endl;
+        CPPUNIT_ASSERT(x.preorden() == "LIBERARANOSSIVERDAD");
 
 }
 
