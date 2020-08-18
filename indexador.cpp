@@ -151,7 +151,7 @@ bool metainformacion=true;
 
 void uso()
 {
-        cerr << "indexador [-latin1] indice indicetemporal dominio arc1 [arc2 ... arc_n]" << endl;
+        cerr << "indexador [-l] indice indicetemporal dominio arc1 [arc2 ... arc_n]" << endl;
         cerr << "       -l indica que los archivos y sus nombres están en LATIN1 (por omisión se supone que están en UTF-8)" << endl;
         exit(1);
 }

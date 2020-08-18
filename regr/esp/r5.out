@@ -4,7 +4,7 @@
   "inicio": 1,
   "fin": 1,
   "resultados": [
-    { "url": "http://r/r1.txt",
+    { "url": "http://r/r1-latin1.txt",
     "frec": "2",
     }
   ]
@@ -15,7 +15,7 @@
   "inicio": 1,
   "fin": 1,
   "resultados": [
-    { "url": "http://r/r1.txt",
+    { "url": "http://r/r1-latin1.txt",
     "frec": "2",
     }
   ]
@@ -26,7 +26,7 @@
   "inicio": 1,
   "fin": 1,
   "resultados": [
-    { "url": "http://r/r1.txt",
+    { "url": "http://r/r1-latin1.txt",
     "frec": "3",
     }
   ]
@@ -37,7 +37,7 @@
   "inicio": 1,
   "fin": 1,
   "resultados": [
-    { "url": "http://r/r1.txt",
+    { "url": "http://r/r1-latin1.txt",
     "frec": "4",
     }
   ]
@@ -48,7 +48,7 @@
   "inicio": 1,
   "fin": 1,
   "resultados": [
-    { "url": "http://r/r1.txt",
+    { "url": "http://r/r1-latin1.txt",
     "frec": "6",
     }
   ]
@@ -59,7 +59,7 @@
   "inicio": 1,
   "fin": 1,
   "resultados": [
-    { "url": "http://r/r1.txt",
+    { "url": "http://r/r1-latin1.txt",
     "frec": "4",
     }
   ]
@@ -70,7 +70,7 @@
   "inicio": 1,
   "fin": 1,
   "resultados": [
-    { "url": "http://r/r1.txt",
+    { "url": "http://r/r1-latin1.txt",
     "frec": "4",
     }
   ]

@@ -12,7 +12,7 @@
   "inicio": 1,
   "fin": 1,
   "resultados": [
-    { "url": "http://r/r2.txt",
+    { "url": "http://r/r2-latin1.txt",
     "frec": "1",
     }
   ]
@@ -23,7 +23,7 @@
   "inicio": 1,
   "fin": 1,
   "resultados": [
-    { "url": "http://r/r2.txt",
+    { "url": "http://r/r2-latin1.txt",
     "frec": "1",
     }
   ]
@@ -34,7 +34,7 @@
   "inicio": 1,
   "fin": 1,
   "resultados": [
-    { "url": "http://r/r2.txt",
+    { "url": "http://r/r2-latin1.txt",
     "frec": "1",
     }
   ]
@@ -45,7 +45,7 @@
   "inicio": 1,
   "fin": 1,
   "resultados": [
-    { "url": "http://r/r2.txt",
+    { "url": "http://r/r2-latin1.txt",
     "frec": "1",
     }
   ]
@@ -64,21 +64,30 @@
   "inicio": 1,
   "fin": 1,
   "resultados": [
-    { "url": "http://r/r2.txt",
+    { "url": "http://r/r2-latin1.txt",
     "frec": "1",
     }
   ]
 }
-1 http://r/nombre%20con%20espacio.txt
-2 http://r/nombre%20con%20e%fffffff1e.txt
-NOMBRECONESPACIO.TXT 1
-NOMBRECONEÑE.TXT 1
-SITIO:R 2
-TIPO:DOCUMENTO 2
-TITULO:CON 2
-TITULO:ESPACIO 1
-TITULO:ESPACIO.TXT 1
-TITULO:EÑE 1
-TITULO:EÑE.TXT 1
-TITULO:NOMBRE 2
-TITULO:TXT 2
+1 http://r/r2-latin1.txt
+AQUEL 1
+CREA 1
+DADO 1
+DIOS 1
+ETERNA 1
+HA 1
+HIJO 1
+NO 1
+PIERDA 1
+R2LATIN1.TXT 1
+SE 1
+SITIO:R 1
+TENGA 1
+TIPO:DOCUMENTO 1
+TITULO:LATIN1 1
+TITULO:LATIN1.TXT 1
+TITULO:R2 1
+TITULO:TXT 1
+TODO 1
+UNIGENITO 1
+VIDA 1

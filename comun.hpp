@@ -277,6 +277,6 @@ vector<string> estalla(const string &delimitador, const string &cad);
 string directorio_temp();
 
 
-// string cadena_latin1_a_utf8(string &str);
+string cadena_latin1_a_utf8(string str);
 
 #endif
