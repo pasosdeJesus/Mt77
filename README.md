@@ -5,10 +5,12 @@ distribuida y de dominio público
   - Más veloz en búsquedas que Lucene y que Amberfish, aunque los
     índices son más grandes y requieren más tiempo de construcción
   - Especialmente diseñado para textos en Español
-  - Puede leer textos planos en codificación UTF-8, archivos XML, HTML, PDF, 
-    ODF y textos planos en codificación LATIN1 con la opción `-l` del 
-    indexador y del buscador
-  - Permite buscar una o varias palabras, así como  una o más cadenas
+  - Puede leer en codificación UTF-8 textos planos, archivos XML, HTML, PDF, 
+    y ODF.  Con la opción -l el indexador también puede leer textos planos en 
+    codificación LATIN1.
+  - Permite buscar una o varias palabras, así como  una o más cadenas. 
+    Se especifican en UTF-8 aunque opcionalmente (empleando opción `-l`
+    del buscador) pueden especificarse en LATIN1.
   - Permite indexar y buscar metainformación (título, tipo de archivo,
     sitio de origen, etiquetas XML)
   - Escrito en C++ siguiendo estándares, con pruebas de unidad
@@ -16,7 +18,7 @@ distribuida y de dominio público
     (con `make limpia; make prueba; make regr`)
 
 
-# 2. Ejemplo de compilación y uso
+# 2. Ejemplo de compilación y uso con textos planos
 
 Primero compile con:
 ```
