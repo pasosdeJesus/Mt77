@@ -55,6 +55,8 @@ using namespace std;
 
 #include "compresion/compresion.hpp"
 
+#include "compresion/compresion.hpp"
+
 /**
  * Escribe un nodo, con cadena y posiciones donde aparece.
  * @param os Flujo de salido donde escribir, donde esté el "cursor"
