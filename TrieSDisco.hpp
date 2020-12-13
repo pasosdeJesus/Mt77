@@ -52,6 +52,8 @@ using namespace std;
 #include "Pos.hpp"
 #include "Doc.hpp"
 
+#include "compresion/compresion.hpp"
+
 /**
  * Escribe un nodo, con cadena y posiciones donde aparece.
  * @param os Flujo de salido donde escribir, donde esté el "cursor"
@@ -64,7 +66,8 @@ using namespace std;
  */
 uint32_t
 escribeNodo(iostream &os, string c, set<Pos> *cpos,
-                    uint32_t dhijos, uint32_t desp = 0) ;
+            uint32_t dhijos, uint32_t desp = 0,
+            Arbol_huffman &arbolHuffman ) ;
 
 /**
  * Calcula cuantos bytes requeriría almacenar un nodo con cadena
@@ -98,7 +101,8 @@ precalcula_escribe_actual(uint32_t longcad, set<Pos> *cpos);
  * 	nodo en flujo de entrada.
  */
 uint32_t escribeCopiaNodo(iostream &os, istream &is, uint32_t &phijo,
-                      vector<int64_t>* renum);
+                          vector<int64_t>* renum,
+                          Arbol_huffman &arbolHuffman ) ;
 
 
 /**
@@ -112,7 +116,8 @@ uint32_t escribeCopiaNodo(iostream &os, istream &is, uint32_t &phijo,
  * @return retorna la posición inicial de escritura en os 
  */
 uint32_t escribeCopiaSubarbol(iostream &os, istream &is, bool conHermanos,
-                          vector<int64_t> *renum = NULL);
+                              vector<int64_t> *renum = NULL,
+                              Arbol_huffman &arbolHuffman ) ;
 
 
 /**
@@ -139,8 +144,9 @@ uint32_t escribeCopiaSubarbol(iostream &os, istream &is, bool conHermanos,
  * 	recorre los subárboles necesarios  de is1 e is2
  */
 uint32_t mezclaRec(istream &is1, istream &is2, iostream &os,
-               bool conHermanos1, bool conHermanos2,
-               vector<int64_t> *renum1, vector<int64_t> *renum2);
+                   bool conHermanos1, bool conHermanos2,
+                   vector<int64_t> *renum1, vector<int64_t> *renum2,
+                   Arbol_huffman &arbolHuffman ) ;
 
 /**
  * Elimina n-esimo documento de is1 dejando resultado en os

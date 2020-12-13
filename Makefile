@@ -3,9 +3,9 @@
 
 include Make.inc
 
-FUENTES=Doc.cpp DocCasoPrueba.cpp Elias.cpp EliasCasoPrueba.cpp NodoTrieS.cpp NodoTrieSCasoPrueba.cpp Operaciones.cpp Pos.cpp PosCasoPrueba.cpp RamDisco.cpp RamDiscoCasoPrueba.cpp TrieSDisco.cpp TrieSDiscoCasoPrueba.cpp buscador.cpp comun.cpp comunCasoPrueba.cpp depuraindice.cpp funzipuno.cpp indexador.cpp leeHTML.cpp leeODT.cpp leePDF.cpp leeXML.cpp operaindice.cpp pruebaCppUnit.cpp sha256.cpp tomsha256.cpp txtdeodt.cpp unzipuno.cpp
+FUENTES=Doc.cpp DocCasoPrueba.cpp Elias.cpp EliasCasoPrueba.cpp NodoTrieS.cpp NodoTrieSCasoPrueba.cpp Operaciones.cpp Pos.cpp PosCasoPrueba.cpp RamDisco.cpp RamDiscoCasoPrueba.cpp TrieSDisco.cpp TrieSDiscoCasoPrueba.cpp buscador.cpp comun.cpp comunCasoPrueba.cpp depuraindice.cpp funzipuno.cpp indexador.cpp leeHTML.cpp leeODT.cpp leePDF.cpp leeXML.cpp operaindice.cpp pruebaCppUnit.cpp sha256.cpp tomsha256.cpp txtdeodt.cpp unzipuno.cpp compresion/compresion.cpp
 
-ENCABEZADOS=CasosPrueba.hpp Doc.hpp DocCasoPrueba.hpp Elias.hpp EliasCasoPrueba.hpp NodoTrieS.hpp NodoTrieSCasoPrueba.hpp Operaciones.hpp Pos.hpp PosCasoPrueba.hpp RamDisco.hpp RamDiscoCasoPrueba.hpp TrieSDisco.hpp TrieSDiscoCasoPrueba.hpp comun.hpp comunCasoPrueba.hpp funzipuno.hpp leeHTML.hpp leeODT.hpp leePDF.hpp leeXML.hpp sha256.hpp
+ENCABEZADOS=CasosPrueba.hpp Doc.hpp DocCasoPrueba.hpp Elias.hpp EliasCasoPrueba.hpp NodoTrieS.hpp NodoTrieSCasoPrueba.hpp Operaciones.hpp Pos.hpp PosCasoPrueba.hpp RamDisco.hpp RamDiscoCasoPrueba.hpp TrieSDisco.hpp TrieSDiscoCasoPrueba.hpp comun.hpp comunCasoPrueba.hpp funzipuno.hpp leeHTML.hpp leeODT.hpp leePDF.hpp leeXML.hpp sha256.hpp compresion/compresion.hpp
 
 CFLAGS ?= -O0
 CFLAGS += -Wall -I/usr/X11R6/include -I/usr/local/include #-I/usr/X11R6/include -fprofile-arcs -ftest-coverage -p -pg
@@ -109,9 +109,11 @@ comun.o: comun.hpp comun.cpp
 RamDisco.o: comun.hpp Doc.hpp Pos.hpp Elias.hpp RamDisco.hpp
 
 FBASE=comun.o Elias.o Pos.o Doc.o sha256.o NodoTrieS.o TrieSDisco.o RamDisco.o 
-FINDEXADOR=$(FBASE) leeXML.o funzipuno.o leeODT.o leeHTML.o leePDF.o Operaciones.o indexador.o 
+FINDEXADOR=$(FBASE) leeXML.o funzipuno.o leeODT.o leeHTML.o leePDF.o Operaciones.o indexador.o compresion.o
 indexador: $(FINDEXADOR)
 	c++ $(LFLAGS) -lxml2 -lxslt -lz -lexpat -lc -o indexador $(FINDEXADOR)
+
+compresion.o: compresion/compresion.hpp compresion/compresion.cpp
 
 leeODT.o: comun.hpp funzipuno.hpp sha256.hpp NodoTrieS.hpp funzipuno.o leeODT.hpp leeODT.cpp
 	c++ -I /usr/local/include -I /usr/local/include/libxml2/ -c leeODT.cpp
@@ -128,7 +130,7 @@ leeHTML.o: comun.hpp Pos.hpp Doc.hpp sha256.hpp NodoTrieS.hpp leeHTML.hpp leeHTM
 
 leePDF.o: comun.hpp Pos.hpp Doc.hpp sha256.hpp NodoTrieS.hpp leePDF.hpp leePDF.cpp
 
-indexador.o: indexador.cpp comun.hpp Pos.hpp Doc.hpp sha256.hpp NodoTrieS.hpp sha256.hpp Operaciones.hpp
+indexador.o: indexador.cpp comun.hpp Pos.hpp Doc.hpp sha256.hpp NodoTrieS.hpp sha256.hpp Operaciones.hpp compresion/compresion.cpp
 
 FBUSCADOR=$(FBASE) 
 buscador:  $(FBUSCADOR)  buscador.o

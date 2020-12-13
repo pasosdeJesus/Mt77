@@ -16,6 +16,7 @@
 #include <string>
 #include <vector>
 #include <stdint.h>
+#include <map>
 
 #if !defined(NodoTrieS_hpp)
 
@@ -37,10 +38,7 @@ class NodoTrieS
 {
 
         private:
-                string cad;
-                NodoTrieS *hermano_mayor; //< Lista de hijos
-                NodoTrieS *hijo_menor; 	//< Lista de hijos
-                set<Pos> cpos; //< Referencia a posiciones de esta palabra
+                std::map<char, int> tendencia; // tendencia de cada caracter
 
                 friend NodoTrieS *mezcla(NodoTrieS *a1, NodoTrieS *a2);
                 friend uint32_t precalcula_escribe_actual(NodoTrieS *n);
@@ -48,7 +46,7 @@ class NodoTrieS
                 friend uint32_t precalcula_escribe(NodoTrieS *n);
                 friend void escribePlanoStream (NodoTrieS *n,
                                                 iostream &os, 
-						uint32_t desp /*= 0*/);
+                                                uint32_t desp /*= 0*/);
                 friend class TrieSDiscoCasoPrueba;
                 friend uint32_t escribeCopiaNodoRam(iostream &os, NodoTrieS *a,
                                                 NodoTrieS **phijo,
@@ -68,6 +66,11 @@ class NodoTrieS
                                                 NodoTrieS **phijo,
                                                 vector<int64_t>* renum);
         public:
+                set<Pos> cpos; //< Referencia a posiciones de esta palabra
+                string cad;
+                NodoTrieS *hijo_menor; 	//< Lista de hijos
+                NodoTrieS *hermano_mayor; //< Lista de hijos
+
                 /** Constructora.
                  * Responsabilidad de liberar hijo_menor y hermano_mayor pasa a
                  * este nodo, esperando más eficiencia en mezclas. 
@@ -178,9 +181,16 @@ class NodoTrieS
                  * @param pini Posición inicial en documento de la cadena c
                  */
                 void insertaConEtiqueta(string c, string etiqueta,
-                                                   uint32_t numdoc, 
-						   uint32_t pini);
+                                        uint32_t numdoc,
+                                        uint32_t pini);
 
+
+        /**
+           Retorna el mapa de tendencias encontrado en el NodoTrieS,
+           lo cual permite conocer la cantidad de apariciones de cada
+           caracter.
+         */
+        std::map<char, int> conseguirTendencia();
 };
 
 

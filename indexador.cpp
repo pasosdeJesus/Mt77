@@ -30,7 +30,7 @@
 #include "leeHTML.hpp"
 #include "leePDF.hpp"
 
-
+#include "compresion/compresion.hpp"
 
 using namespace std;
 
@@ -268,8 +268,20 @@ int main(int argc, char *argv[])
                         is1.clear();
 
                         os << MARCAIND << endl;
+
+                        std::map<char, int> p = t->conseguirTendencia();
+
+                        // for(std::pair<char, int> pp: p ) {
+                        //     cout << pp.first << " " << pp.second << endl;
+                        // }
+
+                        Arbol_huffman arbol_huffman(p);
+
+                        // TODO: aqui seria necesario crear el arbol, de manera que pueda ser utilizado
+                        // ya que en mezclaDiscoRam se hace un llamado a escribeNodo, donde ahi si se
+                        // guarda en el archivo la informacion
                         mezclaDiscoRam(is1, t, 0, os, true, true,
-                                        NULL, NULL);
+                                       NULL, NULL, arbol_huffman);
                         is1.close();
                         os.close();
                         //}

@@ -55,7 +55,8 @@ precalcula_escribe_actual(uint32_t longcad, set<Pos> *cpos)
  */
 uint32_t
 escribeNodo(iostream &os, string c, set<Pos> *cpos,
-                    uint32_t dhijos, uint32_t desp)
+            uint32_t dhijos, uint32_t desp,
+            Arbol_huffman &arbolHuffman )
 {
         ASSERT(c.length() > 0);
         ASSERT(c.length() <= MAXCAD);
@@ -89,7 +90,8 @@ escribeNodo(iostream &os, string c, set<Pos> *cpos,
 
 
 uint32_t escribeCopiaNodo(iostream &os, istream &is, uint32_t &phijo,
-                      vector<int64_t>* renum)
+                          vector<int64_t>* renum,
+                          Arbol_huffman &arbolHuffman )
 {
 
         uint32_t ret = 0;
@@ -116,7 +118,7 @@ uint32_t escribeCopiaNodo(iostream &os, istream &is, uint32_t &phijo,
                 ASSERT(phijo == 0 || is.tellg() <= phijo);
                 //clog << " is.tellg() = " << is.tellg();
                 ASSERT(phermano == 0 || is.tellg() <= phermano);
-                ret = escribeNodo(os, cad, cpos, dhijo);
+                ret = escribeNodo(os, cad, cpos, dhijo, arbolHuffman);
                 delete cpos;
                 cpos = NULL;
         }
@@ -129,7 +131,8 @@ uint32_t escribeCopiaNodo(iostream &os, istream &is, uint32_t &phijo,
 
 uint32_t
 escribeCopiaSubarbol(iostream &os, istream &is, bool conHermanos,
-                     vector<int64_t>* renum)
+                     vector<int64_t>* renum,
+                     Arbol_huffman &arbolHuffman ) ;
 {
 
         int64_t prini = os.tellp(); //puede ser -1
@@ -166,7 +169,7 @@ escribeCopiaSubarbol(iostream &os, istream &is, bool conHermanos,
                 ASSERT(phermano == 0 || is.tellg()<=phermano);
                 //clog << "OJO paso ASSERT" << endl;
                 dhijo.push_back(h);
-                uint32_t tp = escribeNodo(os, cad, cpos, 0);
+                uint32_t tp = escribeNodo(os, cad, cpos, 0, arbolHuffman);
                 //clog << "OJO prini=" << prini << " tp=" << tp << endl;
                 pih.push_back(tp);
                 //clog << "OJO 2 prini=" << prini << ", os.tellp=" << os.tellp() << endl;
@@ -215,7 +218,8 @@ escribeCopiaSubarbol(iostream &os, istream &is, bool conHermanos,
 uint32_t
 mezclaRec(istream &is1, istream &is2, iostream &os,
           bool conHermanos1, bool conHermanos2,
-          vector<int64_t> *renum1, vector<int64_t> *renum2)
+          vector<int64_t> *renum1, vector<int64_t> *renum2,
+          Arbol_huffman &arbolHuffman )
 {
 
         string cad1;
@@ -292,7 +296,7 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
                                 set<Pos> *cpos = leePos(is1, renum1);
                                 opera[numhermanos] = O_COPIA1;
                                 pih[numhermanos] =
-                                        escribeNodo(os, cad1, cpos, 0);
+                                        escribeNodo(os, cad1, cpos, 0, arbolHuffman);
                                 delete cpos;
                                 cpos = NULL;
                                 cad1 = leeCad(is1);
@@ -312,7 +316,7 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
                                 set<Pos> *cpos = leePos(is2, renum2);
                                 opera[numhermanos] = O_COPIA2;
                                 pih[numhermanos] =
-                                        escribeNodo(os, cad2, cpos, 0);
+                                        escribeNodo(os, cad2, cpos, 0, arbolHuffman);
                                 delete cpos;
                                 cpos = NULL;
                                 cad2 = leeCad(is2);
@@ -333,7 +337,7 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
                         set_union(cpos1->begin(), cpos1->end(),
                                   cpos2->begin(), cpos2->end(),
                                   cpos_ins);
-                        pih[numhermanos] = escribeNodo(os, cad2, &cpos, 0);
+                        pih[numhermanos] = escribeNodo(os, cad2, &cpos, 0, arbolHuffman);
                         delete cpos1;
                         cpos1=NULL;
                         delete cpos2;
@@ -371,7 +375,7 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
                                 is2.seekg(phermano2); // Salta al sig en is2
                                 set<Pos> *cpos1 = leePos(is1, renum1);
                                 //clog << "OJO is2.tellg()="<< is2.tellg() << endl;
-                                pih[numhermanos] = escribeNodo(os, c, cpos1, 0);
+                                pih[numhermanos] = escribeNodo(os, c, cpos1, 0, arbolHuffman);
                                 opera[numhermanos] = O_MEZCLA_H1;
                                 delete cpos1;
                                 cpos1=NULL;
@@ -390,7 +394,7 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
                                 leeNDesp(is1); */
                                 set<Pos> *cpos2 = leePos(is2, renum2);
                                 //clog << "OJO en nodo dhijo2[numhermanos]=" << dhijo2[numhermanos] << endl;
-                                pih[numhermanos] = escribeNodo(os, c, cpos2, 0);
+                                pih[numhermanos] = escribeNodo(os, c, cpos2, 0, arbolHuffman);
                                 // Recursion NodoTrieS *m=mezcla(n1, a2->hijo_menor);
                                 delete cpos2;
                                 cpos2=NULL;
@@ -403,7 +407,7 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
                                 //clog << "phermano1=" << phermano1 <<endl;
                                 phermano2 = leeNDesp(is2);
                                 //clog << "phermano2=" << phermano2 <<endl;
-                                pih[numhermanos] = escribeNodo(os, c, NULL, 0);
+                                pih[numhermanos] = escribeNodo(os, c, NULL, 0, arbolHuffman);
                                 //clog << "pih=" << pih[numhermanos] <<endl;
                                 dhijo1[numhermanos] = (uint32_t)is1.tellg() -
                                                       MAXLNUMERO - 1 - 
@@ -426,7 +430,7 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
                                 //clog << "r2 <= r1"<<endl;
                                 phermano1 = leeNDesp(is1);
                                 phermano2 = leeNDesp(is2);
-                                pih[numhermanos] = escribeNodo(os, c, NULL, 0);
+                                pih[numhermanos] = escribeNodo(os, c, NULL, 0, arbolHuffman);
                                 dhijo1[numhermanos] = (uint32_t)is1.tellg() -
                                                       MAXLNUMERO - 1 - 
                                                       (uint32_t)r1.size();
