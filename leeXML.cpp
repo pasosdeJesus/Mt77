@@ -110,7 +110,8 @@ charHandler(void *userData, const char *s, int len)
                 clog << "OJO charHandler(userData, " << cad << ", " << len << ")" << endl; 
                 free(cad); */
                 if (len > 0) {
-                        string pal = utf8_a_latin1(s, len);
+                        //string pal = utf8_a_latin1(s, len);
+                        string pal = string(s, len);
                         if (ultpal == "") {
                                 long pa = XML_GetCurrentByteIndex(parser);
                                 inipal = pa;
@@ -129,9 +130,9 @@ void leeXML(const char *na, long ndoc, NodoTrieS &t)
 
         numdoc = ndoc;
         char buf[BUFSIZ];
-        parser = XML_ParserCreate("ISO-8859-1");
-        if (XML_SetEncoding(parser, "ISO-8859-1") != XML_STATUS_OK) {
-                throw "No puede ponerse codificación ISO-8859-1" ;
+        parser = XML_ParserCreate("UTF-8");
+        if (XML_SetEncoding(parser, "UTF-8") != XML_STATUS_OK) {
+                throw "No puede ponerse codificación UTF-8" ;
         }
         int done;
         int depth = 0;

@@ -4,16 +4,16 @@
   "inicio": 1,
   "fin": 4,
   "resultados": [
-    { "url": "./juan.txt",
+    { "url": "./juan-utf8.txt",
     "frec": "44",
     }, 
-    { "url": "./mateo.txt",
+    { "url": "./mateo-utf8.txt",
     "frec": "14",
     }, 
-    { "url": "./lucas.txt",
+    { "url": "./lucas-utf8.txt",
     "frec": "7",
     }, 
-    { "url": "./marcos.txt",
+    { "url": "./marcos-utf8.txt",
     "frec": "1",
     }
   ]
@@ -24,16 +24,16 @@
   "inicio": 1,
   "fin": 4,
   "resultados": [
-    { "url": "./lucas.txt",
+    { "url": "./lucas-utf8.txt",
     "frec": "149",
     }, 
-    { "url": "./mateo.txt",
+    { "url": "./mateo-utf8.txt",
     "frec": "84",
     }, 
-    { "url": "./juan.txt",
+    { "url": "./juan-utf8.txt",
     "frec": "65",
     }, 
-    { "url": "./marcos.txt",
+    { "url": "./marcos-utf8.txt",
     "frec": "39",
     }
   ]
@@ -44,16 +44,16 @@
   "inicio": 1,
   "fin": 4,
   "resultados": [
-    { "url": "./lucas.txt",
+    { "url": "./lucas-utf8.txt",
     "frec": "135",
     }, 
-    { "url": "./juan.txt",
+    { "url": "./juan-utf8.txt",
     "frec": "101",
     }, 
-    { "url": "./mateo.txt",
+    { "url": "./mateo-utf8.txt",
     "frec": "74",
     }, 
-    { "url": "./marcos.txt",
+    { "url": "./marcos-utf8.txt",
     "frec": "58",
     }
   ]

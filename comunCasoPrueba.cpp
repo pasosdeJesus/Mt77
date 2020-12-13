@@ -221,19 +221,35 @@ void comunCasoPrueba::prueba_escribe128b()
 
 void comunCasoPrueba::prueba_normalizaCaracter()
 {
-        CPPUNIT_ASSERT(normalizaCaracter('a') == string("A"));
-        CPPUNIT_ASSERT(normalizaCaracter(' ') == "");
-        CPPUNIT_ASSERT(normalizaCaracter(':') == "");
+        int inc;
+        CPPUNIT_ASSERT(normalizaCaracter("", inc) == string(""));
+        CPPUNIT_ASSERT(inc == 0);
+        CPPUNIT_ASSERT(normalizaCaracter("a", inc) == string("A"));
+        CPPUNIT_ASSERT(inc == 1);
+        CPPUNIT_ASSERT(normalizaCaracter("á", inc) == string("A"));
+        CPPUNIT_ASSERT(inc == 2);
+        CPPUNIT_ASSERT(normalizaCaracter(" ", inc) == "");
+        CPPUNIT_ASSERT(inc == 1);
+        CPPUNIT_ASSERT(normalizaCaracter(":", inc) == "");
+        CPPUNIT_ASSERT(inc == 1);
 }
 
 void comunCasoPrueba::prueba_normaliza()
 {
-        //CPPUNIT_ASSERT(normaliza("aBáÁñÉíóúü") == string("ABAAÑEIOUU"));
-        CPPUNIT_ASSERT(normaliza("aB\xE1\xC1\xF1\xC9\xED\xF3\xFA\xFC") == string("ABAA\xD1" "EIOUU"));
+        CPPUNIT_ASSERT(normaliza("aBáÁñÉíóúü") == string("ABAAÑEIOUU"));
+        CPPUNIT_ASSERT(
+                        normaliza("aB\xE1\xC1\xF1\xC9\xED\xF3\xFA\xFC", 
+                                true) == string("ABAAÑEIOUU")
+                      );
+
         CPPUNIT_ASSERT(normaliza("      ") == "");
         CPPUNIT_ASSERT(normaliza("titulo:nombre") == "TITULONOMBRE");
         CPPUNIT_ASSERT(normaliza("con") == "");
-        CPPUNIT_ASSERT(normaliza("con.punto") == "CON.PUNTO");
+        CPPUNIT_ASSERT(normaliza("con.puntointermedio") == 
+                        "CON.PUNTOINTERMEDIO");
+        CPPUNIT_ASSERT(normaliza("sinpuntofinal.") == "SINPUNTOFINAL");
+        CPPUNIT_ASSERT(normaliza("quita-gui\xF3" "n", true) == "QUITAGUION");
+        CPPUNIT_ASSERT(normaliza("quita-guión") == "QUITAGUION");
 }
 
 void comunCasoPrueba::prueba_car_utf8_a_latin1()

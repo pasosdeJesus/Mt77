@@ -1,10 +1,10 @@
 {
-  "consulta": "CONOCEREÕS",
+  "consulta": "CONOCERE√çS",
   "documentos": 1,
   "inicio": 1,
   "fin": 1,
   "resultados": [
-    { "url": "http://r/r1.txt",
+    { "url": "http://r/r1-latin1.txt",
     "frec": "1",
     }
   ]
@@ -15,18 +15,18 @@
   "inicio": 1,
   "fin": 1,
   "resultados": [
-    { "url": "http://r/r1.txt",
+    { "url": "http://r/r1-latin1.txt",
     "frec": "3",
     }
   ]
 }
 {
-  "consulta": "\"Y LA VERDAD OS HAR¡ LIBRES\"",
+  "consulta": "\"Y LA VERDAD OS HAR√Å LIBRES\"",
   "documentos": 1,
   "inicio": 1,
   "fin": 1,
   "resultados": [
-    { "url": "http://r/r1.txt",
+    { "url": "http://r/r1-latin1.txt",
     "frec": "1",
     }
   ]
@@ -37,16 +37,16 @@
   "inicio": 1,
   "fin": 4,
   "resultados": [
-    { "url": "./lucas.txt",
+    { "url": "./lucas-utf8.txt",
     "frec": "284",
     }, 
-    { "url": "./juan.txt",
+    { "url": "./juan-utf8.txt",
     "frec": "166",
     }, 
-    { "url": "./mateo.txt",
+    { "url": "./mateo-utf8.txt",
     "frec": "158",
     }, 
-    { "url": "./marcos.txt",
+    { "url": "./marcos-utf8.txt",
     "frec": "97",
     }
   ]
@@ -57,16 +57,16 @@
   "inicio": 1,
   "fin": 4,
   "resultados": [
-    { "url": "./juan.txt",
+    { "url": "./juan-utf8.txt",
     "frec": "11",
     }, 
-    { "url": "./mateo.txt",
+    { "url": "./mateo-utf8.txt",
     "frec": "9",
     }, 
-    { "url": "./lucas.txt",
+    { "url": "./lucas-utf8.txt",
     "frec": "5",
     }, 
-    { "url": "./marcos.txt",
+    { "url": "./marcos-utf8.txt",
     "frec": "4",
     }
   ]
