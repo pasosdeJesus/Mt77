@@ -22,7 +22,6 @@
 #include "TrieSDisco.hpp"
 #include <stdint.h>
 
-#include "compresion/compresion.hpp"
 
 using namespace std;
 
@@ -124,8 +123,7 @@ renumeraUltimoDoc(char *na, char *nrel, uint64_t nd);
 uint32_t
 mezclaDiscoRam(istream &is1, NodoTrieS *a2, int saltacad, iostream &os,
                bool conHermanos1, bool conHermanos2,
-               vector<int64_t> *renum1, vector<int64_t> *renum2,
-               Arbol_huffman &arbolHuffman );
+               vector<int64_t> *renum1, vector<int64_t> *renum2);
 
 
 /**

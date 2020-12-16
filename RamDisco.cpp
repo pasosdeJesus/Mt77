@@ -24,7 +24,6 @@ using namespace std;
 
 #include "RamDisco.hpp"
 
-#include "compresion/compresion.hpp"
 
 
 /**
@@ -316,8 +315,7 @@ escribeCopiaSubarbolRam(iostream &os, NodoTrieS *a, int saltacad,
 uint32_t
 mezclaDiscoRam(istream &is1, NodoTrieS *a2, int saltacad, iostream &os,
                bool conHermanos1, bool conHermanos2,
-               vector<int64_t> *renum1, vector<int64_t> *renum2,
-               Arbol_huffman &arbolHuffman )
+               vector<int64_t> *renum1, vector<int64_t> *renum2)
 {
 
         string cad1;
@@ -585,7 +583,7 @@ mezclaDiscoRam(istream &is1, NodoTrieS *a2, int saltacad, iostream &os,
                                 pini = mezclaDiscoRam(is1, dhijo2[n],
                                                       dhijo2_saltacad[n], os,
                                                       true, true, renum1,
-                                                      renum2, arbolHuffman) ;
+                                                      renum2) ;
                         } else if (dhijo1[n] > 0) {
                                 ASSERT(dhijo2[n] == NULL);
                                 is1.seekg(dhijo1[n]);
@@ -611,7 +609,7 @@ mezclaDiscoRam(istream &is1, NodoTrieS *a2, int saltacad, iostream &os,
                                 pini = mezclaDiscoRam(is1, dhijo2[n],
                                                       dhijo2_saltacad[n],
                                                       os, true, false, renum1,
-                                                      renum2, arbolHuffman) ;
+                                                      renum2) ;
                         } else {
                                 pini = escribeCopiaSubarbolRam(os,
                                                                dhijo2[n],
@@ -630,7 +628,7 @@ mezclaDiscoRam(istream &is1, NodoTrieS *a2, int saltacad, iostream &os,
                                 pini = mezclaDiscoRam(is1, dhijo2[n],
                                                       dhijo2_saltacad[n],
                                                       os, false, true, renum1,
-                                                      renum2, arbolHuffman) ;
+                                                      renum2) ;
                         } else {
                                 pini = escribeCopiaSubarbol(os, is1,
                                                             false, renum1);
