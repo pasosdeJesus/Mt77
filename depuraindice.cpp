@@ -47,7 +47,7 @@ int examina(istream &is, long p)
         do {
                 is.seekg(p);
                 cout << "Posición: " << p << endl;
-                cad = leeCad(is);
+                cad = leeCad(is, arbolHuffman);
                 if (cad.size() > 0) {
                         hermano = leeNDesp(is);
                         hijo = leeNDesp(is);
@@ -105,7 +105,7 @@ int main(int argc, char *argv[])
         verificaNombre(argv[0], relacion);
 
         if (calcondensado) {
-                string c = condensado(argv[0], true);
+                string c = condensado(argv[0], arbolHuffman, true);
                 cout << c << endl;
         } else {
                 fstream is(argv[0], ios_base::in);

@@ -48,7 +48,8 @@ precalcula_escribe(NodoTrieS *n);
  * Después hijos del menor al mayor.
  **/
 void
-escribePlanoStream(NodoTrieS *n, std::ostream &os, uint32_t desp = 0);
+escribePlanoStream(NodoTrieS *n, std::ostream &os,
+                   Arbol_huffman arbolHuffman, uint32_t desp = 0);
 
 
 /** Lee un trieS de un stream donde está almacenado en formato
@@ -67,7 +68,8 @@ leePlanoStream(std::istream &is) throw(string);
  * @param nrel Nombre del archivo por generar con relación de documentos
  */
 void
-escribePlano(NodoTrieS &t, vector<Doc> &docs, const char *na, const char *nrel);
+escribePlano(NodoTrieS &t, vector<Doc> &docs, const char *na, const char *nrel,
+             Arbol_huffman &arbolHuffman);
 
 /** Lee un trieS de un archivo de nombre na donde está almacenado.
  * Retorna vector de documentos indexados en idocs.

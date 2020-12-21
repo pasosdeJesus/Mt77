@@ -293,13 +293,7 @@ int main(int argc, char *argv[])
 
                         os << MARCAIND << endl;
 
-                        std::map<char, int> p = t->conseguirTendencia();
-
-                        // for(std::pair<char, int> pp: p ) {
-                        //     cout << pp.first << " " << pp.second << endl;
-                        // }
-
-                        Arbol_huffman arbol_huffman(p);
+                        Arbol_huffman arbol_huffman(t->conseguirTendencia());
 
                         // TODO: aqui seria necesario crear el arbol, de manera que pueda ser utilizado
                         // ya que en mezclaDiscoRam se hace un llamado a escribeNodo, donde ahi si se

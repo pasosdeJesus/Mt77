@@ -26,6 +26,8 @@ using namespace std;
 
 #include "Pos.hpp"
 
+#include "compresion/compresion.hpp"
+
 /**
  * Un nodo de un TrieS con apuntador a hermano menor e hijo mayor.
  *
@@ -46,15 +48,18 @@ class NodoTrieS
                 friend uint32_t precalcula_escribe(NodoTrieS *n);
                 friend void escribePlanoStream (NodoTrieS *n,
                                                 iostream &os, 
-                                                uint32_t desp /*= 0*/);
+                                                uint32_t desp /*= 0*/,
+                                                Arbol_huffman &arbolHuffman);
                 friend class TrieSDiscoCasoPrueba;
                 friend uint32_t escribeCopiaNodoRam(iostream &os, NodoTrieS *a,
-                                                NodoTrieS **phijo,
-                                                vector<int64_t>* renum);
+                                                    NodoTrieS **phijo,
+                                                    vector<int64_t>* renum,
+                                                    Arbol_huffman &arbolHuffman);
                 friend uint32_t escribeCopiaSubarbolRam(iostream &os, NodoTrieS *a,
-                                                    int saltacad,
-                                                    bool conHermanos,
-                                                    vector<int64_t>* renum);
+                                                        int saltacad,
+                                                        bool conHermanos,
+                                                        vector<int64_t>* renum,
+                                                        Arbol_huffman &arbolHuffman);
                 friend uint32_t mezclaDiscoRam(istream &is1, NodoTrieS *a2,
                                            int saltacad,
                                            iostream &os, bool conHermanos1,
@@ -62,9 +67,10 @@ class NodoTrieS
                                            vector<int64_t> *renum1,
                                            vector<int64_t> *renum2);
                 friend uint32_t escribeCopiaNodoRam(iostream &os, NodoTrieS *a,
-                                                int saltacad,
-                                                NodoTrieS **phijo,
-                                                vector<int64_t>* renum);
+                                                    int saltacad,
+                                                    NodoTrieS **phijo,
+                                                    vector<int64_t>* renum,
+                                                    Arbol_huffman &arbolHuffman);
         public:
                 set<Pos> cpos; //< Referencia a posiciones de esta palabra
                 string cad;

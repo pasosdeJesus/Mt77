@@ -15,20 +15,22 @@ using namespace std;
 
 #include "RamDisco.hpp"
 
+#include "compresion/compresion.hpp"
+
 /**
  * Muestra palabras y frecuencias contenidas en un índice.
  * @param is Flujo de entrada
  * @param pre Prefijo para indentar
  */
 void
-muestraStream(std::istream &is, string pre); //throw(char *)
+muestraStream(std::istream &is, string pre, Arbol_huffman &arbolHuffman); //throw(char *)
 
 /**
  * Lista por salida estándar palabras y frecuencias contenidas en índice.
  * @param noma Nombre de archivo con índice
  * @param nrel Nombre de archivo con relación  de documentos
  */
-void listaPalabras(char *noma, char *nrel) throw(string);
+void listaPalabras(char *noma, char *nrel, Arbol_huffman &arbolHuffman) throw(string);
 
 /**
  * Elimina del indice nomind el documento nd y deja resultado en noma
@@ -37,7 +39,7 @@ void listaPalabras(char *noma, char *nrel) throw(string);
  * @param nd Número de documento a eliminar de nomind
  */
 void
-eliminaDoc(char *noma, char *nomind, uint32_t nd) throw(string);
+eliminaDoc(char *noma, char *nomind, uint32_t nd, Arbol_huffman arbolHuffman) throw(string);
 
 
 /**
@@ -65,7 +67,7 @@ string determinaFormato(string narch);
  * los de ind2.  Por convención 0 es al final.
  */
 void
-mezclaDosDisco(const char *indsal, const char *ind1, const char *ind2,
+mezclaDosDisco(const char *indsal, const char *ind1, const char *ind2, Arbol_huffman &arbol_huffman,
                uint32_t nd = 0) throw(string);
 
 /**
@@ -91,7 +93,7 @@ agregaDoc(const char *indsal, const char *inden, const char *nom,
  * @param nd Numero de documento por extraer del indice de entrada
  */
 void
-subindice(const char *ind, const char *salida, uint32_t nd);
+subindice(const char *ind, const char *salida, uint32_t nd, Arbol_huffman &arbolHuffman);
 
 
 #endif

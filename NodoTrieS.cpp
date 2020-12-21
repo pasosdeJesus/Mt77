@@ -100,7 +100,7 @@ NodoTrieS::~NodoTrieS()
  * OJO al borrar.
  **/
 set<Pos>
-        NodoTrieS::busca(string pal)
+NodoTrieS::busca(string pal)
 {
 
         if (cad.size()==pal.size() && cad == pal) {

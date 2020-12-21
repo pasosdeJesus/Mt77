@@ -111,7 +111,7 @@ int main(int argc, char *argv[])
                                 cerr << "n debe ser mayor o igual a 1" << endl;
                                 exit(1);
                         }
-                        eliminaDoc(noma, argv[3], (long)nd);
+                        eliminaDoc(noma, argv[3], (long)nd, arbolHuffman);
                 } else if (strcmp(argv[1], "grafo") == 0) {
                         snprintf(noma, 1000, "%s", argv[2]);
                         verificaNombre(argv[2], nrel);
@@ -121,11 +121,11 @@ int main(int argc, char *argv[])
                 } else if (strcmp(argv[1], "condensado") == 0) {
                         snprintf(noma, 1000, "%s", argv[2]);
                         verificaNombre(argv[2], nrel);
-                        cout << condensado(argv[2], false) << endl;
+                        cout << condensado(argv[2], arbolHuffman, false) << endl;
                 } else if (strcmp(argv[1], "lista") == 0) {
                         snprintf(noma, 1000, "%s", argv[2]);
                         verificaNombre(argv[2], nrel);
-                        listaPalabras(noma, nrel);
+                        listaPalabras(noma, nrel, arbolHuffman);
                 } else if (strcmp(argv[1], "mezclaram") == 0) {
 
                         NodoTrieS *t = NULL;
@@ -147,9 +147,11 @@ int main(int argc, char *argv[])
                                 t = t2;
                                 r = NULL;
                         }
+
+                        Arbol_huffman arbolHuffman(t->conseguirTendencia());
                         //cerr<<"idocs.size="<<idocs.size()<<endl;
                         verificaNombre(noma, nrel);
-                        escribePlano(*t, docs2, noma, nrel);
+                        escribePlano(*t, docs2, noma, nrel, arbolHuffman);
                 } else if (strcmp(argv[1], "mezcladisco") == 0) {
 
                         /* Mezcla 2 tries en disco */
@@ -161,7 +163,7 @@ int main(int argc, char *argv[])
                                         exit(1);
                                 }
                         }
-                        mezclaDosDisco(argv[2], argv[3], argv[4], nd);
+                        mezclaDosDisco(argv[2], argv[3], argv[4], arbolHuffman, nd);
 
                         /*        } else if (strcmp(argv[1], "agregadoc") == 0) {
                                   long nd = 0;

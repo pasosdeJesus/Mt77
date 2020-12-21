@@ -208,8 +208,9 @@ set<uint32_t> *realizaBusqueda(char *indice, set<string> &consulta,
                                         //clog << "OJO buscando '" << partes[np] << "'" << endl;
                                         fstream is(indice, ios_base::in);
                                         verificaIndice(is);
+                                        // TODO: ver de donde sacar el arbol huffman
                                         try {
-                                                cp2 = buscaPlanoStream(is, partes[np]);
+                                                cp2 = buscaPlanoStream(is, partes[np], arbolHuffman);
                                         } catch (string m) {
                                                 throw errorFormato(is, m);
                                         }

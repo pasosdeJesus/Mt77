@@ -109,7 +109,7 @@ std::string errorFormato(std::istream &is, string m)
 
 /** Lee de un stream una cadena vacía (si el stream no puede leerse) o
  * terminada con { o de MAXCAD caracteres*/
-string leeCad(std::istream &is) throw(string)
+string leeCad(std::istream &is, Arbol_huffman &arbolHuffman) throw(string)
 {
         int c = is.get();
         string cad = "";
