@@ -6,23 +6,29 @@ int main() {
     // prueba(); return 0;
 
     std::string cadenas[] = {
-        "hola que hace"
+        "hola, que hacee:ee\\\\\\eeeeeeeeeeeeeeeeeeeeeeeeee" //\n"
         , "algÈÞesoµ½esto×"
         , "abcdefghijklmnopqrstuvwxyz"
     };
 
+    std::string cadena = "";
+
+    std::string archivo = "huffman_prueba.txt";
+
     for (std::string c : cadenas)
     {
+        // un mismo arbol solo puede encriptar a un unico archivo
         std::cout << c << std::endl;
-        Arbol_huffman ah(c);
-        // ah.imprimirPreOrden();
+        cadena += c;
+        Arbol_huffman ah(cadena, archivo);
 
-        std::string bla = ah.comprimir(c);
-        std::cout << bla << std::endl;
-        // std::cout << bla.length()% 8 << std::endl;
+        std::string comp = ah.comprimir(cadena);
+        std::cout << comp << "  ->" << comp.length() << std::endl;
+        std::string desc = ah.descomprimir(comp);
+        std::cout << desc << "  ->" << desc.length() << std::endl;
 
-        std::cout << ">" << ah.descomprimir(bla) << "<" << std::endl;
-        // ah.prtTendencia();
+        ah.guardar(archivo);
+        // ah.cargar(archivo);
         std::cout << std::endl << std::endl;
     }
 

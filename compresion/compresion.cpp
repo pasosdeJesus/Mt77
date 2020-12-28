@@ -3,7 +3,7 @@
 
 /*
 Begin
-   define a node with character, frequency, left and right child of the node for Huffman tree.
+   definir un nodo con caracter, frecuencia, e hijo izquierdo y derecho.
    create a list ‘freq’ to store frequency of each character, initially, all are 0
    for each character c in the string do
       increase the frequency for character ch in freq list.
@@ -22,6 +22,12 @@ Begin
 End
 */
 
+void sumarMapas(std::map<char, int> &map1, std::map<char, int> map2) {
+    for (std::pair<char, int> p: map2) {
+        // si ya existe lo suma, de lo contrario lo crea
+        map1[p.first] ? map1[p.first] += p.second : map1[p.first] = p.second ;
+    }
+}
 
 nodo_arbol_huffman::nodo_arbol_huffman(char valor, int tendencia) {
     this->valor = valor;
@@ -41,11 +47,20 @@ void nodo_arbol_huffman::prt() {
     std::cout << "'" << this->valor << "' :" << this->tendencia << std::endl;
 }
 
-Arbol_huffman::Arbol_huffman(std::map<char, int> tendencia) {
+std::string nodo_arbol_huffman::toString() {
+    std::stringstream ss;
+    ss << "" << this->valor << ":" << this->tendencia;
+    return ss.str();
+}
+
+Arbol_huffman::Arbol_huffman(std::map<char, int> tendencia, std::string archivo) {
+    if (!archivo.empty()) {
+        sumarMapas(tendencia, Arbol_huffman::cargar(archivo));
+    }
     this->construirArbol(tendencia);
 }
 
-Arbol_huffman::Arbol_huffman(std::string cadena) {
+Arbol_huffman::Arbol_huffman(std::string cadena, std::string archivo) {
 
     // tendencia de cada caracter
     std::map<char, int> tendencia;
@@ -53,11 +68,16 @@ Arbol_huffman::Arbol_huffman(std::string cadena) {
     for (char c : cadena) {
         tendencia[c] ? tendencia[c]++ : tendencia[c] = 1;
     }
+    if (!archivo.empty()) {
+        sumarMapas(tendencia, Arbol_huffman::cargar(archivo));
+    }
 
     this->construirArbol(tendencia);
 }
 
 void Arbol_huffman::construirArbol(std::map<char, int> tendencia) {
+
+    this->tendencias = tendencia;
 
     // cola de prioridad invertida, guarda los valores de menor a mayor
     std::priority_queue<nodo_arbol_huffman, std::vector<nodo_arbol_huffman>,
@@ -178,4 +198,82 @@ std::string Arbol_huffman::comprimir(std::string cadena) {
         ret += (char)btc.to_ulong();
     }
     return ret;
+}
+
+std::string Arbol_huffman::toString() {
+    return _toString(std::shared_ptr<nodo_arbol_huffman>(this->raiz));
+}
+
+std::string Arbol_huffman::_toString(std::shared_ptr<nodo_arbol_huffman> nah) {
+    return "(" +
+        nah->toString() +
+        (nah->hijo_i != NULL ? _toString(nah->hijo_i) : "") +
+        (nah->hijo_d != NULL ? _toString(nah->hijo_d) : "") +
+        ")";
+}
+
+std::map<char, int> Arbol_huffman::conseguirTendencias() {
+    return this->tendencias;
+}
+
+void Arbol_huffman::guardar(std::string nombre) {
+    std::ofstream archivo(nombre);
+
+    bool primer = true;
+
+    // TODO: hay que buscar alguna forma de manejar EOL
+    for (std::pair<char, int> t : this->tendencias) {
+        if (primer) {
+            primer = false;
+        } else {
+            archivo << SEPARADOR;
+            // archivo << std::endl;
+        }
+        archivo << t.first << ":" << t.second ;
+    }
+
+    archivo.close();
+}
+
+std::map<char, int> stringATendencia(std::string cadena) {
+    std::map<char, int> tendencias;
+    // std::cout << cadena << std::endl;
+    std::size_t found = cadena.find(SEPARADOR);
+
+    int rep = 0;
+
+    // longitud del separador
+    int l_sep = sizeof(SEPARADOR)/sizeof(SEPARADOR[0]);
+
+    while (found!=std::string::npos && rep < 50) {
+        std::string pal = cadena.substr(0, found);
+        // std::cout << pal << " -- " << pal.size() << std::endl;
+
+        tendencias[pal[0]] = std::stoi(pal.substr(2));
+
+        cadena = cadena.substr(found + l_sep - 1);
+
+        found = cadena.find(SEPARADOR);
+        rep ++;
+    }
+
+    return tendencias;
+}
+
+std::map<char, int> Arbol_huffman::cargar(std::string nombre) {
+    std::map<char, int> tendencia;
+    std::ifstream archivo(nombre);
+
+    bool primer = true;
+    std::string texto;
+    while (getline (archivo, texto )) {
+        sumarMapas(tendencia, stringATendencia(texto));
+        // Output the text from the file
+        // for (std::pair<char, int> t : stringATendencia(texto)) {
+        //     std::cout << t.first << " -> " << t.second <<std::endl;
+        // }
+    }
+
+    archivo.close();
+    return tendencia;
 }
