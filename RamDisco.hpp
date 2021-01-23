@@ -127,7 +127,7 @@ uint32_t
 mezclaDiscoRam(istream &is1, NodoTrieS *a2, int saltacad, iostream &os,
                bool conHermanos1, bool conHermanos2,
                vector<int64_t> *renum1, vector<int64_t> *renum2,
-               Arbol_huffman &arbolHuffman );
+               Arbol_huffman &arbolHuffmanLectura, Arbol_huffman &arbolHuffmanEscritura);
 
 
 /**

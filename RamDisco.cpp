@@ -321,7 +321,9 @@ uint32_t
 mezclaDiscoRam(istream &is1, NodoTrieS *a2, int saltacad, iostream &os,
                bool conHermanos1, bool conHermanos2,
                vector<int64_t> *renum1, vector<int64_t> *renum2,
-               Arbol_huffman &arbolHuffman )
+               Arbol_huffman &arbolHuffmanLectura, 
+               Arbol_huffman &arbolHuffmanEscritura
+               )
 {
 
         string cad1;
@@ -357,7 +359,7 @@ mezclaDiscoRam(istream &is1, NodoTrieS *a2, int saltacad, iostream &os,
         if (a2 != NULL) {
                 //clog << "OJO a2->cad.substr(saltacad)=" << a2->cad.substr(saltacad) << endl;
         }
-        for (cad1=leeCad(is1, arbolHuffman), cad2=(a2 != NULL ? a2->cad.substr(saltacad) : ""),
+        for (cad1=leeCad(is1, arbolHuffmanLectura), cad2=(a2 != NULL ? a2->cad.substr(saltacad) : ""),
                         numhermanos = 0;
                         (cad1!="" && (conHermanos1 || n1==0)) ||
                         (cad2!="" && (conHermanos2 || n2==0));
@@ -404,10 +406,10 @@ mezclaDiscoRam(istream &is1, NodoTrieS *a2, int saltacad, iostream &os,
                                 set<Pos> *cpos = leePos(is1, renum1);
                                 opera[numhermanos] = O_COPIA1;
                                 pih[numhermanos] =
-                                        escribeNodo(os, cad1, cpos, 0, arbolHuffman);
+                                        escribeNodo(os, cad1, cpos, 0, arbolHuffmanEscritura);
                                 delete cpos;
                                 cpos = NULL;
-                                cad1 = leeCad(is1, arbolHuffman);
+                                cad1 = leeCad(is1, arbolHuffmanLectura);
                                 n1++;
                                 // cad2 quieto
                                 // en la recursión hijos de cad1
@@ -424,7 +426,7 @@ mezclaDiscoRam(istream &is1, NodoTrieS *a2, int saltacad, iostream &os,
                                 opera[numhermanos] = O_COPIA2;
                                 set<Pos> *cp = copiaPos((a2->cpos), renum2);
                                 pih[numhermanos] =
-                                        escribeNodo(os, cad2, cp, 0, arbolHuffman);
+                                        escribeNodo(os, cad2, cp, 0, arbolHuffmanEscritura);
                                 delete cp;
                                 a2 = a2->hermano_mayor;
                                 cad2 = (a2 != NULL) ? a2->cad : "";
@@ -446,7 +448,7 @@ mezclaDiscoRam(istream &is1, NodoTrieS *a2, int saltacad, iostream &os,
                                   cpos2->begin(), cpos2->end(),
                                   cpos_ins);
                         //clog << "OJO cad2='" << cad2 << "', cpos=" << cpos << endl;
-                        pih[numhermanos] = escribeNodo(os, cad2, &cpos, 0, arbolHuffman);
+                        pih[numhermanos] = escribeNodo(os, cad2, &cpos, 0, arbolHuffmanEscritura);
                         delete cpos1;
                         cpos1=NULL;
                         delete cpos2;
@@ -455,7 +457,7 @@ mezclaDiscoRam(istream &is1, NodoTrieS *a2, int saltacad, iostream &os,
                         resto1[numhermanos] = "";
                         resto2[numhermanos] = "";
                         opera[numhermanos] = O_MEZCLA_H1H2;
-                        cad1 = leeCad(is1, arbolHuffman);
+                        cad1 = leeCad(is1, arbolHuffmanLectura);
                         n1++;
                         a2 = a2->hermano_mayor;
                         cad2 = (a2 != NULL) ? a2->cad : "";
@@ -482,7 +484,7 @@ mezclaDiscoRam(istream &is1, NodoTrieS *a2, int saltacad, iostream &os,
                                 dhijo2[numhermanos] = a2;
                                 a2 = a2->hermano_mayor; // Salta al sig en a2
                                 set<Pos> *cpos1 = leePos(is1, renum1);
-                                pih[numhermanos] = escribeNodo(os, c, cpos1, 0, arbolHuffman);
+                                pih[numhermanos] = escribeNodo(os, c, cpos1, 0, arbolHuffmanEscritura);
                                 opera[numhermanos] = O_MEZCLA_H1;
                                 delete cpos1;
                                 cpos1=NULL;
@@ -502,7 +504,7 @@ mezclaDiscoRam(istream &is1, NodoTrieS *a2, int saltacad, iostream &os,
 
                                 //clog << "OJO en nodo dhijo2[numhermanos]="<< dhijo2[numhermanos] << endl;
                                 pih[numhermanos] = escribeNodo(os, c,
-                                                               cpos2, 0, arbolHuffman);
+                                                               cpos2, 0, arbolHuffmanEscritura);
                                 // Recursion NodoTrieS *m=mezcla(n1, a2->hijo_menor);
                                 delete cpos2;
                                 a2 = a2->hermano_mayor;
@@ -512,7 +514,7 @@ mezclaDiscoRam(istream &is1, NodoTrieS *a2, int saltacad, iostream &os,
                                 //clog << "OJO r1<r2"<<endl;
 
                                 phermano1 = leeNDesp(is1);
-                                pih[numhermanos] = escribeNodo(os, c, NULL, 0, arbolHuffman);
+                                pih[numhermanos] = escribeNodo(os, c, NULL, 0, arbolHuffmanEscritura);
                                 dhijo1[numhermanos] = (uint32_t)is1.tellg() -
                                                       MAXLNUMERO - 1 -
                                                       (uint32_t)r1.size();
@@ -529,7 +531,7 @@ mezclaDiscoRam(istream &is1, NodoTrieS *a2, int saltacad, iostream &os,
                                 // e.g BUENO BUENA
                                 //clog << "OJO r2 <= r1"<<endl;
                                 phermano1 = leeNDesp(is1);
-                                pih[numhermanos] = escribeNodo(os, c, NULL, 0, arbolHuffman);
+                                pih[numhermanos] = escribeNodo(os, c, NULL, 0, arbolHuffmanEscritura);
                                 dhijo1[numhermanos] = (uint32_t)is1.tellg() -
                                                       MAXLNUMERO - 1 -
                                                       (uint32_t)r1.size();
@@ -541,7 +543,7 @@ mezclaDiscoRam(istream &is1, NodoTrieS *a2, int saltacad, iostream &os,
                                 a2 = a2->hermano_mayor;
                                 opera[numhermanos] = O_COPIA_PRIMERO_2;
                         }
-                        cad1=leeCad(is1, arbolHuffman);
+                        cad1=leeCad(is1, arbolHuffmanLectura);
                         n1++;
                         cad2=(a2 != NULL ? a2->cad : "");
                         n2++;
@@ -563,7 +565,7 @@ mezclaDiscoRam(istream &is1, NodoTrieS *a2, int saltacad, iostream &os,
                         if (dhijo1[n] > 0) {
                                 is1.seekg(dhijo1[n]);
                                 pini = escribeCopiaSubarbol(os, is1,
-                                                            true, arbolHuffman, renum1);
+                                                            true, arbolHuffmanEscritura, renum1);
                         }
                         break;
 
@@ -573,7 +575,7 @@ mezclaDiscoRam(istream &is1, NodoTrieS *a2, int saltacad, iostream &os,
                                 //clog << "OJO dhijo2[" << n << "]=" << dhijo2[n] << endl;
                                 pini = escribeCopiaSubarbolRam(os,
                                                                dhijo2[n],
-                                                               0, true, renum2, arbolHuffman);
+                                                               0, true, renum2, arbolHuffmanEscritura);
                         }
                         break;
 
@@ -589,19 +591,20 @@ mezclaDiscoRam(istream &is1, NodoTrieS *a2, int saltacad, iostream &os,
                                 pini = mezclaDiscoRam(is1, dhijo2[n],
                                                       dhijo2_saltacad[n], os,
                                                       true, true, renum1,
-                                                      renum2, arbolHuffman) ;
+                                                      renum2, arbolHuffmanEscritura,
+                                                      arbolHuffmanEscritura) ;
                         } else if (dhijo1[n] > 0) {
                                 ASSERT(dhijo2[n] == NULL);
                                 is1.seekg(dhijo1[n]);
                                 pini = escribeCopiaSubarbol(os, is1,
-                                                            true, arbolHuffman, renum1);
+                                                            true, arbolHuffmanEscritura, renum1);
                         } else if (dhijo2[n] != NULL) {
                                 //clog << "OJO dhijo2[n]=" <<dhijo2[n]<< endl;
                                 ASSERT(dhijo1[n] == 0);
                                 pini = escribeCopiaSubarbolRam(os,
                                                                dhijo2[n],
                                                                dhijo2_saltacad[n],
-                                                               true, renum2, arbolHuffman);
+                                                               true, renum2, arbolHuffmanEscritura);
                                 //clog << "OJO pini=" << pini << endl;
                         }
                         break;
@@ -615,12 +618,13 @@ mezclaDiscoRam(istream &is1, NodoTrieS *a2, int saltacad, iostream &os,
                                 pini = mezclaDiscoRam(is1, dhijo2[n],
                                                       dhijo2_saltacad[n],
                                                       os, true, false, renum1,
-                                                      renum2, arbolHuffman) ;
+                                                      renum2, arbolHuffmanEscritura,
+                                                      arbolHuffmanEscritura) ;
                         } else {
                                 pini = escribeCopiaSubarbolRam(os,
                                                                dhijo2[n],
                                                                dhijo2_saltacad[n],
-                                                               false, renum2, arbolHuffman);
+                                                               false, renum2, arbolHuffmanEscritura);
                         }
                         break;
 
@@ -634,10 +638,11 @@ mezclaDiscoRam(istream &is1, NodoTrieS *a2, int saltacad, iostream &os,
                                 pini = mezclaDiscoRam(is1, dhijo2[n],
                                                       dhijo2_saltacad[n],
                                                       os, false, true, renum1,
-                                                      renum2, arbolHuffman) ;
+                                                      renum2, arbolHuffmanEscritura,
+                                                      arbolHuffmanEscritura) ;
                         } else {
                                 pini = escribeCopiaSubarbol(os, is1,
-                                                            false, arbolHuffman, renum1);
+                                                            false, arbolHuffmanEscritura, renum1);
                         }
                         break;
 
@@ -652,22 +657,22 @@ mezclaDiscoRam(istream &is1, NodoTrieS *a2, int saltacad, iostream &os,
                         // pos no es NULL en los siguientes,
                         // más bien copiar de is1 y a2 e hijos
                         // después.
-                        pnh1 = escribeCopiaNodo(os, is1, hijo1, renum1, arbolHuffman);
+                        pnh1 = escribeCopiaNodo(os, is1, hijo1, renum1, arbolHuffmanEscritura);
                         pnh2 = escribeCopiaNodoRam(os, dhijo2[n],
                                                    dhijo2_saltacad[n],
                                                    &hijo2, renum2,
-                                                   arbolHuffman);
+                                                   arbolHuffmanEscritura);
                         os << endl;
                         ph1=os.tellp();
                         if (hijo1 > 0) {
                                 is1.seekg(hijo1);
                                 (void)escribeCopiaSubarbol(os, is1,
-                                                           true, arbolHuffman, renum1);
+                                                           true, arbolHuffmanEscritura, renum1);
                         }
                         ph2=os.tellp();
                         if (hijo2 != NULL) {
                                 escribeCopiaSubarbolRam(os, hijo2,
-                                                        0, true, renum2, arbolHuffman);
+                                                        0, true, renum2, arbolHuffmanEscritura);
                         }
                         pfin = os.tellp();
                         if (hijo1 > 0) {
@@ -693,19 +698,19 @@ mezclaDiscoRam(istream &is1, NodoTrieS *a2, int saltacad, iostream &os,
                         pnh2=escribeCopiaNodoRam(os, dhijo2[n],
                                                  dhijo2_saltacad[n],
                                                  &hijo2, renum2,
-                                                 arbolHuffman);
-                        pnh1=escribeCopiaNodo(os, is1, hijo1, renum1, arbolHuffman);
+                                                 arbolHuffmanEscritura);
+                        pnh1=escribeCopiaNodo(os, is1, hijo1, renum1, arbolHuffmanEscritura);
                         os << endl;
                         ph2=os.tellp();
                         if (hijo2 != NULL) {
                                 escribeCopiaSubarbolRam(os, hijo2,
-                                                        0, true, renum2, arbolHuffman);
+                                                        0, true, renum2, arbolHuffmanEscritura);
                         }
                         ph1=os.tellp();
                         if (hijo1 > 0) {
                                 is1.seekg(hijo1);
                                 escribeCopiaSubarbol(os, is1,
-                                                     true, arbolHuffman, renum1);
+                                                     true, arbolHuffmanEscritura, renum1);
                         }
                         pfin = os.tellp();
                         if (hijo2 != NULL) {

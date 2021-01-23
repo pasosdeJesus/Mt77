@@ -47,7 +47,9 @@ class Arbol_huffman {
 
     // nodo inicial del arbol
 	std::shared_ptr<nodo_arbol_huffman> raiz;
+    // caracter con su respectivo codigo binario (como un string)
     std::map<char, std::string> simbolos;
+    // tendencia de cada caracter
     std::map<char, int> tendencias;
 
 	void _conseguirCodigos(std::shared_ptr<nodo_arbol_huffman> nah, std::string codigo);
@@ -59,32 +61,55 @@ class Arbol_huffman {
 
     void _imprimirPreOrden(std::shared_ptr<nodo_arbol_huffman> nah, int depth);
 
+    // construye un arbol de huffman con base a un mapa de tendencias
+    // realiza el trabajo principal
     void construirArbol(std::map<char, int> tendencia);
 
     std::string _toString(std::shared_ptr<nodo_arbol_huffman> nah);
 
-public:
-    Arbol_huffman(std::string cadena);
-
-    Arbol_huffman(std::string cadena, std::string archivo="");
-
-    Arbol_huffman(std::map<char, int> tendencia, std::string archivo="");
-
+    // consigue los codigos binarios para cada caracter
 	void conseguirCodigos();
 
+public:
+    // construye un arbol vacio
+    Arbol_huffman();
+
+    // construye un arbol de huffman con base a una cadena y un archivo
+    // en el que se haya guardado un arbol de huffman
+    // iniciador, llama a construirArbol
+    Arbol_huffman(std::string cadena, std::string archivo="");
+
+    // construye un arbol de huffman con base a un mapa de tendencias
+    // y un archivo en el que se haya guardado un arbol de huffman
+    // iniciador, llama a construirArbol
+    Arbol_huffman(std::map<char, int> tendencia, std::string archivo="");
+
+    // retorna el mapa de tendencias del arbol de huffman
     std::map<char, int> conseguirTendencias();
 
+    // descomprime la cadena en binCodigo y la retorna
+    // iniciador, llama a _descomprimir
 	std::string descomprimir(std::string binCodigo);
 
+    // imprime los nodos del arbol en pre orden
+    // iniciador, llama a _imprimirPreOrden
 	void imprimirPreOrden();
 
+    // comprime la cadena que se le pasa
 	std::string comprimir(std::string cadena);
 
+    // convierte el arbol a una cadena
+    // iniciador, llama a _toString
     std::string toString();
 
+    // guarda el arbol de huffman en un archivo con nombre "nombre"
     void guardar(std::string nombre);
 
+    // carga un arbol de huffman en un archivo con nombre "nombre"
     static std::map<char, int> cargar(std::string nombre);
+
+    // retorna true en caso de estar vacio el arbol
+    bool vacio();
 
 };
 

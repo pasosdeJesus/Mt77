@@ -2,7 +2,7 @@
 /** @file indexador.cpp
  * A partir de un texto, crea un trie-s y lo salva en un formato
  * propio.
- * 
+ *
  * Convenciòn para un ìndice vacio:
  * archivo.indice tiene cabecera con fin de linea
  * archivo.relacion tiene cabecer sin fin de lina
@@ -145,7 +145,7 @@ bool existe_archivo(string filename) {
         return true;
 }
 
-uint32_t MAXG = 50000000;
+uint32_t MAXG = 50000000; // Tamaño máximo de cada documento de entrada
 
 bool metainformacion=true;
 
@@ -165,7 +165,7 @@ int main(int argc, char *argv[])
                         case 'l':
                                 latin1 = true;
                                 break;
- 
+
                         default:
                                 uso();
                 }
@@ -180,7 +180,7 @@ int main(int argc, char *argv[])
         }
 
         vector<Doc> idocs;
-        vector<Doc> sdocs;
+        vector<Doc> sdocs; // Lista de documentos guardados en el indice
         char indice[1024], indice_temporal[1024], nomrel[1024], pref[1024];
 
         verificaNombre(argv[optind], nomrel);
@@ -254,13 +254,23 @@ int main(int argc, char *argv[])
                 grupo.push_back(idocs.size() - 1);
         }
 
-        char *nomi[2];  // Nombres de temporal e indice final
-        nomi[0] = indice_temporal;
-        nomi[1] = indice;
+        // Nombres de temporal e indice final
+        string nomi[2] = {
+                indice_temporal,  // t1.indice  (inicialmente vacio)
+                indice            // r1.indice  (ya puede venir lleno)
+        };
+
+        string archivo_tendencia = indice;
+        archivo_tendencia += ".tendencia";
+        string archivo_tendencia_temp = indice_temporal;
+        archivo_tendencia_temp += ".tendencia";
+
+        // Se va escribiendo en estos dos archivos a medida que se procesa cada grupo
+        // de archivos de entrada.
 
         string tipo = "otro";
         string formato;
-        NodoTrieS *t;
+        NodoTrieS *t;   // En este NodoTrie agrega todos los documentos de entrada.  Procesa en grupos para no exceder 50M de entrada.
         uint32_t indice_documento_procesado = 0; // indice del documento procesado
         try {
                 //para todos los archivos del grupo, llama indexa
@@ -293,21 +303,37 @@ int main(int argc, char *argv[])
 
                         os << MARCAIND << endl;
 
-                        Arbol_huffman arbol_huffman(t->conseguirTendencia());
+                        // aqui se crea el arbol, de manera que pueda ser utilizado
+                        // ya que en mezclaDiscoRam se hace un llamado a escribeNodo,
+                        // donde guarda en el archivo la informacion
 
-                        // TODO: aqui seria necesario crear el arbol, de manera que pueda ser utilizado
-                        // ya que en mezclaDiscoRam se hace un llamado a escribeNodo, donde ahi si se
-                        // guarda en el archivo la informacion
+                        // Invariante:  Lo que está en disco ya está comprimido y lo que está en RAM no esta comprimido
+
+                        // pertenece al contenido de is1
+                        Arbol_huffman arbolHuffmanLectura("", nomi[ (g + 1) % 2 ] + ".tendencia");
+                        // pertenece al contenido del arbol t
+                        Arbol_huffman arbolHuffmanEscritura(t->conseguirTendencia()); //, nomi[ (g + 1) % 2 ] + ".tendencia");
+
+                        // std::cout << arbolHuffmanEscritura.toString() << std::endl;
+
+                        arbolHuffmanEscritura.guardar( nomi[g % 2] + ".tendencia" );
+
                         mezclaDiscoRam(is1, t, 0, os, true, true,
-                                       NULL, NULL, arbol_huffman);
+                                       NULL, NULL, arbolHuffmanLectura,
+                                       arbolHuffmanEscritura);
+
+                        muestraStream(is1, "", arbolHuffmanLectura);
+
                         is1.close();
                         os.close();
+
                         //}
                         delete t;
                 }
                 if (grupo.size() % 2 == 1) {
                         remove(indice);
                         rename(indice_temporal, indice);
+                        rename(archivo_tendencia_temp.c_str(), archivo_tendencia.c_str());
                 }
                 if (grupo.size() >= 0) {
                         // clog << "OJO escribiendo relacion de documentos" << endl;

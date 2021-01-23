@@ -93,6 +93,8 @@ muestraStream(std::istream &is, string pre, Arbol_huffman &arbolHuffman)
         set<Pos> *cpos;
         uint32_t hijo, her;
 
+        // std::cout << arbolHuffman.toString() << std::endl;
+
         cad = leeCad(is, arbolHuffman);
         if (cad != "")
         {
@@ -115,16 +117,28 @@ muestraStream(std::istream &is, string pre, Arbol_huffman &arbolHuffman)
 }
 
 
+/* Presenta listado de palabras del Trie almacenado en el indice noma
+ *
+ * @param noma Nombre del indice
+ * @param nrel Nombre de la relación de archivos indexados en indice noma (si
+ *   es vacio no se imprime)
+ * @param arbolHuffman Arbol con tendencia para compresión
+ */
 void listaPalabras(char *noma, char *nrel, Arbol_huffman &arbolHuffman) throw(string)
 {
         ASSERT(noma != NULL);
         ASSERT(nrel != NULL);
+        ASSERT(!arbolHuffman.vacio());
+
+        // std::cout << arbolHuffman.toString() << std::endl;
 
         vector<Doc> idocs;
-        leeRelacion(nrel, idocs);
+        if (strlen(nrel) > 0) {
+                leeRelacion(nrel, idocs);
 
-        for (uint32_t i = 0; i< idocs.size(); i++) {
-                cout << (i+1) << " " << idocs[i].URL << endl;
+                for (uint32_t i = 0; i< idocs.size(); i++) {
+                        cout << (i+1) << " " << idocs[i].URL << endl;
+                }
         }
 
         fstream is(noma, ios_base::in);

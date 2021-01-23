@@ -10,11 +10,11 @@
  * - Mezcla en ram los índices i1 a i_n y deja el resultado en is
  *    mezclaram is i1 i2 ... i_n
  * - Mezcla en disco el índice i1 con el índice i2 y deja el resultado en is
- *    mezcladisco is i1 i2 
- * - Indexar y añadir textos a indice i con dominio d y dejar resultado en o. 
+ *    mezcladisco is i1 i2
+ * - Indexar y añadir textos a indice i con dominio d y dejar resultado en o.
  *    indexa i d a -salida o
  * - Mezclar con otro índice y dejar resultado en un tercer archivo.
- *   o Añadir un índice 
+ *   o Añadir un índice
  *     i1 d -aumenta i2 -salida i3
  * - Eliminar uno o más documentos
  *     i d -elimina d1 -elimina d2 ... -elimina d_n
@@ -48,6 +48,8 @@ using namespace std;
 #include "RamDisco.hpp"
 #include "Operaciones.hpp"
 
+#include "compresion/compresion.hpp"
+
 bool metainformacion=true;
 
 int main(int argc, char *argv[])
@@ -73,7 +75,7 @@ int main(int argc, char *argv[])
                 cerr << "	en la que se insertarán documentos referenciados " << endl;
                 cerr << "	por i2. Si no se especifica se insertan después de los de i1. " << endl;
                 cerr << "	Puede ser entre 1 y el total de documentos de i1 más 1"  << endl;
-/* Esto lo hace indexador 
+/* Esto lo hace indexador
  * cerr << "agregadoc is i1 pref d [n]" << endl;
                 cerr << "	Usando como prefijo para URL pref, indexa el documento d en RAM y " << endl;
                 cerr << "       lo mezcla con el índice i1, dejando el índice resultante en is." << endl;
@@ -89,6 +91,8 @@ int main(int argc, char *argv[])
         char noma[1000];
         char nrel[MAXLURL];
 
+
+        Arbol_huffman arbolHuffman;
 
         if (((strcmp(argv[1], "lista") == 0 ||
                 strcmp(argv[1], "grafo") == 0 ||
@@ -125,7 +129,14 @@ int main(int argc, char *argv[])
                 } else if (strcmp(argv[1], "lista") == 0) {
                         snprintf(noma, 1000, "%s", argv[2]);
                         verificaNombre(argv[2], nrel);
-                        listaPalabras(noma, nrel, arbolHuffman);
+
+                        string nombre_tendencia = noma;
+                        nombre_tendencia += ".tendencia";
+
+                        std::clog << "archivo tendencia" << nombre_tendencia << std::endl;
+
+                        Arbol_huffman arbolHuffman2("", nombre_tendencia);
+                        listaPalabras(noma, nrel, arbolHuffman2);
                 } else if (strcmp(argv[1], "mezclaram") == 0) {
 
                         NodoTrieS *t = NULL;
@@ -189,7 +200,7 @@ int main(int argc, char *argv[])
                                 exit(1);
                         }
 
-                        subindice(argv[3], argv[2], nd);
+                        subindice(argv[3], argv[2], nd, arbolHuffman);
                 } else {
                         cerr << "operación desconocida " << argv[1] << endl;
                         return 1;

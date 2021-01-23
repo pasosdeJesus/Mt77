@@ -29,6 +29,13 @@ void sumarMapas(std::map<char, int> &map1, std::map<char, int> map2) {
     }
 }
 
+void imprimirMapa(std::map<char, int> &tendencia) {
+    for (std::pair<char, int> v : tendencia) {
+        std::cout << v.first << " -> " << v.second << std::endl;
+    }
+}
+
+
 nodo_arbol_huffman::nodo_arbol_huffman(char valor, int tendencia) {
     this->valor = valor;
     this->tendencia = tendencia;
@@ -51,6 +58,14 @@ std::string nodo_arbol_huffman::toString() {
     std::stringstream ss;
     ss << "" << this->valor << ":" << this->tendencia;
     return ss.str();
+}
+
+Arbol_huffman::Arbol_huffman() {
+    this->raiz = nullptr;
+}
+
+bool Arbol_huffman::vacio() {
+    return this->raiz == nullptr;
 }
 
 Arbol_huffman::Arbol_huffman(std::map<char, int> tendencia, std::string archivo) {
@@ -77,6 +92,8 @@ Arbol_huffman::Arbol_huffman(std::string cadena, std::string archivo) {
 
 void Arbol_huffman::construirArbol(std::map<char, int> tendencia) {
 
+    // imprimirMapa(tendencia);
+
     this->tendencias = tendencia;
 
     // cola de prioridad invertida, guarda los valores de menor a mayor
@@ -96,18 +113,17 @@ void Arbol_huffman::construirArbol(std::map<char, int> tendencia) {
         cp.push(nodo_arbol_huffman(nah, nah2));
     }
 
-    nodo_arbol_huffman nah = cp.top();
-    cp.pop();
-
-    this->raiz = std::make_shared<nodo_arbol_huffman>(nah);
+    if (cp.size() != 0) {
+        nodo_arbol_huffman nah = cp.top();
+        cp.pop();
+        this->raiz = std::make_shared<nodo_arbol_huffman>(nah);
+    } else {
+        this->raiz = nullptr;
+    }
 }
 
 void Arbol_huffman::conseguirCodigos() {
     _conseguirCodigos(this->raiz, "1");
-
-    // for (std::pair<char, std::string> v : this->simbolos) {
-    // 	std::cout << v.first << "->" << v.second << std::endl;
-    // }
 }
 
 void Arbol_huffman::_conseguirCodigos(std::shared_ptr<nodo_arbol_huffman> nah,
@@ -123,12 +139,15 @@ void Arbol_huffman::_conseguirCodigos(std::shared_ptr<nodo_arbol_huffman> nah,
 
 std::string Arbol_huffman::descomprimir(std::string binCodigo) {
     std::string codigo = "";
+    // convertir cada caracter a su representacion binaria
     for (char c : binCodigo) {
         std::bitset<8> btc(c);
         codigo += btc.to_string();
     }
     std::string desc = "";
     int posicion = 0;
+    // cada caracter empieza con '1', por lo que hay que revisar que
+    // no se empiece con '0', ya que eso seria relleno para compretar el byte
     while (codigo.length() > posicion && codigo[posicion] != '0') {
         posicion++;
         desc += _descomprimir(this->raiz, codigo.substr(posicion), posicion);
@@ -201,6 +220,8 @@ std::string Arbol_huffman::comprimir(std::string cadena) {
 }
 
 std::string Arbol_huffman::toString() {
+    if (this->raiz == nullptr )
+        return "";
     return _toString(std::shared_ptr<nodo_arbol_huffman>(this->raiz));
 }
 
@@ -221,7 +242,6 @@ void Arbol_huffman::guardar(std::string nombre) {
 
     bool primer = true;
 
-    // TODO: hay que buscar alguna forma de manejar EOL
     for (std::pair<char, int> t : this->tendencias) {
         if (primer) {
             primer = false;
@@ -235,43 +255,34 @@ void Arbol_huffman::guardar(std::string nombre) {
     archivo.close();
 }
 
-std::map<char, int> stringATendencia(std::string cadena) {
-    std::map<char, int> tendencias;
-    // std::cout << cadena << std::endl;
-    std::size_t found = cadena.find(SEPARADOR);
-
-    int rep = 0;
-
-    // longitud del separador
-    int l_sep = sizeof(SEPARADOR)/sizeof(SEPARADOR[0]);
-
-    while (found!=std::string::npos && rep < 50) {
-        std::string pal = cadena.substr(0, found);
-        // std::cout << pal << " -- " << pal.size() << std::endl;
-
-        tendencias[pal[0]] = std::stoi(pal.substr(2));
-
-        cadena = cadena.substr(found + l_sep - 1);
-
-        found = cadena.find(SEPARADOR);
-        rep ++;
-    }
-
-    return tendencias;
-}
-
 std::map<char, int> Arbol_huffman::cargar(std::string nombre) {
     std::map<char, int> tendencia;
     std::ifstream archivo(nombre);
 
-    bool primer = true;
-    std::string texto;
-    while (getline (archivo, texto )) {
-        sumarMapas(tendencia, stringATendencia(texto));
-        // Output the text from the file
-        // for (std::pair<char, int> t : stringATendencia(texto)) {
-        //     std::cout << t.first << " -> " << t.second <<std::endl;
-        // }
+    std::string cadena;
+    char valor;
+
+    // contador de caracteres SEPARADOR
+    int contSep = 0;
+    while (archivo.get(valor)) {
+        cadena += valor;
+
+        if (valor == SEPARADOR[0]) {
+            contSep ++;
+
+            // al encontrar 2, se sabe que es un SEPARADOR
+            if (contSep == 2) {
+                tendencia[cadena[0]] = std::stoi(cadena.substr(2));
+                cadena = "";
+                contSep = 0;
+            }
+        } else {
+            contSep = 0;
+        }
+    }
+    if (!cadena.empty())
+    {
+        tendencia[cadena[0]] = std::stoi(cadena.substr(2));
     }
 
     archivo.close();

@@ -70,7 +70,7 @@ escribeNodo(iostream &os, string c, set<Pos> *cpos,
             uint32_t dhijos,
             Arbol_huffman &arbolHuffman,
             uint32_t desp = 0
-            ) ;
+            );
 
 /**
  * Calcula cuantos bytes requeriría almacenar un nodo con cadena

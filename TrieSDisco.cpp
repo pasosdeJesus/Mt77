@@ -70,9 +70,17 @@ escribeNodo(iostream &os, string c, set<Pos> *cpos,
 
         int64_t pini = os.tellp();  // Es  posible que sea -1
         //clog << "pini=" << pini << endl;
-        os << c << FINCADENA;
+        // os << c << FINCADENA;
+        std::string comprimido = c;
+        if (!arbolHuffman.vacio())
+        {
+                comprimido = arbolHuffman.comprimir(c);
+        }
+        ASSERT(!comprimido.find(FINCADENA));
+
+        os << comprimido << FINCADENA;
         uint32_t dhermano = (pini >= 0 ? pini : 0) + desp +
-                        precalcula_escribe_actual(c.length(), cpos); //+ 1;
+                        precalcula_escribe_actual(comprimido.length(), cpos); //+ 1;
         //clog << "dhermano=" << dhermano << endl;
         escribeNDesp(os, dhermano);
         uint32_t phijo = 0;
@@ -108,7 +116,7 @@ uint32_t escribeCopiaNodo(iostream &os, istream &is, uint32_t &phijo,
 #if defined(NDEBUG)
                 (void)leeNDesp(is); // Si depura comentar y descomentar ant.
 #else
-                uint32_t phermano = leeNDesp(is); 
+                uint32_t phermano = leeNDesp(is);
 #endif
                 //clog << " phermano=" << phermano;
                 phijo = leeNDesp(is);
@@ -152,17 +160,17 @@ escribeCopiaSubarbol(iostream &os, istream &is, bool conHermanos,
         cad = leeCad(is, arbolHuffman);
         //clog << "OJO cad=" << cad << endl;
         /* INV: cad es cadena leida del nodo por copiar
-         * "cursor" de is está a continuación de la cadena leída 
+         * "cursor" de is está a continuación de la cadena leída
          * n es cantidad de nodos hermanos ya leidos
-         * dhijo tiene lista de apuntadores a hijos 
+         * dhijo tiene lista de apuntadores a hijos
          * pih es vector de posiciones de apuntadores a hijos escritos en os
          */
         for (n = 0; cad != "" && (conHermanos || n == 0); n++) {
                 //clog << "OJO is.tellg()=" << is.tellg() << endl;
 #if defined(NDEBUG)
-                (void)leeNDesp(is); 
+                (void)leeNDesp(is);
 #else
-                uint32_t phermano = leeNDesp(is); 
+                uint32_t phermano = leeNDesp(is);
                 //clog << "OJO prini=" << prini << " phermano=" << phermano << endl;
 #endif
                 uint32_t h = leeNDesp(is);
@@ -252,7 +260,7 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
         vector<int64_t> opera(0); // operación por realizar a hijos en 2da parte
         vector<int64_t> pih(0); // posiciones de apuntadores a hijos en os
 
-        int64_t prini = os.tellp(); //podría ser -1 
+        int64_t prini = os.tellp(); //podría ser -1
         //clog << "OJO mezclaRec prini=" << prini << ", is1.tellg()=" << is1.tellg() << ", is2.tellg()=" << is2.tellg() << endl;
         //clog << "peek1=" << is1.peek() << endl;
         //clog << "peek2=" << is2.peek() << endl;
@@ -277,9 +285,9 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
                 /* INV:
                  * cad1 es cadena en nodo de is1
                  * cad2 es cadena en nodo de is2
-                 * cursor de is1 está a continuación de cad1 
+                 * cursor de is1 está a continuación de cad1
                  * 	(sobre inicio de posiciones)
-                 * cursor de is2 está a continuación de cad2 
+                 * cursor de is2 está a continuación de cad2
                  * conHermanos1 es true si debe continuar con hermanos en is1
                  * conHermanos2 es true si debe seguir con hermanos en is2
                  */
@@ -415,11 +423,11 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
                                 pih[numhermanos] = escribeNodo(os, c, NULL, 0, arbolHuffman);
                                 //clog << "pih=" << pih[numhermanos] <<endl;
                                 dhijo1[numhermanos] = (uint32_t)is1.tellg() -
-                                                      MAXLNUMERO - 1 - 
+                                                      MAXLNUMERO - 1 -
                                                       (uint32_t)r1.size();
                                 //clog << "dhijo1=" << dhijo1[numhermanos] <<endl;
                                 dhijo2[numhermanos]=(uint32_t)is2.tellg() -
-                                                    MAXLNUMERO - 1 - 
+                                                    MAXLNUMERO - 1 -
                                                     (uint32_t)r2.size();
                                 //clog << "dhijo2=" << dhijo2[numhermanos] <<endl;
                                 is1.seekg(phermano1);
@@ -437,10 +445,10 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
                                 phermano2 = leeNDesp(is2);
                                 pih[numhermanos] = escribeNodo(os, c, NULL, 0, arbolHuffman);
                                 dhijo1[numhermanos] = (uint32_t)is1.tellg() -
-                                                      MAXLNUMERO - 1 - 
+                                                      MAXLNUMERO - 1 -
                                                       (uint32_t)r1.size();
                                 dhijo2[numhermanos] = (uint32_t)is2.tellg() -
-                                                      MAXLNUMERO - 1 - 
+                                                      MAXLNUMERO - 1 -
                                                       (uint32_t)r2.size();
                                 //saltaPos(is1); leeNDesp(is1);
                                 is1.seekg(phermano1);
@@ -609,7 +617,7 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
                                 escribeCopiaSubarbol(os, is1,
                                                      true, arbolHuffman, renum1);
                         }
-                        pfin = os.tellp(); 
+                        pfin = os.tellp();
                         if (hijo2 > 0) {
                                 os.seekp(pnh2);
                                 escribeNDesp(os, ph2);
@@ -647,6 +655,8 @@ buscaPlanoStream(std::istream &is, string pal, Arbol_huffman &arbolHuffman) thro
 {
         string cad;
         set<Pos> *cpos;
+
+        // std::cout << arbolHuffman.toString() <<std::endl;
 
         cad = leeCad(is, arbolHuffman);
         //clog<<"OJO cad = "<<cad <<endl;
@@ -750,7 +760,7 @@ leeRelacion(const char *nrel,  vector<Doc> &docs) throw(string)
 }
 
 
-void escribeRelacion(const char *nrel, vector<Doc> &docs, 
+void escribeRelacion(const char *nrel, vector<Doc> &docs,
                 vector<int64_t> *reord)
 {
         ASSERT(nrel != NULL);
@@ -767,9 +777,9 @@ void escribeRelacion(const char *nrel, vector<Doc> &docs,
 /**
  * Calcula condensado de un conjunto de posiciones
  * @param cpos conjunto de posiciones
- * @param md   estado del condensado que es modificado 
+ * @param md   estado del condensado que es modificado
  *
- * @return void 
+ * @return void
  */
 void condensadoPos(set<Pos> *cpos, hash_state *md, bool imprime = false)
 {
@@ -780,7 +790,7 @@ void condensadoPos(set<Pos> *cpos, hash_state *md, bool imprime = false)
         for (i = cpos->begin(); i != cpos->end(); i++) {
                 stringstream c;
                 c << i->numd << "," << i->numb;
-                sha256_process(md, (const unsigned char*)c.str().c_str(), 
+                sha256_process(md, (const unsigned char*)c.str().c_str(),
                                 c.str().size());
                 if (imprime) {
                         cout << " " << c.str();
@@ -794,10 +804,10 @@ void condensadoPos(set<Pos> *cpos, hash_state *md, bool imprime = false)
  * completas y las posiciones donde aparece.
  *
  * @param is       archivo que se lee ubicado al comienzo de un nodo
- * @param md       estado del condensado que es modificado 
+ * @param md       estado del condensado que es modificado
  * @param precad   prefijo para la cadena del nodo actual
- * 
- * @return void 
+ *
+ * @return void
  */
 void condensadoFlujo(istream &is,  hash_state *md, Arbol_huffman &arbolHuffman,
                      string precad, bool imprime)
@@ -814,7 +824,7 @@ void condensadoFlujo(istream &is,  hash_state *md, Arbol_huffman &arbolHuffman,
                 hijo = leeNDesp(is);
                 cpos = leePos(is);
                 if (cpos != NULL && cpos->size() > 0) {
-                        sha256_process(md, (const unsigned char *)cad.c_str(), 
+                        sha256_process(md, (const unsigned char *)cad.c_str(),
                                         cad.size());
                         if (imprime) {
                                 cout << cad;
@@ -845,7 +855,7 @@ void condensadoFlujo(istream &is,  hash_state *md, Arbol_huffman &arbolHuffman,
  *
  * @param indice   Índice
  * @param depura   Si debe presentar datos a los que calcula SHA256
- * 
+ *
  * @return string 32 bytes hexadececimales
  */
 string condensado(char *indice, Arbol_huffman &arbolHuffman, bool depura)
