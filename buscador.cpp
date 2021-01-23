@@ -559,6 +559,7 @@ int main(int argc, char *argv[])
                 exit(1);
         }
 
+
         string nc = nombra_resconsulta(cons, argv[optind]);
         //clog << "nc = " << nc << endl;
         vector<uint32_t> *vpos = NULL;

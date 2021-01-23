@@ -139,10 +139,6 @@ void Arbol_huffman::construirArbol(std::map<char, int> tendencia, std::string ar
 
 void Arbol_huffman::conseguirCodigos() {
     _conseguirCodigos(this->raiz, "1");
-
-    // for (std::pair<char, std::string> v : this->simbolos) {
-    // 	std::cout << v.first << "->" << v.second << std::endl;
-    // }
 }
 
 void Arbol_huffman::_conseguirCodigos(std::shared_ptr<nodo_arbol_huffman> nah,

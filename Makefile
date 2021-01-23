@@ -120,8 +120,6 @@ FINDEXADOR=$(FBASE) leeXML.o funzipuno.o leeODT.o leeHTML.o leePDF.o Operaciones
 indexador: $(FINDEXADOR)
 	c++ $(LFLAGS) -lxml2 -lxslt -lz -lexpat -lc -o indexador $(FINDEXADOR)
 
-compresion.o: compresion/compresion.hpp compresion/compresion.cpp
-
 leeODT.o: comun.hpp funzipuno.hpp sha256.hpp NodoTrieS.hpp funzipuno.o leeODT.hpp leeODT.cpp
 	c++ -I /usr/local/include -I /usr/local/include/libxml2/ -c leeODT.cpp
 

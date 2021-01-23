@@ -267,7 +267,6 @@ int main(int argc, char *argv[])
 
         // Se va escribiendo en estos dos archivos a medida que se procesa cada grupo
         // de archivos de entrada.
-        
         ofstream archivo(archivo_tendencia, ios::out | ios::app);
         archivo.close();
 
