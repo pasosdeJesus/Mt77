@@ -206,7 +206,10 @@ std::string Arbol_huffman::comprimir(std::string cadena) {
         binString += this->simbolos[c];
     }
 
-    int faltante = binString.length() % 8;
+    // encontrar la cantidad de bits faltantes
+    // en caso de que binString.length() sea multiplo de 0
+    // dejar el resultado final en 0
+    int faltante = (8 - (binString.length() % 8)) % 8 ;
 
     for (int a = 0; a < faltante; a++) {
         binString += "0";
