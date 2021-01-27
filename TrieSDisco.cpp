@@ -24,6 +24,7 @@ using namespace std;
 
 
 #include "TrieSDisco.hpp"
+#include "comun.hpp"
 
 stringstream *depuraos = NULL;
 
@@ -55,7 +56,10 @@ precalcula_escribe_actual(uint32_t longcad, set<Pos> *cpos)
  */
 uint32_t
 escribeNodo(iostream &os, string c, set<Pos> *cpos,
-                    uint32_t dhijos, uint32_t desp)
+            uint32_t dhijos,
+            Arbol_huffman &arbolHuffman,
+            uint32_t desp
+            )
 {
         ASSERT(c.length() > 0);
         ASSERT(c.length() <= MAXCAD);
@@ -66,9 +70,17 @@ escribeNodo(iostream &os, string c, set<Pos> *cpos,
 
         int64_t pini = os.tellp();  // Es  posible que sea -1
         //clog << "pini=" << pini << endl;
-        os << c << FINCADENA;
+        // os << c << FINCADENA;
+        std::string comprimido = c;
+        if (!arbolHuffman.vacio())
+        {
+                comprimido = arbolHuffman.comprimir(c);
+        }
+        ASSERT(!comprimido.find(FINCADENA));
+
+        os << comprimido << FINCADENA;
         uint32_t dhermano = (pini >= 0 ? pini : 0) + desp +
-                        precalcula_escribe_actual(c.length(), cpos); //+ 1;
+                        precalcula_escribe_actual(comprimido.length(), cpos); //+ 1;
         //clog << "dhermano=" << dhermano << endl;
         escribeNDesp(os, dhermano);
         uint32_t phijo = 0;
@@ -89,20 +101,22 @@ escribeNodo(iostream &os, string c, set<Pos> *cpos,
 
 
 uint32_t escribeCopiaNodo(iostream &os, istream &is, uint32_t &phijo,
-                      vector<int64_t>* renum)
+                          vector<int64_t>* renum,
+                          Arbol_huffman &arbolHuffman
+                          )
 {
 
         uint32_t ret = 0;
 
         int64_t pini = is.tellg();
         //clog << "\nescribeCopiaNodo is.tellg() = " << is.tellg();
-        string cad = leeCad(is);
+        string cad = leeCad(is, arbolHuffman);
         //clog << " cad='" << cad << "'";
         if (cad != "") {
 #if defined(NDEBUG)
                 (void)leeNDesp(is); // Si depura comentar y descomentar ant.
 #else
-                uint32_t phermano = leeNDesp(is); 
+                uint32_t phermano = leeNDesp(is);
 #endif
                 //clog << " phermano=" << phermano;
                 phijo = leeNDesp(is);
@@ -116,7 +130,7 @@ uint32_t escribeCopiaNodo(iostream &os, istream &is, uint32_t &phijo,
                 ASSERT(phijo == 0 || is.tellg() <= phijo);
                 //clog << " is.tellg() = " << is.tellg();
                 ASSERT(phermano == 0 || is.tellg() <= phermano);
-                ret = escribeNodo(os, cad, cpos, dhijo);
+                ret = escribeNodo(os, cad, cpos, dhijo, arbolHuffman);
                 delete cpos;
                 cpos = NULL;
         }
@@ -129,7 +143,9 @@ uint32_t escribeCopiaNodo(iostream &os, istream &is, uint32_t &phijo,
 
 uint32_t
 escribeCopiaSubarbol(iostream &os, istream &is, bool conHermanos,
-                     vector<int64_t>* renum)
+                     Arbol_huffman &arbolHuffman,
+                     vector<int64_t>* renum
+                     )
 {
 
         int64_t prini = os.tellp(); //puede ser -1
@@ -141,20 +157,20 @@ escribeCopiaSubarbol(iostream &os, istream &is, bool conHermanos,
         vector<uint32_t> dhijo;
         vector<uint32_t> pih;
 
-        cad = leeCad(is);
+        cad = leeCad(is, arbolHuffman);
         //clog << "OJO cad=" << cad << endl;
         /* INV: cad es cadena leida del nodo por copiar
-         * "cursor" de is está a continuación de la cadena leída 
+         * "cursor" de is está a continuación de la cadena leída
          * n es cantidad de nodos hermanos ya leidos
-         * dhijo tiene lista de apuntadores a hijos 
+         * dhijo tiene lista de apuntadores a hijos
          * pih es vector de posiciones de apuntadores a hijos escritos en os
          */
         for (n = 0; cad != "" && (conHermanos || n == 0); n++) {
                 //clog << "OJO is.tellg()=" << is.tellg() << endl;
 #if defined(NDEBUG)
-                (void)leeNDesp(is); 
+                (void)leeNDesp(is);
 #else
-                uint32_t phermano = leeNDesp(is); 
+                uint32_t phermano = leeNDesp(is);
                 //clog << "OJO prini=" << prini << " phermano=" << phermano << endl;
 #endif
                 uint32_t h = leeNDesp(is);
@@ -166,7 +182,7 @@ escribeCopiaSubarbol(iostream &os, istream &is, bool conHermanos,
                 ASSERT(phermano == 0 || is.tellg()<=phermano);
                 //clog << "OJO paso ASSERT" << endl;
                 dhijo.push_back(h);
-                uint32_t tp = escribeNodo(os, cad, cpos, 0);
+                uint32_t tp = escribeNodo(os, cad, cpos, 0, arbolHuffman);
                 //clog << "OJO prini=" << prini << " tp=" << tp << endl;
                 pih.push_back(tp);
                 //clog << "OJO 2 prini=" << prini << ", os.tellp=" << os.tellp() << endl;
@@ -176,7 +192,7 @@ escribeCopiaSubarbol(iostream &os, istream &is, bool conHermanos,
                         //clog << depuraos->str() << endl;
                 }
                 if (conHermanos) {
-                        cad = leeCad(is);
+                    cad = leeCad(is, arbolHuffman);
                         //clog << "OJO conHermanos cad=" << cad << endl;
                 }
         }
@@ -196,7 +212,7 @@ escribeCopiaSubarbol(iostream &os, istream &is, bool conHermanos,
                 if (dhijo[i] > 0) {
                         //clog << "OJO en hijos prini=" << prini << " dhijo[" << i << "]=" << dhijo[i] << endl;
                         is.seekg(dhijo[i]);
-                        pini = escribeCopiaSubarbol(os, is, true, renum);
+                        pini = escribeCopiaSubarbol(os, is, true, arbolHuffman, renum);
                         //clog << "OJO prini=" << prini << " pini=" << pini << endl;
                         pfin = os.tellp(); // No puede ser -1
                         //clog << "OJO pfin=" << pfin <<endl;
@@ -215,7 +231,8 @@ escribeCopiaSubarbol(iostream &os, istream &is, bool conHermanos,
 uint32_t
 mezclaRec(istream &is1, istream &is2, iostream &os,
           bool conHermanos1, bool conHermanos2,
-          vector<int64_t> *renum1, vector<int64_t> *renum2)
+          vector<int64_t> *renum1, vector<int64_t> *renum2,
+          Arbol_huffman &arbolHuffman )
 {
 
         string cad1;
@@ -243,11 +260,11 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
         vector<int64_t> opera(0); // operación por realizar a hijos en 2da parte
         vector<int64_t> pih(0); // posiciones de apuntadores a hijos en os
 
-        int64_t prini = os.tellp(); //podría ser -1 
+        int64_t prini = os.tellp(); //podría ser -1
         //clog << "OJO mezclaRec prini=" << prini << ", is1.tellg()=" << is1.tellg() << ", is2.tellg()=" << is2.tellg() << endl;
         //clog << "peek1=" << is1.peek() << endl;
         //clog << "peek2=" << is2.peek() << endl;
-        for (cad1=leeCad(is1), cad2=leeCad(is2), numhermanos = 0;
+        for (cad1=leeCad(is1, arbolHuffman), cad2=leeCad(is2, arbolHuffman), numhermanos = 0;
                         (cad1!="" && (conHermanos1 || n1==0)) ||
                         (cad2!="" && (conHermanos2 || n2==0));
                         numhermanos++) {
@@ -268,9 +285,9 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
                 /* INV:
                  * cad1 es cadena en nodo de is1
                  * cad2 es cadena en nodo de is2
-                 * cursor de is1 está a continuación de cad1 
+                 * cursor de is1 está a continuación de cad1
                  * 	(sobre inicio de posiciones)
-                 * cursor de is2 está a continuación de cad2 
+                 * cursor de is2 está a continuación de cad2
                  * conHermanos1 es true si debe continuar con hermanos en is1
                  * conHermanos2 es true si debe seguir con hermanos en is2
                  */
@@ -292,10 +309,10 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
                                 set<Pos> *cpos = leePos(is1, renum1);
                                 opera[numhermanos] = O_COPIA1;
                                 pih[numhermanos] =
-                                        escribeNodo(os, cad1, cpos, 0);
+                                        escribeNodo(os, cad1, cpos, 0, arbolHuffman);
                                 delete cpos;
                                 cpos = NULL;
-                                cad1 = leeCad(is1);
+                                cad1 = leeCad(is1, arbolHuffman);
                                 n1++;
                                 // cad2 quieto
                                 // en la recursión hijos de cad1
@@ -312,10 +329,10 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
                                 set<Pos> *cpos = leePos(is2, renum2);
                                 opera[numhermanos] = O_COPIA2;
                                 pih[numhermanos] =
-                                        escribeNodo(os, cad2, cpos, 0);
+                                        escribeNodo(os, cad2, cpos, 0, arbolHuffman);
                                 delete cpos;
                                 cpos = NULL;
-                                cad2 = leeCad(is2);
+                                cad2 = leeCad(is2, arbolHuffman);
                                 n2++;
                         }
                 } else if (cad1 == cad2) { // Hay prefijo c != "" && cad1!="" && cad2!=""
@@ -333,7 +350,7 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
                         set_union(cpos1->begin(), cpos1->end(),
                                   cpos2->begin(), cpos2->end(),
                                   cpos_ins);
-                        pih[numhermanos] = escribeNodo(os, cad2, &cpos, 0);
+                        pih[numhermanos] = escribeNodo(os, cad2, &cpos, 0, arbolHuffman);
                         delete cpos1;
                         cpos1=NULL;
                         delete cpos2;
@@ -342,9 +359,9 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
                         resto1[numhermanos] = "";
                         resto2[numhermanos] = "";
                         opera[numhermanos] = O_MEZCLA_H1H2;
-                        cad1 = leeCad(is1);
+                        cad1 = leeCad(is1, arbolHuffman);
                         n1++;
-                        cad2 = leeCad(is2);
+                        cad2 = leeCad(is2, arbolHuffman);
                         n2++;
                 } else { // hay prefijo c != "" && cad1!="" && cad2!="" && cad1!=cad2
                         string r1 = cad1.substr(c.size());
@@ -371,7 +388,7 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
                                 is2.seekg(phermano2); // Salta al sig en is2
                                 set<Pos> *cpos1 = leePos(is1, renum1);
                                 //clog << "OJO is2.tellg()="<< is2.tellg() << endl;
-                                pih[numhermanos] = escribeNodo(os, c, cpos1, 0);
+                                pih[numhermanos] = escribeNodo(os, c, cpos1, 0, arbolHuffman);
                                 opera[numhermanos] = O_MEZCLA_H1;
                                 delete cpos1;
                                 cpos1=NULL;
@@ -390,7 +407,7 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
                                 leeNDesp(is1); */
                                 set<Pos> *cpos2 = leePos(is2, renum2);
                                 //clog << "OJO en nodo dhijo2[numhermanos]=" << dhijo2[numhermanos] << endl;
-                                pih[numhermanos] = escribeNodo(os, c, cpos2, 0);
+                                pih[numhermanos] = escribeNodo(os, c, cpos2, 0, arbolHuffman);
                                 // Recursion NodoTrieS *m=mezcla(n1, a2->hijo_menor);
                                 delete cpos2;
                                 cpos2=NULL;
@@ -403,14 +420,14 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
                                 //clog << "phermano1=" << phermano1 <<endl;
                                 phermano2 = leeNDesp(is2);
                                 //clog << "phermano2=" << phermano2 <<endl;
-                                pih[numhermanos] = escribeNodo(os, c, NULL, 0);
+                                pih[numhermanos] = escribeNodo(os, c, NULL, 0, arbolHuffman);
                                 //clog << "pih=" << pih[numhermanos] <<endl;
                                 dhijo1[numhermanos] = (uint32_t)is1.tellg() -
-                                                      MAXLNUMERO - 1 - 
+                                                      MAXLNUMERO - 1 -
                                                       (uint32_t)r1.size();
                                 //clog << "dhijo1=" << dhijo1[numhermanos] <<endl;
                                 dhijo2[numhermanos]=(uint32_t)is2.tellg() -
-                                                    MAXLNUMERO - 1 - 
+                                                    MAXLNUMERO - 1 -
                                                     (uint32_t)r2.size();
                                 //clog << "dhijo2=" << dhijo2[numhermanos] <<endl;
                                 is1.seekg(phermano1);
@@ -426,12 +443,12 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
                                 //clog << "r2 <= r1"<<endl;
                                 phermano1 = leeNDesp(is1);
                                 phermano2 = leeNDesp(is2);
-                                pih[numhermanos] = escribeNodo(os, c, NULL, 0);
+                                pih[numhermanos] = escribeNodo(os, c, NULL, 0, arbolHuffman);
                                 dhijo1[numhermanos] = (uint32_t)is1.tellg() -
-                                                      MAXLNUMERO - 1 - 
+                                                      MAXLNUMERO - 1 -
                                                       (uint32_t)r1.size();
                                 dhijo2[numhermanos] = (uint32_t)is2.tellg() -
-                                                      MAXLNUMERO - 1 - 
+                                                      MAXLNUMERO - 1 -
                                                       (uint32_t)r2.size();
                                 //saltaPos(is1); leeNDesp(is1);
                                 is1.seekg(phermano1);
@@ -439,10 +456,10 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
                                 is2.seekg(phermano2);
                                 opera[numhermanos] = O_COPIA_PRIMERO_2;
                         }
-                        cad1=leeCad(is1);
+                        cad1=leeCad(is1, arbolHuffman);
                         n1++;
                         //clog << "lee cad1=" << cad1 << endl;
-                        cad2=leeCad(is2);
+                        cad2=leeCad(is2, arbolHuffman);
                         n2++;
                         //clog << "lee cad2=" << cad2 << endl;
                 }
@@ -462,7 +479,7 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
                         if (dhijo1[n] > 0) {
                                 is1.seekg(dhijo1[n]);
                                 pini = escribeCopiaSubarbol(os, is1,
-                                                            true, renum1);
+                                                            true, arbolHuffman, renum1);
                         }
                         break;
 
@@ -473,7 +490,7 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
                                 //dhijo2[n] << endl;
                                 is2.seekg(dhijo2[n]);
                                 pini = escribeCopiaSubarbol(os, is2,
-                                                            true, renum2);
+                                                            true, arbolHuffman, renum2);
                         }
                         break;
 
@@ -488,19 +505,19 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
                                 is1.seekg(dhijo1[n]);
                                 is2.seekg(dhijo2[n]);
                                 pini = mezclaRec(is1, is2, os,
-                                                 true, true, renum1, renum2) ;
+                                                 true, true, renum1, renum2, arbolHuffman) ;
                         } else if (dhijo1[n] > 0) {
                                 ASSERT(dhijo2[n] == 0);
                                 is1.seekg(dhijo1[n]);
                                 pini = escribeCopiaSubarbol(os, is1,
-                                                            true, renum1);
+                                                            true, arbolHuffman, renum1);
                         } else if (dhijo2[n] > 0) {
                                 //clog << "OJO dhijo2[n]=" <<dhijo2[n]<< endl;
                                 ASSERT(dhijo1[n] == 0);
                                 is2.seekg(dhijo2[n]);
                                 //clog << "OJO is2.peek=" << (char)is2.peek()<< endl;
                                 pini = escribeCopiaSubarbol(os, is2,
-                                                            true, renum2);
+                                                            true, arbolHuffman, renum2);
                                 //clog << "OJO pini=" << pini << endl;
                         }
                         break;
@@ -513,10 +530,10 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
                         if (dhijo1[n] > 0) {
                                 is1.seekg(dhijo1[n]);
                                 pini = mezclaRec(is1, is2, os,
-                                                 true, false, renum1, renum2) ;
+                                                 true, false, renum1, renum2, arbolHuffman) ;
                         } else {
                                 pini = escribeCopiaSubarbol(os, is2,
-                                                            false, renum2);
+                                                            false, arbolHuffman, renum2);
                         }
                         break;
 
@@ -529,10 +546,10 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
                         if (dhijo2[n] > 0) {
                                 is2.seekg(dhijo2[n]);
                                 pini = mezclaRec(is1, is2, os,
-                                                 false, true, renum1, renum2) ;
+                                                 false, true, renum1, renum2, arbolHuffman) ;
                         } else {
                                 pini = escribeCopiaSubarbol(os, is1,
-                                                            false, renum1);
+                                                            false, arbolHuffman, renum1);
                         }
                         break;
 
@@ -548,20 +565,20 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
                         // pos no es NULL en los siguientes,
                         // más bien copiar de is1 e is2 e hijos
                         // después.
-                        pnh1=escribeCopiaNodo(os, is1, hijo1, renum1);
-                        pnh2=escribeCopiaNodo(os, is2, hijo2, renum2);
+                        pnh1=escribeCopiaNodo(os, is1, hijo1, renum1, arbolHuffman);
+                        pnh2=escribeCopiaNodo(os, is2, hijo2, renum2, arbolHuffman);
                         os << endl;
                         ph1=os.tellp(); // no puede ser -1
                         if (hijo1 > 0) {
                                 is1.seekg(hijo1);
                                 (void)escribeCopiaSubarbol(os, is1,
-                                                           true, renum1);
+                                                           true, arbolHuffman, renum1);
                         }
                         ph2=os.tellp(); // no puede ser -1
                         if (hijo2 > 0) {
                                 is2.seekg(hijo2);
                                 escribeCopiaSubarbol(os, is2,
-                                                     true, renum2);
+                                                     true, arbolHuffman, renum2);
                         }
                         pfin = os.tellp(); // no puede ser -1
                         if (hijo1 > 0) {
@@ -585,22 +602,22 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
                         is2.seekg(dhijo2[n]);
                         pini = os.tellp(); // no -1
 
-                        pnh2=escribeCopiaNodo(os, is2, hijo2, renum2);
-                        pnh1=escribeCopiaNodo(os, is1, hijo1, renum1);
+                        pnh2=escribeCopiaNodo(os, is2, hijo2, renum2, arbolHuffman);
+                        pnh1=escribeCopiaNodo(os, is1, hijo1, renum1, arbolHuffman);
                         os << endl;
                         ph2=os.tellp(); // no -1
                         if (hijo2 > 0) {
                                 is2.seekg(hijo2);
                                 escribeCopiaSubarbol(os, is2,
-                                                     true, renum2);
+                                                     true, arbolHuffman, renum2);
                         }
                         ph1=os.tellp(); // no -1
                         if (hijo1 > 0) {
                                 is1.seekg(hijo1);
                                 escribeCopiaSubarbol(os, is1,
-                                                     true, renum1);
+                                                     true, arbolHuffman, renum1);
                         }
-                        pfin = os.tellp(); 
+                        pfin = os.tellp();
                         if (hijo2 > 0) {
                                 os.seekp(pnh2);
                                 escribeNDesp(os, ph2);
@@ -634,12 +651,14 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
  * formato extra-simple
  */
 set<Pos> *
-buscaPlanoStream(std::istream &is, string pal) throw(string)
+buscaPlanoStream(std::istream &is, string pal, Arbol_huffman &arbolHuffman) throw(string)
 {
         string cad;
         set<Pos> *cpos;
 
-        cad = leeCad(is);
+        // std::cout << arbolHuffman.toString() <<std::endl;
+
+        cad = leeCad(is, arbolHuffman);
         //clog<<"OJO cad = "<<cad <<endl;
         if (cad.size() == pal.size() && cad.compare(pal) == 0) {
                 //clog<<"OJO encontrado";
@@ -658,7 +677,7 @@ buscaPlanoStream(std::istream &is, string pal) throw(string)
                 //is>>hijo;
                 if (hijo > 0) {
                         is.seekg(hijo);
-                        return buscaPlanoStream(is, pal.substr(cad.size()));
+                        return buscaPlanoStream(is, pal.substr(cad.size()), arbolHuffman);
                 }
         } else if (cad.size() > 0 && cad.compare(pal) < 0) {
                 //clog<<"OJO pasar a hermano mayor"<<endl;
@@ -667,7 +686,7 @@ buscaPlanoStream(std::istream &is, string pal) throw(string)
                 is.seekg(hermano);
                 //saltaPos(is);
 
-                return buscaPlanoStream(is, pal);
+                return buscaPlanoStream(is, pal, arbolHuffman);
         }
         //clog<<"OJO no se encontró" << endl;
         return NULL;
@@ -686,7 +705,8 @@ void verificaIndice(istream &is)
 }
 
 set<Pos> *
-buscaPlano(const char *na, const char *nrel, string pal, vector<Doc> &docs)
+buscaPlano(const char *na, const char *nrel, string pal, vector<Doc> &docs,
+           Arbol_huffman &arbolHuffman)
 {
         set<Pos> *r;
         string enc;
@@ -695,7 +715,7 @@ buscaPlano(const char *na, const char *nrel, string pal, vector<Doc> &docs)
         fstream is(na, ios_base::in);
         verificaIndice(is);
         try {
-                r = buscaPlanoStream(is, pal);
+            r = buscaPlanoStream(is, pal, arbolHuffman);
                 //clog << "OJO buscado r=" << r << endl;
                 //throw errorFormato(is, "OJO paso 2");
         } catch (string m) {
@@ -740,7 +760,7 @@ leeRelacion(const char *nrel,  vector<Doc> &docs) throw(string)
 }
 
 
-void escribeRelacion(const char *nrel, vector<Doc> &docs, 
+void escribeRelacion(const char *nrel, vector<Doc> &docs,
                 vector<int64_t> *reord)
 {
         ASSERT(nrel != NULL);
@@ -757,9 +777,9 @@ void escribeRelacion(const char *nrel, vector<Doc> &docs,
 /**
  * Calcula condensado de un conjunto de posiciones
  * @param cpos conjunto de posiciones
- * @param md   estado del condensado que es modificado 
+ * @param md   estado del condensado que es modificado
  *
- * @return void 
+ * @return void
  */
 void condensadoPos(set<Pos> *cpos, hash_state *md, bool imprime = false)
 {
@@ -770,7 +790,7 @@ void condensadoPos(set<Pos> *cpos, hash_state *md, bool imprime = false)
         for (i = cpos->begin(); i != cpos->end(); i++) {
                 stringstream c;
                 c << i->numd << "," << i->numb;
-                sha256_process(md, (const unsigned char*)c.str().c_str(), 
+                sha256_process(md, (const unsigned char*)c.str().c_str(),
                                 c.str().size());
                 if (imprime) {
                         cout << " " << c.str();
@@ -784,26 +804,27 @@ void condensadoPos(set<Pos> *cpos, hash_state *md, bool imprime = false)
  * completas y las posiciones donde aparece.
  *
  * @param is       archivo que se lee ubicado al comienzo de un nodo
- * @param md       estado del condensado que es modificado 
+ * @param md       estado del condensado que es modificado
  * @param precad   prefijo para la cadena del nodo actual
- * 
- * @return void 
+ *
+ * @return void
  */
-void condensadoFlujo(istream &is,  hash_state *md, string precad, bool imprime)
+void condensadoFlujo(istream &is,  hash_state *md, Arbol_huffman &arbolHuffman,
+                     string precad, bool imprime)
 {
  //       cerr << "OJO condensado(is, md, " << precad << ", " << imprime << ")" << endl;
         string cad;
         long hermano, hijo;
         set<Pos> *cpos = NULL;
 
-        string lc = leeCad(is);
+        string lc = leeCad(is, arbolHuffman);
         if (lc.size() > 0) {
                 cad = precad + lc;
                 hermano = leeNDesp(is);
                 hijo = leeNDesp(is);
                 cpos = leePos(is);
                 if (cpos != NULL && cpos->size() > 0) {
-                        sha256_process(md, (const unsigned char *)cad.c_str(), 
+                        sha256_process(md, (const unsigned char *)cad.c_str(),
                                         cad.size());
                         if (imprime) {
                                 cout << cad;
@@ -818,11 +839,11 @@ void condensadoFlujo(istream &is,  hash_state *md, string precad, bool imprime)
 
                 if (hijo > 0) {
                         is.seekg(hijo);
-                        condensadoFlujo(is, md, cad, imprime);
+                        condensadoFlujo(is, md, arbolHuffman, cad, imprime);
                 }
                 if (hermano > 0) {
                         is.seekg(hermano);
-                        condensadoFlujo(is, md, precad, imprime);
+                        condensadoFlujo(is, md, arbolHuffman, precad, imprime);
                 }
         }
 }
@@ -834,10 +855,10 @@ void condensadoFlujo(istream &is,  hash_state *md, string precad, bool imprime)
  *
  * @param indice   Índice
  * @param depura   Si debe presentar datos a los que calcula SHA256
- * 
+ *
  * @return string 32 bytes hexadececimales
  */
-string condensado(char *indice, bool depura)
+string condensado(char *indice, Arbol_huffman &arbolHuffman, bool depura)
 {
         ASSERT(indice != NULL);
 
@@ -852,7 +873,7 @@ string condensado(char *indice, bool depura)
         hash_state md;
         unsigned char hash[33];
         sha256_init(&md);
-        condensadoFlujo(is, &md, "", depura);
+        condensadoFlujo(is, &md, arbolHuffman, "", depura);
         sha256_done(&md, hash);
         is.close();
 

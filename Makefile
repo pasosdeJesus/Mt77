@@ -3,9 +3,9 @@
 
 include Make.inc
 
-FUENTES=Doc.cpp DocCasoPrueba.cpp Elias.cpp EliasCasoPrueba.cpp NodoTrieS.cpp NodoTrieSCasoPrueba.cpp Operaciones.cpp Pos.cpp PosCasoPrueba.cpp RamDisco.cpp RamDiscoCasoPrueba.cpp TrieSDisco.cpp TrieSDiscoCasoPrueba.cpp buscador.cpp comun.cpp comunCasoPrueba.cpp depuraindice.cpp funzipuno.cpp indexador.cpp leeHTML.cpp leeODT.cpp leePDF.cpp leeXML.cpp operaindice.cpp pruebaCppUnit.cpp sha256.cpp tomsha256.cpp txtdeodt.cpp unzipuno.cpp
+FUENTES=Doc.cpp DocCasoPrueba.cpp Elias.cpp EliasCasoPrueba.cpp NodoTrieS.cpp NodoTrieSCasoPrueba.cpp Operaciones.cpp Pos.cpp PosCasoPrueba.cpp RamDisco.cpp RamDiscoCasoPrueba.cpp TrieSDisco.cpp TrieSDiscoCasoPrueba.cpp buscador.cpp comun.cpp comunCasoPrueba.cpp depuraindice.cpp funzipuno.cpp indexador.cpp leeHTML.cpp leeODT.cpp leePDF.cpp leeXML.cpp operaindice.cpp pruebaCppUnit.cpp sha256.cpp tomsha256.cpp txtdeodt.cpp unzipuno.cpp compresion/compresion.cpp
 
-ENCABEZADOS=CasosPrueba.hpp Doc.hpp DocCasoPrueba.hpp Elias.hpp EliasCasoPrueba.hpp NodoTrieS.hpp NodoTrieSCasoPrueba.hpp Operaciones.hpp Pos.hpp PosCasoPrueba.hpp RamDisco.hpp RamDiscoCasoPrueba.hpp TrieSDisco.hpp TrieSDiscoCasoPrueba.hpp comun.hpp comunCasoPrueba.hpp funzipuno.hpp leeHTML.hpp leeODT.hpp leePDF.hpp leeXML.hpp sha256.hpp
+ENCABEZADOS=CasosPrueba.hpp Doc.hpp DocCasoPrueba.hpp Elias.hpp EliasCasoPrueba.hpp NodoTrieS.hpp NodoTrieSCasoPrueba.hpp Operaciones.hpp Pos.hpp PosCasoPrueba.hpp RamDisco.hpp RamDiscoCasoPrueba.hpp TrieSDisco.hpp TrieSDiscoCasoPrueba.hpp comun.hpp comunCasoPrueba.hpp funzipuno.hpp leeHTML.hpp leeODT.hpp leePDF.hpp leeXML.hpp sha256.hpp compresion/compresion.hpp
 
 CFLAGS ?= -O0
 CFLAGS += -Wall -I/usr/X11R6/include -I/usr/local/include #-I/usr/X11R6/include -fprofile-arcs -ftest-coverage -p -pg
@@ -27,15 +27,15 @@ all: $(BINARIOS)
 
 # Requieren cppunit instalado en /usr/local/include --por defecto en
 # paquete cppunit en OpenBSD (pkg_add cppunit)
-PUNIDAD=pruebaComun pruebaElias pruebaPos pruebaDoc pruebaNodoTrieS pruebaTrieSDisco pruebaRamDisco 
-unidad: 
+PUNIDAD=pruebaComun pruebaElias pruebaPos pruebaDoc pruebaNodoTrieS pruebaTrieSDisco pruebaRamDisco
+unidad:
 	CFLAGS="$(DEPCFLAGS)" make $(PUNIDAD)
 	for i in $(PUNIDAD) ; do echo $$i; /usr/bin/time ./$$i; done
 
-depura: 
+depura:
 	LFLAGS="$(DEPLFLAGS)" CFLAGS="$(DEPCFLAGS)" make all
 
-cobertura: 
+cobertura:
 	for i in $(PUNIDAD); do echo $$i; nf=`echo $$i | sed -e "s/prueba//g;s/Comun/comun/g"`; echo $$nf; ./cobertura.sh "$$nf.cpp" "$$i"; done
 
 
@@ -46,7 +46,7 @@ FTOMSHA256 = sha256.o tomsha256.o
 tomsha256: $(FTOMSHA256)
 	c++ $(LFLAGS) -o $(.TARGET) -lc $(FTOMSHA256)
 
-FTXTDEODT = comun.o Elias.o Pos.o Doc.o sha256.o NodoTrieS.o funzipuno.o leeODT.o txtdeodt.o 
+FTXTDEODT = compresion/compresion.o comun.o Elias.o Pos.o Doc.o sha256.o NodoTrieS.o funzipuno.o leeODT.o txtdeodt.o
 txtdeodt : $(FTXTDEODT)
 	c++ $(LFLAGS) -o $(.TARGET) -lc -lxml2 -lxslt -lz $(FTXTDEODT)
 
@@ -104,12 +104,14 @@ Pos.o: comun.hpp Pos.hpp Pos.cpp
 
 Doc.o: comun.hpp Doc.hpp Doc.cpp
 
-comun.o: comun.hpp comun.cpp
+compresion/compresion.o: compresion/compresion.hpp compresion/compresion.cpp
+
+comun.o: compresion/compresion.o comun.hpp comun.cpp
 
 RamDisco.o: comun.hpp Doc.hpp Pos.hpp Elias.hpp RamDisco.hpp
 
-FBASE=comun.o Elias.o Pos.o Doc.o sha256.o NodoTrieS.o TrieSDisco.o RamDisco.o 
-FINDEXADOR=$(FBASE) leeXML.o funzipuno.o leeODT.o leeHTML.o leePDF.o Operaciones.o indexador.o 
+FBASE=comun.o Elias.o Pos.o Doc.o sha256.o NodoTrieS.o TrieSDisco.o RamDisco.o compresion/compresion.o
+FINDEXADOR=$(FBASE) leeXML.o funzipuno.o leeODT.o leeHTML.o leePDF.o Operaciones.o indexador.o
 indexador: $(FINDEXADOR)
 	c++ $(LFLAGS) -lxml2 -lxslt -lz -lexpat -lc -o indexador $(FINDEXADOR)
 
@@ -128,20 +130,20 @@ leeHTML.o: comun.hpp Pos.hpp Doc.hpp sha256.hpp NodoTrieS.hpp leeHTML.hpp leeHTM
 
 leePDF.o: comun.hpp Pos.hpp Doc.hpp sha256.hpp NodoTrieS.hpp leePDF.hpp leePDF.cpp
 
-indexador.o: indexador.cpp comun.hpp Pos.hpp Doc.hpp sha256.hpp NodoTrieS.hpp sha256.hpp Operaciones.hpp
+indexador.o: indexador.cpp comun.hpp Pos.hpp Doc.hpp sha256.hpp NodoTrieS.hpp sha256.hpp Operaciones.hpp compresion/compresion.hpp
 
-FBUSCADOR=$(FBASE) 
-buscador:  $(FBUSCADOR)  buscador.o
+FBUSCADOR=$(FBASE)
+buscador:  $(FBUSCADOR) buscador.o
 	c++ $(LFLAGS) -static -o buscador $(FBUSCADOR) buscador.o
 
 buscador.o: buscador.cpp $(FBUSCADOR:S/.o/.hpp/g)
 
-FDEPURAINDICE=$(FBASE) 
+FDEPURAINDICE=$(FBASE)
 depuraindice:  $(FDEPURAINDICE)  depuraindice.o
 	c++ $(LFLAGS) -static -o depuraindice $(FDEPURAINDICE) depuraindice.o
 
 
-FOPERAINDICE=$(FBASE) Operaciones.o operaindice.o 
+FOPERAINDICE=$(FBASE) Operaciones.o operaindice.o
 operaindice: $(FOPERAINDICE)
 	c++ $(LFLAGS)  -static -o operaindice /usr/local/lib/libxml2.a $(FOPERAINDICE)
 
@@ -154,7 +156,7 @@ operaindice: $(FOPERAINDICE)
 limpia:
 	rm -f pruebaComun pruebaPos pruebaTrieSDisco pruebaNodoTrieS pruebaRamDisco buscador indexador operaindice txtdeodt unzipuno tomsha256 *.o *~ *.core gmon.out prueba.indice regr/*~ herram/*~ regr/{*~,*.core,*.out,*.relacion,*.indice,*.lista}
 
-desempeno: 
+desempeno:
 	make limpia
 	CFLAGS="-I/usr/local/include -I/usr/X11R6/include -fprofile-arcs -ftest-coverage -p -pg" LFLAGS="-fprofile-arcs -ftest-coverage -p -pg" make indexador operaindice
 	echo `date` >> desempeno.txt
@@ -192,7 +194,7 @@ htdocs/ccdoc.db : htdocs
 		-root SINCODH \
 		-rootfile htdocs/index.html \
 		-html htdocs/
-        
+
 # Create the htdocs directory, if necessary.
 htdocs : ; @mkdir $@
 

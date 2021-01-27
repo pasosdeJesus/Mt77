@@ -30,6 +30,8 @@ using namespace std;
 #include "TrieSDisco.hpp"
 #include "comun.hpp"
 
+#include "compresion/compresion.hpp"
+
 /**
  * Recibe consulta, la analiza y retorna un conjunto de cadenas por
  * buscar con la función realizaBusqueda
@@ -184,7 +186,7 @@ int compDoc(Pos p1, Pos p2)
  * Las cadenas por buscar ya están normalizadas.
  */
 set<uint32_t> *realizaBusqueda(char *indice, set<string> &consulta,
-                                                 vector<Doc> &docs)
+                               vector<Doc> &docs, Arbol_huffman arbolHuffman)
         {
                 set<uint32_t> *res = new set<uint32_t>();
                 set<Pos> *cp = NULL, *cp2 = NULL;
@@ -209,7 +211,7 @@ set<uint32_t> *realizaBusqueda(char *indice, set<string> &consulta,
                                         fstream is(indice, ios_base::in);
                                         verificaIndice(is);
                                         try {
-                                                cp2 = buscaPlanoStream(is, partes[np]);
+                                                cp2 = buscaPlanoStream(is, partes[np], arbolHuffman);
                                         } catch (string m) {
                                                 throw errorFormato(is, m);
                                         }
@@ -548,6 +550,7 @@ int main(int argc, char *argv[])
         cout << "Consulta vacía<br>" << endl;
         exit(1);
         } */
+
         char *f;
         if ((f = strstr(argv[optind], ".indice")) == NULL ||
                         (uint32_t)(f - argv[optind]) != (strlen(argv[optind]) - 7) ) {
@@ -556,13 +559,17 @@ int main(int argc, char *argv[])
                 exit(1);
         }
 
+
         string nc = nombra_resconsulta(cons, argv[optind]);
         //clog << "nc = " << nc << endl;
         vector<uint32_t> *vpos = NULL;
 
+        string archivo_indice = argv[optind];
+        Arbol_huffman arbolHuffman("", archivo_indice + ".tendencia");
+
         //if (!resconsulta_reciente(nc) || sincopiarec) {
         //cerr << "No es reciente " << argv[optind] << endl;
-        set<uint32_t> *cpos = realizaBusqueda(argv[optind], cons, docs);
+        set<uint32_t> *cpos = realizaBusqueda(argv[optind], cons, docs, arbolHuffman);
         //clog << "OJO realizaBusqueda retornó conjunto de tamaño " << cpos->size() << endl;
         vpos = escalafon(cpos, &docs);
         ASSERT(cpos->size() == vpos->size());

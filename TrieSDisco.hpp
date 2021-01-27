@@ -51,6 +51,9 @@ using namespace std;
 
 #include "Pos.hpp"
 #include "Doc.hpp"
+#include "comun.hpp"
+
+#include "compresion/compresion.hpp"
 
 /**
  * Escribe un nodo, con cadena y posiciones donde aparece.
@@ -64,7 +67,10 @@ using namespace std;
  */
 uint32_t
 escribeNodo(iostream &os, string c, set<Pos> *cpos,
-                    uint32_t dhijos, uint32_t desp = 0) ;
+            uint32_t dhijos,
+            Arbol_huffman &arbolHuffman,
+            uint32_t desp = 0
+            );
 
 /**
  * Calcula cuantos bytes requeriría almacenar un nodo con cadena
@@ -98,7 +104,8 @@ precalcula_escribe_actual(uint32_t longcad, set<Pos> *cpos);
  * 	nodo en flujo de entrada.
  */
 uint32_t escribeCopiaNodo(iostream &os, istream &is, uint32_t &phijo,
-                      vector<int64_t>* renum);
+                          vector<int64_t>* renum,
+                          Arbol_huffman &arbolHuffman ) ;
 
 
 /**
@@ -112,7 +119,9 @@ uint32_t escribeCopiaNodo(iostream &os, istream &is, uint32_t &phijo,
  * @return retorna la posición inicial de escritura en os 
  */
 uint32_t escribeCopiaSubarbol(iostream &os, istream &is, bool conHermanos,
-                          vector<int64_t> *renum = NULL);
+                              Arbol_huffman &arbolHuffman,
+                              vector<int64_t> *renum = NULL
+                              ) ;
 
 
 /**
@@ -139,8 +148,9 @@ uint32_t escribeCopiaSubarbol(iostream &os, istream &is, bool conHermanos,
  * 	recorre los subárboles necesarios  de is1 e is2
  */
 uint32_t mezclaRec(istream &is1, istream &is2, iostream &os,
-               bool conHermanos1, bool conHermanos2,
-               vector<int64_t> *renum1, vector<int64_t> *renum2);
+                   bool conHermanos1, bool conHermanos2,
+                   vector<int64_t> *renum1, vector<int64_t> *renum2,
+                   Arbol_huffman &arbolHuffman ) ;
 
 /**
  * Elimina n-esimo documento de is1 dejando resultado en os
@@ -174,7 +184,9 @@ void verificaIndice(istream &is);
  * @return Conjunto de posiciones donde aparece la palabra
  */
 set<Pos> *buscaPlano(const char *na, const char *nrel, string pal, 
-		vector<Doc> &docs);
+                     vector<Doc> &docs,
+                     Arbol_huffman &arbolHuffman
+    );
 
 
 /** Busca una palabra en un índice ya abierto.
@@ -182,7 +194,7 @@ set<Pos> *buscaPlano(const char *na, const char *nrel, string pal,
  * @param pal Palabra por buscar
  * @return Conjunto de posiciones donde aparece la palabra
  **/
-set<Pos> *buscaPlanoStream(std::istream &is, string pal) throw(string);
+set<Pos> *buscaPlanoStream(std::istream &is, string pal, Arbol_huffman &arbolHuffman) throw(string);
 
 
 
@@ -219,8 +231,8 @@ void escribeRelacion(const char *nrel,  vector<Doc> &docs,
  * 
  * @return void 
  */
-void condensadoFlujo(istream &is,  hash_state *md, string precad = "", 
-                bool imprime = false);
+void condensadoFlujo(istream &is,  hash_state *md, Arbol_huffman &arbolHuffman,
+                     string precad = "", bool imprime = false);
 
 
 /**
@@ -232,7 +244,7 @@ void condensadoFlujo(istream &is,  hash_state *md, string precad = "",
  * 
  * @return string 32 bytes hexadececimales
  */
-string condensado(char *indice, bool depura = false);
+string condensado(char *indice, Arbol_huffman &arbolHuffman, bool depura = false);
 
 
 #endif

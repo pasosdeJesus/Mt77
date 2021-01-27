@@ -19,6 +19,8 @@
 #include <iomanip>
 #include <stdint.h>
 
+#include "compresion/compresion.hpp"
+
 #ifdef ASSERT
 #undef ASSERT
 #endif
@@ -125,7 +127,7 @@ std::string errorFormato(std::istream &is, string m);
  * Lee una cadena
  * @param is flujo de entrada
  **/
-string leeCad(istream &is) throw(string);
+string leeCad(istream &is, Arbol_huffman &arbolHuffman) throw(string);
 
 /**
  * Lee un número hexadecimal

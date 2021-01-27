@@ -87,13 +87,15 @@ string determinaFormato(string narch)
 
 
 void
-muestraStream(std::istream &is, string pre) 
+muestraStream(std::istream &is, string pre, Arbol_huffman &arbolHuffman)
 {
         string cad, npre;
         set<Pos> *cpos;
         uint32_t hijo, her;
 
-        cad = leeCad(is);
+        // std::cout << arbolHuffman.toString() << std::endl;
+
+        cad = leeCad(is, arbolHuffman);
         if (cad != "")
         {
                 her = lee128b(is);
@@ -107,35 +109,47 @@ muestraStream(std::istream &is, string pre)
                         is.seekg(hijo);
                         npre = pre;
                         npre += cad;
-                        muestraStream(is, npre);
+                        muestraStream(is, npre, arbolHuffman);
                 }
                 is.seekg(pac);
-                muestraStream(is, pre);
+                muestraStream(is, pre, arbolHuffman);
         }
 }
 
 
-void listaPalabras(char *noma, char *nrel) throw(string)
+/* Presenta listado de palabras del Trie almacenado en el indice noma
+ *
+ * @param noma Nombre del indice
+ * @param nrel Nombre de la relación de archivos indexados en indice noma (si
+ *   es vacio no se imprime)
+ * @param arbolHuffman Arbol con tendencia para compresión
+ */
+void listaPalabras(char *noma, char *nrel, Arbol_huffman &arbolHuffman) throw(string)
 {
         ASSERT(noma != NULL);
         ASSERT(nrel != NULL);
+        ASSERT(!arbolHuffman.vacio());
+
+        // std::cout << arbolHuffman.toString() << std::endl;
 
         vector<Doc> idocs;
-        leeRelacion(nrel, idocs);
+        if (strlen(nrel) > 0) {
+                leeRelacion(nrel, idocs);
 
-        for (uint32_t i = 0; i< idocs.size(); i++) {
-                cout << (i+1) << " " << idocs[i].URL << endl;
+                for (uint32_t i = 0; i< idocs.size(); i++) {
+                        cout << (i+1) << " " << idocs[i].URL << endl;
+                }
         }
 
         fstream is(noma, ios_base::in);
         verificaIndice(is);
-        muestraStream(is, "");
+        muestraStream(is, "", arbolHuffman);
         is.close();
 }
 
 
 void
-eliminaDoc(char *noma, char *nomind, uint32_t nd) throw(string)
+eliminaDoc(char *noma, char *nomind, uint32_t nd, Arbol_huffman arbolHuffman) throw(string)
 {
         ASSERT(nd > 0);
         char nrel1[MAXLURL];
@@ -175,7 +189,7 @@ eliminaDoc(char *noma, char *nomind, uint32_t nd) throw(string)
         is.clear();
 
         os << MARCAIND << endl;
-        escribeCopiaSubarbol(os, is, true, &renum);
+        escribeCopiaSubarbol(os, is, true, arbolHuffman, &renum);
         is.close();
         os.close();
 
@@ -235,7 +249,7 @@ calcRenum(uint32_t td1, uint32_t td2, uint32_t nd, vector<int64_t> *reord,
 
 
 void
-mezclaDosDisco(const char *indsal, const char *ind1, const char *ind2,
+mezclaDosDisco(const char *indsal, const char *ind1, const char *ind2, Arbol_huffman &arbolHuffman,
                uint32_t nd)  throw(string)
 {
         ASSERT(nd >= 0);
@@ -293,7 +307,7 @@ mezclaDosDisco(const char *indsal, const char *ind1, const char *ind2,
 
         //clog << "OJO después de verificar" << endl;
         os << MARCAIND << endl;
-        mezclaRec(is1, is2, os, true, true, renum1, &renum2);
+        mezclaRec(is1, is2, os, true, true, renum1, &renum2, arbolHuffman);
         //clog << "OJO después de mezclaRec" << endl;
         is1.close();
         is2.close();
@@ -376,7 +390,7 @@ agregaDoc(const char *indsal, const char *inden, const char *nom,
 */
 
 void
-subindice(const char *ind, const char *salida, uint32_t nd)
+subindice(const char *ind, const char *salida, uint32_t nd, Arbol_huffman &arbolHuffman)
 {
         char nrel[MAXLURL];
         char nrelsal[MAXLURL];
@@ -409,12 +423,5 @@ subindice(const char *ind, const char *salida, uint32_t nd)
         subindiceDiscoaRAM(is1, &t, nd);
         is1.close();
 
-        escribePlano(t, docsal, salida, nrelsal);
+        escribePlano(t, docsal, salida, nrelsal, arbolHuffman);
 }
-
-
-
-
-
-
-

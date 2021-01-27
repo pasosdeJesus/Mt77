@@ -34,7 +34,6 @@
 
 #include "comun.hpp"
 
-
 /**
  * Divide una cadena de acuerdo a un delimitador
  * http://www.zedwood.com/article/106/cpp-explode-function
@@ -109,7 +108,7 @@ std::string errorFormato(std::istream &is, string m)
 
 /** Lee de un stream una cadena vacía (si el stream no puede leerse) o
  * terminada con { o de MAXCAD caracteres*/
-string leeCad(std::istream &is) throw(string)
+string leeCad(std::istream &is, Arbol_huffman &arbolHuffman) throw(string)
 {
         int c = is.get();
         string cad = "";
@@ -130,7 +129,13 @@ string leeCad(std::istream &is) throw(string)
 
                 throw errorFormato(is, string("Se esperaba ") + FINCADENA);
         }
-        return cad;
+
+        // return cad;
+
+        // std::cout<<"cadena comprimida : " << cad << std::endl;
+        std::string cadena_desc = arbolHuffman.descomprimir(cad);
+        // std::cout<<"cadena descomprimida : " << cadena_desc << std::endl;
+        return cadena_desc;
 }
 
 /** Lee un número hexadecimal */

@@ -22,6 +22,7 @@
 #include "TrieSDisco.hpp"
 #include <stdint.h>
 
+#include "compresion/compresion.hpp"
 
 using namespace std;
 
@@ -47,7 +48,8 @@ precalcula_escribe(NodoTrieS *n);
  * Después hijos del menor al mayor.
  **/
 void
-escribePlanoStream(NodoTrieS *n, std::ostream &os, uint32_t desp = 0);
+escribePlanoStream(NodoTrieS *n, std::ostream &os,
+                   Arbol_huffman arbolHuffman, uint32_t desp = 0);
 
 
 /** Lee un trieS de un stream donde está almacenado en formato
@@ -66,7 +68,8 @@ leePlanoStream(std::istream &is) throw(string);
  * @param nrel Nombre del archivo por generar con relación de documentos
  */
 void
-escribePlano(NodoTrieS &t, vector<Doc> &docs, const char *na, const char *nrel);
+escribePlano(NodoTrieS &t, vector<Doc> &docs, const char *na, const char *nrel,
+             Arbol_huffman &arbolHuffman);
 
 /** Lee un trieS de un archivo de nombre na donde está almacenado.
  * Retorna vector de documentos indexados en idocs.
@@ -123,7 +126,8 @@ renumeraUltimoDoc(char *na, char *nrel, uint64_t nd);
 uint32_t
 mezclaDiscoRam(istream &is1, NodoTrieS *a2, int saltacad, iostream &os,
                bool conHermanos1, bool conHermanos2,
-               vector<int64_t> *renum1, vector<int64_t> *renum2);
+               vector<int64_t> *renum1, vector<int64_t> *renum2,
+               Arbol_huffman &arbolHuffmanLectura, Arbol_huffman &arbolHuffmanEscritura);
 
 
 /**
