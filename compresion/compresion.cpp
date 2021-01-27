@@ -2,24 +2,24 @@
 #include "compresion.hpp"
 
 /*
-Begin
+Inicio
    definir un nodo con caracter, frecuencia, e hijo izquierdo y derecho.
-   create a list ‘freq’ to store frequency of each character, initially, all are 0
-   for each character c in the string do
-      increase the frequency for character ch in freq list.
-   done
+   crear una lista de frecuencia para cada caracter, inicialmente todos estan en 0
+   para cada caracter c en la cadena hacer
+      incrementar la frecuancia de cada caracter ch en la lista de frecuencias
+   terminado
 
-   for all type of character ch do
-      if the frequency of ch is non zero then
-         add ch and its frequency as a node of priority queue Q.
-   done
+   para cada tipo de caracter hacer
+      si la frecuencia de ch no es 0, entonces
+         agregar ch y su frecuencia como un nodo a la cola de prioridad Q
+   terminado
 
-   while Q is not empty do
-      remove item from Q and assign it to left child of node
-      remove item from Q and assign to the right child of node
-      traverse the node to find the assigned code
-   done
-End
+   mientras Q no este vacio hacer
+      eliminar elemento de Q y asignarlo al hijo izquierdo del nodo
+      eliminar elemento de Q y asignarlo al hijo derecho del nodo
+      pasar al siguiente nodo para encontrar el codigo asignado
+   terminado
+Fin
 */
 
 void sumarMapas(std::map<char, int> &map1, std::map<char, int> map2) {
@@ -153,6 +153,9 @@ std::string Arbol_huffman::descomprimir(std::string binCodigo) {
         desc += _descomprimir(this->raiz, codigo.substr(posicion), posicion);
     }
 
+    // std::cout << "palabra: " << desc << std::endl;
+    // std::cout << "codigo: " << codigo << std::endl;
+    // std::cout << "sobrante: " << codigo.substr(posicion) << std::endl;
     return desc;
 }
 
@@ -197,6 +200,7 @@ void Arbol_huffman::_imprimirPreOrden(std::shared_ptr<nodo_arbol_huffman> nah,
         _imprimirPreOrden(nah->hijo_d, depth + 1);
 }
 
+// No debe retornar una cadena que incluya '{'
 std::string Arbol_huffman::comprimir(std::string cadena) {
     this->conseguirCodigos();
     std::string binString = "";
