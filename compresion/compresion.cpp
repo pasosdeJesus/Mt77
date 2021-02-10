@@ -35,7 +35,6 @@ void imprimirMapa(std::map<char, int> &tendencia) {
     }
 }
 
-
 nodo_arbol_huffman::nodo_arbol_huffman(char valor, int tendencia) {
     this->valor = valor;
     this->tendencia = tendencia;
@@ -138,6 +137,12 @@ void Arbol_huffman::_conseguirCodigos(std::shared_ptr<nodo_arbol_huffman> nah,
 }
 
 std::string Arbol_huffman::descomprimir(std::string binCodigo) {
+    // en caso de no haber arbol, no es posible descomprimir cadenas
+    if (this->raiz == nullptr)
+    {
+        return binCodigo;
+    }
+
     std::string codigo = "";
     // convertir cada caracter a su representacion binaria
     for (char c : binCodigo) {
