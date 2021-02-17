@@ -154,7 +154,7 @@ void Arbol_huffman::_conseguirCodigos(std::shared_ptr<nodo_arbol_huffman> nah,
 
 std::string Arbol_huffman::descomprimir(std::string binCodigo) {
     // en caso de no haber arbol, no es posible descomprimir cadenas
-    if (this->raiz == nullptr || binCodigo.empty())
+    if (this->raiz == nullptr || binCodigo.empty()) {
         return binCodigo;
     }
 
