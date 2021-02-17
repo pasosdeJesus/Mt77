@@ -93,20 +93,20 @@ escribePlanoStream(NodoTrieS *n, std::iostream &os,
         tn = n;
         uint32_t pactual = 0;  // Posición actual desde comienzo de grupo de hermanos
         //cout << "escribePlanoStream de: " << endl; n->aDotty(cerr, "");
-        while (tn != NULL && tn->cad.length() > 0) {
+        while (tn != NULL && tn->valorCad().length() > 0) {
                 if (tn->hijo_menor != NULL) {
                         dhijo = dultimo - pactual;
                         dultimo += precalcula_escribe(tn->hijo_menor);
                 } else {
                         dhijo = 0;
                 }
-                //cout << "dultimo=" << dultimo << ", pactual=" << pactual << ", os.tellp=" << os.tellp() << ". Por llamar escribeNodo(ss, " << tn->cad << ", " << (tn->cpos).size() << ", " << dhijo << ")" << endl;
-                escribeNodo(os, tn->cad, &(tn->cpos), dhijo, arbolHuffman, desp);
+                //cout << "dultimo=" << dultimo << ", pactual=" << pactual << ", os.tellp=" << os.tellp() << ". Por llamar escribeNodo(ss, " << tn->valorCad() << ", " << (tn->cpos).size() << ", " << dhijo << ")" << endl;
+                escribeNodo(os, tn->valorCad(), &(tn->cpos), dhijo, arbolHuffman, desp);
                 //cout << "ret = " << r << endl;
                 if (depuraos != NULL) {
                         cout << depuraos->str() << endl;
                 }
-                pactual += precalcula_escribe_actual((tn->cad).length(),
+                pactual += precalcula_escribe_actual((tn->valorCad()).length(),
                                                      &(tn->cpos));
                 tn = tn->hermano_mayor;
         }
@@ -358,7 +358,7 @@ mezclaDiscoRam(istream &is1, NodoTrieS *a2, int saltacad, iostream &os,
         if (a2 != NULL) {
                 //clog << "OJO a2->cad.substr(saltacad)=" << a2->cad.substr(saltacad) << endl;
         }
-        for (cad1=leeCad(is1, arbolHuffmanLectura), cad2=(a2 != NULL ? a2->cad.substr(saltacad) : ""),
+        for (cad1=leeCad(is1, arbolHuffmanLectura), cad2=(a2 != NULL ? a2->valorCad().substr(saltacad) : ""),
                         numhermanos = 0;
                         (cad1!="" && (conHermanos1 || n1==0)) ||
                         (cad2!="" && (conHermanos2 || n2==0));
@@ -428,7 +428,7 @@ mezclaDiscoRam(istream &is1, NodoTrieS *a2, int saltacad, iostream &os,
                                         escribeNodo(os, cad2, cp, 0, arbolHuffmanEscritura);
                                 delete cp;
                                 a2 = a2->hermano_mayor;
-                                cad2 = (a2 != NULL) ? a2->cad : "";
+                                cad2 = (a2 != NULL) ? a2->valorCad() : "";
                                 n2++;
                         }
                 } else if (cad1 == cad2) { // Hay prefijo c != "" && cad1!="" && cad2!=""
@@ -460,7 +460,7 @@ mezclaDiscoRam(istream &is1, NodoTrieS *a2, int saltacad, iostream &os,
                         cad1 = leeCad(is1, arbolHuffmanLectura);
                         n1++;
                         a2 = a2->hermano_mayor;
-                        cad2 = (a2 != NULL) ? a2->cad : "";
+                        cad2 = (a2 != NULL) ? a2->valorCad() : "";
                         n2++;
                 } else { // hay prefijo c != "" && cad1!="" && cad2!="" && cad1!=cad2
                         string r1 = cad1.substr(c.size());
@@ -549,7 +549,7 @@ mezclaDiscoRam(istream &is1, NodoTrieS *a2, int saltacad, iostream &os,
                         }
                         cad1=leeCad(is1, arbolHuffmanLectura);
                         n1++;
-                        cad2=(a2 != NULL ? a2->cad : "");
+                        cad2=(a2 != NULL ? a2->valorCad() : "");
                         n2++;
                 }
         }

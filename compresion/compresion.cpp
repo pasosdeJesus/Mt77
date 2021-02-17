@@ -21,13 +21,30 @@ Inicio
    terminado
 Fin
 */
+void Arbol_huffman::restarCadenaAMapa(std::map<char, int> &mapa, std::string cad) {
+    for (char c : cad) {
+        mapa[c] --;
+        if (mapa[c] == 0) {
+            mapa.erase(c);
+        }
+    }
+}
 
-void sumarMapas(std::map<char, int> &map1, std::map<char, int> map2) {
+void Arbol_huffman::sumarMapas(std::map<char, int> &map1, std::map<char, int> map2) {
     for (std::pair<char, int> p: map2) {
         // si ya existe lo suma, de lo contrario lo crea
         map1[p.first] ? map1[p.first] += p.second : map1[p.first] = p.second ;
     }
 }
+
+std::map<char, int> Arbol_huffman::cadenaAMapa(std::string cadena) {
+    std::map<char, int> tendencia;
+    for (char c : cadena) {
+        tendencia[c] ? tendencia[c]++ : tendencia[c] = 1;
+    }
+    return tendencia;
+}
+
 
 void imprimirMapa(std::map<char, int> &tendencia) {
     for (std::pair<char, int> v : tendencia) {
@@ -68,30 +85,20 @@ bool Arbol_huffman::vacio() {
 }
 
 Arbol_huffman::Arbol_huffman(std::map<char, int> tendencia, std::string archivo) {
-    if (!archivo.empty()) {
-        sumarMapas(tendencia, Arbol_huffman::cargar(archivo));
-    }
-    this->construirArbol(tendencia);
+    this->construirArbol(tendencia, archivo);
 }
 
 Arbol_huffman::Arbol_huffman(std::string cadena, std::string archivo) {
-
     // tendencia de cada caracter
-    std::map<char, int> tendencia;
-
-    for (char c : cadena) {
-        tendencia[c] ? tendencia[c]++ : tendencia[c] = 1;
-    }
-    if (!archivo.empty()) {
-        sumarMapas(tendencia, Arbol_huffman::cargar(archivo));
-    }
-
-    this->construirArbol(tendencia);
+    std::map<char, int> tendencia = Arbol_huffman::cadenaAMapa(cadena);
+    this->construirArbol(tendencia, archivo);
 }
 
-void Arbol_huffman::construirArbol(std::map<char, int> tendencia) {
+void Arbol_huffman::construirArbol(std::map<char, int> tendencia, std::string archivo) {
 
-    // imprimirMapa(tendencia);
+    if (!archivo.empty()) {
+        Arbol_huffman::sumarMapas(tendencia, Arbol_huffman::cargar(archivo));
+    }
 
     this->tendencias = tendencia;
 
@@ -138,7 +145,7 @@ void Arbol_huffman::_conseguirCodigos(std::shared_ptr<nodo_arbol_huffman> nah,
 
 std::string Arbol_huffman::descomprimir(std::string binCodigo) {
     // en caso de no haber arbol, no es posible descomprimir cadenas
-    if (this->raiz == nullptr)
+    if (this->raiz == nullptr || binCodigo.empty())
     {
         return binCodigo;
     }
@@ -149,19 +156,23 @@ std::string Arbol_huffman::descomprimir(std::string binCodigo) {
         std::bitset<8> btc(c);
         codigo += btc.to_string();
     }
+
+    return binarioACadena(codigo);
+}
+
+std::string Arbol_huffman::binarioACadena(std::string binario)
+{
+    std::string cadena = "";
     std::string desc = "";
     int posicion = 0;
     // cada caracter empieza con '1', por lo que hay que revisar que
     // no se empiece con '0', ya que eso seria relleno para compretar el byte
-    while (codigo.length() > posicion && codigo[posicion] != '0') {
+    while (binario.length() > posicion && binario[posicion] != '0') {
         posicion++;
-        desc += _descomprimir(this->raiz, codigo.substr(posicion), posicion);
+        cadena += _descomprimir(this->raiz, binario.substr(posicion), posicion);
     }
 
-    // std::cout << "palabra: " << desc << std::endl;
-    // std::cout << "codigo: " << codigo << std::endl;
-    // std::cout << "sobrante: " << codigo.substr(posicion) << std::endl;
-    return desc;
+    return cadena;
 }
 
 char Arbol_huffman::_descomprimir(std::shared_ptr<nodo_arbol_huffman> nah,
@@ -271,11 +282,17 @@ std::map<char, int> Arbol_huffman::cargar(std::string nombre) {
     std::map<char, int> tendencia;
     std::ifstream archivo(nombre);
 
+    if (!archivo) {
+        return tendencia;
+    }
+
     std::string cadena;
     char valor;
 
     // contador de caracteres SEPARADOR
     int contSep = 0;
+
+
     while (archivo.get(valor)) {
         cadena += valor;
 

@@ -65,6 +65,11 @@ NodoTrieS::NodoTrieS(string cad, NodoTrieS *hijo_menor,
         this->hijo_menor = hijo_menor;
         this->hermano_mayor = hermano_mayor;
         this->cpos = cpos;
+        this->tendencia = Arbol_huffman::cadenaAMapa(cad);
+        if (hijo_menor != NULL)
+                Arbol_huffman::sumarMapas(this->tendencia, hijo_menor->tendencia);
+        if (hermano_mayor != NULL)
+                Arbol_huffman::sumarMapas(this->tendencia, hermano_mayor->tendencia);
 }
 
 
@@ -83,8 +88,22 @@ NodoTrieS::NodoTrieS(string cad, NodoTrieS *hijo_menor,
         if (p.numd >= 0 && p.numb >= 0) {
                 cpos.insert(p);
         }
+        this->tendencia = Arbol_huffman::cadenaAMapa(cad);
+        if (hijo_menor != NULL)
+                Arbol_huffman::sumarMapas(this->tendencia, hijo_menor->tendencia);
+        if (hermano_mayor != NULL)
+                Arbol_huffman::sumarMapas(this->tendencia, hermano_mayor->tendencia);
 }
 
+void NodoTrieS::modificarCad(string cad) {
+        Arbol_huffman::restarCadenaAMapa(this->tendencia, cad);
+        this->cad = cad;
+        Arbol_huffman::sumarMapas( this->tendencia, Arbol_huffman::cadenaAMapa(cad));
+}
+
+string NodoTrieS::valorCad() {
+        return this->cad;
+}
 
 NodoTrieS::~NodoTrieS()
 {
@@ -174,10 +193,10 @@ NodoTrieS::inserta(string pal, set<Pos> *npos)
 {
         // sumar la tendencia de las nuevas palabras agregadas, de manera que se pueda
         // conocer la tendencia total de todas las letras en el NodoTrieS
-        for( char c : pal)
-        {
-            this->tendencia[c] ? this->tendencia[c]++ : this->tendencia[c] = 1;
-        }
+        Arbol_huffman::sumarMapas(
+                        this->tendencia,
+                        Arbol_huffman::cadenaAMapa(pal)
+                        );
 
         // clog << "insertando la palabra: " << pal << std::endl;
         //cerr << "OJO " << "inserta("<< pal << ", "<< p << ")" << endl;
@@ -423,7 +442,7 @@ mezcla(NodoTrieS *a1, NodoTrieS *a2)
                         //cerr << "hay posfijo r1="<<r1<<" r2="<<r2<<endl;
                         if (r1=="") {
                                 //cerr << "r1 vacio"<<endl;
-                                a2->cad = r2;
+                                a2->modificarCad(r2);
                                 n2=a2;
                                 a2=a2->hermano_mayor;
                                 n2->hermano_mayor = NULL;
@@ -442,7 +461,7 @@ mezcla(NodoTrieS *a1, NodoTrieS *a2)
                                 //cerr << "r2 vacio"<<endl;
                                 n1=a1;
                                 a1=a1->hermano_mayor;
-                                n1->cad = r1;
+                                n1->modificarCad( r1);
                                 n1->hermano_mayor = NULL;
                                 NodoTrieS *m = mezcla(n1, a2->hijo_menor);
                                 n1=NULL;
@@ -456,8 +475,8 @@ mezcla(NodoTrieS *a1, NodoTrieS *a2)
                                 delete t;
                         } else if (r1 < r2) {
                                 //cerr << "r1<r2"<<endl;
-                                a1->cad = r1;
-                                a2->cad = r2;
+                                a1->modificarCad( r1);
+                                a2->modificarCad( r2);
                                 n1=a1;
                                 a1=a1->hermano_mayor;
                                 n2=a2;
@@ -468,8 +487,8 @@ mezcla(NodoTrieS *a1, NodoTrieS *a2)
                                 r=&((*r)->hermano_mayor);
                         } else { /* r2<r1 */
                                 //cerr << "r2<r1"<<endl;
-                                a1->cad = r1;
-                                a2->cad = r2;
+                                a1->modificarCad( r1);
+                                a2->modificarCad( r2);
                                 n1=a1;
                                 a1=a1->hermano_mayor;
                                 n2=a2;

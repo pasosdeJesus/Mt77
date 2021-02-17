@@ -46,31 +46,35 @@ public:
 class Arbol_huffman {
 
     // nodo inicial del arbol
-	std::shared_ptr<nodo_arbol_huffman> raiz;
+    std::shared_ptr<nodo_arbol_huffman> raiz;
     // caracter con su respectivo codigo binario (como un string)
     std::map<char, std::string> simbolos;
     // tendencia de cada caracter
     std::map<char, int> tendencias;
 
-	void _conseguirCodigos(std::shared_ptr<nodo_arbol_huffman> nah, std::string codigo);
+    void _conseguirCodigos(std::shared_ptr<nodo_arbol_huffman> nah, std::string codigo);
 
-	char _descomprimir(std::shared_ptr<nodo_arbol_huffman> nah,
-					   std::string codigo,
-					   int &posicion
-		);
+    char _descomprimir(std::shared_ptr<nodo_arbol_huffman> nah,
+            std::string codigo,
+            int &posicion
+            );
 
     void _imprimirPreOrden(std::shared_ptr<nodo_arbol_huffman> nah, int depth);
 
     // construye un arbol de huffman con base a un mapa de tendencias
     // realiza el trabajo principal
-    void construirArbol(std::map<char, int> tendencia);
+    void construirArbol(std::map<char, int> tendencia, std::string archivo);
 
     std::string _toString(std::shared_ptr<nodo_arbol_huffman> nah);
 
     // consigue los codigos binarios para cada caracter
-	void conseguirCodigos();
+    void conseguirCodigos();
 
 public:
+
+
+    std::string binarioACadena(std::string binario);
+
     // construye un arbol vacio
     Arbol_huffman();
 
@@ -110,6 +114,13 @@ public:
 
     // retorna true en caso de estar vacio el arbol
     bool vacio();
+
+    // agrega el segundo mapa al primer mapa
+    static void sumarMapas(std::map<char, int> &map1, std::map<char, int> map2);
+
+    static std::map<char, int> cadenaAMapa(std::string cadena);
+
+    static void restarCadenaAMapa(std::map<char, int> &mapa, std::string cad);
 
 };
 
