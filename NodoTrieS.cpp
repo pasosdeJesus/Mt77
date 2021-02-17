@@ -201,10 +201,10 @@ NodoTrieS::inserta(string pal, set<Pos> *npos)
         // clog << "insertando la palabra: " << pal << std::endl;
         // sumar la tendencia de las nuevas palabras agregadas, de manera que se pueda
         // conocer la tendencia total de todas las letras en el NodoTrieS
-        for( char c : pal)
-        {
-            this->tendencia[c] ? this->tendencia[c]++ : this->tendencia[c] = 1;
-        }
+        Arbol_huffman::sumarMapas(
+                        this->tendencia,
+                        Arbol_huffman::cadenaAMapa(pal)
+                        );
 
         //cerr << "OJO " << "inserta("<< pal << ", "<< p << ")" << endl;
         if (pal == cad) {
