@@ -267,6 +267,10 @@ int main(int argc, char *argv[])
 
         // Se va escribiendo en estos dos archivos a medida que se procesa cada grupo
         // de archivos de entrada.
+        
+        ofstream archivo(archivo_tendencia, ios::out | ios::app);
+        archivo.close();
+
 
         string tipo = "otro";
         string formato;
@@ -312,7 +316,7 @@ int main(int argc, char *argv[])
                         // pertenece al contenido de is1
                         Arbol_huffman arbolHuffmanLectura("", nomi[ (g + 1) % 2 ] + ".tendencia");
                         // pertenece al contenido del arbol t
-                        Arbol_huffman arbolHuffmanEscritura(t->conseguirTendencia()); //, nomi[ (g + 1) % 2 ] + ".tendencia");
+                        Arbol_huffman arbolHuffmanEscritura(t->conseguirTendencia(), nomi[ (g + 1) % 2 ] + ".tendencia"); //, nomi[ (g + 1) % 2 ] + ".tendencia");
 
                         // std::cout << arbolHuffmanEscritura.toString() << std::endl;
 

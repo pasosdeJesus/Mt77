@@ -96,8 +96,7 @@ int main(int argc, char *argv[])
 
         if (((strcmp(argv[1], "lista") == 0 ||
                 strcmp(argv[1], "grafo") == 0 ||
-                strcmp(argv[1], "condensado") == 0) &&
-                argc != 3) ||
+                strcmp(argv[1], "condensado") == 0) && argc != 3) ||
                 (strcmp(argv[1], "subindice") == 0 && argc != 5) ||
                 (strcmp(argv[1], "eliminadoc") == 0 && argc != 5) ||
                 (strcmp(argv[1], "mezclaram") == 0 && argc < 5) ||
@@ -133,7 +132,7 @@ int main(int argc, char *argv[])
                         string nombre_tendencia = noma;
                         nombre_tendencia += ".tendencia";
 
-                        std::clog << "archivo tendencia" << nombre_tendencia << std::endl;
+                        // std::clog << "archivo tendencia" << nombre_tendencia << std::endl;
 
                         Arbol_huffman arbolHuffman2("", nombre_tendencia);
                         listaPalabras(noma, nrel, arbolHuffman2);
@@ -160,6 +159,7 @@ int main(int argc, char *argv[])
                         }
 
                         Arbol_huffman arbolHuffman(t->conseguirTendencia());
+                        arbolHuffman.guardar( string(argv[2]) + ".tendencia");
                         //cerr<<"idocs.size="<<idocs.size()<<endl;
                         verificaNombre(noma, nrel);
                         escribePlano(*t, docs2, noma, nrel, arbolHuffman);

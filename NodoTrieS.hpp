@@ -71,11 +71,17 @@ class NodoTrieS
                                                     NodoTrieS **phijo,
                                                     vector<int64_t>* renum,
                                                     Arbol_huffman &arbolHuffman);
+                string cad;
         public:
                 set<Pos> cpos; //< Referencia a posiciones de esta palabra
-                string cad;
                 NodoTrieS *hijo_menor; 	//< Lista de hijos
                 NodoTrieS *hermano_mayor; //< Lista de hijos
+
+                // modifica el valor de cad
+                void modificarCad(string cad);
+
+                // conseguir el valor de cad
+                string valorCad();
 
                 /** Constructora.
                  * Responsabilidad de liberar hijo_menor y hermano_mayor pasa a

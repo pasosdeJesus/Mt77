@@ -36,7 +36,7 @@ void uso()
         exit(1);
 }
 
-int examina(istream &is, long p)
+int examina(istream &is, long p, Arbol_huffman &arbolHuffman)
 {
         string cad;
         long hermano = 0, hijo = 0;
@@ -66,9 +66,9 @@ int examina(istream &is, long p)
                 }
                 cin >> cmd;
                 if ((cmd == "hijo" || cmd == "i") && hijo > 0) {
-                        sigue = examina(is, hijo);
+                    sigue = examina(is, hijo, arbolHuffman);
                 } else if ((cmd == "hermano" || cmd == "e") && hermano > 0) {
-                        sigue = examina(is, hermano);
+                    sigue = examina(is, hermano, arbolHuffman);
                 } else if ((cmd == "anterior" || cmd == "a")) {
                         return 1;
                 }
@@ -82,12 +82,14 @@ int main(int argc, char *argv[])
 
         bool calcondensado = false;
         int ch;
+
+        Arbol_huffman arbolHuffman;
         while ((ch = getopt(argc, argv, "cd")) != -1) {
                 switch (ch) {
                         case 'c':
                                 calcondensado = true;
                                 break;
- 
+
                         default:
                                 uso();
                 }
@@ -112,7 +114,7 @@ int main(int argc, char *argv[])
                 clog << "Verificando que es indice" << endl;
                 verificaIndice(is);
                 clog << "Examinando" << endl;
-                examina(is, is.tellg());
+                examina(is, is.tellg(), arbolHuffman);
                 is.close();
         }
 
