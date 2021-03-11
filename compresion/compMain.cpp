@@ -5,11 +5,6 @@ int main() {
 
     // prueba(); return 0;
 
-    std::string cadenas[] = {
-        "hola, que hacee:ee\\\\\\eeeeeeeeeeeeeeeeeeeeeeeeee\n"
-        , "algÈÞesoµ½esto×"
-        , "abcdefghijklmnopqrstuvwxyz"
-    };
 
     // antes de guardar -- reconstruir arbol huffman
 

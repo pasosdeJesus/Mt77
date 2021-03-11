@@ -82,6 +82,10 @@ FPRUEBARAMDISCO=comun.o Elias.o Pos.o Doc.o sha256.o NodoTrieS.o TrieSDisco.o Ra
 pruebaRamDisco: $(FPRUEBARAMDISCO)
 	c++ $(LFLAGS) -L/usr/local/lib -lcppunit -o $(.TARGET) $(FPRUEBARAMDISCO)
 
+FPRUEBACOMPRESION=compresion/compresion.o compresion/pruebas.o
+pruebaCompresion: $(FPRUEBACOMPRESION)
+	c++ $(LFLAGS) -L/usr/local/lib -lcppunit -o $(.TARGET) $(FPRUEBACOMPRESION)
+
 funzipuno.o: funzipuno.hpp funzipuno.cpp
 
 unzipuno.o: funzipuno.hpp funzipuno.o unzipuno.cpp
@@ -105,6 +109,7 @@ Pos.o: comun.hpp Pos.hpp Pos.cpp
 Doc.o: comun.hpp Doc.hpp Doc.cpp
 
 compresion/compresion.o: compresion/compresion.hpp compresion/compresion.cpp
+compresion/pruebas.o: compresion/compresion.o compresion/pruebas.hpp compresion/pruebas.cpp
 
 comun.o: compresion/compresion.o comun.hpp comun.cpp
 
