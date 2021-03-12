@@ -12,7 +12,7 @@
 #define CPP_UNIT_ELIASCASOPRUEBA_HPP
 
 #include <cppunit/extensions/HelperMacros.h>
-
+#include "compresion/compresion.hpp"
 
 class EliasCasoPrueba : public CPPUNIT_NS::TestFixture
 {

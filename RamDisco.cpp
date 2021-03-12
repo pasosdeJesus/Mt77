@@ -81,7 +81,7 @@ extern stringstream *depuraos ;
  **/
 void
 escribePlanoStream(NodoTrieS *n, std::iostream &os,
-                   Arbol_huffman arbolHuffman, uint32_t desp)
+                   Arbol_huffman &arbolHuffman, uint32_t desp)
 {
 
         NodoTrieS *tn;

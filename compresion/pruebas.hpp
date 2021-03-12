@@ -23,11 +23,16 @@ class CompresionTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(pruebaSumarMapas);
     CPPUNIT_TEST(pruebaRestarCadenaAMapa);
     CPPUNIT_TEST(pruebaConseguirTendencias);
+    CPPUNIT_TEST(pruebaCadenaAMapa) ;
+    CPPUNIT_TEST(pruebaDescompresionArbolVacio) ;
 
     CPPUNIT_TEST_SUITE_END();
 public:
     void setUp();
-protected:
+private:
+
+    std::vector<std::string> cadenas;
+
     // void setUp();
     // void tearDown();
 
@@ -51,6 +56,8 @@ protected:
     void pruebaRestarCadenaAMapa() ;
 
     void pruebaConseguirTendencias() ;
+
+    void pruebaDescompresionArbolVacio() ;
 
     // utilidades generales
 

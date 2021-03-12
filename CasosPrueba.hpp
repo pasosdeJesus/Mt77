@@ -11,6 +11,8 @@
 #if !defined(CasosPrueba_hpp)
 #define CasosPrueba_hpp
 
+#include "compresion/compresion.hpp"
+
 // Indices de prueba
 const string ps1 = "a{0000=00000}";
 const string ps2 = "a{0000?00000\x80\x80}";
@@ -39,7 +41,7 @@ const string ps15=  MARCAIND + "\n" +
 /** Auxiliar para llenar un stringstream con la representación plana
  * de un NodoTrieS
  */
-inline void llena_ss(std::stringstream &ss, NodoTrieS *n, string pref = "")
+inline void llena_ss(std::stringstream &ss, NodoTrieS *n, Arbol_huffman &ah, string pref = "")
 {
         ss.clear();
         ss.str("");
@@ -47,7 +49,7 @@ inline void llena_ss(std::stringstream &ss, NodoTrieS *n, string pref = "")
         ss.seekg(0);
         ss.clear();
         ss << pref;
-        escribePlanoStream(n, ss, 0);
+        escribePlanoStream(n, ss, ah, 0);
         ss.seekg(0);
 }
 

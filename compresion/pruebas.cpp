@@ -8,6 +8,9 @@
 #define ARCHIVO_PRUEBA "compresion_archivo_prueba.txt"
 
 
+// Registers the fixture into the 'registry'
+CPPUNIT_TEST_SUITE_REGISTRATION( CompresionTest );
+
 int main (int argc, char* argv[])
 {
     // Create the event manager and test controller
@@ -33,12 +36,10 @@ int main (int argc, char* argv[])
     return result.wasSuccessful() ? 0 : 1;
 }
 
-// Registers the fixture into the 'registry'
-CPPUNIT_TEST_SUITE_REGISTRATION( CompresionTest );
-
 // void CompresionTest::testBinarioACadena() {
 //
 // }
+
 
 void CompresionTest::equalString(const std::string &str1, const std::string &str2) {
     // std::cout << std::endl << str1 << " == " << str2 << std::endl;
@@ -46,6 +47,12 @@ void CompresionTest::equalString(const std::string &str1, const std::string &str
 }
 
 void CompresionTest::setUp() {
+    this->cadenas = {
+        "hola, que hacee:ee\\\\\\eeeeeeeeeeeeeeeeeeeeeeeeee\n"
+            , "algÈÞesoµ½esto×"
+            , "abcdefghijklmnopqrstuvwxyz"
+            };
+
 }
 
 // cargar varios strings al arbol
@@ -59,16 +66,12 @@ void CompresionTest::pruebaComprimirDescomprimir(Arbol_huffman ah, std::string c
     std::string comp = ah.comprimir(cadena);
     std::string desc = ah.descomprimir(comp);
 
+    // std::cout << std::endl << desc << " == " << cadena << std::endl;
     equalString(desc, cadena);
 }
 
 void CompresionTest::pruebaCadenasCompresion() {
-    std::string cadenas[] = {
-        "hola, que hacee:ee\\\\\\eeeeeeeeeeeeeeeeeeeeeeeeee\n"
-        , "algÈÞesoµ½esto×"
-        , "abcdefghijklmnopqrstuvwxyz"
-    };
-    for (std::string c : cadenas)
+    for (std::string c : this->cadenas)
     {
         Arbol_huffman ah(c);
         CPPUNIT_ASSERT(!ah.vacio());
@@ -77,13 +80,8 @@ void CompresionTest::pruebaCadenasCompresion() {
 }
 
 void CompresionTest::pruebaAgregarCadenasACompresion() {
-    std::string cadenas[] = {
-        "hola, que hacee:ee\\\\\\eeeeeeeeeeeeeeeeeeeeeeeeee\n"
-        , "algÈÞesoµ½esto×"
-        , "abcdefghijklmnopqrstuvwxyz"
-    };
     std::string cadena = "";
-    for (std::string c : cadenas)
+    for (std::string c : this->cadenas)
     {
         cadena += c;
         // un mismo arbol solo puede comprimir a un unico archivo
@@ -94,7 +92,7 @@ void CompresionTest::pruebaAgregarCadenasACompresion() {
 }
 
 void CompresionTest::pruebaCargarArchivo() {
-    std::string cadena = "hola, que hacee:ee\\\\\\eeeeeeeeeeeeeeeeeeeeeeeeee\n";
+    std::string cadena = this->cadenas[0];
     Arbol_huffman ah(cadena);
     ah.guardar(ARCHIVO_PRUEBA);
 
@@ -103,7 +101,28 @@ void CompresionTest::pruebaCargarArchivo() {
     equalString(ah.toString(), ah2.toString());
 }
 
-void CompresionTest::pruebaCadenaAMapa() {}
+void CompresionTest::pruebaDescompresionArbolVacio() {
+    Arbol_huffman ah;
+    for (std::string c : this->cadenas)
+    {
+        // std::cout << c << std::endl;
+        pruebaComprimirDescomprimir(ah,c);
+    }
+}
+
+void CompresionTest::pruebaCadenaAMapa() {
+
+    std::map<char, int> mapaCaracteres {
+        {'a', 2},
+        {'b', 3},
+        {'c', 4}
+    };
+    std::string cadena = "aabbbcccc";
+    CPPUNIT_ASSERT(
+        Arbol_huffman::cadenaAMapa(cadena) == mapaCaracteres
+        );
+
+}
 void CompresionTest::pruebaSumarMapas() {}
 void CompresionTest::pruebaRestarCadenaAMapa() {}
 void CompresionTest::pruebaConseguirTendencias() {}

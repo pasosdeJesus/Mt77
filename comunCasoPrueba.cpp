@@ -88,35 +88,36 @@ void comunCasoPrueba::prueba_prefijo_comun_mas_largo()
 void comunCasoPrueba::prueba_leeCad()
 {
         std::stringstream ss;
+        Arbol_huffman ah;
         ss.clear();
         ss << "";
-        CPPUNIT_ASSERT(leeCad(ss)=="" );
+        CPPUNIT_ASSERT(leeCad(ss, ah)=="" );
         ss.clear();
         ss << "{";
-        CPPUNIT_ASSERT(leeCad(ss) == "");
+        CPPUNIT_ASSERT(leeCad(ss, ah) == "");
         ss.clear();
         ss << "a";
-        CPPUNIT_ASSERT_THROW(leeCad(ss), std::string);
+        CPPUNIT_ASSERT_THROW(leeCad(ss, ah), std::string);
         ss.clear();
         ss << "a{";
-        CPPUNIT_ASSERT(leeCad(ss) == "a");
+        CPPUNIT_ASSERT(leeCad(ss, ah) == "a");
         ss.clear();
         ss << "a{b";
-        CPPUNIT_ASSERT(leeCad(ss) == "a");
+        CPPUNIT_ASSERT(leeCad(ss, ah) == "a");
         ss.str("");  // Este es necesario para que el clear siguiente funcione.
         // clear solo borra flags de error.
         ss.clear();
         ss << "123456789{";
-        CPPUNIT_ASSERT(leeCad(ss) == "123456789");
+        CPPUNIT_ASSERT(leeCad(ss, ah) == "123456789");
         ss.clear();
         ss << "12345678901234567890123456789012{";
-        CPPUNIT_ASSERT(leeCad(ss) == "12345678901234567890123456789012");
+        CPPUNIT_ASSERT(leeCad(ss, ah) == "12345678901234567890123456789012");
         ss.clear();
         ss << "123456789012345678901234567890123";
-        CPPUNIT_ASSERT_THROW(leeCad(ss), std::string);
+        CPPUNIT_ASSERT_THROW(leeCad(ss, ah), std::string);
         ss.clear();
         ss << "a\0b{";
-        CPPUNIT_ASSERT_THROW(leeCad(ss), std::string);
+        CPPUNIT_ASSERT_THROW(leeCad(ss, ah), std::string);
 }
 
 

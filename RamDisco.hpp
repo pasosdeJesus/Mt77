@@ -49,7 +49,7 @@ precalcula_escribe(NodoTrieS *n);
  **/
 void
 escribePlanoStream(NodoTrieS *n, std::ostream &os,
-                   Arbol_huffman arbolHuffman, uint32_t desp = 0);
+                   Arbol_huffman &arbolHuffman, uint32_t desp = 0);
 
 
 /** Lee un trieS de un stream donde está almacenado en formato
