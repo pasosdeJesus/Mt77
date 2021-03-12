@@ -216,6 +216,7 @@ void Arbol_huffman::_imprimirPreOrden(std::shared_ptr<nodo_arbol_huffman> nah,
         _imprimirPreOrden(nah->hijo_d, depth + 1);
 }
 
+// TODO: No debe retornar una cadena que incluya '{'
 std::string Arbol_huffman::comprimir(std::string cadena) {
 
     if (this->raiz == nullptr || cadena.empty())
