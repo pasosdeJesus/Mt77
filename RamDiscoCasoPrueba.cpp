@@ -29,24 +29,25 @@ CPPUNIT_TEST_SUITE_REGISTRATION(RamDiscoCasoPrueba);
 
 void RamDiscoCasoPrueba::prueba_precalcula_escribe_con_hermanos()
 {
-        CPPUNIT_ASSERT(precalcula_escribe_con_hermanos(NULL) == 0);
+        Arbol_huffman ah;
+        CPPUNIT_ASSERT(precalcula_escribe_con_hermanos(NULL, ah) == 0);
 
         NodoTrieS *n = new NodoTrieS("abc");
-        uint32_t p = precalcula_escribe_con_hermanos(n) ;
+        uint32_t p = precalcula_escribe_con_hermanos(n, ah) ;
         //cout << p << endl;
         CPPUNIT_ASSERT(p == 16);
         delete n;
 
         n = new NodoTrieS("bc");
         NodoTrieS *n2 = new NodoTrieS("a", n);
-        p = precalcula_escribe_con_hermanos(n2) ;
+        p = precalcula_escribe_con_hermanos(n2, ah) ;
         //cout << p << endl;
         CPPUNIT_ASSERT(p == 14);
         delete n2;
 
         n = new NodoTrieS("bc");
         n2 = new NodoTrieS("a", NULL, n);
-        p = precalcula_escribe_con_hermanos(n2) ;
+        p = precalcula_escribe_con_hermanos(n2, ah) ;
         //cout << p << endl;
         CPPUNIT_ASSERT(p == 28);
         delete n;
@@ -55,24 +56,25 @@ void RamDiscoCasoPrueba::prueba_precalcula_escribe_con_hermanos()
 
 void RamDiscoCasoPrueba::prueba_precalcula_escribe()
 {
-        CPPUNIT_ASSERT(precalcula_escribe(NULL) == 0);
+        Arbol_huffman ah;
+        CPPUNIT_ASSERT(precalcula_escribe(NULL, ah) == 0);
 
         NodoTrieS *n = new NodoTrieS("abc");
-        uint32_t p = precalcula_escribe(n) ;
+        uint32_t p = precalcula_escribe(n, ah) ;
         //cout << p << endl;
         CPPUNIT_ASSERT(p == 16);
         delete n;
 
         n = new NodoTrieS("bc");
         NodoTrieS *n2 = new NodoTrieS("a", n);
-        p = precalcula_escribe(n2) ;
+        p = precalcula_escribe(n2, ah) ;
         //cout << p << endl;
         CPPUNIT_ASSERT(p == 29);
         delete n2;
 
         n = new NodoTrieS("bc");
         n2 = new NodoTrieS("a", NULL, n);
-        p = precalcula_escribe(n2) ;
+        p = precalcula_escribe(n2, ah) ;
         //cout << p << endl;
         CPPUNIT_ASSERT(p == 28);
         delete n;
