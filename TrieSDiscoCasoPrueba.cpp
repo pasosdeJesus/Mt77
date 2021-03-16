@@ -1,4 +1,4 @@
-// vim: set expandtab tabstop=8 shiftwidth=8 foldmethod=marker:
+/* vim: set expandtab tabstop=8 shiftwidth=8 foldmethod=marker: */
 /** @file TrieSDiscoCasoPrueba.cpp
  * Pruebas de regresión a TrieSDisco.
  *
@@ -57,7 +57,7 @@ void TrieSDiscoCasoPrueba::prueba_escribeNodo()
         r = escribeNodo(ss, "a", &p, 0, ah);
         //cout << "r=" << r << "  ss.str=" << ss.str() << " size=" << ss.str().size() << endl;
         CPPUNIT_ASSERT(r == 7 &&
-                       ss.str() == ps3);
+                        ss.str() == ps3);
         //cout << "Terminó prueba_escribeNodo" << endl;
 
 }
@@ -142,76 +142,76 @@ extern stringstream *depuraos;
 
 
 /*void TrieSDiscoCasoPrueba::prueba_escribePlanoStream()
-{	
-	std::stringstream sis;
- 
-	NodoTrieS *nr = new NodoTrieS("r", NULL, NULL, set<Pos>());
-	NodoTrieS *no = new NodoTrieS("o", nr, NULL, set<Pos>());
-	NodoTrieS *nm = new NodoTrieS("m", no, NULL, set<Pos>());
-	NodoTrieS *na = new NodoTrieS("a", nm, NULL, set<Pos>());
-	//depuraos=&sis;
-	sis.clear(); sis.str("");sis.seekp(-1);sis.seekg(0); sis.clear(); 
-	escribePlanoStream(na, sis);
-	sis.seekg(0);
-	delete na; na = NULL;
-	//cout << "sis=" << sis.str() << endl;
-	CPPUNIT_ASSERT(sis.str() == ps14 );
- 
-	NodoTrieS *ns = new NodoTrieS("s", NULL, NULL, set<Pos>());
-	nr = new NodoTrieS("r", ns, NULL, set<Pos>());
-	no = new NodoTrieS("o", nr, NULL, set<Pos>());
-	nm = new NodoTrieS("m", no, NULL, set<Pos>());
-	na = new NodoTrieS("a", nm, NULL, set<Pos>());
-	//na->aDotty(cerr, "");
-	llena_ss(sis, na);
-	delete na; na = NULL;
-	//cout << "sis='" << sis.str() << "'" << endl;
-	sis.seekg(0);
-	CPPUNIT_ASSERT(sis.str() == "a{0000=0000>}\nm{0000K0000L}\no{0000Y0000Z}\nr{0000g0000h}\ns{0000u00000}\n");
- 
-	NodoTrieS *nb = new NodoTrieS("b", NULL, NULL, set<Pos>());
-	no = new NodoTrieS("o", NULL, NULL, set<Pos>());
-	nm = new NodoTrieS("m", no, NULL, set<Pos>());
-	na = new NodoTrieS("a", nm, nb, set<Pos>());
- 
-	//depuraos = &sis;
-	llena_ss(sis, na);
-	delete na; na = NULL;
-	//cout << "sis='" << sis.str() << "'" << endl;
-	sis.seekg(0);
-	CPPUNIT_ASSERT(sis.str() == "a{0000=0000K}b{0000J00000}\nm{0000X0000Y}\no{0000f00000}\n");
- 
-	na = new NodoTrieS();
-	na->inserta("CONOCEREIS", Pos(1,1));
-	na->inserta("LA", Pos(1,2));
-	na->inserta("VERDAD", Pos(1,3));
-	na->inserta("Y", Pos(1,4));
-	na->inserta("LA", Pos(1,5));
-	na->inserta("VERDAD", Pos(1,6));
-	na->inserta("OS", Pos(1,7));
-	na->inserta("HARA", Pos(1,8));
-	na->inserta("LIBRES", Pos(1,9));
- 
-	//na->aDotty(cout, "");
- 
-	llena_ss(sis, na);
-	//cout << "sis='"<<sis.str().length()<<"'"<<endl;
-	//cout << "precalcula_escribe='"<<precalcula_escribe(na)<<"'"<<endl; 
-	sis.seekg(0);
-	CPPUNIT_ASSERT(sis.str().length() == precalcula_escribe(na));
-	delete na; na = NULL;
- 
-	na = new NodoTrieS();
-	na->inserta("CINTURA", Pos(2, 1));
-	na->inserta("CONTABAN", Pos(2, 15));
-	na->inserta("COMFESABAN", Pos(2, 11));
-	na->inserta("COMIA", Pos(2, 8));
-	na->inserta("EM", Pos(1, 1));
-	//na->aDotty(cout, "");
-	llena_ss(sis, na);
-	//cout << sis.str() << endl;
-	CPPUNIT_ASSERT(sis.str().length() == precalcula_escribe(na));
-	delete na;
+  {  
+  std::stringstream sis;
+
+  NodoTrieS *nr = new NodoTrieS("r", NULL, NULL, set<Pos>());
+  NodoTrieS *no = new NodoTrieS("o", nr, NULL, set<Pos>());
+  NodoTrieS *nm = new NodoTrieS("m", no, NULL, set<Pos>());
+  NodoTrieS *na = new NodoTrieS("a", nm, NULL, set<Pos>());
+//depuraos=&sis;
+sis.clear(); sis.str("");sis.seekp(-1);sis.seekg(0); sis.clear(); 
+escribePlanoStream(na, sis);
+sis.seekg(0);
+delete na; na = NULL;
+//cout << "sis=" << sis.str() << endl;
+CPPUNIT_ASSERT(sis.str() == ps14 );
+
+NodoTrieS *ns = new NodoTrieS("s", NULL, NULL, set<Pos>());
+nr = new NodoTrieS("r", ns, NULL, set<Pos>());
+no = new NodoTrieS("o", nr, NULL, set<Pos>());
+nm = new NodoTrieS("m", no, NULL, set<Pos>());
+na = new NodoTrieS("a", nm, NULL, set<Pos>());
+//na->aDotty(cerr, "");
+llena_ss(sis, na);
+delete na; na = NULL;
+//cout << "sis='" << sis.str() << "'" << endl;
+sis.seekg(0);
+CPPUNIT_ASSERT(sis.str() == "a{0000=0000>}\nm{0000K0000L}\no{0000Y0000Z}\nr{0000g0000h}\ns{0000u00000}\n");
+
+NodoTrieS *nb = new NodoTrieS("b", NULL, NULL, set<Pos>());
+no = new NodoTrieS("o", NULL, NULL, set<Pos>());
+nm = new NodoTrieS("m", no, NULL, set<Pos>());
+na = new NodoTrieS("a", nm, nb, set<Pos>());
+
+//depuraos = &sis;
+llena_ss(sis, na);
+delete na; na = NULL;
+//cout << "sis='" << sis.str() << "'" << endl;
+sis.seekg(0);
+CPPUNIT_ASSERT(sis.str() == "a{0000=0000K}b{0000J00000}\nm{0000X0000Y}\no{0000f00000}\n");
+
+na = new NodoTrieS();
+na->inserta("CONOCEREIS", Pos(1,1));
+na->inserta("LA", Pos(1,2));
+na->inserta("VERDAD", Pos(1,3));
+na->inserta("Y", Pos(1,4));
+na->inserta("LA", Pos(1,5));
+na->inserta("VERDAD", Pos(1,6));
+na->inserta("OS", Pos(1,7));
+na->inserta("HARA", Pos(1,8));
+na->inserta("LIBRES", Pos(1,9));
+
+//na->aDotty(cout, "");
+
+llena_ss(sis, na);
+//cout << "sis='"<<sis.str().length()<<"'"<<endl;
+//cout << "precalcula_escribe='"<<precalcula_escribe(na)<<"'"<<endl; 
+sis.seekg(0);
+CPPUNIT_ASSERT(sis.str().length() == precalcula_escribe(na));
+delete na; na = NULL;
+
+na = new NodoTrieS();
+na->inserta("CINTURA", Pos(2, 1));
+na->inserta("CONTABAN", Pos(2, 15));
+na->inserta("COMFESABAN", Pos(2, 11));
+na->inserta("COMIA", Pos(2, 8));
+na->inserta("EM", Pos(1, 1));
+//na->aDotty(cout, "");
+llena_ss(sis, na);
+//cout << sis.str() << endl;
+CPPUNIT_ASSERT(sis.str().length() == precalcula_escribe(na));
+delete na;
 }
 */
 
@@ -917,9 +917,9 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         CPPUNIT_ASSERT(sos.str() == sis1.str() );
         /*
          *        1         2         3         4         5         6         7
-        01234567890123456789012345678901234567890123456789012345678901234567890123456789
-        a{}0000000c\a{}00000023b{}0000002F\m{}00000000\m{}00000000
-        */
+         01234567890123456789012345678901234567890123456789012345678901234567890123456789
+         a{}0000000c\a{}00000023b{}0000002F\m{}00000000\m{}00000000
+         */
 
         sos.clear();
         sos.str("");
@@ -1140,12 +1140,12 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         //cout<<"sos='"<<sos.str()<<"'"<<endl;
 
         /*sist.str(MARCAIND + "\n" + sist.str());
-        sist.seekg(MARCAIND.length() + 1);
-        NodoTrieS *l1 = leePlanoStream(sist);
-        l1->aDotty(cout, "");
-        sos.seekg(MARCAIND.length() + 1);
-        NodoTrieS *l2 = leePlanoStream(sos);
-        l2->aDotty(cout, ""); */
+          sist.seekg(MARCAIND.length() + 1);
+          NodoTrieS *l1 = leePlanoStream(sist);
+          l1->aDotty(cout, "");
+          sos.seekg(MARCAIND.length() + 1);
+          NodoTrieS *l2 = leePlanoStream(sos);
+          l2->aDotty(cout, ""); */
 
         CPPUNIT_ASSERT(sos.str() == (MARCAIND + "\n" + sist.str()));
         CPPUNIT_ASSERT((long)sos.tellp() == (long)sos.str().size() );
@@ -1161,7 +1161,7 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         na->inserta("JESUS", Pos(2, 2));
         llena_ss(sis1, na, ah, MARCAIND + "\n");
         delete na;
-        //	cout << "JESUS sis1=" << sis1.str() << endl;
+        //  cout << "JESUS sis1=" << sis1.str() << endl;
         na = new NodoTrieS();
         na->inserta("JORAM", Pos(3, 2));
         na->inserta("JOTAM", Pos(2, 2));
@@ -1235,27 +1235,31 @@ void TrieSDiscoCasoPrueba::prueba_leeRelacion()
 {
         vector<Doc> docs;
 
+        char nomtemp[L_tmpnam];
+
+        tmpnam(nomtemp);
+        clog << "-1, Archivo temporal: " << nomtemp << endl;
         {
-                fstream os("/tmp/z", ios_base::out);
+                fstream os(nomtemp, ios_base::out);
                 os << "";
                 os.close();
         }
         docs.clear();
         clog << "0" << endl;
-        CPPUNIT_ASSERT_THROW(leeRelacion("/tmp/z", docs), std::string);
+        CPPUNIT_ASSERT_THROW(leeRelacion(nomtemp, docs), std::string);
 
         clog << "1" << endl;
         {
-                fstream os("/tmp/z", ios_base::out);
+                fstream os(nomtemp, ios_base::out);
                 os << "0fffffff";
                 os.close();
         }
         docs.clear();
-        CPPUNIT_ASSERT_THROW(leeRelacion("/tmp/z", docs), std::string);
+        CPPUNIT_ASSERT_THROW(leeRelacion(nomtemp, docs), std::string);
 
         clog << "2" << endl;
         {
-                fstream os("/tmp/z", ios_base::out);
+                fstream os(nomtemp, ios_base::out);
                 os << MARCAREL << "\n" ;
                 os << "a1 12345678901234567890123456789012 2009-01-01" << endl;
                 os << "b2 abcdefabcdefabcdefabcdefabcdefab 2009-01-01" << endl;
@@ -1263,7 +1267,7 @@ void TrieSDiscoCasoPrueba::prueba_leeRelacion()
                 os.close();
         }
         docs.clear();
-        leeRelacion("/tmp/z", docs);
+        leeRelacion(nomtemp, docs);
         clog << "3" << endl;
         CPPUNIT_ASSERT(docs.size() == 3);
         CPPUNIT_ASSERT(docs[0].URL == "a1");
@@ -1274,7 +1278,7 @@ void TrieSDiscoCasoPrueba::prueba_leeRelacion()
         CPPUNIT_ASSERT(docs[2].cond == "00000000000000000000000000000000");
 
         {
-                fstream os("/tmp/z", ios_base::out);
+                fstream os(nomtemp, ios_base::out);
                 os.seekg(0);
                 os << MARCAREL << "\n" ;
                 for (uint32_t i = 0; i < MAXLURL+2; i++) {
@@ -1283,7 +1287,7 @@ void TrieSDiscoCasoPrueba::prueba_leeRelacion()
                 os.close();
         }
         docs.clear();
-        CPPUNIT_ASSERT_THROW(leeRelacion("/tmp/z", docs), std::string);
+        CPPUNIT_ASSERT_THROW(leeRelacion(nomtemp, docs), std::string);
         clog << "4" << endl;
 }
 
@@ -1342,7 +1346,7 @@ void TrieSDiscoCasoPrueba::prueba_buscaPlanoStream()
         delete b;
 
         //cout << "-----------" << endl;
-        
+
         NodoTrieS *na = new NodoTrieS();
         na->inserta("CINTURA", Pos(2, 1));
         na->inserta("CONTABAN", Pos(2, 15));
@@ -1356,17 +1360,17 @@ void TrieSDiscoCasoPrueba::prueba_buscaPlanoStream()
         CPPUNIT_ASSERT(b2->size() == 1);
         delete na;
 
-        /*	vector<string> idocs(0);
-        	idocs.empty();
-        	set<Pos> *cpos = buscaPlano("prueba.idxtxt", "BUENO", idocs);
-         
-        	if (cpos==NULL) {
-        		cerr << "cpos no debería ser NULL" <<endl;
-        	}
-        	else {
-        		cout << cpos->size() << endl;
-        		cout << (*cpos) << endl;
-        	} */
+        /*  vector<string> idocs(0);
+            idocs.empty();
+            set<Pos> *cpos = buscaPlano("prueba.idxtxt", "BUENO", idocs);
+
+            if (cpos==NULL) {
+            cerr << "cpos no debería ser NULL" <<endl;
+            }
+            else {
+            cout << cpos->size() << endl;
+            cout << (*cpos) << endl;
+            } */
 }
 
 void TrieSDiscoCasoPrueba::setUp()
