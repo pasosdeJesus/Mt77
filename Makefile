@@ -27,7 +27,7 @@ all: $(BINARIOS)
 
 # Requieren cppunit instalado en /usr/local/include --por defecto en
 # paquete cppunit en OpenBSD (pkg_add cppunit)
-PUNIDAD=pruebaComun pruebaElias pruebaPos pruebaDoc pruebaNodoTrieS pruebaTrieSDisco pruebaRamDisco
+PUNIDAD=pruebaComun pruebaElias pruebaPos pruebaDoc pruebaNodoTrieS pruebaTrieSDisco pruebaRamDisco pruebaCompresion
 unidad:
 	CFLAGS="$(DEPCFLAGS)" make $(PUNIDAD)
 	for i in $(PUNIDAD) ; do echo $$i; /usr/bin/time ./$$i; done
@@ -54,33 +54,37 @@ FUNZIPUNO = funzipuno.o unzipuno.o
 unzipuno: $(FUNZIPUNO)
 	c++ $(LFLAGS) -o $(.TARGET) -lc -lz $(FUNZIPUNO)
 
-FPRUEBACOMUN = comun.o comunCasoPrueba.o pruebaCppUnit.o
+FPRUEBACOMUN = comun.o comunCasoPrueba.o pruebaCppUnit.o compresion/compresion.o
 pruebaComun:  $(FPRUEBACOMUN)
 	c++ $(LFLAGS) -L/usr/local/lib -lcppunit -o $(.TARGET) $(FPRUEBACOMUN)
 
-FPRUEBAELIAS = comun.o Elias.o EliasCasoPrueba.o pruebaCppUnit.o
+FPRUEBAELIAS = comun.o Elias.o EliasCasoPrueba.o pruebaCppUnit.o compresion/compresion.o
 pruebaElias:  $(FPRUEBAELIAS)
 	c++ $(LFLAGS) -L/usr/local/lib -lcppunit -o $(.TARGET) $(FPRUEBAELIAS)
 
-FPRUEBAPOS = comun.o Elias.o Pos.o PosCasoPrueba.o pruebaCppUnit.o
+FPRUEBAPOS = comun.o Elias.o Pos.o PosCasoPrueba.o pruebaCppUnit.o compresion/compresion.o
 pruebaPos:  $(FPRUEBAPOS)
 	c++ $(LFLAGS) -L/usr/local/lib -lcppunit -o $(.TARGET) $(FPRUEBAPOS)
 
-FPRUEBADOC = comun.o Doc.o DocCasoPrueba.o pruebaCppUnit.o
+FPRUEBADOC = comun.o Doc.o DocCasoPrueba.o pruebaCppUnit.o compresion/compresion.o
 pruebaDoc:  $(FPRUEBADOC)
 	c++ $(LFLAGS) -L/usr/local/lib -lcppunit -o $(.TARGET) $(FPRUEBADOC)
 
-FPRUEBANODOTRIES=comun.o Elias.o Pos.o Doc.o sha256.o NodoTrieS.o NodoTrieSCasoPrueba.o pruebaCppUnit.o
+FPRUEBANODOTRIES=comun.o Elias.o Pos.o Doc.o sha256.o NodoTrieS.o NodoTrieSCasoPrueba.o pruebaCppUnit.o compresion/compresion.o
 pruebaNodoTrieS: $(FPRUEBANODOTRIES)
 	c++ $(LFLAGS) -L/usr/local/lib -lcppunit -o pruebaNodoTrieS $(FPRUEBANODOTRIES)
 
-FPRUEBATRIESDISCO=comun.o Elias.o Pos.o Doc.o sha256.o NodoTrieS.o TrieSDisco.o RamDisco.o TrieSDiscoCasoPrueba.o pruebaCppUnit.o
+FPRUEBATRIESDISCO=comun.o Elias.o Pos.o Doc.o sha256.o NodoTrieS.o TrieSDisco.o RamDisco.o TrieSDiscoCasoPrueba.o pruebaCppUnit.o compresion/compresion.o
 pruebaTrieSDisco: $(FPRUEBATRIESDISCO)
 	c++ $(LFLAGS) -L/usr/local/lib -lcppunit -o $(.TARGET) $(FPRUEBATRIESDISCO)
 
-FPRUEBARAMDISCO=comun.o Elias.o Pos.o Doc.o sha256.o NodoTrieS.o TrieSDisco.o RamDisco.o RamDiscoCasoPrueba.o pruebaCppUnit.o
+FPRUEBARAMDISCO=comun.o Elias.o Pos.o Doc.o sha256.o NodoTrieS.o TrieSDisco.o RamDisco.o RamDiscoCasoPrueba.o pruebaCppUnit.o compresion/compresion.o
 pruebaRamDisco: $(FPRUEBARAMDISCO)
 	c++ $(LFLAGS) -L/usr/local/lib -lcppunit -o $(.TARGET) $(FPRUEBARAMDISCO)
+
+FPRUEBACOMPRESION=compresion/compresion.o compresion/pruebas.o
+pruebaCompresion: $(FPRUEBACOMPRESION)
+	c++ $(LFLAGS) -L/usr/local/lib -lcppunit -o $(.TARGET) $(FPRUEBACOMPRESION)
 
 funzipuno.o: funzipuno.hpp funzipuno.cpp
 
@@ -105,6 +109,7 @@ Pos.o: comun.hpp Pos.hpp Pos.cpp
 Doc.o: comun.hpp Doc.hpp Doc.cpp
 
 compresion/compresion.o: compresion/compresion.hpp compresion/compresion.cpp
+compresion/pruebas.o: compresion/compresion.o compresion/pruebas.hpp compresion/pruebas.cpp
 
 comun.o: compresion/compresion.o comun.hpp comun.cpp
 

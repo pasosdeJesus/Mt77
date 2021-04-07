@@ -76,7 +76,15 @@ escribeNodo(iostream &os, string c, set<Pos> *cpos,
         {
                 comprimido = arbolHuffman.comprimir(c);
         }
-        ASSERT(!comprimido.find(FINCADENA));
+
+        bool presenteFinC = comprimido.find(FINCADENA) != std::string::npos ;
+        // std::cout << (presenteFinC ? "finc": "nofinc") << std::endl;
+
+        // TODO: encontrar como diferenciar entre un FINCADENA dentro del texto
+        // y un FINCADENA que si represente el final de la cadena
+        ASSERT(!presenteFinC);
+
+        // comprimido.find(FINCADENA);
 
         os << comprimido << FINCADENA;
         uint32_t dhermano = (pini >= 0 ? pini : 0) + desp +

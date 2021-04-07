@@ -12,6 +12,7 @@
 #define CPP_UNIT_COMUNCASOPRUEBA_HPP
 
 #include <cppunit/extensions/HelperMacros.h>
+#include "compresion/compresion.hpp"
 
 #ifdef NDEBUG
 #error Estas pruebas requieren NDEBUG activo
