@@ -129,7 +129,7 @@ void listaPalabras(char *noma, char *nrel, Arbol_huffman &arbolHuffman) throw(st
 {
         ASSERT(noma != NULL);
         ASSERT(nrel != NULL);
-        ASSERT(!arbolHuffman.vacio());
+
 
         // std::cout << arbolHuffman.toString() << std::endl;
 
