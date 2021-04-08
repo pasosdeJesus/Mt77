@@ -95,8 +95,9 @@ void RamDiscoCasoPrueba::prueba_leePlano()
 
         docs.clear();
 
+        Arbol_huffman arbolHuffman;
         NodoTrieS *n = leePlano((char *)"ej.indice", (char *)"ej.relacion", 
-                        docs);
+                                docs, arbolHuffman);
         cout << n->preorden() << endl;
         CPPUNIT_ASSERT(docs.size() == 1);
         CPPUNIT_ASSERT(n->preorden() == "JESUSORAMTAM");
@@ -1013,7 +1014,8 @@ void RamDiscoCasoPrueba::prueba_mezclaDiscoRam()
 
                 //cout << "3" << endl;
                 sos.seekg(MARCAIND.length() + 1);
-                NodoTrieS *l1 = leePlanoStream(sos);
+                Arbol_huffman arbolHuffman;
+                NodoTrieS *l1 = leePlanoStream(sos, arbolHuffman);
                 //l1->aDotty(cout, "");
                 set<Pos> cr = l1->busca("JESUS");
                 CPPUNIT_ASSERT(cr.size() == 1);

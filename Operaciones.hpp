@@ -67,7 +67,10 @@ string determinaFormato(string narch);
  * los de ind2.  Por convención 0 es al final.
  */
 void
-mezclaDosDisco(const char *indsal, const char *ind1, const char *ind2, Arbol_huffman &arbol_huffman,
+mezclaDosDisco(const char *indsal, const char *ind1, const char *ind2,
+               Arbol_huffman &arbol_huffman1,
+               Arbol_huffman &arbol_huffman2,
+               Arbol_huffman &arbol_huffmanOut,
                uint32_t nd = 0) throw(string);
 
 /**
