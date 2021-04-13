@@ -152,7 +152,9 @@ int main(int argc, char *argv[])
                                 // Mezcla docs1 en docs2
                                 vector<int64_t> renum =
                                         mezclaDocs(docs1, docs2);
-                                r->renumeraDocs(renum);
+                                if (r != NULL) {
+                                  r->renumeraDocs(renum);
+                                }
                                 NodoTrieS *t2=mezcla(t, r);
                                 t = t2;
                                 r = NULL;
