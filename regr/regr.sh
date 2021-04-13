@@ -168,7 +168,7 @@ if (test "$?" != "0") then {
 ../buscador rm.indice Y 1 0 ) | grep -v "fecha\":" > rm.out 2>&1
 cmp rm.out esp/rm.out
 if (test "$?" != "0") then {
-	echo "** ERROR: rm -f fallo";
+	echo "** ERROR: rm fallo";
 } fi;
 
 
