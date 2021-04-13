@@ -160,7 +160,11 @@ int main(int argc, char *argv[])
                                 r = NULL;
                         }
 
-                        Arbol_huffman arbolHuffman(t->conseguirTendencia());
+                        std::map<char, int> tendencia;
+                        if (t != NULL) {
+                          tendencia = t->conseguirTendencia();
+                        }
+                        Arbol_huffman arbolHuffman(tendencia);
                         arbolHuffman.guardar( string(argv[2]) + ".tendencia");
                         //cerr<<"idocs.size="<<idocs.size()<<endl;
                         verificaNombre(noma, nrel);
