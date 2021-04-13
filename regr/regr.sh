@@ -10,7 +10,7 @@ rm -rf r0.indice; ../indexador r0.indice t.indice "http://r" "" > r0.out 2>&1
 ../operaindice lista r0.indice >> r0.out 2>&1
 rm -rf rc0.indice; ../indexador rc0.indice t.indice "http://r" "" >> r0.out 2>&1
 echo "ram" >> r0.out 2>&1
-rm rm0.indice; ../operaindice mezclaram rm0.indice r0.indice rc0.indice >> r0.out 2>&1
+rm -f rm0.indice; ../operaindice mezclaram rm0.indice r0.indice rc0.indice >> r0.out 2>&1
 ../operaindice lista rm0.indice >> r0.out 2>&1
 ../operaindice mezcladisco rd0.indice r0.indice rc0.indice >> r0.out 2>&1
 ../operaindice lista rd0.indice >> r0.out 2>&1 #1
