@@ -9,9 +9,9 @@ rm -rf r0.indice; ../indexador r0.indice t.indice "http://r" "" > r0.out 2>&1
 ../buscador r0.indice LA >> r0.out 2>&1
 ../operaindice lista r0.indice >> r0.out 2>&1
 rm -rf rc0.indice; ../indexador rc0.indice t.indice "http://r" "" >> r0.out 2>&1
-#echo "ram" >> r0.out 2>&1
-#../operaindice mezclaram rm0.indice r0.indice rc0.indice >> r0.out 2>&1
-#../operaindice lista rm0.indice >> r0.out 2>&1
+echo "ram" >> r0.out 2>&1
+rm rm0.indice; ../operaindice mezclaram rm0.indice r0.indice rc0.indice >> r0.out 2>&1
+../operaindice lista rm0.indice >> r0.out 2>&1
 ../operaindice mezcladisco rd0.indice r0.indice rc0.indice >> r0.out 2>&1
 ../operaindice lista rd0.indice >> r0.out 2>&1
 
@@ -148,6 +148,17 @@ if (test "$?" != "0") then {
 
 
 echo "Mezcla"
+
+rm -f rm01.indice; ../operaindice mezclaram rm01.indice r0.indice r1.indice 
+cmp rm01.indice r1.indice
+if (test "$?" != "0") then {
+  echo "** ERROR: rm01 fallo";
+} fi;
+rm -f rm10.indice; ../operaindice mezclaram rm10.indice r1.indice r0.indice
+cmp rm10.indice r1.indice
+if (test "$?" != "0") then {
+  echo "** ERROR: rm10 fallo";
+} fi;
 
 ../operaindice mezclaram rm.indice r1.indice r2.indice
 (../buscador rm.indice VERDAD;
