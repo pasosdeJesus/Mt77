@@ -147,10 +147,14 @@ uint32_t escribeCopiaSubarbol(iostream &os, istream &is, bool conHermanos,
  * 2. Escribe todos los subárboles del menor al mayor. Para esto
  * 	recorre los subárboles necesarios  de is1 e is2
  */
-uint32_t mezclaRec(istream &is1, istream &is2, iostream &os,
-                   bool conHermanos1, bool conHermanos2,
-                   vector<int64_t> *renum1, vector<int64_t> *renum2,
-                   Arbol_huffman &arbolHuffman ) ;
+uint32_t
+mezclaRec(istream &is1, istream &is2, iostream &os, bool conHermanos1,
+          bool conHermanos2, vector<int64_t> *renum1,
+          vector<int64_t> *renum2,
+          Arbol_huffman &arbolHuffman1,  // pertenece a is1
+          Arbol_huffman &arbolHuffman2,  // pertenece a is2
+          Arbol_huffman &arbolHuffmanOut // pertenece a os
+);
 
 /**
  * Elimina n-esimo documento de is1 dejando resultado en os

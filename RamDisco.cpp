@@ -124,7 +124,7 @@ escribePlanoStream(NodoTrieS *n, std::iostream &os,
 
 
 NodoTrieS *
-leePlanoStream(std::istream &is) throw(string)
+leePlanoStream(std::istream &is, Arbol_huffman &arbolHuffman) throw(string)
 {
         string cad;
         set<Pos> *cpos;
@@ -152,13 +152,16 @@ leePlanoStream(std::istream &is) throw(string)
                 throw errorFormato(is, ss.str());
         }
 
-        NodoTrieS *hermanomayor = leePlanoStream(is);
+        NodoTrieS *hermanomayor = leePlanoStream(is, arbolHuffman);
         NodoTrieS *hijomenor = NULL;
         if (hijo > 0) {
                 is.seekg(hijo);
-                hijomenor = leePlanoStream(is);
+                hijomenor = leePlanoStream(is, arbolHuffman);
         }
-        NodoTrieS *r = new NodoTrieS(cad, hijomenor,
+
+        std::string cadena_desc = arbolHuffman.descomprimir(cad);
+        // std::cout << std::endl << cadena_desc << std::endl;
+        NodoTrieS *r = new NodoTrieS(cadena_desc, hijomenor,
                                      hermanomayor, *cpos);
 
         return r;
@@ -184,14 +187,16 @@ escribePlano(NodoTrieS &t, vector<Doc> &docs, const char *na, const char *nrel,
 
 
 NodoTrieS *
-leePlano(char *na, char *nrel, vector<Doc> &docs)
+leePlano(char *na, char *nrel, vector<Doc> &docs, Arbol_huffman &arbolHuffman)
 {
         NodoTrieS *r;
         //cout << "leePlano(" << na << ", " << nrel << ", " << idocs.size() << ", " << condensados.size() << ")" << endl;
         fstream is(na, ios_base::in);
         verificaIndice(is);
         try {
-                r = leePlanoStream(is);
+                r = leePlanoStream(is, arbolHuffman);
+                // std::cout << std::endl << ">> " << r->valorCad() << std::endl;
+                // std::cout << std::endl << ">> " << r->preorden() << std::endl;
         } catch (string m) {
                 stringstream ss;
                 ss << na << ":" << is.tellg() << m << endl;

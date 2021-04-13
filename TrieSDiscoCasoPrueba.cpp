@@ -426,7 +426,8 @@ void TrieSDiscoCasoPrueba::prueba_escribeCopiaSubarbol()
         	} */
         //cout << "ps15 sis='"<< sis.str() << "', sos='"<<sos.str()<<"', r="<<r<<endl;
         sos.seekg(MARCAIND.length() + 1);
-        NodoTrieS *l2 = leePlanoStream(sos);
+        Arbol_huffman arbolHuffman;
+        NodoTrieS *l2 = leePlanoStream(sos, arbolHuffman);
         //l2->aDotty(cout, "");
         //cout << "ps15 preorden " << l2->preorden() << endl;
         CPPUNIT_ASSERT(l2->preorden() == "JESUSORAMTAM" );
@@ -463,7 +464,7 @@ void TrieSDiscoCasoPrueba::prueba_escribeCopiaSubarbol()
         sis.seekg(0);
         r = escribeCopiaSubarbol(sos, sis, true, ah, &renum);
         //cout << "sis="<< sis.str() << ", sos="<<sos.str()<<", r="<<r<<endl;
-        l2 = leePlanoStream(sos);
+        l2 = leePlanoStream(sos, arbolHuffman);
         //l2->aDotty(cout, "");
         //cout << "V-1 preorden " << l2->preorden() << endl;
         CPPUNIT_ASSERT(l2->preorden() == "CONOCEREISLAIBRESY" );
@@ -483,7 +484,8 @@ void TrieSDiscoCasoPrueba::prueba_escribeCopiaSubarbol()
 
 void TrieSDiscoCasoPrueba::prueba_mezclarec()
 {
-        Arbol_huffman ah;
+        Arbol_huffman ah; // siendo que no se realiza compresion en estas pruebas, se puede usar el mismo arbol para todo
+
         std::stringstream sos;
         std::stringstream sis1;
         std::stringstream sis2;
@@ -494,7 +496,7 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         sis1.str("");
         sis2.clear();
         sis2.str("");
-        mezclaRec(sis1, sis2, sos, false, false, NULL, NULL, ah);
+        mezclaRec(sis1, sis2, sos, false, false, NULL, NULL, ah, ah, ah);
         CPPUNIT_ASSERT(sos.str() == "\n" );
 
         sos.clear();
@@ -503,7 +505,7 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         sis1.str("\n");
         sis2.clear();
         sis2.str("\n");
-        mezclaRec(sis1, sis2, sos, false, false, NULL, NULL, ah);
+        mezclaRec(sis1, sis2, sos, false, false, NULL, NULL, ah, ah, ah);
         CPPUNIT_ASSERT(sos.str() == "\n" );
 
         sos.clear();
@@ -512,7 +514,7 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         sis1.str("\n");
         sis2.clear();
         sis2.str("\n");
-        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah);
+        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah, ah, ah);
         CPPUNIT_ASSERT(sos.str() == "\n" );
 
         sos.clear();
@@ -521,7 +523,7 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         sis1.str("x");
         sis2.clear();
         sis2.str("\n");
-        CPPUNIT_ASSERT_THROW(mezclaRec(sis1, sis2, sos, false, false, NULL, NULL, ah),
+        CPPUNIT_ASSERT_THROW(mezclaRec(sis1, sis2, sos, false, false, NULL, NULL, ah, ah, ah),
                              std::string);
 
         sos.clear();
@@ -530,7 +532,7 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         sis1.str(ps1 + "\n");
         sis2.clear();
         sis2.str("\n");
-        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah);
+        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah, ah, ah); // TODO: problema
         //cout << sos.str() << endl;
         CPPUNIT_ASSERT(sos.str() == (ps1 + "\n") );
 
@@ -541,7 +543,7 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         sis1.str(ps4);
         sis2.clear();
         sis2.str("\n");
-        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah);
+        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah, ah, ah);
         //cout << "1 sos='" << sos.str() << "'" << endl;
         CPPUNIT_ASSERT(sos.str() == ps4 );
 
@@ -551,7 +553,7 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         sis1.str("\n");
         sis2.clear();
         sis2.str(ps1 + "\n");
-        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah);
+        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah, ah, ah);
         CPPUNIT_ASSERT(sos.str() == (ps1 + "\n") );
 
         sos.clear();
@@ -560,7 +562,7 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         sis1.str("\n");
         sis2.clear();
         sis2.str(ps4);
-        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah);
+        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah, ah, ah);
         //cout << "2 sos='" << sos.str() << "'" << endl;
         CPPUNIT_ASSERT(sos.str() == ps4);
 
@@ -571,7 +573,7 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         sis1.str(ps2 + "\n");
         sis2.clear();
         sis2.str("\n");
-        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah);
+        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah, ah, ah);
         CPPUNIT_ASSERT(sos.str() == (ps2 + "\n") );
 
         sos.clear();
@@ -580,7 +582,7 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         sis1.str(ps1 + "\n");
         sis2.clear();
         sis2.str(ps1 + "\n");
-        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah);
+        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah, ah, ah);
         CPPUNIT_ASSERT(sos.str() == (ps1 + "\n") );
 
         sos.clear();
@@ -589,7 +591,7 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         sis1.str(ps4);
         sis2.clear();
         sis2.str(ps4);
-        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah);
+        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah, ah, ah);
         CPPUNIT_ASSERT(sos.str() == ps4 );
 
 
@@ -599,7 +601,7 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         sis1.str(ps2 + "\n");
         sis2.clear();
         sis2.str(ps2 + "\n");
-        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah);
+        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah, ah, ah);
         CPPUNIT_ASSERT(sos.str() == (ps2 + "\n") );
 
         sos.clear();
@@ -608,7 +610,7 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         sis1.str(ps2 + "\n");
         sis2.clear();
         sis2.str(ps3 + "\n");
-        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah);
+        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah, ah, ah);
         CPPUNIT_ASSERT(sos.str() == (ps3 + "\n") );
 
         sos.clear();
@@ -617,7 +619,7 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         sis1.str(ps5);
         sis2.clear();
         sis2.str(ps5);
-        mezclaRec(sis1, sis2, sos, false, false, NULL, NULL, ah);
+        mezclaRec(sis1, sis2, sos, false, false, NULL, NULL, ah, ah, ah);
         //cout << "sos='" << sos.str() << "'" << endl;
         CPPUNIT_ASSERT(sos.str() == (ps1 + "\n") );
 
@@ -627,7 +629,7 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         sis1.str(ps8);
         sis2.clear();
         sis2.str(ps9);
-        mezclaRec(sis1, sis2, sos, true, false, NULL, NULL, ah);
+        mezclaRec(sis1, sis2, sos, true, false, NULL, NULL, ah, ah, ah);
         CPPUNIT_ASSERT(sos.str() == ps8 );
 
         sos.clear();
@@ -636,7 +638,7 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         sis1.str(ps8);
         sis2.clear();
         sis2.str(ps9);
-        mezclaRec(sis1, sis2, sos, false, true, NULL, NULL, ah);
+        mezclaRec(sis1, sis2, sos, false, true, NULL, NULL, ah, ah, ah);
         CPPUNIT_ASSERT(sos.str() == ps9);
 
         sos.clear();
@@ -645,7 +647,7 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         sis1.str(ps8);
         sis2.clear();
         sis2.str(ps9);
-        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah);
+        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah, ah, ah);
         //cout << "sos=" << sos.str() << endl;
         CPPUNIT_ASSERT(sos.str() == ps10);
 
@@ -655,7 +657,7 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         sis1.str(ps9);
         sis2.clear();
         sis2.str(ps8);
-        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah);
+        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah, ah, ah);
         CPPUNIT_ASSERT(sos.str() == ps10);
 
         sos.clear();
@@ -664,7 +666,7 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         sis1.str(ps1 + "\n");
         sis2.clear();
         sis2.str(ps11);
-        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah);
+        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah, ah, ah);
         //cout<<"ps4 sos='"<<sos.str()<<"'"<<endl;
         CPPUNIT_ASSERT(sos.str() == ps4 );
 
@@ -674,7 +676,7 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         sis1.str(ps11);
         sis2.clear();
         sis2.str(ps1 + "\n");
-        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah);
+        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah, ah, ah);
         //cout<<"sos='"<<sos.str()<<"'"<<endl;
         CPPUNIT_ASSERT(sos.str() == ps4 );
 
@@ -685,7 +687,7 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         sis1.str(ps12);
         sis2.clear();
         sis2.str(ps11);
-        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah);
+        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah, ah, ah);
         //cout<<"ps13 sos='"<<sos.str()<<"'"<<endl;
         CPPUNIT_ASSERT(sos.str() == ps13 );
 
@@ -695,7 +697,7 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         sis1.str(ps11);
         sis2.clear();
         sis2.str(ps12);
-        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah);
+        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah, ah, ah);
         //cout<<"sos='"<<sos.str()<<"'"<<endl;
         CPPUNIT_ASSERT(sos.str() == ps13 );
 
@@ -709,7 +711,7 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         sos.str("");
         llena_ss(sis1, nam, ah);
         llena_ss(sis2, na, ah);
-        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah);
+        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah, ah, ah);
 
         NodoTrieS *nm = new NodoTrieS("m", NULL, NULL, set<Pos>());
         na->hijo_menor = nm;
@@ -730,7 +732,7 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         na = new NodoTrieS("a", no, NULL, set<Pos>());
         llena_ss(sis2, na, ah);
 
-        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah);
+        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah, ah, ah);
         delete na; // Borra también no
         delete nam;
 
@@ -751,7 +753,7 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         llena_ss(sis2, nab, ah);
         sos.clear();
         sos.str("");
-        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah);
+        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah, ah, ah);
         delete naa;
         delete nab;
         NodoTrieS *nb = new NodoTrieS();
@@ -774,7 +776,7 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         nab = new NodoTrieS("ab", nm, NULL, set<Pos>());
         llena_ss(sis2, nab, ah);
         delete nab;
-        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah);
+        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah, ah, ah);
         NodoTrieS *nm2 = new NodoTrieS("m", NULL, NULL, set<Pos>());
         nm = new NodoTrieS("m", NULL, NULL, set<Pos>());
         nab = new NodoTrieS("b", nm, NULL, set<Pos>());
@@ -795,7 +797,7 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         naa->inserta("aa", Pos(1,1));
         llena_ss(sis2, naa, ah);
         delete naa;
-        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah);
+        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah, ah, ah);
         nb = new NodoTrieS("b");
         naa = new NodoTrieS("a",NULL, nb, Pos(1,1));
         na = new NodoTrieS("a", naa, NULL);
@@ -814,7 +816,7 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         naa = new NodoTrieS("aa", nm, NULL);
         llena_ss(sis2, naa, ah);
         delete naa;
-        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah);
+        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah, ah, ah);
 
         nm = new NodoTrieS("m");
         nab = new NodoTrieS("b", nm);
@@ -834,7 +836,7 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         nb = new NodoTrieS("b", NULL, NULL, Pos(1,1));
         llena_ss(sis2, nb, ah);
         delete nb;
-        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah);
+        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah, ah, ah);
         nb = new NodoTrieS("b", NULL, NULL, Pos(1,1));
         na = new NodoTrieS("a", NULL, nb);
         llena_ss(sist, na, ah);
@@ -854,7 +856,7 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         na->inserta("a", Pos(1,1));
         llena_ss(sis2, na, ah);
         delete na;
-        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah);
+        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah, ah, ah);
         nr = new NodoTrieS("r");
         no = new NodoTrieS("o", nr);
         nm = new NodoTrieS("m", no);
@@ -877,7 +879,7 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         na = new NodoTrieS("a", nm);
         llena_ss(sis2, na, ah);
         delete na;
-        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah);
+        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah, ah, ah);
         nr = new NodoTrieS("r");
         no = new NodoTrieS("o", nr);
         nm = new NodoTrieS("m", no);
@@ -898,7 +900,7 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         na = new NodoTrieS("a");
         llena_ss(sis2, na, ah);
         delete na;
-        mezclaRec(sis1, sis2, sos, false, true, NULL, NULL, ah);
+        mezclaRec(sis1, sis2, sos, false, true, NULL, NULL, ah, ah, ah);
         CPPUNIT_ASSERT(sos.str() == sis2.str() );
 
         sos.clear();
@@ -910,7 +912,7 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         na = new NodoTrieS("a", NULL, nb);
         llena_ss(sis2, na, ah);
         delete na;
-        mezclaRec(sis1, sis2, sos, true, false, NULL, NULL, ah);
+        mezclaRec(sis1, sis2, sos, true, false, NULL, NULL, ah, ah, ah);
         //cout<<"sinh aba sos1='"<<sos.str()<<"'"<<endl;
         CPPUNIT_ASSERT(sos.str() == sis1.str() );
         /*
@@ -931,7 +933,7 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         na->inserta("a", Pos(1,1));
         llena_ss(sis2, na, ah);
         delete na;
-        mezclaRec(sis1, sis2, sos, true, false, NULL, NULL, ah);
+        mezclaRec(sis1, sis2, sos, true, false, NULL, NULL, ah, ah, ah);
         //cout<<"sinh amor sos='"<<sos.str()<<"'"<<endl;
         CPPUNIT_ASSERT(sos.str()== sis2.str());
 
@@ -948,7 +950,7 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         na = new NodoTrieS("a");
         llena_ss(sis2, na, ah);
         delete na;
-        mezclaRec(sis1, sis2, sos, false, false, NULL, NULL, ah);
+        mezclaRec(sis1, sis2, sos, false, false, NULL, NULL, ah, ah, ah);
         //cout<<"sinh amor2 sos='"<<sos.str()<<"'"<<endl;
         CPPUNIT_ASSERT(sos.str() == sis1.str());
 
@@ -965,7 +967,7 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         nb = new NodoTrieS("b");
         llena_ss(sis2, nb, ah);
         delete nb;
-        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah);
+        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah, ah, ah);
         nc = new NodoTrieS("c");
         nb = new NodoTrieS("b", NULL, nc);
         na = new NodoTrieS("a", NULL, nb);
@@ -983,7 +985,7 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         nb = new NodoTrieS("b");
         llena_ss(sis2, nb, ah);
         delete nb;
-        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah);
+        mezclaRec(sis1, sis2, sos, true, true, NULL, NULL, ah, ah, ah);
         nc = new NodoTrieS("c");
         nb = new NodoTrieS("b", nc);
         na = new NodoTrieS("a", NULL, nb);
@@ -1005,7 +1007,7 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         delete na;
         vector<int64_t> renum;
         renum.push_back(0);
-        mezclaRec(sis1, sis2, sos, true, true, NULL, &renum, ah);
+        mezclaRec(sis1, sis2, sos, true, true, NULL, &renum, ah, ah, ah);
         //cout<<"renum sos='"<<sos.str()<<"'"<<endl;
         nr = new NodoTrieS("r");
         no = new NodoTrieS("o", nr);
@@ -1031,7 +1033,7 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         llena_ss(sis2, na, ah);
         delete na;
         //cout<<"renum amor por Mezclar"<<endl;
-        mezclaRec(sis1, sis2, sos, true, true, NULL, &renum, ah);
+        mezclaRec(sis1, sis2, sos, true, true, NULL, &renum, ah, ah, ah);
         nr = new NodoTrieS("r");
         no = new NodoTrieS("o", nr);
         nm = new NodoTrieS("m", no);
@@ -1059,7 +1061,7 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         na = new NodoTrieS("a", nl);
         llena_ss(sis2, na, ah);
         delete na;
-        mezclaRec(sis1, sis2, sos, true, true, NULL, &renum, ah);
+        mezclaRec(sis1, sis2, sos, true, true, NULL, &renum, ah, ah, ah);
         nr = new NodoTrieS("r");
         no = new NodoTrieS("o", nr);
         nm = new NodoTrieS("m", no);
@@ -1116,7 +1118,7 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         sis2.seekg(0);
         delete na;
         //sis2.seekg(MARCAIND.length() +1);
-        mezclaRec(sis1, sis2, sos, true, true, NULL, &renum, ah);
+        mezclaRec(sis1, sis2, sos, true, true, NULL, &renum, ah, ah, ah);
         na = new NodoTrieS();
         na->inserta("CINTURA", Pos(2, 1));
         na->inserta("CONTABAN", Pos(2, 15));
@@ -1169,7 +1171,7 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
         try {
                 sis1.seekg(MARCAIND.length() + 1);
                 sis2.seekg(MARCAIND.length() + 1);
-                mezclaRec(sis1, sis2, sos, true, true, NULL, &renum, ah);
+                mezclaRec(sis1, sis2, sos, true, true, NULL, &renum, ah, ah, ah);
                 //cout << "J sos = " << sos.str();
                 CPPUNIT_ASSERT(sos.str() == ps15);
                 CPPUNIT_ASSERT((long)sos.tellp() == (long)sos.str().size() );
@@ -1204,11 +1206,12 @@ void TrieSDiscoCasoPrueba::prueba_mezclarec()
                 //cout << "2" << endl;
                 sis1.seekg(MARCAIND.length() + 1);
                 sis2.seekg(MARCAIND.length() + 1);
-                mezclaRec(sis1, sis2, sos, true, true, &renum1, &renum, ah);
+                mezclaRec(sis1, sis2, sos, true, true, &renum1, &renum, ah, ah, ah);
 
                 //cout << "3" << endl;
                 sos.seekg(MARCAIND.length() + 1);
-                NodoTrieS *l1 = leePlanoStream(sos);
+                Arbol_huffman arbolHuffman;
+                NodoTrieS *l1 = leePlanoStream(sos, arbolHuffman);
                 //l1->aDotty(cout, "");
                 set<Pos> cr = l1->busca("JESUS");
                 CPPUNIT_ASSERT(cr.size() == 1);

@@ -98,6 +98,7 @@ muestraStream(std::istream &is, string pre, Arbol_huffman &arbolHuffman)
         cad = leeCad(is, arbolHuffman);
         if (cad != "")
         {
+                ASSERT(!arbolHuffman.vacio());
                 her = lee128b(is);
                 hijo = lee128b(is);
                 cpos = leePos(is, NULL);
@@ -128,7 +129,7 @@ void listaPalabras(char *noma, char *nrel, Arbol_huffman &arbolHuffman) throw(st
 {
         ASSERT(noma != NULL);
         ASSERT(nrel != NULL);
-        ASSERT(!arbolHuffman.vacio());
+
 
         // std::cout << arbolHuffman.toString() << std::endl;
 
@@ -249,7 +250,11 @@ calcRenum(uint32_t td1, uint32_t td2, uint32_t nd, vector<int64_t> *reord,
 
 
 void
-mezclaDosDisco(const char *indsal, const char *ind1, const char *ind2, Arbol_huffman &arbolHuffman,
+mezclaDosDisco(const char *indsal, const char *ind1,
+               const char *ind2,
+               Arbol_huffman &arbolHuffman1,
+               Arbol_huffman &arbolHuffman2,
+               Arbol_huffman &arbolHuffmanOut,
                uint32_t nd)  throw(string)
 {
         ASSERT(nd >= 0);
@@ -307,7 +312,7 @@ mezclaDosDisco(const char *indsal, const char *ind1, const char *ind2, Arbol_huf
 
         //clog << "OJO después de verificar" << endl;
         os << MARCAIND << endl;
-        mezclaRec(is1, is2, os, true, true, renum1, &renum2, arbolHuffman);
+        mezclaRec(is1, is2, os, true, true, renum1, &renum2, arbolHuffman1, arbolHuffman2, arbolHuffmanOut);
         //clog << "OJO después de mezclaRec" << endl;
         is1.close();
         is2.close();

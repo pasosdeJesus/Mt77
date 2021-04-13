@@ -58,7 +58,7 @@ escribePlanoStream(NodoTrieS *n, std::ostream &os,
  * @return trieS que construye
  */
 NodoTrieS *
-leePlanoStream(std::istream &is) throw(string);
+leePlanoStream(std::istream &is, Arbol_huffman & arbolHuffman) throw(string);
 
 /**
  * Escribe en formato plano en un archivo
@@ -79,7 +79,7 @@ escribePlano(NodoTrieS &t, vector<Doc> &docs, const char *na, const char *nrel,
  * @return TrieS leido de na
  */
 NodoTrieS *
-leePlano(char *na, char *nrel, vector<Doc> &docs);
+leePlano(char *na, char *nrel, vector<Doc> &docs, Arbol_huffman &arbolHuffman);
 
 
 /** Elimina un documento de un índice.
