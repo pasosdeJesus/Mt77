@@ -200,12 +200,24 @@ class NodoTrieS
                                         uint32_t pini,
                                         bool latin1 = false);
 
-        /**
-           Retorna el mapa de tendencias encontrado en el NodoTrieS,
-           lo cual permite conocer la cantidad de apariciones de cada
-           caracter.
-         */
-        std::map<char, int> conseguirTendencia();
+                /**
+                  Retorna el mapa de tendencias encontrado en el NodoTrieS,
+                  lo cual permite conocer la cantidad de apariciones de cada
+                  caracter.
+                  */
+                std::map<char, int> conseguirTendencia();
+
+                /**
+                 * Agrega la tendencia del NodoTrieS nts a la tendencia de este 
+                 * NodoTrieS
+                 */
+                void agregarTendenciaNodo(NodoTrieS *nts);
+
+                /**
+                 * Cambia el valor de this->tendencia por la tendencia
+                 * entregada como parametro
+                 */
+                void ponerTendencia(std::map<char, int> &tendencia);
 };
 
 

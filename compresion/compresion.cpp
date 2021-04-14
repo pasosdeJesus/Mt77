@@ -38,7 +38,7 @@ void Arbol_huffman::sumarMapas(std::map<char, int> &map1, std::map<char, int> ma
 }
 
 std::map<char, int> Arbol_huffman::cadenaAMapa(std::string cadena) {
-    std::map<char, int> tendencia;
+    std::map<char, int> tendencia = {};
     for (char c : cadena) {
         tendencia[c] ? tendencia[c]++ : tendencia[c] = 1;
     }

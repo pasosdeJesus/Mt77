@@ -70,7 +70,7 @@ void
 mezclaDosDisco(const char *indsal, const char *ind1, const char *ind2,
                Arbol_huffman &arbol_huffman1,
                Arbol_huffman &arbol_huffman2,
-               Arbol_huffman &arbol_huffmanOut,
+               Arbol_huffman &arbol_huffmanSalida,
                uint32_t nd = 0) throw(string);
 
 /**

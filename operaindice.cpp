@@ -137,7 +137,7 @@ int main(int argc, char *argv[])
                 } else if (strcmp(argv[1], "mezclaram") == 0) {
 
                         // aqui se van acumulando los demas archivos
-                        NodoTrieS *t = NULL;
+                        NodoTrieS *t = new NodoTrieS();
 
                         snprintf(noma, 1000, "%s", argv[2]);
                         //cerr<<"noma="<<noma<<endl;
@@ -148,6 +148,7 @@ int main(int argc, char *argv[])
                                 verificaNombre(argv[i], nrel);
                                 Arbol_huffman arbolHuffman("", std::string(argv[i]) + ".tendencia");
                                 NodoTrieS *r = leePlano(argv[i], nrel, docs1, arbolHuffman);
+
                                 // Renumera los del r
                                 // Mezcla docs1 en docs2
                                 vector<int64_t> renum =
@@ -156,6 +157,12 @@ int main(int argc, char *argv[])
                                   r->renumeraDocs(renum);
                                 }
                                 NodoTrieS *t2=mezcla(t, r);
+
+                                std::cout << "final: \n";
+                                for (std::pair<char, int> v : t2->conseguirTendencia()) {
+                                        std::cout << v.first << " -> " << v.second << std::endl;
+                                }
+
                                 t = t2;
                                 r = NULL;
                         }
@@ -183,12 +190,12 @@ int main(int argc, char *argv[])
 
                         Arbol_huffman arbolHuffman1("", std::string(argv[3]) + ".tendencia");
                         Arbol_huffman arbolHuffman2("", std::string(argv[4]) + ".tendencia");
-                        Arbol_huffman arbolHuffmanOut("", std::string(argv[2]) + ".tendencia");
+                        Arbol_huffman arbolHuffmanSalida("", std::string(argv[2]) + ".tendencia");
                         // TODO: esto por alguna razon solo retorna el primer valor
                         mezclaDosDisco(argv[2], argv[3], argv[4],
                                        arbolHuffman1,
                                        arbolHuffman2,
-                                       arbolHuffmanOut,
+                                       arbolHuffmanSalida,
                                        nd);
 
                         /*        } else if (strcmp(argv[1], "agregadoc") == 0) {

@@ -56,7 +56,6 @@ using namespace std;
 #include "Pos.hpp"
 #include "NodoTrieS.hpp"
 
-
 NodoTrieS::NodoTrieS(string cad, NodoTrieS *hijo_menor,
                      NodoTrieS *hermano_mayor, set<Pos> cpos)
 {
@@ -96,7 +95,7 @@ NodoTrieS::NodoTrieS(string cad, NodoTrieS *hijo_menor,
 }
 
 void NodoTrieS::modificarCad(string cad) {
-        Arbol_huffman::restarCadenaAMapa(this->tendencia, cad);
+        Arbol_huffman::restarCadenaAMapa(this->tendencia, this->cad);
         this->cad = cad;
         Arbol_huffman::sumarMapas( this->tendencia, Arbol_huffman::cadenaAMapa(cad));
 }
@@ -391,6 +390,26 @@ mezcla(NodoTrieS *a1, NodoTrieS *a2)
         NodoTrieS **r=&res;
         string c;
 
+        std::cout << "--------------------\n";
+
+        std::map<char, int> tendencia;
+
+        if (a1 != NULL) {
+            Arbol_huffman::sumarMapas(
+                tendencia,
+                a1->conseguirTendencia()
+                );
+        }
+
+        if (a2 != NULL) {
+            Arbol_huffman::sumarMapas(
+                tendencia,
+                a2->conseguirTendencia()
+                );
+        }
+
+
+
         while (a1!=NULL || a2!=NULL) {
                 c = "";
                 if (a1!=NULL && a2!=NULL) {
@@ -507,12 +526,19 @@ mezcla(NodoTrieS *a1, NodoTrieS *a2)
                         }
                 }
         }
+
+        res->ponerTendencia(tendencia);
+
+        std::cout << "mezcla:\n";
+        for (std::pair<char, int> v : res->conseguirTendencia()) {
+          std::cout << v.first << " -> " << v.second << std::endl;
+        }
         /*cerr << "Sale de función con trie iniciado con ";
         if (res!=NULL) {
-        	cerr <<"res="<<res<<"("<<res->cad<<")"<<endl;
-        	long p = 0;
-        	res->escribePlanoStream(cerr, p) ;
-        	cerr << endl;
+                cerr <<"res="<<res<<"("<<res->cad<<")"<<endl;
+                long p = 0;
+                res->escribePlanoStream(cerr, p) ;
+                cerr << endl;
         } */
         return res;
 }
@@ -692,5 +718,33 @@ NodoTrieS::insertaConEtiqueta(string c, string etiqueta,
 std::map<char, int>
 NodoTrieS::conseguirTendencia()
 {
+        // if ( this->tendencia == NULL)
+        //         return 
         return this->tendencia;
+}
+
+void
+NodoTrieS::agregarTendenciaNodo(NodoTrieS *nts)
+{
+        if(nts == NULL)
+                return; 
+
+        std::map<char, int> map2 = nts->conseguirTendencia();
+        Arbol_huffman::sumarMapas(
+            this->tendencia,
+            map2
+            );
+}
+
+void
+NodoTrieS::ponerTendencia(std::map<char, int> &tendencia)
+{
+        if (this == NULL)
+                std::cout << "this vacia\n";
+
+        // if (this->tendencia == NULL)
+        //         std::cout << "this tendencia vacia\n";
+        // if (tendencia == NULL)
+        //         std::cout << "tendencia vacia\n";
+        this->tendencia = tendencia;
 }
