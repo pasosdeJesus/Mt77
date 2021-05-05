@@ -21,6 +21,7 @@ Inicio
    terminado
 Fin
 */
+
 void Arbol_huffman::restarCadenaAMapa(std::map<char, int> &mapa, std::string cad) {
     for (char c : cad) {
         mapa[c] --;
@@ -28,6 +29,14 @@ void Arbol_huffman::restarCadenaAMapa(std::map<char, int> &mapa, std::string cad
             mapa.erase(c);
         }
     }
+}
+
+// compara ambos mapas
+bool Arbol_huffman::equivalenciaMapas( std::map<char, int> const &map1, std::map<char, int> const map2) {
+    return map1.size() == map2.size()
+        && std::equal(map1.begin(), map1.end(), map2.begin(),
+                [] (auto a, auto b) { return a.first == b.first; }
+                );
 }
 
 void Arbol_huffman::sumarMapas(std::map<char, int> &map1, std::map<char, int> map2) {
@@ -46,7 +55,7 @@ std::map<char, int> Arbol_huffman::cadenaAMapa(std::string cadena) {
 }
 
 
-void imprimirMapa(std::map<char, int> &tendencia) {
+void Arbol_huffman::imprimirMapa(std::map<char, int> const &tendencia) {
     for (std::pair<char, int> v : tendencia) {
         std::cout << v.first << " -> " << v.second << std::endl;
     }
@@ -216,7 +225,6 @@ void Arbol_huffman::_imprimirPreOrden(std::shared_ptr<nodo_arbol_huffman> nah,
         _imprimirPreOrden(nah->hijo_d, depth + 1);
 }
 
-// TODO: No debe retornar una cadena que incluya '{'
 std::string Arbol_huffman::comprimir(std::string cadena) {
 
     if (this->raiz == nullptr || cadena.empty())
@@ -262,8 +270,11 @@ std::string Arbol_huffman::_toString(std::shared_ptr<nodo_arbol_huffman> nah) {
         ")";
 }
 
-std::map<char, int> Arbol_huffman::conseguirTendencias() {
-    return this->tendencias;
+std::map<char, int> Arbol_huffman::conseguirTendencia() {
+    std::map<char, int> tendencia ;
+    if (this != NULL)
+        tendencia = this->tendencias;
+    return tendencia;
 }
 
 void Arbol_huffman::guardar(std::string nombre) {

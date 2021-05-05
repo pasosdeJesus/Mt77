@@ -64,11 +64,6 @@ NodoTrieS::NodoTrieS(string cad, NodoTrieS *hijo_menor,
         this->hijo_menor = hijo_menor;
         this->hermano_mayor = hermano_mayor;
         this->cpos = cpos;
-        this->tendencia = Arbol_huffman::cadenaAMapa(cad);
-        if (hijo_menor != NULL)
-                Arbol_huffman::sumarMapas(this->tendencia, hijo_menor->tendencia);
-        if (hermano_mayor != NULL)
-                Arbol_huffman::sumarMapas(this->tendencia, hermano_mayor->tendencia);
 }
 
 
@@ -87,17 +82,10 @@ NodoTrieS::NodoTrieS(string cad, NodoTrieS *hijo_menor,
         if (p.numd >= 0 && p.numb >= 0) {
                 cpos.insert(p);
         }
-        this->tendencia = Arbol_huffman::cadenaAMapa(cad);
-        if (hijo_menor != NULL)
-                Arbol_huffman::sumarMapas(this->tendencia, hijo_menor->tendencia);
-        if (hermano_mayor != NULL)
-                Arbol_huffman::sumarMapas(this->tendencia, hermano_mayor->tendencia);
 }
 
 void NodoTrieS::modificarCad(string cad) {
-        Arbol_huffman::restarCadenaAMapa(this->tendencia, this->cad);
         this->cad = cad;
-        Arbol_huffman::sumarMapas( this->tendencia, Arbol_huffman::cadenaAMapa(cad));
 }
 
 string NodoTrieS::valorCad() {
@@ -190,20 +178,8 @@ NodoTrieS::inserta(string pal, Pos p)
 void
 NodoTrieS::inserta(string pal, set<Pos> *npos)
 {
-        // sumar la tendencia de las nuevas palabras agregadas, de manera que se pueda
-        // conocer la tendencia total de todas las letras en el NodoTrieS
-        Arbol_huffman::sumarMapas(
-                        this->tendencia,
-                        Arbol_huffman::cadenaAMapa(pal)
-                        );
 
         // clog << "insertando la palabra: " << pal << std::endl;
-        // sumar la tendencia de las nuevas palabras agregadas, de manera que se pueda
-        // conocer la tendencia total de todas las letras en el NodoTrieS
-        Arbol_huffman::sumarMapas(
-                        this->tendencia,
-                        Arbol_huffman::cadenaAMapa(pal)
-                        );
 
         //cerr << "OJO " << "inserta("<< pal << ", "<< p << ")" << endl;
         if (pal == cad) {
@@ -390,26 +366,6 @@ mezcla(NodoTrieS *a1, NodoTrieS *a2)
         NodoTrieS **r=&res;
         string c;
 
-        std::cout << "--------------------\n";
-
-        std::map<char, int> tendencia;
-
-        if (a1 != NULL) {
-            Arbol_huffman::sumarMapas(
-                tendencia,
-                a1->conseguirTendencia()
-                );
-        }
-
-        if (a2 != NULL) {
-            Arbol_huffman::sumarMapas(
-                tendencia,
-                a2->conseguirTendencia()
-                );
-        }
-
-
-
         while (a1!=NULL || a2!=NULL) {
                 c = "";
                 if (a1!=NULL && a2!=NULL) {
@@ -525,13 +481,6 @@ mezcla(NodoTrieS *a1, NodoTrieS *a2)
                                 r=&((*r)->hermano_mayor);
                         }
                 }
-        }
-
-        res->ponerTendencia(tendencia);
-
-        std::cout << "mezcla:\n";
-        for (std::pair<char, int> v : res->conseguirTendencia()) {
-          std::cout << v.first << " -> " << v.second << std::endl;
         }
         /*cerr << "Sale de función con trie iniciado con ";
         if (res!=NULL) {
@@ -718,33 +667,24 @@ NodoTrieS::insertaConEtiqueta(string c, string etiqueta,
 std::map<char, int>
 NodoTrieS::conseguirTendencia()
 {
-        // if ( this->tendencia == NULL)
-        //         return 
-        return this->tendencia;
+        std::map<char, int> tendencia;
+        this->preordenTendencia(tendencia);
+        return tendencia;
 }
 
 void
-NodoTrieS::agregarTendenciaNodo(NodoTrieS *nts)
+NodoTrieS::preordenTendencia(std::map<char, int> &tendencia)
 {
-        if(nts == NULL)
-                return; 
 
-        std::map<char, int> map2 = nts->conseguirTendencia();
         Arbol_huffman::sumarMapas(
-            this->tendencia,
-            map2
-            );
-}
+                tendencia,
+                Arbol_huffman::cadenaAMapa(this->cad)
+        );
 
-void
-NodoTrieS::ponerTendencia(std::map<char, int> &tendencia)
-{
-        if (this == NULL)
-                std::cout << "this vacia\n";
-
-        // if (this->tendencia == NULL)
-        //         std::cout << "this tendencia vacia\n";
-        // if (tendencia == NULL)
-        //         std::cout << "tendencia vacia\n";
-        this->tendencia = tendencia;
+        if (hijo_menor!=NULL) {
+                hijo_menor->preordenTendencia(tendencia);
+        }
+        if (hermano_mayor!=NULL) {
+                hermano_mayor->preordenTendencia(tendencia);
+        }
 }

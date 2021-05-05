@@ -40,8 +40,6 @@ class NodoTrieS
 {
 
         private:
-                std::map<char, int> tendencia; // tendencia de cada caracter
-
                 friend NodoTrieS *mezcla(NodoTrieS *a1, NodoTrieS *a2);
                 friend uint32_t precalcula_escribe_actual(NodoTrieS *n);
                 friend uint32_t precalcula_escribe_con_hermanos(NodoTrieS *n);
@@ -72,6 +70,10 @@ class NodoTrieS
                                                     vector<int64_t>* renum,
                                                     Arbol_huffman &arbolHuffman);
                 string cad;
+
+                // realiza preorden sobre NodoTrie para conseguir la tendencia
+                void preordenTendencia(std::map<char, int> &tendencia);
+
         public:
                 set<Pos> cpos; //< Referencia a posiciones de esta palabra
                 NodoTrieS *hijo_menor; 	//< Lista de hijos
@@ -207,17 +209,6 @@ class NodoTrieS
                   */
                 std::map<char, int> conseguirTendencia();
 
-                /**
-                 * Agrega la tendencia del NodoTrieS nts a la tendencia de este 
-                 * NodoTrieS
-                 */
-                void agregarTendenciaNodo(NodoTrieS *nts);
-
-                /**
-                 * Cambia el valor de this->tendencia por la tendencia
-                 * entregada como parametro
-                 */
-                void ponerTendencia(std::map<char, int> &tendencia);
 };
 
 

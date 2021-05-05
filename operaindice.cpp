@@ -137,7 +137,7 @@ int main(int argc, char *argv[])
                 } else if (strcmp(argv[1], "mezclaram") == 0) {
 
                         // aqui se van acumulando los demas archivos
-                        NodoTrieS *t = new NodoTrieS();
+                        NodoTrieS *t = NULL;
 
                         snprintf(noma, 1000, "%s", argv[2]);
                         //cerr<<"noma="<<noma<<endl;
@@ -146,32 +146,36 @@ int main(int argc, char *argv[])
                         for (int i = 3; i < argc; i++) {
                                 vector<Doc> docs1; // Documentos en i-esimo índ.
                                 verificaNombre(argv[i], nrel);
+
+                                // std::cout << "archivo " << argv[i] << std::endl;
                                 Arbol_huffman arbolHuffman("", std::string(argv[i]) + ".tendencia");
+
+                                // std::cout << arbolHuffman.toString() << std::endl;
+
                                 NodoTrieS *r = leePlano(argv[i], nrel, docs1, arbolHuffman);
+
+                                if (r != NULL) {
+                                        ASSERT(
+                                                        Arbol_huffman::equivalenciaMapas(r->conseguirTendencia(), arbolHuffman.conseguirTendencia())
+                                              );
+                                }
 
                                 // Renumera los del r
                                 // Mezcla docs1 en docs2
                                 vector<int64_t> renum =
                                         mezclaDocs(docs1, docs2);
                                 if (r != NULL) {
-                                  r->renumeraDocs(renum);
+                                        r->renumeraDocs(renum);
                                 }
-                                NodoTrieS *t2=mezcla(t, r);
 
-                                std::cout << "final: \n";
-                                for (std::pair<char, int> v : t2->conseguirTendencia()) {
-                                        std::cout << v.first << " -> " << v.second << std::endl;
-                                }
+                                NodoTrieS *t2=mezcla(t, r);
 
                                 t = t2;
                                 r = NULL;
                         }
 
-                        std::map<char, int> tendencia;
-                        if (t != NULL) {
-                          tendencia = t->conseguirTendencia();
-                        }
-                        Arbol_huffman arbolHuffman(tendencia);
+                        Arbol_huffman arbolHuffman(t->conseguirTendencia());
+
                         arbolHuffman.guardar( string(argv[2]) + ".tendencia");
                         //cerr<<"idocs.size="<<idocs.size()<<endl;
                         verificaNombre(noma, nrel);

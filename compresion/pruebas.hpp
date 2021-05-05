@@ -23,8 +23,10 @@ class CompresionTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(pruebaSumarMapas);
     CPPUNIT_TEST(pruebaRestarCadenaAMapa);
     CPPUNIT_TEST(pruebaConseguirTendencias);
-    CPPUNIT_TEST(pruebaCadenaAMapa) ;
-    CPPUNIT_TEST(pruebaDescompresionArbolVacio) ;
+    CPPUNIT_TEST(pruebaCadenaAMapa);
+    CPPUNIT_TEST(pruebaDescompresionArbolVacio);
+    CPPUNIT_TEST(pruebaSumarMapas);
+    CPPUNIT_TEST(pruebaRestarCadenaAMapa);
 
     CPPUNIT_TEST_SUITE_END();
 public:
@@ -41,27 +43,28 @@ private:
 
     // // method to test the assigning and retrieval of grades
     // void testAssignAndRetrieveGrades();
+
     void pruebaVacia();
 
-    void pruebaCadenasCompresion() ;
+    void pruebaCadenasCompresion();
 
-    void pruebaAgregarCadenasACompresion() ;
+    void pruebaAgregarCadenasACompresion();
 
-    void pruebaCargarArchivo() ;
+    void pruebaCargarArchivo();
 
-    void pruebaCadenaAMapa() ;
+    void pruebaCadenaAMapa();
 
-    void pruebaSumarMapas() ;
+    void pruebaSumarMapas();
 
-    void pruebaRestarCadenaAMapa() ;
+    void pruebaRestarCadenaAMapa();
 
-    void pruebaConseguirTendencias() ;
+    void pruebaConseguirTendencias();
 
-    void pruebaDescompresionArbolVacio() ;
+    void pruebaDescompresionArbolVacio();
 
     // utilidades generales
 
-    void pruebaComprimirDescomprimir(Arbol_huffman ah, std::string cadena) ;
+    void pruebaComprimirDescomprimir(Arbol_huffman ah, std::string cadena);
 
     void equalString(const std::string &str1, const std::string &str2);
 

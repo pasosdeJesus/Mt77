@@ -123,6 +123,49 @@ void CompresionTest::pruebaCadenaAMapa() {
         );
 
 }
-void CompresionTest::pruebaSumarMapas() {}
-void CompresionTest::pruebaRestarCadenaAMapa() {}
+
+void CompresionTest::pruebaSumarMapas() {
+    std::map<char, int> mapaCaracteresResultado {
+        {'a', 2},
+        {'b', 3},
+        {'c', 4}
+    };
+
+    std::map<char, int> mc1 {
+        {'a', 1},
+        {'b', 1},
+        {'c', 2}
+    };
+    std::map<char, int> mc2 {
+        {'a', 1},
+        {'b', 2},
+        {'c', 2}
+    };
+
+    Arbol_huffman::sumarMapas(mc1, mc2);
+
+    CPPUNIT_ASSERT(
+            Arbol_huffman::equivalenciaMapas(mapaCaracteresResultado, mc1));
+
+}
+
+void CompresionTest::pruebaRestarCadenaAMapa() {
+    std::map<char, int> mapa {
+        {'a', 2},
+        {'b', 3},
+        {'c', 4}
+    };
+
+    Arbol_huffman::restarCadenaAMapa(mapa, "aacb");
+
+    std::map<char, int> mapaResultado {
+        {'b', 2},
+        {'c', 3}
+    };
+
+    CPPUNIT_ASSERT(
+            Arbol_huffman::equivalenciaMapas(mapa, mapaResultado));
+
+}
+
 void CompresionTest::pruebaConseguirTendencias() {}
