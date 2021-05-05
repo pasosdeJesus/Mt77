@@ -60,7 +60,7 @@ private:
 
     void pruebaConseguirTendencias();
 
-    void pruebaDescompresionArbolVacio() ;
+    void pruebaDescompresionArbolVacio();
 
     // utilidades generales
 
