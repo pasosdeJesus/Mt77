@@ -734,8 +734,9 @@ std::map<char, int>
 NodoTrieS::conseguirTendencia()
 {
         std::map<char, int> tendencia;
-        if (this != NULL)
+        if (this != NULL) {
                 this->preordenTendencia(tendencia);
+        }
         return tendencia;
 }
 
