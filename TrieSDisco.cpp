@@ -72,14 +72,27 @@ escribeNodo(iostream &os, string c, set<Pos> *cpos,
         //clog << "pini=" << pini << endl;
         // os << c << FINCADENA;
         std::string comprimido = c;
-        if (!arbolHuffman.vacio())
+
+        if (!arbolHuffman.vacio() && !comprimido.empty())
         {
                 comprimido = arbolHuffman.comprimir(c);
-        }
 
-        // TODO: encontrar como diferenciar entre un FINCADENA dentro del texto
-        // y un FINCADENA que si represente el final de la cadena
-        ASSERT(comprimido.find(FINCADENA) == std::string::npos);
+                // TODO: encontrar como diferenciar entre un FINCADENA dentro del texto
+                // y un FINCADENA que si represente el final de la cadena
+
+                size_t pos = comprimido.find(FINCADENA);
+
+                // if (pos != std::string::npos) {
+                //         std::cout << comprimido << " <--> FINCADENA: " << FINCADENA << std::endl;
+
+                //         std::cout << pos << std::endl;
+                //         std::cout << "letra: " << comprimido[pos] << std::endl;
+
+                //         std::cout << arbolHuffman.toString() << std::endl;
+                // }
+
+                ASSERT(pos == std::string::npos);
+        }
 
         // comprimido.find(FINCADENA);
 

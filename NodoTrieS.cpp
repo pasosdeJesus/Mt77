@@ -336,6 +336,42 @@ NodoTrieS::aDotty(std::ostream &os, string pref, bool primero, bool mayor)
         }
 }
 
+void
+NodoTrieS::aDotty() throw(string)
+{
+        aDotty(cout);
+}
+
+// imprimir el arbol
+void
+NodoTrieS::preorden2(int d)
+{
+        if (this == NULL)
+                return;
+
+        std::cout<< cad ;
+
+        std::cout << std::endl;
+
+        for(int a = 0; a < d ; a++) {
+                std::cout << "  ";
+        }
+        std::cout << "- ";
+        if (hijo_menor!=NULL) {
+                hijo_menor->preorden2(d+1);
+        }
+        std::cout << "\n";
+        for(int a = 0; a < d - 1 ; a++) {
+                std::cout << "  ";
+        }
+        std::cout << "- ";
+        if (hermano_mayor!=NULL) {
+                hermano_mayor->preorden2(d);
+        }
+        std::cout << "\n";
+
+}
+
 string
 NodoTrieS::preorden()
 {
@@ -394,7 +430,7 @@ mezcla(NodoTrieS *a1, NodoTrieS *a2)
                                 t->hermano_mayor = NULL;
                                 delete t;
                         }
-                } else if (a1->cad == a2->cad) { // c != "" && a1!=NULL && a2!=NULL
+                } else if (a1 != NULL && a2 != NULL && a1->cad == a2->cad) { // c != "" && a1!=NULL && a2!=NULL
                         //cerr << "iguales" <<endl;
                         set<Pos> cpos;
                         insert_iterator<set<Pos> >
@@ -443,7 +479,7 @@ mezcla(NodoTrieS *a1, NodoTrieS *a2)
                                 //cerr << "r2 vacio"<<endl;
                                 n1=a1;
                                 a1=a1->hermano_mayor;
-                                n1->modificarCad( r1);
+                                n1->modificarCad(r1);
                                 n1->hermano_mayor = NULL;
                                 NodoTrieS *m = mezcla(n1, a2->hijo_menor);
                                 n1=NULL;
@@ -668,17 +704,19 @@ std::map<char, int>
 NodoTrieS::conseguirTendencia()
 {
         std::map<char, int> tendencia;
-        this->preordenTendencia(tendencia);
+        if (this != NULL)
+                this->preordenTendencia(tendencia);
         return tendencia;
 }
 
 void
 NodoTrieS::preordenTendencia(std::map<char, int> &tendencia)
 {
+        std::map<char, int> tendenciaActual = Arbol_huffman::cadenaAMapa(this->cad);
 
         Arbol_huffman::sumarMapas(
                 tendencia,
-                Arbol_huffman::cadenaAMapa(this->cad)
+                tendenciaActual
         );
 
         if (hijo_menor!=NULL) {

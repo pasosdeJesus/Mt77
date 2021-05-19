@@ -32,7 +32,7 @@ using namespace std;
  * sin descendientes con función escribe
  */
 uint32_t
-precalcula_escribe_con_hermanos(NodoTrieS *n)
+precalcula_escribe_con_hermanos(NodoTrieS *n, Arbol_huffman &arbolHuffman)
 {
         //ASSERT(n == NULL || n->cad.length() > 0);
 
@@ -42,8 +42,9 @@ precalcula_escribe_con_hermanos(NodoTrieS *n)
         }
         //cerr << "OJO precalcula_escribe_con_hermanos '" << (n!=NULL ? n->cad : string("null")) << "' t=" << t ;
         while (n != NULL) {
-                t += precalcula_escribe_actual(n->cad.length(),
-                                               &(n->cpos));
+                t += precalcula_escribe_actual(
+                                arbolHuffman.comprimir(n->valorCad()).length(),
+                                &(n->cpos));
                 //cerr << " 2 t=" << t;
                 n = n->hermano_mayor;
                 //cerr << " 3 t=" << t;
@@ -53,13 +54,13 @@ precalcula_escribe_con_hermanos(NodoTrieS *n)
 }
 
 uint32_t
-precalcula_escribe(NodoTrieS *n)
+precalcula_escribe(NodoTrieS *n, Arbol_huffman &arbolHuffman)
 {
-        uint32_t t = precalcula_escribe_con_hermanos(n);
+        uint32_t t = precalcula_escribe_con_hermanos(n, arbolHuffman);
         //cerr << "OJO precalcula_escribe en '" << (n!=NULL ? n->cad : string("null")) << "' t=" << t ;
 
         while (n != NULL) {
-                t += precalcula_escribe(n->hijo_menor);
+                t += precalcula_escribe(n->hijo_menor, arbolHuffman);
                 //cerr << "  En ciclo t=" << t ;
                 n = n->hermano_mayor;
         }
@@ -85,7 +86,7 @@ escribePlanoStream(NodoTrieS *n, std::iostream &os,
 {
 
         NodoTrieS *tn;
-        uint32_t nh = precalcula_escribe_con_hermanos(n);
+        uint32_t nh = precalcula_escribe_con_hermanos(n, arbolHuffman);
         uint32_t dultimo = nh; // Distancia a último desde comienzo de grupo de hermanos
         uint32_t dhijo = 0; // distancia a hijo desde hermano actual
 
@@ -96,7 +97,7 @@ escribePlanoStream(NodoTrieS *n, std::iostream &os,
         while (tn != NULL && tn->valorCad().length() > 0) {
                 if (tn->hijo_menor != NULL) {
                         dhijo = dultimo - pactual;
-                        dultimo += precalcula_escribe(tn->hijo_menor);
+                        dultimo += precalcula_escribe(tn->hijo_menor, arbolHuffman);
                 } else {
                         dhijo = 0;
                 }
@@ -106,8 +107,9 @@ escribePlanoStream(NodoTrieS *n, std::iostream &os,
                 if (depuraos != NULL) {
                         cout << depuraos->str() << endl;
                 }
-                pactual += precalcula_escribe_actual((tn->valorCad()).length(),
-                                                     &(tn->cpos));
+                pactual += precalcula_escribe_actual(
+                                arbolHuffman.comprimir(tn->valorCad()).length(),
+                                &(tn->cpos));
                 tn = tn->hermano_mayor;
         }
         os << "\n";
@@ -227,7 +229,7 @@ escribeCopiaNodoRam(iostream &os, NodoTrieS *a, int saltacad,
                 *phijo = a->hijo_menor;
                 uint32_t dhijo = 0;
                 if (*phijo != NULL) {
-                        dhijo = precalcula_escribe_con_hermanos(a);
+                        dhijo = precalcula_escribe_con_hermanos(a, arbolHuffman);
                 }
                 //clog << " phijo=" << phijo;
                 //clog << " cpos=" << *cpos;

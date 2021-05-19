@@ -174,11 +174,15 @@ class NodoTrieS
                 void aDotty(ostream &os, string pref = "",
                             bool primero = true, bool mayor = true) throw(string);
 
+                void aDotty() throw(string);
+
                 /**
                  * Con propósitos de depuración, retorna cadena con 
                 * árbol en preorden.
                  */
                 string preorden();
+
+                void preorden2(int d);
 
                 /** Renumera documentos referenciados en posiciones de trieS de
                  * acuerdo a vector renum.   Una posición cuyo documento sea el
