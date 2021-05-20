@@ -1,5 +1,5 @@
 Mt77 es un motor de búsqueda rápido, preciso, apto para indexación
-distribuida y de dominio público
+distribuida y con licencia ISC
 
 # 1. Características:
   - Más veloz en búsquedas que Lucene y que Amberfish, aunque los
@@ -30,11 +30,11 @@ Que entre otras generará las herramientas `indexador` y `buscador` para
 crear un índice y para buscar sobre un índice.
 
 Con las fuentes se incluyen textos de prueba en el directorio `regr` como
-por ejemplo el evangelio de Mateo como texto plano en codificacíon UTF-8 
+por ejemplo el evangelio de Mateo como texto plano en codificación UTF-8 
 `regr/mateo-utf8.txt`.
 
 Para crear un índice `m.indice` (con relación de documentos indexados
-`m.relacion`) con las palabras de `regr/mateo-utf8.txt` referenciado el 
+`m.relacion`) con las palabras de `regr/mateo-utf8.txt` referenciando el 
 texto con el URL <https://traduccion.pasosdeJesus.org>:
 ```
    rm -f m.indice m.relacion t.indice;
@@ -62,7 +62,7 @@ Que retornará un JSON indicando que encontró 14 ocurrencias de la palabra:
 }
 ```
 
-Para agrega al mismo índice índice `m.indice` (con relación `m.relacion`) las 
+Para agregar al mismo índice `m.indice` (con relación `m.relacion`) las 
 palabras de `regr/marcos-utf8.txt`:
 ```
    ./indexador m.indice t.indice 'https://traduccion.pasosdeJesus.org' regr/marcos-utf8.txt
@@ -104,11 +104,14 @@ Consta de las siguientes herramientas:
 
 # 4. Herramientas para el desarrollo y estándares
 
-- `make doctec` Genera documentación de fuentes
+- `make all` Compila herramientas sin aserciones y con optimizaciones
+- `make prueba` Compila pero activando aserciones y sin optimizaciones
+- `make limpia` Limpia ejecutables generados al compilar
 - `make unidad` Ejecuta pruebas de unidad. Pero sólo debe hacerse después de 
   compilar con aserciones `make limpia prueba`
 - `make regr` Ejecuta pruebas de regresión (deben pasar tanto con como sin
     aserciones).
 - `make cobertura` Verificar cobertura de las pruebas de unidad
 - `make desempeno` Análisis de desempeño
+- `make doctec` Genera documentación de fuentes
 
