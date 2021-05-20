@@ -320,13 +320,13 @@ int main(int argc, char *argv[])
 
                         // std::cout << arbolHuffmanEscritura.toString() << std::endl;
 
-                        arbolHuffmanEscritura.guardar( nomi[g % 2] + ".tendencia" );
-
                         mezclaDiscoRam(is1, t, 0, os, true, true,
                                        NULL, NULL, arbolHuffmanLectura,
                                        arbolHuffmanEscritura);
 
                         muestraStream(is1, "", arbolHuffmanLectura);
+
+                        arbolHuffmanEscritura.guardar( nomi[g % 2] + ".tendencia" );
 
                         is1.close();
                         os.close();

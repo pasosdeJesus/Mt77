@@ -89,18 +89,18 @@ public:
     Arbol_huffman(std::map<char, int> tendencia, std::string archivo="");
 
     // retorna el mapa de tendencias del arbol de huffman
-    std::map<char, int> conseguirTendencias();
+    std::map<char, int> conseguirTendencia();
 
     // descomprime la cadena en binCodigo y la retorna
     // iniciador, llama a _descomprimir
-	std::string descomprimir(std::string binCodigo);
+    std::string descomprimir(std::string binCodigo);
 
     // imprime los nodos del arbol en pre orden
     // iniciador, llama a _imprimirPreOrden
-	void imprimirPreOrden();
+    void imprimirPreOrden();
 
     // comprime la cadena que se le pasa
-	std::string comprimir(std::string cadena);
+    std::string comprimir(std::string cadena);
 
     // convierte el arbol a una cadena
     // iniciador, llama a _toString
@@ -118,9 +118,15 @@ public:
     // agrega el segundo mapa al primer mapa
     static void sumarMapas(std::map<char, int> &map1, std::map<char, int> map2);
 
+    // agrega el segundo mapa al primer mapa
+    static bool equivalenciaMapas(
+            std::map<char, int> const  &map1, std::map<char, int> const map2);
+
     static std::map<char, int> cadenaAMapa(std::string cadena);
 
     static void restarCadenaAMapa(std::map<char, int> &mapa, std::string cad);
+
+    static void imprimirMapa(std::map<char, int> const &tendencia);
 
 };
 

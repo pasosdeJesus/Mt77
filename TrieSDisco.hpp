@@ -155,7 +155,7 @@ mezclaRec(istream &is1, istream &is2, iostream &os, bool conHermanos1,
           vector<int64_t> *renum2,
           Arbol_huffman &arbolHuffman1,  // pertenece a is1
           Arbol_huffman &arbolHuffman2,  // pertenece a is2
-          Arbol_huffman &arbolHuffmanOut // pertenece a os
+          Arbol_huffman &arbolHuffmanSalida // pertenece a os
 );
 
 /**

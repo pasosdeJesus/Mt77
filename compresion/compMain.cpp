@@ -5,7 +5,6 @@ int main() {
 
     // prueba(); return 0;
 
-
     // antes de guardar -- reconstruir arbol huffman
 
     std::string cadena = "";

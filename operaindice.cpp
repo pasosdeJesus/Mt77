@@ -130,8 +130,6 @@ int main(int argc, char *argv[])
                         verificaNombre(argv[2], nrel);
 
                         // std::clog << "archivo tendencia" << nombre_tendencia << std::endl;
-                        // TODO: aqui solo se imprime la primera palabra, se deberia imprimir toda la lista
-
                         Arbol_huffman arbolHuffman("", std::string(argv[2]) + ".tendencia");
                         listaPalabras(noma, nrel, arbolHuffman);
                 } else if (strcmp(argv[1], "mezclaram") == 0) {
@@ -146,26 +144,33 @@ int main(int argc, char *argv[])
                         for (int i = 3; i < argc; i++) {
                                 vector<Doc> docs1; // Documentos en i-esimo índ.
                                 verificaNombre(argv[i], nrel);
+
+                                // std::cout << "archivo " << argv[i] << std::endl;
                                 Arbol_huffman arbolHuffman("", std::string(argv[i]) + ".tendencia");
                                 NodoTrieS *r = leePlano(argv[i], nrel, docs1, arbolHuffman);
+
+                                if (r != NULL) {
+                                        ASSERT(
+                                                        Arbol_huffman::equivalenciaMapas(r->conseguirTendencia(), arbolHuffman.conseguirTendencia())
+                                              );
+                                }
+
                                 // Renumera los del r
                                 // Mezcla docs1 en docs2
-                                vector<int64_t> renum =
-                                        mezclaDocs(docs1, docs2);
+                                vector<int64_t> renum = mezclaDocs(docs1, docs2);
                                 if (r != NULL) {
-                                  r->renumeraDocs(renum);
+                                        r->renumeraDocs(renum);
                                 }
+
                                 NodoTrieS *t2=mezcla(t, r);
+
                                 t = t2;
                                 r = NULL;
                         }
 
-                        std::map<char, int> tendencia;
-                        if (t != NULL) {
-                          tendencia = t->conseguirTendencia();
-                        }
-                        Arbol_huffman arbolHuffman(tendencia);
-                        arbolHuffman.guardar( string(argv[2]) + ".tendencia");
+                        Arbol_huffman arbolHuffman(t->conseguirTendencia());
+
+                        arbolHuffman.guardar(string(argv[2]) + ".tendencia");
                         //cerr<<"idocs.size="<<idocs.size()<<endl;
                         verificaNombre(noma, nrel);
                         escribePlano(*t, docs2, noma, nrel, arbolHuffman);
@@ -183,13 +188,15 @@ int main(int argc, char *argv[])
 
                         Arbol_huffman arbolHuffman1("", std::string(argv[3]) + ".tendencia");
                         Arbol_huffman arbolHuffman2("", std::string(argv[4]) + ".tendencia");
-                        Arbol_huffman arbolHuffmanOut("", std::string(argv[2]) + ".tendencia");
-                        // TODO: esto por alguna razon solo retorna el primer valor
-                        mezclaDosDisco(argv[2], argv[3], argv[4],
-                                       arbolHuffman1,
-                                       arbolHuffman2,
-                                       arbolHuffmanOut,
-                                       nd);
+                        Arbol_huffman arbolHuffmanSalida("", std::string(argv[2]) + ".tendencia");
+                        mezclaDosDisco(
+                                argv[2], argv[3], argv[4],
+                                arbolHuffman1,
+                                arbolHuffman2,
+                                arbolHuffmanSalida,
+                                nd
+                        );
+
 
                         /*        } else if (strcmp(argv[1], "agregadoc") == 0) {
                                   long nd = 0;

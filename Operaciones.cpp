@@ -254,7 +254,7 @@ mezclaDosDisco(const char *indsal, const char *ind1,
                const char *ind2,
                Arbol_huffman &arbolHuffman1,
                Arbol_huffman &arbolHuffman2,
-               Arbol_huffman &arbolHuffmanOut,
+               Arbol_huffman &arbolHuffmanSalida,
                uint32_t nd)  throw(string)
 {
         ASSERT(nd >= 0);
@@ -312,7 +312,7 @@ mezclaDosDisco(const char *indsal, const char *ind1,
 
         //clog << "OJO después de verificar" << endl;
         os << MARCAIND << endl;
-        mezclaRec(is1, is2, os, true, true, renum1, &renum2, arbolHuffman1, arbolHuffman2, arbolHuffmanOut);
+        mezclaRec(is1, is2, os, true, true, renum1, &renum2, arbolHuffman1, arbolHuffman2, arbolHuffmanSalida);
         //clog << "OJO después de mezclaRec" << endl;
         is1.close();
         is2.close();

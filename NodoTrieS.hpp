@@ -40,8 +40,6 @@ class NodoTrieS
 {
 
         private:
-                std::map<char, int> tendencia; // tendencia de cada caracter
-
                 friend NodoTrieS *mezcla(NodoTrieS *a1, NodoTrieS *a2);
                 friend uint32_t precalcula_escribe_actual(NodoTrieS *n);
                 friend uint32_t precalcula_escribe_con_hermanos(NodoTrieS *n);
@@ -72,6 +70,10 @@ class NodoTrieS
                                                     vector<int64_t>* renum,
                                                     Arbol_huffman &arbolHuffman);
                 string cad;
+
+                // realiza preorden sobre NodoTrie para conseguir la tendencia
+                void preordenTendencia(std::map<char, int> &tendencia);
+
         public:
                 set<Pos> cpos; //< Referencia a posiciones de esta palabra
                 NodoTrieS *hijo_menor; 	//< Lista de hijos
@@ -172,11 +174,15 @@ class NodoTrieS
                 void aDotty(ostream &os, string pref = "",
                             bool primero = true, bool mayor = true) throw(string);
 
+                void aDotty() throw(string);
+
                 /**
                  * Con propósitos de depuración, retorna cadena con 
                 * árbol en preorden.
                  */
                 string preorden();
+
+                void preorden2(int d);
 
                 /** Renumera documentos referenciados en posiciones de trieS de
                  * acuerdo a vector renum.   Una posición cuyo documento sea el
@@ -200,12 +206,13 @@ class NodoTrieS
                                         uint32_t pini,
                                         bool latin1 = false);
 
-        /**
-           Retorna el mapa de tendencias encontrado en el NodoTrieS,
-           lo cual permite conocer la cantidad de apariciones de cada
-           caracter.
-         */
-        std::map<char, int> conseguirTendencia();
+                /**
+                  Retorna el mapa de tendencias encontrado en el NodoTrieS,
+                  lo cual permite conocer la cantidad de apariciones de cada
+                  caracter.
+                  */
+                std::map<char, int> conseguirTendencia();
+
 };
 
 

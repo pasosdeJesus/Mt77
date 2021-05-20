@@ -31,14 +31,14 @@ using namespace std;
  * sin descendientes con función escribe 
  */
 uint32_t
-precalcula_escribe_con_hermanos(NodoTrieS *n);
+precalcula_escribe_con_hermanos(NodoTrieS *n, Arbol_huffman &arbolHuffman);
 
 /**
  * Calcula cuantos bytes requeriría el procedimiento escribe
  * para representar el nodo, sus hermanos y descendientes
  */
 uint32_t
-precalcula_escribe(NodoTrieS *n);
+precalcula_escribe(NodoTrieS *n, Arbol_huffman &arbolHuffman);
 
 
 /**

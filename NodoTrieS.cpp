@@ -56,7 +56,6 @@ using namespace std;
 #include "Pos.hpp"
 #include "NodoTrieS.hpp"
 
-
 NodoTrieS::NodoTrieS(string cad, NodoTrieS *hijo_menor,
                      NodoTrieS *hermano_mayor, set<Pos> cpos)
 {
@@ -65,11 +64,6 @@ NodoTrieS::NodoTrieS(string cad, NodoTrieS *hijo_menor,
         this->hijo_menor = hijo_menor;
         this->hermano_mayor = hermano_mayor;
         this->cpos = cpos;
-        this->tendencia = Arbol_huffman::cadenaAMapa(cad);
-        if (hijo_menor != NULL)
-                Arbol_huffman::sumarMapas(this->tendencia, hijo_menor->tendencia);
-        if (hermano_mayor != NULL)
-                Arbol_huffman::sumarMapas(this->tendencia, hermano_mayor->tendencia);
 }
 
 
@@ -88,17 +82,10 @@ NodoTrieS::NodoTrieS(string cad, NodoTrieS *hijo_menor,
         if (p.numd >= 0 && p.numb >= 0) {
                 cpos.insert(p);
         }
-        this->tendencia = Arbol_huffman::cadenaAMapa(cad);
-        if (hijo_menor != NULL)
-                Arbol_huffman::sumarMapas(this->tendencia, hijo_menor->tendencia);
-        if (hermano_mayor != NULL)
-                Arbol_huffman::sumarMapas(this->tendencia, hermano_mayor->tendencia);
 }
 
 void NodoTrieS::modificarCad(string cad) {
-        Arbol_huffman::restarCadenaAMapa(this->tendencia, cad);
         this->cad = cad;
-        Arbol_huffman::sumarMapas( this->tendencia, Arbol_huffman::cadenaAMapa(cad));
 }
 
 string NodoTrieS::valorCad() {
@@ -191,20 +178,8 @@ NodoTrieS::inserta(string pal, Pos p)
 void
 NodoTrieS::inserta(string pal, set<Pos> *npos)
 {
-        // sumar la tendencia de las nuevas palabras agregadas, de manera que se pueda
-        // conocer la tendencia total de todas las letras en el NodoTrieS
-        Arbol_huffman::sumarMapas(
-                        this->tendencia,
-                        Arbol_huffman::cadenaAMapa(pal)
-                        );
 
         // clog << "insertando la palabra: " << pal << std::endl;
-        // sumar la tendencia de las nuevas palabras agregadas, de manera que se pueda
-        // conocer la tendencia total de todas las letras en el NodoTrieS
-        Arbol_huffman::sumarMapas(
-                        this->tendencia,
-                        Arbol_huffman::cadenaAMapa(pal)
-                        );
 
         //cerr << "OJO " << "inserta("<< pal << ", "<< p << ")" << endl;
         if (pal == cad) {
@@ -361,6 +336,42 @@ NodoTrieS::aDotty(std::ostream &os, string pref, bool primero, bool mayor)
         }
 }
 
+void
+NodoTrieS::aDotty() throw(string)
+{
+        aDotty(cout);
+}
+
+// imprimir el arbol
+void
+NodoTrieS::preorden2(int d)
+{
+        if (this == NULL)
+                return;
+
+        std::cout<< cad ;
+
+        std::cout << std::endl;
+
+        for(int a = 0; a < d ; a++) {
+                std::cout << "  ";
+        }
+        std::cout << "- ";
+        if (hijo_menor!=NULL) {
+                hijo_menor->preorden2(d+1);
+        }
+        std::cout << "\n";
+        for(int a = 0; a < d - 1 ; a++) {
+                std::cout << "  ";
+        }
+        std::cout << "- ";
+        if (hermano_mayor!=NULL) {
+                hermano_mayor->preorden2(d);
+        }
+        std::cout << "\n";
+
+}
+
 string
 NodoTrieS::preorden()
 {
@@ -419,7 +430,7 @@ mezcla(NodoTrieS *a1, NodoTrieS *a2)
                                 t->hermano_mayor = NULL;
                                 delete t;
                         }
-                } else if (a1->cad == a2->cad) { // c != "" && a1!=NULL && a2!=NULL
+                } else if (a1 != NULL && a2 != NULL && a1->cad == a2->cad) { // c != "" && a1!=NULL && a2!=NULL
                         //cerr << "iguales" <<endl;
                         set<Pos> cpos;
                         insert_iterator<set<Pos> >
@@ -468,7 +479,7 @@ mezcla(NodoTrieS *a1, NodoTrieS *a2)
                                 //cerr << "r2 vacio"<<endl;
                                 n1=a1;
                                 a1=a1->hermano_mayor;
-                                n1->modificarCad( r1);
+                                n1->modificarCad(r1);
                                 n1->hermano_mayor = NULL;
                                 NodoTrieS *m = mezcla(n1, a2->hijo_menor);
                                 n1=NULL;
@@ -509,10 +520,10 @@ mezcla(NodoTrieS *a1, NodoTrieS *a2)
         }
         /*cerr << "Sale de función con trie iniciado con ";
         if (res!=NULL) {
-        	cerr <<"res="<<res<<"("<<res->cad<<")"<<endl;
-        	long p = 0;
-        	res->escribePlanoStream(cerr, p) ;
-        	cerr << endl;
+                cerr <<"res="<<res<<"("<<res->cad<<")"<<endl;
+                long p = 0;
+                res->escribePlanoStream(cerr, p) ;
+                cerr << endl;
         } */
         return res;
 }
@@ -692,5 +703,26 @@ NodoTrieS::insertaConEtiqueta(string c, string etiqueta,
 std::map<char, int>
 NodoTrieS::conseguirTendencia()
 {
-        return this->tendencia;
+        std::map<char, int> tendencia;
+        if (this != NULL)
+                this->preordenTendencia(tendencia);
+        return tendencia;
+}
+
+void
+NodoTrieS::preordenTendencia(std::map<char, int> &tendencia)
+{
+        std::map<char, int> tendenciaActual = Arbol_huffman::cadenaAMapa(this->cad);
+
+        Arbol_huffman::sumarMapas(
+                tendencia,
+                tendenciaActual
+        );
+
+        if (hijo_menor!=NULL) {
+                hijo_menor->preordenTendencia(tendencia);
+        }
+        if (hermano_mayor!=NULL) {
+                hermano_mayor->preordenTendencia(tendencia);
+        }
 }
