@@ -5,6 +5,8 @@
  *    lista i
  * - Generar árbol en formato dotty
  *    grafo i
+ * - Generar otro árbol en formato dotty
+ *    grafo2 i
  * - Genera condensado de índice
  *    condensado i
  * - Mezcla en ram los índices i1 a i_n y deja el resultado en is
@@ -63,6 +65,8 @@ int main(int argc, char *argv[])
 
                 cerr << "grafo i" << endl;
                 cerr << "	Generar árbol en formato dotty" << endl;
+                cerr << "grafo2 i" << endl;
+                cerr << "	Generar otro árbol en formato dotty" << endl;
                 cerr << "condensado i" << endl;
                 cerr << "	Generar condensado" << endl;
                 cerr << "lista i" << endl;
@@ -93,7 +97,9 @@ int main(int argc, char *argv[])
 
         if (((strcmp(argv[1], "lista") == 0 ||
                 strcmp(argv[1], "grafo") == 0 ||
-                strcmp(argv[1], "condensado") == 0) && argc != 3) ||
+                strcmp(argv[1], "grafo2") == 0 ||
+                strcmp(argv[1], "condensado") == 0) &&
+                argc != 3) ||
                 (strcmp(argv[1], "subindice") == 0 && argc != 5) ||
                 (strcmp(argv[1], "eliminadoc") == 0 && argc != 5) ||
                 (strcmp(argv[1], "mezclaram") == 0 && argc < 5) ||
@@ -120,6 +126,12 @@ int main(int argc, char *argv[])
                         Arbol_huffman arbolHuffman("", std::string(argv[2]) + ".tendencia");
                         NodoTrieS *r = leePlano(noma, nrel, docs1, arbolHuffman);
                         r->aDotty(cout);
+                } else if (strcmp(argv[1], "grafo2") == 0) {
+                        snprintf(noma, 1000, "%s", argv[2]);
+                        verificaNombre(argv[2], nrel);
+                        vector<Doc> docs1;
+                        NodoTrieS *r = leePlano(noma, nrel, docs1);
+                        r->aDotty2();
                 } else if (strcmp(argv[1], "condensado") == 0) {
                         snprintf(noma, 1000, "%s", argv[2]);
                         verificaNombre(argv[2], nrel);
