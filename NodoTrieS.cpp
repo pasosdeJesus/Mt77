@@ -328,6 +328,43 @@ NodoTrieS::aDotty(std::ostream &os, string pref, bool primero, bool mayor)
         }
 }
 
+void
+NodoTrieS::aDotty2(std::ostream &os, string pref, bool primero)
+{
+  NodoTrieS *n = this;
+  if (primero) {
+    os << "digraph \"Mt77\" {" << endl << endl;
+  }
+
+  if (n != NULL && n->cad != "") {
+    os << '"' << pref << n->cad
+      << "\" [label=\"" << n->cad
+      << " " << n->cpos << "\"]" << endl;
+    if (pref != "") {
+      os << '"' << pref << "\" -> \""
+        << pref << n->cad << "\"" << endl;
+    }
+    if (n->hijo_menor != NULL) {
+      n->hijo_menor->aDotty2(os, pref+n->cad, false);
+    }
+    if (n->hermano_mayor != NULL) {
+      n->hermano_mayor->aDotty2(os, pref, false);
+    }
+  }
+
+  if (primero) {
+    os << "}" << endl;
+  }
+
+}
+
+
+void
+NodoTrieS::aDotty2()
+{
+  aDotty2(cout, "", true);
+}
+
 string
 NodoTrieS::preorden()
 {

@@ -157,6 +157,13 @@ class NodoTrieS
                 void aDotty(ostream &os, string pref = "",
                             bool primero = true, bool mayor = true) throw(string);
 
+                /* Arbol mas simple en formato dot */
+                void aDotty2(ostream &os, string pref = "", bool primero = true);
+
+                /* Arbol mas simple en formato dot en salida estándar*/
+                void aDotty2();
+
+
                 /**
                  * Con propósitos de depuración, retorna cadena con 
                 * árbol en preorden.
