@@ -117,20 +117,26 @@ int main(int argc, char *argv[])
                                 cerr << "n debe ser mayor o igual a 1" << endl;
                                 exit(1);
                         }
-                        Arbol_huffman arbolHuffman("", std::string(argv[2]) + ".tendencia");
+                        Arbol_huffman arbolHuffman("", std::string(argv[2]) + 
+                            ".tendencia");
                         eliminaDoc(noma, argv[3], (long)nd, arbolHuffman);
                 } else if (strcmp(argv[1], "grafo") == 0) {
                         snprintf(noma, 1000, "%s", argv[2]);
                         verificaNombre(argv[2], nrel);
                         vector<Doc> docs1;
-                        Arbol_huffman arbolHuffman("", std::string(argv[2]) + ".tendencia");
-                        NodoTrieS *r = leePlano(noma, nrel, docs1, arbolHuffman);
+                        Arbol_huffman arbolHuffman("", std::string(argv[2]) + 
+                            ".tendencia");
+                        NodoTrieS *r = leePlano(noma, nrel, docs1, 
+                            arbolHuffman);
                         r->aDotty(cout);
                 } else if (strcmp(argv[1], "grafo2") == 0) {
                         snprintf(noma, 1000, "%s", argv[2]);
                         verificaNombre(argv[2], nrel);
                         vector<Doc> docs1;
-                        NodoTrieS *r = leePlano(noma, nrel, docs1);
+                        Arbol_huffman arbolHuffman("", std::string(argv[2]) + 
+                            ".tendencia");
+                        NodoTrieS *r = leePlano(noma, nrel, docs1,
+                            arbolHuffman);
                         r->aDotty2();
                 } else if (strcmp(argv[1], "condensado") == 0) {
                         snprintf(noma, 1000, "%s", argv[2]);

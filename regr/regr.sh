@@ -9,12 +9,12 @@ limpiar () {
 
     if [ -f "$indice" ]
     then
-        rm -r "$indice"
+        rm -f "$indice"
     fi
     # echo "rm -r $1.indice.tendencia"
     if [ -f "$tendencia" ]
     then
-        rm -r "$tendencia"
+        rm -f "$tendencia"
     fi
 }
 
@@ -372,7 +372,7 @@ comparar mmj.indice mmja.indice "** ERROR: mmj y mmja deberían ser identicos"
 
 echo "Comparando indexado en grupos"
 rm -f -f t.indice*
-rm -f rg1.indice* MT77MAXG=120 ../indexador -l rg1.indice t.indice "http://r/" r1-latin1.txt r2-latin1.txt
+rm -f rg1.indice*; MT77MAXG=120 ../indexador -l rg1.indice t.indice "http://r/" r1-latin1.txt r2-latin1.txt  #1
 if (test ! -f t.indice) then {
 	echo "No se uso temporal t.indice";
 } fi;
