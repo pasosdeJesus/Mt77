@@ -3,6 +3,7 @@
 # ignorar todos los archivos *.indice
 **.indice
 **.relacion
+**.tendencia
 
 *~
 Make.inc
@@ -149,3 +150,12 @@ regr/rx.relacion
 regr/verdad.indice
 regr/verdad.relacion
 verdad.docindice
+
+*.tmp
+*.core
+pruebaCompresion
+pruebaComun
+pruebaNodoTrieS
+pruebaPos
+pruebaRamDisco
+pruebaTrieSDisco

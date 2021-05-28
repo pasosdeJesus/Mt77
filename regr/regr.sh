@@ -3,10 +3,10 @@
 # Dominio público. 2009. vtamara@pasosdeJesus.org
 
 limpiar () {
-    echo "rm -r $1.indice"
-    rm -r "$1.indice"
-    echo "rm -r $1.indice.tendencia"
-    rm -r "$1.indice.tendencia"
+    echo "rm -f $1.indice"
+    rm -f "$1.indice"
+    echo "rm -f $1.indice.tendencia"
+    rm -f "$1.indice.tendencia"
 }
 
 comparar () {
@@ -446,7 +446,7 @@ if (test "$?" != "0") then {
 
 echo "Comparando indexado en grupos"
 rm -f -f t.indice*
-rm -f rg1.indice* MT77MAXG=120 ../indexador -l rg1.indice t.indice "http://r/" r1-latin1.txt r2-latin1.txt  #1
+rm -f rg1.indice*; MT77MAXG=120 ../indexador -l rg1.indice t.indice "http://r/" r1-latin1.txt r2-latin1.txt  #1
 if (test ! -f t.indice) then {
 	echo "No se uso temporal t.indice";
 } fi;
