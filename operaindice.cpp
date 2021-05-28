@@ -165,7 +165,6 @@ int main(int argc, char *argv[])
 
                               // std::cout << "archivo " << argv[i] << std::endl;
                               Arbol_huffman arbolHuffman("", std::string(argv[i]) + ".tendencia");
-
                               // std::cout << arbolHuffman.toString() << std::endl;
 
                               NodoTrieS *r = leePlano(argv[i], nrel, docs1, arbolHuffman);

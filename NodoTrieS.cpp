@@ -178,7 +178,6 @@ NodoTrieS::inserta(string pal, Pos p)
 void
 NodoTrieS::inserta(string pal, set<Pos> *npos)
 {
-
         // clog << "insertando la palabra: " << pal << std::endl;
 
         //cerr << "OJO " << "inserta("<< pal << ", "<< p << ")" << endl;
