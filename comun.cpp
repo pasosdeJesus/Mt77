@@ -122,6 +122,8 @@ string leeCad(std::istream &is, Arbol_huffman &arbolHuffman) throw(string)
                         // como FINCADENA, sino que hace parte del
                         // texto. Es por esto que se avanza un espacio.
                         c = is.get();
+                        // TODO: esto deberia reconocer FINCADENA
+                        // estructuralmente.
                 }
                 cad += c;
                 c = is.get();

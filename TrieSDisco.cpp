@@ -48,7 +48,7 @@ std::string escapar_caracteres_especiales(std::string cadena) {
 
     for (char c : cadena ) {
         if (c == FINCADENA || c == ESCAPE) {
-            nueva_cadena += '\\';
+            nueva_cadena += ESCAPE;
         }
 
         nueva_cadena += c;
@@ -89,6 +89,9 @@ escribeNodo(iostream &os, string c, set<Pos> *cpos,
         std::string comprimido = c;
 
         if (!arbolHuffman.vacio() && !comprimido.empty()) {
+                // TODO: encontrar una forma estructural para reconocer un
+                // FINCADENA, sin gastar caracteres adicionales para
+                // identificarlo
                 comprimido = escapar_caracteres_especiales(arbolHuffman.comprimir(c));
         }
 
