@@ -42,6 +42,21 @@ precalcula_escribe_actual(uint32_t longcad, set<Pos> *cpos)
         return t;
 }
 
+std::string escapar_caracteres_especiales(std::string cadena) {
+
+    std::string nueva_cadena = "";
+
+    for (char c : cadena ) {
+        if (c == FINCADENA || c == ESCAPE) {
+            nueva_cadena += '\\';
+        }
+
+        nueva_cadena += c;
+    }
+
+    return nueva_cadena;
+}
+
 
 /*
  * cadena
@@ -73,28 +88,9 @@ escribeNodo(iostream &os, string c, set<Pos> *cpos,
         // os << c << FINCADENA;
         std::string comprimido = c;
 
-        if (!arbolHuffman.vacio() && !comprimido.empty())
-        {
-                comprimido = arbolHuffman.comprimir(c);
-
-                // TODO: encontrar como diferenciar entre un FINCADENA dentro del texto
-                // y un FINCADENA que si represente el final de la cadena
-
-                size_t pos = comprimido.find(FINCADENA);
-
-                // if (pos != std::string::npos) {
-                //         std::cout << comprimido << " <--> FINCADENA: " << FINCADENA << std::endl;
-
-                //         std::cout << pos << std::endl;
-                //         std::cout << "letra: " << comprimido[pos] << std::endl;
-
-                //         std::cout << arbolHuffman.toString() << std::endl;
-                // }
-
-                ASSERT(pos == std::string::npos);
+        if (!arbolHuffman.vacio() && !comprimido.empty()) {
+                comprimido = escapar_caracteres_especiales(arbolHuffman.comprimir(c));
         }
-
-        // comprimido.find(FINCADENA);
 
         os << comprimido << FINCADENA;
         uint32_t dhermano = (pini >= 0 ? pini : 0) + desp +

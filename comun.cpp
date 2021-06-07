@@ -116,6 +116,13 @@ string leeCad(std::istream &is, Arbol_huffman &arbolHuffman) throw(string)
                 return "";
         }
         while (c != FINCADENA && c != EOF && cad.size() < MAXCAD) {
+                if (c == ESCAPE) {
+                        // ya que se consigue un caracter de escape,
+                        // se sabe que el siguiente caracter no cuenta
+                        // como FINCADENA, sino que hace parte del
+                        // texto. Es por esto que se avanza un espacio.
+                        c = is.get();
+                }
                 cad += c;
                 c = is.get();
         }
