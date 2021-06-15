@@ -330,7 +330,7 @@ mezclaDiscoRam(istream &is1, NodoTrieS *a2, int saltacad, iostream &os,
                vector<int64_t> *renum1, vector<int64_t> *renum2,
                Arbol_huffman &arbolHuffmanLectura, 
                Arbol_huffman &arbolHuffmanEscritura
-               )
+        )
 {
 
         string cad1;
@@ -578,6 +578,7 @@ mezclaDiscoRam(istream &is1, NodoTrieS *a2, int saltacad, iostream &os,
                                 pini = escribeCopiaSubarbol(os, is1,
                                                             true,
                                                             arbolHuffmanEscritura,
+                                                            arbolHuffmanLectura,
                                                             renum1);
                         }
                         break;
@@ -611,7 +612,9 @@ mezclaDiscoRam(istream &is1, NodoTrieS *a2, int saltacad, iostream &os,
                                 ASSERT(dhijo2[n] == NULL);
                                 is1.seekg(dhijo1[n]);
                                 pini = escribeCopiaSubarbol(os, is1,
-                                                            true, arbolHuffmanEscritura, renum1);
+                                                            true, arbolHuffmanEscritura,
+                                                            arbolHuffmanLectura,
+                                                            renum1);
                         } else if (dhijo2[n] != NULL) {
                                 //clog << "OJO dhijo2[n]=" <<dhijo2[n]<< endl;
                                 ASSERT(dhijo1[n] == 0);
@@ -656,7 +659,9 @@ mezclaDiscoRam(istream &is1, NodoTrieS *a2, int saltacad, iostream &os,
                                                       arbolHuffmanEscritura) ;
                         } else {
                                 pini = escribeCopiaSubarbol(os, is1,
-                                                            false, arbolHuffmanEscritura, renum1);
+                                                            false, arbolHuffmanEscritura,
+                                                            arbolHuffmanLectura,
+                                                            renum1);
                         }
                         break;
 
@@ -683,6 +688,7 @@ mezclaDiscoRam(istream &is1, NodoTrieS *a2, int saltacad, iostream &os,
                                 is1.seekg(hijo1);
                                 (void)escribeCopiaSubarbol(os, is1,
                                                            true, arbolHuffmanEscritura,
+                                                           arbolHuffmanLectura,
                                                            renum1);
                         }
                         ph2=os.tellp();
@@ -729,7 +735,8 @@ mezclaDiscoRam(istream &is1, NodoTrieS *a2, int saltacad, iostream &os,
                         if (hijo1 > 0) {
                                 is1.seekg(hijo1);
                                 escribeCopiaSubarbol(os, is1,
-                                                     true, arbolHuffmanEscritura, 
+                                                     true, arbolHuffmanEscritura,
+                                                     arbolHuffmanLectura,
                                                      renum1);
                         }
                         pfin = os.tellp();

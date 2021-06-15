@@ -123,7 +123,8 @@ uint32_t escribeCopiaNodo(iostream &os, istream &is, uint32_t &phijo,
  * @return retorna la posición inicial de escritura en os 
  */
 uint32_t escribeCopiaSubarbol(iostream &os, istream &is, bool conHermanos,
-                              Arbol_huffman &arbolHuffman,
+                              Arbol_huffman &arbolHuffmanEscritura,
+                              Arbol_huffman &arbolHuffmanLectura,
                               vector<int64_t> *renum = NULL
                               ) ;
 

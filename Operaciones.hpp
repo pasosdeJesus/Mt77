@@ -39,7 +39,7 @@ void listaPalabras(char *noma, char *nrel, Arbol_huffman &arbolHuffman) throw(st
  * @param nd Número de documento a eliminar de nomind
  */
 void
-eliminaDoc(char *noma, char *nomind, uint32_t nd, Arbol_huffman arbolHuffman) throw(string);
+eliminaDoc(char *noma, char *nomind, uint32_t nd, Arbol_huffman &arbolHuffmanEscritura, Arbol_huffman &arbolHuffmanLectura) throw(string);
 
 
 /**

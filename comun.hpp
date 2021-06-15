@@ -37,7 +37,7 @@
   }
 #endif
 
-/** Máxima longitud de un URL --de documentaos indexables */
+/** Máxima longitud de un URL --de documentos indexables */
 const uint32_t MAXLURL = 1024;
 
 /** Máxima longitud de un condensado */

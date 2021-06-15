@@ -2,6 +2,13 @@
 # Pruebas de regresión a Mt77
 # Dominio público. 2009. vtamara@pasosdeJesus.org
 
+# para poder definir facilmente si se sale del programa en caso de
+# encontrar un error
+respuesta_error() {
+    echo "** Error: $1"
+    exit # salir en caso de encontrar errores
+}
+
 # se borra el indice y la tendencia de 1
 limpiar () {
     indice="$1.indice"
@@ -20,11 +27,22 @@ limpiar () {
 
 # 1 y 2 son los archivos a comparar, 3 es el mensaje de error
 comparar () {
+
+    if [ ! -f "$1" ]
+    then
+        respuesta_error "no existe archivo $1"
+    fi
+
+    if [ ! -f "$2" ]
+    then
+        respuesta_error "no existe archivo $2"
+    fi
+
     cmp "$1" "$2"
     if test "$?" != "0"
     then
-        echo "$3"
         diff "$1" "$2"
+        respuesta_error "$3"
     fi
 }
 
@@ -33,6 +51,17 @@ buscar_palabras () {
     for palabra in $2
     do
         ../buscador "$indice" "$palabra"
+    done
+}
+
+requiere () {
+    for archivo in "$@"
+    do
+        # echo "$archivo"
+        if [ ! -f "$archivo" ]
+        then
+            respuesta_error "archivo $archivo no encontrado"
+        fi
     done
 }
 
@@ -53,10 +82,13 @@ prueba_indice_vacio () {
     ../operaindice mezcladisco rd0.indice r0.indice rc0.indice >> r0.out 2>&1
     ../operaindice lista rd0.indice >> r0.out 2>&1
 
-    comparar r0.out esp/r0.out "** ERROR: r0 falló"
+    comparar r0.out esp/r0.out "r0 falló"
 }
 
 prueba2 () {
+
+    requiere r1-latin1.txt
+
     echo "Creación de índice r1 a partir de texto LATIN1";
 
     indice="r1.indice"
@@ -85,13 +117,13 @@ prueba2 () {
         ../operaindice lista "$indice"
     ) | grep -v "\"fecha\":" >> r1.out 2>&1
 
-    comparar r1.out esp/r1.out "** ERROR: r1 falló"
+    comparar r1.out esp/r1.out "r1 falló"
 
     echo "Búsqueda de metainformación sobre r1"
 
     buscar_palabras r1.indice "sitio:r sitio:s tipo:texto tipo:xrlt titulo:r1 titulo:s titulo:txt" | grep -v "fecha\":" > r1m.out 2>&1
 
-    comparar r1m.out esp/r1m.out "** ERROR: r1m falló"
+    comparar r1m.out esp/r1m.out "r1m falló"
 
     echo "Creación de índices r1-u8 a partir de texto UTF-8";
     limpiar r1-u8
@@ -115,29 +147,30 @@ prueba2 () {
         ../operaindice lista r1-u8.indice
     ) | grep -v "\"fecha\":" > r1-u8.out 2>&1
 
-    comparar r1-u8.out esp/r1-u8.out "** ERROR: r1-u8 falló"
+    comparar r1-u8.out esp/r1-u8.out "r1-u8 falló"
 
     echo "Búsqueda de metainformación sobre r1-u8"
 
     buscar_palabras r1-u8.indice "sitio:r sitio:s tipo:texto tipo:xrlt titulo:r1 titulo:s titulo:txt" | grep -v "fecha\":" > r1m-u8.out 2>&1
 
-    comparar r1m-u8.out esp/r1m-u8.out "** ERROR: r1m-u8 falló"
-
+    comparar r1m-u8.out esp/r1m-u8.out "r1m-u8 falló"
 }
 
 prueba4 () {
+    requiere nombrearc-latin1.txt "nombre con espacio.txt"  "nombre con eñe.txt"
+
     echo "Caso vacío";
     nombrearc_latin1=$(cat nombrearc-latin1.txt)
     limpiar nse
     (
-        ../indexador -l nse.indice t.indice "http://r/" "nombre con espacio.txt" "$nombrearc_latin1"
+        ../indexador -l nse.indice t.indice "http://r/" "nombre con espacio.txt" "$nombrearc_latin1";
         ../indexador nse.indice t.indice "http://r/" "nombre con eñe.txt";
         ../buscador nse.indice HOLA ;
         ../buscador nse.indice "" ;
         ../operaindice lista nse.indice
     ) | grep -v "fecha:\"" > nse.out
 
-    comparar nse.out esp/nse.out "** ERROR: nse falló"
+    comparar nse.out esp/nse.out "nse falló"
 
     echo "Otro índice";
     limpiar r2
@@ -157,18 +190,21 @@ prueba4 () {
         ../operaindice lista r2.indice
     ) | grep -v "fecha\":" >> r2.out 2>&1
 
-    comparar r2.out esp/r2.out "** ERROR: r2 fallo"
+    comparar r2.out esp/r2.out "r2 fallo"
 }
 
 prueba5 () {
+    requiere r4-latin1.txt
+
     echo "Creación de otro índice";
     limpiar r4
     ../indexador -l r4.indice t.indice "http://r/" r4-latin1.txt
 
-    comparar r1.out esp/r1.out "** ERROR: r1 falló"
+    comparar r1.out esp/r1.out "r1 falló"
 }
 
 pruebaMezclaRam() {
+    requiere simple.txt r0.indice r1.indice
 
     echo "prueba simple"
     ../indexador simple.indice t.indice "http://s/"  simple.txt > simple.out
@@ -180,35 +216,38 @@ pruebaMezclaRam() {
     limpiar rm01
     ../operaindice mezclaram rm01.indice r0.indice r1.indice
 
-    comparar rm01.indice r1.indice "** ERROR: rm01 fallo"
+    comparar rm01.indice r1.indice "rm01 fallo"
 
     limpiar rm10
     ../operaindice mezclaram rm10.indice r1.indice r0.indice
 
-    comparar rm10.indice r1.indice "** ERROR: rm10 fallo"
+    comparar rm10.indice r1.indice "rm10 fallo"
 
     limpiar rm
     ../operaindice mezclaram rm.indice r1.indice r2.indice
     buscar_palabras rm.indice "VERDAD HIJO DIOS Y" | grep -v "fecha\":" > rm.out 2>&1
 
-    comparar rm.out esp/rm.out "** ERROR: rm fallo"
+    comparar rm.out esp/rm.out "rm fallo"
 
     echo "Mezcla indices"
     ../operaindice mezclaram rm2.indice rm.indice r1.indice r2.indice
 
-    comparar rm.indice rm2.indice "** ERROR: rm2 y rm -f deberían ser identicos"
+    comparar rm.indice rm2.indice "rm2 y rm -f deberían ser identicos"
 }
 
 prueba8 () {
+    requiere r1-latin1.txt r2-latin1.txt
     echo "Otra mezcla"
 
     limpiar ro
     ../indexador -l ro.indice t.indice "http://r/" r1-latin1.txt r2-latin1.txt
 
-    comparar ro.indice rm.indice "** ERROR: ro y rm deberían ser identicos"
+    comparar ro.indice rm.indice "ro y rm deberían ser identicos"
 }
 
 prueba9 () {
+    requiere mateo-utf8.txt marcos-utf8.txt lucas-utf8.txt juan-utf8.txt
+
     echo "Comparando mezcla en memoria con mezcla en disco"
     limpiar mateo
     ../indexador mateo.indice t.indice ./ mateo-utf8.txt
@@ -223,40 +262,41 @@ prueba9 () {
     ../operaindice mezclaram mm.indice marcos.indice mateo.indice
     ../operaindice mezcladisco md.indice marcos.indice mateo.indice
 
-    comparar mm.indice md.indice "** ERROR: mm y md deberían ser identicos"
+    comparar mm.indice md.indice "mm y md deberían ser identicos"
 
     ../operaindice mezclaram mm2.indice mm.indice lucas.indice
     ../operaindice mezcladisco md2.indice md.indice lucas.indice
 
-    comparar mm2.indice md2.indice "** ERROR: mm2 y md2 deberían ser identicos"
+    comparar mm2.indice md2.indice "mm2 y md2 deberían ser identicos"
 
     ../operaindice mezclaram mm3.indice mm2.indice juan.indice
     ../operaindice mezcladisco md3.indice md2.indice juan.indice
 
-    comparar mm3.indice md3.indice "** ERROR: mm3 y md3 deberían ser identicos"
+    comparar mm3.indice md3.indice "mm3 y md3 deberían ser identicos"
 
     ../operaindice mezclaram mmt.indice marcos.indice mateo.indice lucas.indice juan.indice
 
-    comparar mmt.indice md3.indice "** ERROR: mmt y md3 deberían ser identicos"
+    comparar mmt.indice md3.indice "mmt y md3 deberían ser identicos"
 
     buscar_palabras md3.indice "VERDAD HIJO DIOS Y" | grep -v "fecha\":" > rm3.out 2>&1
 
-    comparar rm3.out esp/rm3.out "** ERROR: rm3 fallo"
+    comparar rm3.out esp/rm3.out "rm3 fallo"
 }
+
+requiere ../indexador ../buscador ../operaindice
 
 rm *.indice *.indice.tendencia
 
+# TODO: poner mejores nombres
 prueba_indice_vacio
 prueba2
-prueba4 # tiene un error menor en unas letras
+prueba4
 prueba5
 pruebaMezclaRam
 prueba8
-# prueba9 # aparece un error en leeRelacion
+prueba9
 
 # TODO: pasar el resto a funciones
-
-# exit
 
 echo "Búsqueda de varias palabras"
 ../buscador r1.indice "LA VERDAD" 1 0 | grep -v "fecha\":" > r5.out 2>&1;
@@ -268,7 +308,7 @@ echo "Búsqueda de varias palabras"
 ../buscador r1.indice "OS Y Y Y Y Y VERDAD LIBRES" 1 0 | grep -v "fecha\":" >> r5.out 2>&1;
 ../buscador r1.indice "FALSO VERDAD" 1 0  | grep -v "fecha\":" >> r5.out 2>&1
 
-comparar r5.out esp/r5.out "** ERROR: r5 fallo";
+comparar r5.out esp/r5.out "r5 fallo";
 
 echo "En XML"
 rm -f rx.indice*
@@ -283,7 +323,7 @@ rm -f rx.indice*
 ../buscador rx.indice "noesta:noesta" ;
 ../buscador rx.indice "sexo:masculino" 1 0) | grep -v "fecha\":" > rx.out 2>&1
 
-comparar rx.out esp/rx.out "** ERROR: rx fallo"
+comparar rx.out esp/rx.out "rx fallo"
 
 #} ; # function t
 
@@ -292,21 +332,21 @@ rm -f bdc-ene2009.indice*
 ../indexador bdc-ene2009.indice t.indice http://127.0.0.1:17443/ bdc-ene2009.xrlat > bdc.out
 ../operaindice lista bdc-ene2009.indice >> bdc.out
 
-comparar bdc.out esp/bdc.out "** ERROR: bdc fallo"
+comparar bdc.out esp/bdc.out "bdc fallo"
 
 echo "En ODT"
 rm -f poema_ser_como_ninos.indice*
 ../indexador poema_ser_como_ninos.indice t.indice http://ejemplo.com/ poema_ser_como_ninos.odt
 ../operaindice lista poema_ser_como_ninos.indice > poema_ser_como_ninos.lista
 
-comparar poema_ser_como_ninos.lista esp/poema_ser_como_ninos.lista "** ERROR: poema_ser_como_ninos.lista fallo";
+comparar poema_ser_como_ninos.lista esp/poema_ser_como_ninos.lista "poema_ser_como_ninos.lista fallo";
 
 echo "En HTML"
 rm -f html.indice*
 ../indexador html.indice t.indice http://ejemplo.com/ html.html
 ../operaindice lista html.indice > html.lista
 
-comparar html.lista esp/html.lista "** ERROR: html.lista fallo"
+comparar html.lista esp/html.lista "html.lista fallo"
 
 echo "Elimina un documento"
 
@@ -317,7 +357,7 @@ rm -f ro.indice*
 ../buscador -l ro2.indice "$conocereis_l1" 1 0 | grep -v "fecha\":" >> ro2.out 
 ../operaindice lista ro2.indice >> ro2.out 
 
-comparar ro2.out esp/ro2.out "** ERROR: ro2 fallo"
+comparar ro2.out esp/ro2.out "ro2 fallo"
 
 
 echo "Mezcla indices no necesariamente al final"
@@ -341,7 +381,7 @@ rm -f ra6.indice*
 ../operaindice grafo ra8.indice >> ra.out
 
 
-comparar ra.out esp/ra.out "** ERROR: ra fallo"
+comparar ra.out esp/ra.out "ra fallo"
 
 echo "Agrega documentos a un índice"
 cp r1.indice rd1.indice; cp r1.relacion rd1.relacion
@@ -352,7 +392,7 @@ cp r1.indice rd1.indice; cp r1.relacion rd1.relacion
 ../operaindice grafo rd1.indice >> rd.out #| awk '/.*/ { n = n + 1; if (n>2) { print $0; }}' > /tmp/z1
 
 
-comparar rd.out esp/rd.out "** ERROR: rd fallo"
+comparar rd.out esp/rd.out "rd fallo"
 
 
 echo "Comparando mezcla en disco con agregar documento en disco"
@@ -362,12 +402,12 @@ rm -f marcos.indice*
 time (rm -f juan.indice; ../indexador juan.indice t.indice ./ juan-utf8.txt; ../operaindice mezcladisco mmj.indice marcos.indice juan.indice)
 time (cp marcos.indice mmja.indice; cp marcos.relacion mmja.relacion; ../indexador mmja.indice t.indice "./" juan-utf8.txt)
 
-comparar mmj.indice mmja.indice "** ERROR: mmj y mmja deberían ser identicos"
+comparar mmj.indice mmja.indice "mmj y mmja deberían ser identicos"
 
 time (rm -f mateo.indice; ../indexador mateo.indice t.indice ./ mateo-utf8.txt; ../operaindice mezcladisco mmj.indice juan.indice mateo.indice; rm -f marcos.indice; ../indexador marcos.indice t.indice ./ marcos-utf8.txt; ../operaindice mezcladisco mmj2.indice mmj.indice marcos.indice; rm -f lucas.indice; ../indexador lucas.indice t.indice ./ lucas-utf8.txt; ../operaindice mezcladisco mmj.indice mmj2.indice lucas.indice;)
 time (cp juan.indice mmja.indice; cp juan.relacion mmja.relacion; ../indexador mmja.indice t.indice "./" mateo-utf8.txt marcos-utf8.txt lucas-utf8.txt)
 
-comparar mmj.indice mmja.indice "** ERROR: mmj y mmja deberían ser identicos"
+comparar mmj.indice mmja.indice "mmj y mmja deberían ser identicos"
 
 
 echo "Comparando indexado en grupos"
@@ -377,7 +417,7 @@ if (test ! -f t.indice) then {
 	echo "No se uso temporal t.indice";
 } fi;
 rm -f rgt1.indice; ../indexador -l rgt1.indice t.indice "http://r/" r1-latin1.txt r2-latin1.txt
-comparar rg1.indice rgt1.indice "** ERROR: rg1 y rgt1 deberían ser identicos"
+comparar rg1.indice rgt1.indice "rg1 y rgt1 deberían ser identicos"
 
 echo "Búsqueda de cadenas"
 (../buscador -l r1.indice "$conocereis_l1"  ;
@@ -387,19 +427,19 @@ echo "Búsqueda de cadenas"
 ../buscador md3.indice '"HIJO DE DIOS"' 
 ) | grep -v "fecha\":" > rc1.out 2>&1
 
-comparar rc1.out esp/rc1.out "** ERROR: rc1 falló"
+comparar rc1.out esp/rc1.out "rc1 falló"
 
 echo "En PDF"
 rm -f pdf.indice; ../indexador pdf.indice t.indice http://ejemplo.com/ OpenHymnalChristmas2009.pdf
 ../operaindice lista pdf.indice > pdf.lista
-comparar pdf.lista esp/pdf.lista "** ERROR: pdf.lista fallo"
+comparar pdf.lista esp/pdf.lista "pdf.lista fallo"
 
 #}
 
 echo "Extrae subíndice"
 ../operaindice subindice rsub.indice r1.indice 1
 ../operaindice lista rsub.indice > rsub.lista
-comparar rsub.lista esp/rsub.lista "** ERROR: rsub.lista fallo"
+comparar rsub.lista esp/rsub.lista "rsub.lista fallo"
 
 ../operaindice subindice rsubm.indice mmj.indice 1 # Saca Mateo
-comparar rsubm.indice juan.indice "** ERROR: rsubm.indice y mateo.indice debería ser iguales"
+comparar rsubm.indice juan.indice "rsubm.indice y mateo.indice debería ser iguales"
