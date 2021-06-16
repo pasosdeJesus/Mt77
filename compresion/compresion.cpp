@@ -165,42 +165,33 @@ std::string Arbol_huffman::descomprimir(std::string binCodigo) {
         codigo += btc.to_string();
     }
 
+    // std::cout << codigo << std::endl;
     return binarioACadena(codigo);
 }
 
-std::string Arbol_huffman::binarioACadena(std::string binario)
+std::string Arbol_huffman::binarioACadena(std::string codigo)
 {
-    std::string cadena = "";
-    std::string desc = "";
-    int posicion = 0;
-    // cada caracter empieza con '1', por lo que hay que revisar que
-    // no se empiece con '0', ya que eso seria relleno para compretar el byte
-    while (binario.length() > posicion && binario[posicion] != '0') {
-        posicion++;
-        cadena += _descomprimir(this->raiz, binario.substr(posicion), posicion);
-    }
+    int pos = 1;
+    std::shared_ptr<nodo_arbol_huffman> nah = this->raiz;
+    std::string respuesta = "";
 
-    return cadena;
-}
-
-char Arbol_huffman::_descomprimir(std::shared_ptr<nodo_arbol_huffman> nah,
-                                  std::string codigo, int &posicion) {
-    char respuesta = 0;
-
-    if (codigo[0] == '1') {
-        if (nah->hijo_i != NULL) {
-            posicion++;
-            respuesta = _descomprimir(nah->hijo_i, codigo.substr(1), posicion);
-        } else {
-            respuesta = nah->valor;
+    while (pos < codigo.length()) {
+        if (codigo[pos] == '1' && nah->hijo_i != NULL) {
+            nah = nah->hijo_i;
+        } else if (codigo[pos] == '0' && nah->hijo_d != NULL) {
+            nah = nah->hijo_d;
         }
-    } else {
-        if (nah->hijo_d != NULL) {
-            posicion++;
-            respuesta = _descomprimir(nah->hijo_d, codigo.substr(1), posicion);
-        } else {
-            respuesta = nah->valor;
+
+        if (nah->hijo_d == NULL && nah->hijo_i == NULL) {
+            respuesta += nah->valor;
+            nah = this->raiz;
+            pos ++;
+            if (codigo[pos] == '0') {
+                break;
+            }
         }
+        pos ++;
+
     }
 
     return respuesta;
@@ -219,9 +210,15 @@ void Arbol_huffman::_imprimirPreOrden(std::shared_ptr<nodo_arbol_huffman> nah,
     nah->prt();
 
     if (nah->hijo_i != NULL)
+    {
+        std::cout << "1 ";
         _imprimirPreOrden(nah->hijo_i, depth + 1);
+    }
     if (nah->hijo_d != NULL)
+    {
+        std::cout << "0 ";
         _imprimirPreOrden(nah->hijo_d, depth + 1);
+    }
 }
 
 std::string Arbol_huffman::comprimir(std::string cadena) {
