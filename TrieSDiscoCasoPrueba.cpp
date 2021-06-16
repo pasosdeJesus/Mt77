@@ -226,14 +226,14 @@ void TrieSDiscoCasoPrueba::prueba_escribeCopiaSubarbol()
         sos.str("");
         sis.clear();
         sis.str("");
-        escribeCopiaSubarbol(sos, sis, false, ah, NULL);
+        escribeCopiaSubarbol(sos, sis, false, ah, ah, NULL);
         CPPUNIT_ASSERT(sos.str()==sis.str() );
         sos.clear();
         sos.str("");
         sis.clear();
         sis.str("x");
         CPPUNIT_ASSERT_THROW(escribeCopiaSubarbol(sos, sis,
-                                                  false, ah, NULL), std::string);
+                                                  false, ah, ah, NULL), std::string);
         sos.clear();
         sos.str("");
         sis.clear();
@@ -244,7 +244,7 @@ void TrieSDiscoCasoPrueba::prueba_escribeCopiaSubarbol()
         sis.seekg(0);
         sis.seekp(0);
         //cout << "sis='"<<sis.str()<<"', long="<< sis.str().length() << endl;
-        r = escribeCopiaSubarbol(sos, sis, false, ah, NULL);
+        r = escribeCopiaSubarbol(sos, sis, false, ah, ah, NULL);
         //cout << "sos='"<<sos.str()<<"'"<<endl;
         CPPUNIT_ASSERT(sos.str() == sis.str() );
 
@@ -253,7 +253,7 @@ void TrieSDiscoCasoPrueba::prueba_escribeCopiaSubarbol()
         sis.clear();
         sis.str(ps4);
         //cout << "sis='"<<sis.str()<<"'"<<endl;
-        r = escribeCopiaSubarbol(sos, sis, true, ah, NULL);
+        r = escribeCopiaSubarbol(sos, sis, true, ah, ah, NULL);
         //cout << "sos='"<<sos.str()<<"'"<<endl;
         CPPUNIT_ASSERT(sos.str()==sis.str() );
 
@@ -271,7 +271,7 @@ void TrieSDiscoCasoPrueba::prueba_escribeCopiaSubarbol()
         sis.seekg(0);
         sos.clear();
         sos.str("");
-        r = escribeCopiaSubarbol(sos, sis, true, ah, NULL);
+        r = escribeCopiaSubarbol(sos, sis, true, ah, ah, NULL);
         //cout << "sis='"<<sis.str()<<"'"<<endl;
         //cout << "sos='"<<sos.str()<<"'"<<endl;
         CPPUNIT_ASSERT(sos.str()==sis.str() );
@@ -288,7 +288,7 @@ void TrieSDiscoCasoPrueba::prueba_escribeCopiaSubarbol()
         llena_ss(sis, na, ah);
         sos.clear();
         sos.str("");
-        r = escribeCopiaSubarbol(sos, sis, true, ah, NULL);
+        r = escribeCopiaSubarbol(sos, sis, true, ah, ah, NULL);
         //cout << "sis='"<<sis.str()<<"'"<<endl;
         //cout << "sos='"<<sos.str()<<"'"<<endl;
         CPPUNIT_ASSERT(sos.str()==sis.str() );
@@ -313,7 +313,7 @@ void TrieSDiscoCasoPrueba::prueba_escribeCopiaSubarbol()
         na = NULL;
         //cout << "sis='"<<sis.str()<<"'"<<endl;
         sis.seekg(0);
-        r = escribeCopiaSubarbol(sos, sis, true, ah, NULL);
+        r = escribeCopiaSubarbol(sos, sis, true, ah, ah, NULL);
         //cout << "sis='"<<sis.str()<<"'"<<endl;
         //cout << "sos='"<<sos.str()<<"'"<<endl;
         CPPUNIT_ASSERT(sos.str()==sis.str() );
@@ -337,7 +337,7 @@ void TrieSDiscoCasoPrueba::prueba_escribeCopiaSubarbol()
         na = NULL;
         //cout << "V sis="<< sis.str() << endl;
         sis.seekg(0);
-        r = escribeCopiaSubarbol(sos, sis, true, ah, NULL);
+        r = escribeCopiaSubarbol(sos, sis, true, ah, ah, NULL);
         //cout << "sis="<< sis.str() << ", sos="<<sos.str()<<", r="<<r<<endl;
         CPPUNIT_ASSERT(sos.str()==sis.str() );
 
@@ -346,7 +346,7 @@ void TrieSDiscoCasoPrueba::prueba_escribeCopiaSubarbol()
         sos.str("");
         sis.clear();
         sis.str(ps5);
-        r = escribeCopiaSubarbol(sos, sis, false, ah, NULL);
+        r = escribeCopiaSubarbol(sos, sis, false, ah, ah, NULL);
         //cout << "sis='"<< sis.str() << "', sos='"<<sos.str()<<"', r="<<r<<endl;
         CPPUNIT_ASSERT(sos.str() == ps1 + "\n" );
 
@@ -354,7 +354,7 @@ void TrieSDiscoCasoPrueba::prueba_escribeCopiaSubarbol()
         sos.str("");
         sis.clear();
         sis.str(ps6);
-        r = escribeCopiaSubarbol(sos, sis, false, ah, NULL);
+        r = escribeCopiaSubarbol(sos, sis, false, ah, ah, NULL);
         //cout << "sis='"<< sis.str() << "', sos='"<<sos.str()<<"', r="<<r<<endl;
         CPPUNIT_ASSERT(sos.str() == ps1 + "\n" );
 
@@ -363,7 +363,7 @@ void TrieSDiscoCasoPrueba::prueba_escribeCopiaSubarbol()
         sos.str("");
         sis.clear();
         sis.str(ps7);
-        r = escribeCopiaSubarbol(sos, sis, false, ah, NULL);
+        r = escribeCopiaSubarbol(sos, sis, false, ah, ah, NULL);
         //cout << "sis='"<< sis.str() << "', sos='"<<sos.str()<<"', r="<<r<<endl;
         CPPUNIT_ASSERT(sos.str() == ps4 );
 
@@ -374,7 +374,7 @@ void TrieSDiscoCasoPrueba::prueba_escribeCopiaSubarbol()
         sos << ps1;
         sis.clear();
         sis.str("b{0000=00000}\n");
-        r = escribeCopiaSubarbol(sos, sis, true, ah, NULL);
+        r = escribeCopiaSubarbol(sos, sis, true, ah, ah, NULL);
         CPPUNIT_ASSERT(sos.str() == ps5 );
 
         sos.clear();
@@ -383,7 +383,7 @@ void TrieSDiscoCasoPrueba::prueba_escribeCopiaSubarbol()
         sos << ps1;
         sis.clear();
         sis.str(ps4_1);
-        r = escribeCopiaSubarbol(sos, sis, true, ah, NULL);
+        r = escribeCopiaSubarbol(sos, sis, true, ah, ah, NULL);
         //cout<<"sos='"<<sos.str()<<"'"<<endl;
         CPPUNIT_ASSERT(sos.str() == ps6);
 
@@ -396,7 +396,7 @@ void TrieSDiscoCasoPrueba::prueba_escribeCopiaSubarbol()
         sos.str("");
         sis.clear();
         sis.str(ps5);
-        r = escribeCopiaSubarbol(sos, sis, true, ah, &renum);
+        r = escribeCopiaSubarbol(sos, sis, true, ah, ah, &renum);
         //cout << "ps5 sis='"<< sis.str() << "', sos='"<<sos.str()<<"', r="<<r<<endl;
         CPPUNIT_ASSERT(sos.str() == ps5 );
 
@@ -404,7 +404,7 @@ void TrieSDiscoCasoPrueba::prueba_escribeCopiaSubarbol()
         sos.str("");
         sis.clear();
         sis.str(ps8);
-        r = escribeCopiaSubarbol(sos, sis, true, ah, &renum);
+        r = escribeCopiaSubarbol(sos, sis, true, ah, ah, &renum);
         //cout << "ps8 sis='"<< sis.str() << "', sos='"<<sos.str()<<"', r="<<r<<endl;
         CPPUNIT_ASSERT(sos.str() == ps5 );
         //cout << "paso" << endl;
@@ -416,7 +416,7 @@ void TrieSDiscoCasoPrueba::prueba_escribeCopiaSubarbol()
         renum[1]=0; // El segundo lo convertimos en primero
         renum.push_back(0); // El tercero en primero
         //	try {
-        r = escribeCopiaSubarbol(sos, sis, true, ah, &renum);
+        r = escribeCopiaSubarbol(sos, sis, true, ah, ah, &renum);
         /*	}
         	try {
         	}
@@ -462,7 +462,7 @@ void TrieSDiscoCasoPrueba::prueba_escribeCopiaSubarbol()
         na = NULL;
         //cout << "V-1 sis="<< sis.str() << endl;
         sis.seekg(0);
-        r = escribeCopiaSubarbol(sos, sis, true, ah, &renum);
+        r = escribeCopiaSubarbol(sos, sis, true, ah, ah, &renum);
         //cout << "sis="<< sis.str() << ", sos="<<sos.str()<<", r="<<r<<endl;
         l2 = leePlanoStream(sos, arbolHuffman);
         //l2->aDotty(cout, "");

@@ -54,11 +54,6 @@ class Arbol_huffman {
 
     void _conseguirCodigos(std::shared_ptr<nodo_arbol_huffman> nah, std::string codigo);
 
-    char _descomprimir(std::shared_ptr<nodo_arbol_huffman> nah,
-            std::string codigo,
-            int &posicion
-            );
-
     void _imprimirPreOrden(std::shared_ptr<nodo_arbol_huffman> nah, int depth);
 
     // construye un arbol de huffman con base a un mapa de tendencias
@@ -72,8 +67,7 @@ class Arbol_huffman {
 
 public:
 
-
-    std::string binarioACadena(std::string binario);
+    std::string binarioACadena(std::string codigo);
 
     // construye un arbol vacio
     Arbol_huffman();

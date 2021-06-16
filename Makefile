@@ -19,7 +19,7 @@ produccion:
 	LFLAGS="-g" CFLAGS="-g -O0 -DNDEBUG" make all -DNDEBUG
 
 prueba: 
-	LFLAGS="-g" CFLAGS="-g -O0" make all 
+	LFLAGS="-g" CFLAGS="-g -O0 " make all 
 
 BINARIOS=indexador buscador operaindice unzipuno txtdeodt tomsha256 depuraindice
 
