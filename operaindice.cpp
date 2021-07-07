@@ -117,11 +117,10 @@ int main(int argc, char *argv[])
                               cerr << "n debe ser mayor o igual a 1" << endl;
                               exit(1);
                       }
-                      // TODO: ESTO FUNCIONA ERRONEAMENTE.
-                      // no se de donde se estaria consiguiendo esto
-                      // hay que revisar de cual archivo seria cada uno
                       Arbol_huffman arbolHuffmanEscritura("", std::string(argv[2]) + ".tendencia");
-                      Arbol_huffman arbolHuffmanLectura("", std::string(argv[2]) + ".tendencia");
+                      Arbol_huffman arbolHuffmanLectura("", std::string(argv[3]) + ".tendencia");
+
+                      // TODO: hace falta revisar el funcionamiento correcto de esta funcion
                       eliminaDoc(noma, argv[3], (long)nd, arbolHuffmanEscritura, arbolHuffmanLectura);
               } else if (strcmp(argv[1], "grafo") == 0) {
                       snprintf(noma, 1000, "%s", argv[2]);

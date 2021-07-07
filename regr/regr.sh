@@ -9,7 +9,12 @@ respuesta_error() {
     exit # salir en caso de encontrar errores
 }
 
-# se borra el indice y la tendencia de 1
+# para ponerlo antes de un comando en caso de querer correrlo con egdb
+correr_con_egdb() {
+    egdb --args $@
+}
+
+# se borra el indice y la tendencia del parametro 1
 limpiar () {
     indice="$1.indice"
     tendencia="$1.indice.tendencia"
@@ -250,24 +255,37 @@ prueba9 () {
 
     echo "Comparando mezcla en memoria con mezcla en disco"
     limpiar mateo
-    ../indexador mateo.indice t.indice ./ mateo-utf8.txt
     limpiar marcos
-    ../indexador marcos.indice t.indice ./ marcos-utf8.txt
     limpiar lucas
-    ../indexador lucas.indice t.indice ./ lucas-utf8.txt
     limpiar juan
+
+    ../indexador mateo.indice t.indice ./ mateo-utf8.txt
+    ../indexador marcos.indice t.indice ./ marcos-utf8.txt
+    ../indexador lucas.indice t.indice ./ lucas-utf8.txt
     ../indexador juan.indice t.indice ./ juan-utf8.txt
 
+    # hasta aqui bien
+
     limpiar mm
+    # este genera el primer error: marcos.indice:8979589794: Se esperaba digito 128b
     ../operaindice mezclaram mm.indice marcos.indice mateo.indice
+    # exit
+
+    # este genera el error: No se indexó completa palabra larga...
+
     ../operaindice mezcladisco md.indice marcos.indice mateo.indice
 
     comparar mm.indice md.indice "mm y md deberían ser identicos"
+
+    # exit
 
     ../operaindice mezclaram mm2.indice mm.indice lucas.indice
     ../operaindice mezcladisco md2.indice md.indice lucas.indice
 
     comparar mm2.indice md2.indice "mm2 y md2 deberían ser identicos"
+
+
+    exit
 
     ../operaindice mezclaram mm3.indice mm2.indice juan.indice
     ../operaindice mezcladisco md3.indice md2.indice juan.indice
@@ -353,9 +371,12 @@ echo "Elimina un documento"
 rm -f ro.indice*
 ../indexador -l ro.indice t.indice "http://r/" r1-latin1.txt r2-latin1.txt 
 ../buscador -l ro.indice "$conocereis_l1" 1 0 | grep -v "fecha\":" > ro2.out 2>&1;
-../operaindice eliminadoc ro2.indice ro.indice 1 
+
+# nuevo indice, antiguo indice, posicion de documento a eliminar
+../operaindice eliminadoc ro2.indice ro.indice 1
+
 ../buscador -l ro2.indice "$conocereis_l1" 1 0 | grep -v "fecha\":" >> ro2.out 
-../operaindice lista ro2.indice >> ro2.out 
+../operaindice lista ro2.indice >> ro2.out
 
 comparar ro2.out esp/ro2.out "ro2 fallo"
 
