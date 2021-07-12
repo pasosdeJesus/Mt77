@@ -93,12 +93,14 @@ muestraStream(std::istream &is, string pre, Arbol_huffman &arbolHuffman)
         set<Pos> *cpos;
         uint32_t hijo, her;
 
-        // std::cout << arbolHuffman.toString() << std::endl;
-
         cad = leeCad(is, arbolHuffman);
         if (cad != "")
         {
                 ASSERT(!arbolHuffman.vacio());
+
+                // TODO: tengo la hipotesis de que el problema que
+                // pasa aqui, es porque se esta leyendo el stream
+                // directamente sin antes descomprimirlo
                 her = lee128b(is);
                 hijo = lee128b(is);
                 cpos = leePos(is, NULL);
