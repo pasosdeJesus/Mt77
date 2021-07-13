@@ -2,6 +2,7 @@
 
 # ignorar todos los archivos *.indice
 **.indice
+**.indice.tendencia
 **.relacion
 **.tendencia
 

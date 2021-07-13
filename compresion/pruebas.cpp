@@ -36,11 +36,6 @@ int main (int argc, char* argv[])
     return result.wasSuccessful() ? 0 : 1;
 }
 
-// void CompresionTest::testBinarioACadena() {
-//
-// }
-
-
 void CompresionTest::equalString(const std::string &str1, const std::string &str2) {
     // std::cout << std::endl << str1 << " == " << str2 << std::endl;
     CPPUNIT_ASSERT(str1 == str2);
@@ -49,10 +44,9 @@ void CompresionTest::equalString(const std::string &str1, const std::string &str
 void CompresionTest::setUp() {
     this->cadenas = {
         "hola, que hacee:ee\\\\\\eeeeeeeeeeeeeeeeeeeeeeeeee\n"
-            , "algÈÞesoµ½esto×"
-            , "abcdefghijklmnopqrstuvwxyz"
-            };
-
+        , "algÈÞesoµ½esto×"
+        , "abcdefghijklmnopqrstuvwxyz"
+    };
 }
 
 // cargar varios strings al arbol

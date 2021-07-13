@@ -153,7 +153,7 @@ void listaPalabras(char *noma, char *nrel, Arbol_huffman &arbolHuffman) throw(st
 
 
 void
-eliminaDoc(char *noma, char *nomind, uint32_t nd, Arbol_huffman arbolHuffman) throw(string)
+eliminaDoc(char *noma, char *nomind, uint32_t nd, Arbol_huffman &arbolHuffmanEscritura, Arbol_huffman &arbolHuffmanLectura) throw(string)
 {
         ASSERT(nd > 0);
         char nrel1[MAXLURL];
@@ -193,7 +193,7 @@ eliminaDoc(char *noma, char *nomind, uint32_t nd, Arbol_huffman arbolHuffman) th
         is.clear();
 
         os << MARCAIND << endl;
-        escribeCopiaSubarbol(os, is, true, arbolHuffman, &renum);
+        escribeCopiaSubarbol(os, is, true, arbolHuffmanEscritura, arbolHuffmanLectura, &renum);
         is.close();
         os.close();
 

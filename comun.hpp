@@ -37,7 +37,7 @@
   }
 #endif
 
-/** Máxima longitud de un URL --de documentaos indexables */
+/** Máxima longitud de un URL --de documentos indexables */
 const uint32_t MAXLURL = 1024;
 
 /** Máxima longitud de un condensado */
@@ -76,6 +76,9 @@ const string MARCAREL = "Mt77:relaci\xf3nP6";
 
 /** Caracter que marca final de una cadena en archivo */
 const char FINCADENA = '{';
+
+/** Caracter que escapa un caracter especial en un texto */
+const char ESCAPE = '\\';
 
 /**
  * Verifica nombre de índice, y genera nombre de relación de documentos

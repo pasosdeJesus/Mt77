@@ -310,7 +310,9 @@ int main(int argc, char *argv[])
                         // ya que en mezclaDiscoRam se hace un llamado a escribeNodo,
                         // donde guarda en el archivo la informacion
 
-                        // Invariante:  Lo que está en disco ya está comprimido y lo que está en RAM no esta comprimido
+                        // Invariante: Lo que está en disco ya está
+                        // comprimido y lo que está en RAM no esta
+                        // comprimido
 
                         // pertenece al contenido de is1
                         Arbol_huffman arbolHuffmanLectura("", nomi[ (g + 1) % 2 ] + ".tendencia");
