@@ -173,7 +173,10 @@ int main(int argc, char *argv[])
 
                               if (r != NULL) {
                                       ASSERT(
-                                                      Arbol_huffman::equivalenciaMapas(r->conseguirTendencia(), arbolHuffman.conseguirTendencia())
+                                                      Arbol_huffman::equivalenciaMapas(
+                                                          r->conseguirTendencia(),
+                                                          arbolHuffman.conseguirTendencia()
+                                                      )
                                             );
                               }
 
@@ -192,10 +195,10 @@ int main(int argc, char *argv[])
 
                       Arbol_huffman arbolHuffman(t->conseguirTendencia());
 
-                        arbolHuffman.guardar(string(argv[2]) + ".tendencia");
-                        //cerr<<"idocs.size="<<idocs.size()<<endl;
-                        verificaNombre(noma, nrel);
-                        escribePlano(*t, docs2, noma, nrel, arbolHuffman);
+                      arbolHuffman.guardar(string(argv[2]) + ".tendencia");
+                      //cerr<<"idocs.size="<<idocs.size()<<endl;
+                      verificaNombre(noma, nrel);
+                      escribePlano(*t, docs2, noma, nrel, arbolHuffman);
                 } else if (strcmp(argv[1], "mezcladisco") == 0) {
 
                         /* Mezcla 2 tries en disco */
