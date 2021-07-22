@@ -192,18 +192,17 @@ NodoTrieS *
 leePlano(char *na, char *nrel, vector<Doc> &docs, Arbol_huffman &arbolHuffman)
 {
         NodoTrieS *r;
-        //cout << "leePlano(" << na << ", " << nrel << ", " << idocs.size() << ", " << condensados.size() << ")" << endl;
         fstream is(na, ios_base::in);
         verificaIndice(is);
         try {
                 r = leePlanoStream(is, arbolHuffman);
-                // std::cout << std::endl << ">> " << r->valorCad() << std::endl;
-                // std::cout << std::endl << ">> " << r->preorden() << std::endl;
         } catch (string m) {
                 stringstream ss;
                 ss << na << ":" << is.tellg() << m << endl;
                 throw ss.str();
         }
+
+        // ERROR: is no se esta cerrando en caso de haber una excepcion
         is.close();
 
         leeRelacion(nrel, docs);

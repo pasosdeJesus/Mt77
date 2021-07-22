@@ -366,8 +366,7 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
                         dhijo2[numhermanos] = leeNDesp(is2);
                         //clog << "iguales" <<endl;
                         set<Pos> cpos;
-                        insert_iterator<set<Pos> >
-                        cpos_ins(cpos, cpos.begin());
+                        insert_iterator<set<Pos> > cpos_ins(cpos, cpos.begin());
                         set<Pos> *cpos1 = leePos(is1, renum1);
                         set<Pos> *cpos2 = leePos(is2, renum2);
 
