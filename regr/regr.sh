@@ -94,16 +94,16 @@ verificarIndice () {
 
         err="no se ha creado correctamente el indice $indice"
 
-        # echo "$indice"
-        # echo "$tendencia"
         if [ ! -f "$indice" ]
         then
             respuesta_error "$err"
         fi
+
         if [ ! -f "$tendencia" ]
         then
             respuesta_error "$err, no se creo tendencia"
         fi
+
         if [ ! -f "$relacion" ]
         then
             respuesta_error "$err, no se creo relacion"
@@ -222,29 +222,29 @@ prueba4 () {
     echo "Caso vacío";
     nombrearc_latin1=$(cat nombrearc-latin1.txt)
     (
-        indexador -l nse.indice t.indice "http://r/" "nombre con espacio.txt" "$nombrearc_latin1";
-        indexador nse.indice t.indice "http://r/" "nombre con eñe.txt";
-        ../buscador nse.indice HOLA ;
-        ../buscador nse.indice "" ;
+        indexador -l nse.indice t.indice "http://r/" "nombre con espacio.txt" "$nombrearc_latin1"
+        indexador nse.indice t.indice "http://r/" "nombre con eñe.txt"
+        ../buscador nse.indice HOLA
+        ../buscador nse.indice ""
         ../operaindice lista nse.indice
     ) | grep -v "fecha:\"" > nse.out
 
     comparar nse.out esp/nse.out
 
-    echo "Otro índice";
+    echo "Otro índice"
     indexador -l r2.indice t.indice "http://r/" r2-latin1.txt > r2.out
 
     echo "Búsqueda sobre índice"
 
     unigenito_l1=$(cat unigenito-latin1.txt)
     (
-        ../buscador -l r2.indice "$conocereis_l1";
-        ../buscador r2.indice CREA;
-        ../buscador -l r2.indice "$unigenito_l1";
-        ../buscador r2.indice VIDA;
-        ../buscador r2.indice ETERNA;
-        ../buscador r2.indice QUE;
-        ../buscador r2.indice HIJO;
+        ../buscador -l r2.indice "$conocereis_l1"
+        ../buscador r2.indice CREA
+        ../buscador -l r2.indice "$unigenito_l1"
+        ../buscador r2.indice VIDA
+        ../buscador r2.indice ETERNA
+        ../buscador r2.indice QUE
+        ../buscador r2.indice HIJO
         ../operaindice lista r2.indice
     ) | grep -v "fecha\":" >> r2.out 2>&1
 
@@ -266,7 +266,7 @@ pruebaSimple() {
     verificarIndice r0 r1
 
     echo "prueba simple"
-    indexador simple.indice t.indice "http://s/"  simple.txt > simple.out
+    indexador simple.indice t.indice "http://s/" simple.txt > simple.out
     ../operaindice mezclaram simpler0.indice r0.indice simple.indice
 }
 
@@ -286,6 +286,11 @@ pruebaMezclaRam() {
     ../operaindice mezclaram rm.indice r1.indice r2.indice
     buscar_palabras rm.indice "VERDAD HIJO DIOS Y" | grep -v "fecha\":" > rm.out 2>&1
     comparar rm.out esp/rm.out
+}
+
+pruebaMezclaIndices() {
+    limpiarIndices rm2
+    verificarIndice rm r1 r2
 
     echo "Mezcla indices"
     ../operaindice mezclaram rm2.indice rm.indice r1.indice r2.indice
@@ -316,15 +321,12 @@ pruebaMezclaMemoriaVSDisco () {
 
     # hasta aqui bien
 
-    verificarIndice marcos mateo
-
-    # este genera el primer error: marcos.indice:8979589794: Se esperaba digito 128b
-    correr_con_egdb ../operaindice mezclaram mm.indice marcos.indice mateo.indice
-    exit
+    ../operaindice mezclaram mm.indice marcos.indice mateo.indice
 
     # este genera el error: No se indexó completa palabra larga...
     ../operaindice mezcladisco md.indice marcos.indice mateo.indice
     comparar mm.indice md.indice
+    exit
 
     ../operaindice mezclaram mm2.indice mm.indice lucas.indice
     ../operaindice mezcladisco md2.indice md.indice lucas.indice
@@ -511,6 +513,7 @@ prueba_comparacion_mezcla_disco_con_agregar_documento_disco() {
 prueba_comparar_indexado_grupos() {
     requiere r1-latin1.txt r2-latin1.txt
     limpiarIndices t rg1 rgt1
+    verificarIndice md3
 
     echo "Comparando indexado en grupos"
 
@@ -558,8 +561,14 @@ prueba_extrae_subindice() {
     comparar rsubm.indice juan.indice
 }
 
-cd .. ; make prueba ; cd -
-echo
+compilar() {
+    cd ..
+    make prueba || (respuesta_error "error en compilacion" && exit)
+    cd -
+    echo
+}
+
+compilar
 
 requiere ../indexador ../buscador ../operaindice
 
@@ -584,13 +593,19 @@ prueba_eliminar_documento
 
 ### mezcla de indices
 pruebaMezclaRam
+pruebaMezclaIndices
 pruebaOtraMezcla
-# pruebaMezclaMemoriaVSDisco # genera error
-prueba_mezcla_indices_no_al_final # genera error
+## desde aqui se genera error
+pruebaMezclaMemoriaVSDisco # genera error
+# prueba_mezcla_indices_no_al_final # genera error
 # prueba_agregar_documento_a_indice # genera error
 # prueba_comparacion_mezcla_disco_con_agregar_documento_disco # genera error
+
+
 # prueba_comparar_indexado_grupos # genera error
-# prueba_extrae_subindice # genera error
+
+## subindice
+prueba_extrae_subindice # genera error
 
 echo
 echo "Todas las pruebas salieron exitosas"

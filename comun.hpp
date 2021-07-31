@@ -14,10 +14,28 @@
 
 #include <set>
 #include <string>
+#include <iomanip>
+#include <iostream>
+#include <list>
+#include <vector>
+
 #include <ostream>
 #include <sstream>
-#include <iomanip>
+#include <fstream>
+#include <istream>
+
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <err.h>
+#include <errno.h>
 #include <stdint.h>
+
+#include <stdio.h>
+#include <string.h>
+#include <map>
+
+using namespace std;
 
 #include "compresion/compresion.hpp"
 
@@ -63,8 +81,6 @@ const int MAXLDEC = 10;
 
 /** Tamaño máximo de una cadena indexable */
 const uint32_t MAXCAD = 32;
-
-using namespace std;
 
 /** Marca en índice */
 const string MARCAIND = "Mt77:\xedndiceP6";

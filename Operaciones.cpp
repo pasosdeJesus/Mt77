@@ -255,7 +255,8 @@ calcRenum(uint32_t td1, uint32_t td2, uint32_t nd, vector<int64_t> *reord,
 
 
 void
-mezclaDosDisco(const char *indsal, const char *ind1,
+mezclaDosDisco(const char *indsal,
+               const char *ind1,
                const char *ind2,
                Arbol_huffman &arbolHuffman1,
                Arbol_huffman &arbolHuffman2,
@@ -317,7 +318,8 @@ mezclaDosDisco(const char *indsal, const char *ind1,
 
         //clog << "OJO después de verificar" << endl;
         os << MARCAIND << endl;
-        mezclaRec(is1, is2, os, true, true, renum1, &renum2, arbolHuffman1, arbolHuffman2, arbolHuffmanSalida);
+        mezclaRec(is1, is2, os, true, true, renum1, &renum2,
+                  arbolHuffman1, arbolHuffman2, arbolHuffmanSalida);
         //clog << "OJO después de mezclaRec" << endl;
         is1.close();
         is2.close();

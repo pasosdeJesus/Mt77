@@ -9,29 +9,6 @@
  * @version   $Id: comun.cpp,v 1.17 2011/03/29 23:07:26 vtamara Exp $
  */
 
-#include <set>
-#include <iostream>
-#include <iomanip>
-#include <list>
-#include <vector>
-#include <fstream>
-#include <istream>
-#include <sstream>
-
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
-#include <err.h>
-#include <errno.h>
-#include <stdint.h>
-
-#include <stdio.h>
-#include <string.h>
-#include <map>
-
-// using namespace std;
-// La anterior comentada por poco portable
-
 #include "comun.hpp"
 
 /**
@@ -203,7 +180,6 @@ void escribe128b(std::ostream &os, uint32_t n)
         os << res;
 }
 
-
 long
 lee128b(std::istream &is) throw (std::string)
 {
@@ -225,7 +201,6 @@ lee128b(std::istream &is) throw (std::string)
                 }
                 valor = valor * 128 + (c - '0');
         }
-
 
         return valor;
 }
