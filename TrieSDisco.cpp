@@ -249,7 +249,8 @@ escribeCopiaSubarbol(iostream &os, istream &is, bool conHermanos,
 
 
 uint32_t
-mezclaRec(istream &is1, istream &is2, iostream &os,
+mezclaRec(istream &is1, istream &is2, // los dos indices
+          iostream &os, // el nuevo archivo de salida
           bool conHermanos1, bool conHermanos2,
           vector<int64_t> *renum1, vector<int64_t> *renum2,
           // Arbol_huffman &arbolHuffman
@@ -276,7 +277,7 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
               O_MEZCLA_H2=5,
               O_COPIA_PRIMERO_1=6,
               O_COPIA_PRIMERO_2=7;
-        ;
+
         vector<int64_t> dhijo1(0); // apuntadores a hijos de nodos en is1
         vector<int64_t> dhijo2(0); // apuntadores a hijos de nodos en is2
         vector<string> resto1(0); // Cadenas con las que comenazarán hijos
@@ -288,7 +289,9 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
         //clog << "OJO mezclaRec prini=" << prini << ", is1.tellg()=" << is1.tellg() << ", is2.tellg()=" << is2.tellg() << endl;
         //clog << "peek1=" << is1.peek() << endl;
         //clog << "peek2=" << is2.peek() << endl;
-        for (cad1=leeCad(is1, arbolHuffman1), cad2=leeCad(is2, arbolHuffman2), numhermanos = 0;
+
+        for (cad1=leeCad(is1, arbolHuffman1),
+                 cad2=leeCad(is2, arbolHuffman2), numhermanos = 0;
                         (cad1!="" && (conHermanos1 || n1==0)) ||
                         (cad2!="" && (conHermanos2 || n2==0));
                         numhermanos++) {
@@ -323,6 +326,7 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
                 if (c == "") { // No hay prefijo comun
                         resto1[numhermanos] = "";
                         resto2[numhermanos] = "";
+                        set<Pos> *cpos = NULL;
                         if (cad2 == "" || (cad1 != "" && cad1 < cad2)) {
                                 // e.g AMOR y BUENO  o
                                 //     ""   y BUENO
@@ -330,12 +334,10 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
                                 phermano1 = leeNDesp(is1);
                                 dhijo1[numhermanos] = leeNDesp(is1);
                                 dhijo2[numhermanos] = -1;
-                                set<Pos> *cpos = leePos(is1, renum1);
+                                cpos = leePos(is1, renum1);
                                 opera[numhermanos] = O_COPIA1;
                                 pih[numhermanos] =
                                         escribeNodo(os, cad1, cpos, 0, arbolHuffmanSalida);
-                                delete cpos;
-                                cpos = NULL;
                                 cad1 = leeCad(is1, arbolHuffman1);
                                 n1++;
                                 // cad2 quieto
@@ -350,15 +352,15 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
                                 phermano2 = leeNDesp(is2);
                                 dhijo2[numhermanos] = leeNDesp(is2);
                                 //clog << "phermano2=" << phermano2 << ", phijo=" << dhijo2[numhermanos] << endl;
-                                set<Pos> *cpos = leePos(is2, renum2);
+                                cpos = leePos(is2, renum2);
                                 opera[numhermanos] = O_COPIA2;
                                 pih[numhermanos] =
                                         escribeNodo(os, cad2, cpos, 0, arbolHuffmanSalida);
-                                delete cpos;
-                                cpos = NULL;
                                 cad2 = leeCad(is2, arbolHuffman2);
                                 n2++;
                         }
+                        delete cpos;
+                        cpos = NULL;
                 } else if (cad1 == cad2) { // Hay prefijo c != "" && cad1!="" && cad2!=""
                         phermano1 = leeNDesp(is1);
                         phermano2 = leeNDesp(is2);
@@ -366,8 +368,7 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
                         dhijo2[numhermanos] = leeNDesp(is2);
                         //clog << "iguales" <<endl;
                         set<Pos> cpos;
-                        insert_iterator<set<Pos> >
-                        cpos_ins(cpos, cpos.begin());
+                        insert_iterator<set<Pos> > cpos_ins(cpos, cpos.begin());
                         set<Pos> *cpos1 = leePos(is1, renum1);
                         set<Pos> *cpos2 = leePos(is2, renum2);
 
@@ -394,16 +395,17 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
                         resto2[numhermanos] = r2;
                         ASSERT(r1 != "" || r2 != "");
                         //clog << "hay posfijo r1="<<r1<<" r2="<<r2<<endl;
-                        if (r1=="") {
-                                // e.g BUENO BUENOS
+
+                        phermano1 = leeNDesp(is1);
+                        phermano2 = leeNDesp(is2);
+
+                        if (r1=="") {// e.g BUENO BUENOS
                                 ASSERT(r2 != "");
                                 //clog << "r1 vacio"<<endl;
                                 // debe mezclar hijo de is1 con un sólo
                                 // nodo de is2 pero is2 comenzando en el
                                 // posfijo r2
 
-                                phermano1 = leeNDesp(is1);
-                                phermano2 = leeNDesp(is2);
                                 dhijo1[numhermanos] = leeNDesp(is1);
                                 dhijo2[numhermanos] = (uint32_t)is2.tellg() -
                                                       MAXLNUMERO - 1 - (uint32_t)r2.size();
@@ -416,15 +418,11 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
                                 opera[numhermanos] = O_MEZCLA_H1;
                                 delete cpos1;
                                 cpos1=NULL;
-                        } else if (r2 == "") {
-                                // e.g BUENOS BUENO
+                        } else if (r2 == "") {// e.g BUENOS BUENO
                                 ASSERT(r1 != "");
                                 //clog << "r2 vacio"<<endl;
-                                //
-                                phermano1 = leeNDesp(is1);
                                 dhijo1[numhermanos] = (uint32_t)is1.tellg() -
                                                       MAXLNUMERO - 1 - (uint32_t)r1.size();
-                                phermano2 = leeNDesp(is2);
                                 dhijo2[numhermanos] = leeNDesp(is2);
                                 is1.seekg(phermano1);
                                 /*saltaPos(is1);
@@ -436,14 +434,9 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
                                 delete cpos2;
                                 cpos2=NULL;
                                 opera[numhermanos] = O_MEZCLA_H2;
-                        } else if (r1 < r2) {
-                                // e.g BUENA BUENO
+                        } else if (r1 < r2) {// e.g BUENA BUENO
                                 //clog << "r1<r2"<<endl;
 
-                                phermano1 = leeNDesp(is1);
-                                //clog << "phermano1=" << phermano1 <<endl;
-                                phermano2 = leeNDesp(is2);
-                                //clog << "phermano2=" << phermano2 <<endl;
                                 pih[numhermanos] = escribeNodo(os, c, NULL, 0, arbolHuffmanSalida);
                                 //clog << "pih=" << pih[numhermanos] <<endl;
                                 dhijo1[numhermanos] = (uint32_t)is1.tellg() -
@@ -465,8 +458,6 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
                         } else { /* r1 >= r2 */
                                 // e.g BUENO BUENA
                                 //clog << "r2 <= r1"<<endl;
-                                phermano1 = leeNDesp(is1);
-                                phermano2 = leeNDesp(is2);
                                 pih[numhermanos] = escribeNodo(os, c, NULL, 0, arbolHuffmanSalida);
                                 dhijo1[numhermanos] = (uint32_t)is1.tellg() -
                                                       MAXLNUMERO - 1 -

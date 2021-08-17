@@ -117,8 +117,10 @@ int main(int argc, char *argv[])
                               cerr << "n debe ser mayor o igual a 1" << endl;
                               exit(1);
                       }
-                      Arbol_huffman arbolHuffmanEscritura("", std::string(argv[2]) + ".tendencia");
-                      Arbol_huffman arbolHuffmanLectura("", std::string(argv[3]) + ".tendencia");
+                      Arbol_huffman arbolHuffmanEscritura;
+                      arbolHuffmanEscritura.sumarArchivo(std::string(argv[2]) + ".tendencia");
+                      Arbol_huffman arbolHuffmanLectura;
+                      arbolHuffmanLectura.sumarArchivo(std::string(argv[3]) + ".tendencia");
 
                       // TODO: hace falta revisar el funcionamiento correcto de esta funcion
                       eliminaDoc(noma, argv[3], (long)nd, arbolHuffmanEscritura, arbolHuffmanLectura);
@@ -126,8 +128,8 @@ int main(int argc, char *argv[])
                       snprintf(noma, 1000, "%s", argv[2]);
                       verificaNombre(argv[2], nrel);
                       vector<Doc> docs1;
-                      Arbol_huffman arbolHuffman("", std::string(argv[2]) + 
-                          ".tendencia");
+                      Arbol_huffman arbolHuffman;
+                      arbolHuffman.sumarArchivo(std::string(argv[2]) + ".tendencia");
                       NodoTrieS *r = leePlano(noma, nrel, docs1, 
                           arbolHuffman);
                       r->aDotty(cout);
@@ -135,22 +137,24 @@ int main(int argc, char *argv[])
                       snprintf(noma, 1000, "%s", argv[2]);
                       verificaNombre(argv[2], nrel);
                       vector<Doc> docs1;
-                      Arbol_huffman arbolHuffman("", std::string(argv[2]) + 
-                          ".tendencia");
+                      Arbol_huffman arbolHuffman;
+                      arbolHuffman.sumarArchivo(std::string(argv[2]) + ".tendencia");
                       NodoTrieS *r = leePlano(noma, nrel, docs1,
                           arbolHuffman);
                       r->aDotty2();
               } else if (strcmp(argv[1], "condensado") == 0) {
                       snprintf(noma, 1000, "%s", argv[2]);
                       verificaNombre(argv[2], nrel);
-                      Arbol_huffman arbolHuffman("", std::string(argv[2]) + ".tendencia");
+                      Arbol_huffman arbolHuffman;
+                      arbolHuffman.sumarArchivo(std::string(argv[2]) + ".tendencia");
                       cout << condensado(argv[2], arbolHuffman, false) << endl;
               } else if (strcmp(argv[1], "lista") == 0) {
                       snprintf(noma, 1000, "%s", argv[2]);
                       verificaNombre(argv[2], nrel);
 
                       // std::clog << "archivo tendencia" << nombre_tendencia << std::endl;
-                      Arbol_huffman arbolHuffman("", std::string(argv[2]) + ".tendencia");
+                      Arbol_huffman arbolHuffman;
+                      arbolHuffman.sumarArchivo(std::string(argv[2]) + ".tendencia");
                       listaPalabras(noma, nrel, arbolHuffman);
               } else if (strcmp(argv[1], "mezclaram") == 0) {
 
@@ -166,14 +170,17 @@ int main(int argc, char *argv[])
                               verificaNombre(argv[i], nrel);
 
                               // std::cout << "archivo " << argv[i] << std::endl;
-                              Arbol_huffman arbolHuffman("", std::string(argv[i]) + ".tendencia");
-                              // std::cout << arbolHuffman.toString() << std::endl;
+                              Arbol_huffman arbolHuffman;
+                              arbolHuffman.sumarArchivo(std::string(argv[i]) + ".tendencia");
 
                               NodoTrieS *r = leePlano(argv[i], nrel, docs1, arbolHuffman);
 
                               if (r != NULL) {
                                       ASSERT(
-                                                      Arbol_huffman::equivalenciaMapas(r->conseguirTendencia(), arbolHuffman.conseguirTendencia())
+                                                      Arbol_huffman::equivalenciaMapas(
+                                                          r->conseguirTendencia(),
+                                                          arbolHuffman.conseguirTendencia()
+                                                      )
                                             );
                               }
 
@@ -190,12 +197,13 @@ int main(int argc, char *argv[])
                               r = NULL;
                       }
 
-                      Arbol_huffman arbolHuffman(t->conseguirTendencia());
+                      Arbol_huffman arbolHuffman;
+                      arbolHuffman.sumarTendencia(t->conseguirTendencia());
 
-                        arbolHuffman.guardar(string(argv[2]) + ".tendencia");
-                        //cerr<<"idocs.size="<<idocs.size()<<endl;
-                        verificaNombre(noma, nrel);
-                        escribePlano(*t, docs2, noma, nrel, arbolHuffman);
+                      arbolHuffman.guardar(string(argv[2]) + ".tendencia");
+                      //cerr<<"idocs.size="<<idocs.size()<<endl;
+                      verificaNombre(noma, nrel);
+                      escribePlano(*t, docs2, noma, nrel, arbolHuffman);
                 } else if (strcmp(argv[1], "mezcladisco") == 0) {
 
                         /* Mezcla 2 tries en disco */
@@ -208,9 +216,17 @@ int main(int argc, char *argv[])
                                 }
                         }
 
-                        Arbol_huffman arbolHuffman1("", std::string(argv[3]) + ".tendencia");
-                        Arbol_huffman arbolHuffman2("", std::string(argv[4]) + ".tendencia");
-                        Arbol_huffman arbolHuffmanSalida("", std::string(argv[2]) + ".tendencia");
+                        Arbol_huffman arbolHuffman1;
+                        arbolHuffman1.sumarArchivo(std::string(argv[3]) + ".tendencia");
+                        Arbol_huffman arbolHuffman2;
+                        arbolHuffman2.sumarArchivo(std::string(argv[4]) + ".tendencia");
+                        Arbol_huffman arbolHuffmanSalida;
+                        // este arbol aun no existe, se genera a partir de los otros dos
+                        arbolHuffmanSalida.sumarArchivo(std::string(argv[3]) + ".tendencia");
+                        arbolHuffmanSalida.sumarArchivo(std::string(argv[4]) + ".tendencia");
+
+                        arbolHuffmanSalida.guardar(std::string(argv[2]) + ".tendencia");
+
                         mezclaDosDisco(
                                 argv[2], argv[3], argv[4],
                                 arbolHuffman1,
@@ -244,8 +260,8 @@ int main(int argc, char *argv[])
                                 exit(1);
                         }
 
-                        // TODO: preguntar esto
-                        Arbol_huffman arbolHuffman("", std::string(argv[2]) + ".tendencia");
+                        Arbol_huffman arbolHuffman;
+                        arbolHuffman.sumarArchivo(std::string(argv[2]) + ".tendencia");
                         subindice(argv[3], argv[2], nd, arbolHuffman);
                 } else {
                         cerr << "operación desconocida " << argv[1] << endl;

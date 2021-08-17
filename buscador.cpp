@@ -564,7 +564,8 @@ int main(int argc, char *argv[])
         vector<uint32_t> *vpos = NULL;
 
         string archivo_indice = argv[optind];
-        Arbol_huffman arbolHuffman("", archivo_indice + ".tendencia");
+        Arbol_huffman arbolHuffman;
+        arbolHuffman.sumarArchivo(archivo_indice + ".tendencia");
 
         //if (!resconsulta_reciente(nc) || sincopiarec) {
         //cerr << "No es reciente " << argv[optind] << endl;

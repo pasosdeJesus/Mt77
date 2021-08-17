@@ -314,10 +314,16 @@ int main(int argc, char *argv[])
                         // comprimido y lo que está en RAM no esta
                         // comprimido
 
+                        std::string tendencia1 = nomi[ (g + 1) % 2 ] + ".tendencia";
+
                         // pertenece al contenido de is1
-                        Arbol_huffman arbolHuffmanLectura("", nomi[ (g + 1) % 2 ] + ".tendencia");
+                        Arbol_huffman arbolHuffmanLectura;
+                        arbolHuffmanLectura.sumarArchivo(tendencia1);
+
                         // pertenece al contenido del arbol t
-                        Arbol_huffman arbolHuffmanEscritura(t->conseguirTendencia(), nomi[ (g + 1) % 2 ] + ".tendencia"); //, nomi[ (g + 1) % 2 ] + ".tendencia");
+                        Arbol_huffman arbolHuffmanEscritura;
+                        arbolHuffmanEscritura.sumarTendencia(t->conseguirTendencia());
+                        arbolHuffmanEscritura.sumarArchivo(tendencia1);
 
                         // std::cout << arbolHuffmanEscritura.toString() << std::endl;
 

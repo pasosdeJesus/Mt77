@@ -136,6 +136,15 @@ leePlanoStream(std::istream &is, Arbol_huffman &arbolHuffman) throw(string)
                 return NULL;
         }
         while (c != FINCADENA && c != EOF) {
+                if (c == ESCAPE) {
+                        // ya que se consigue un caracter de escape,
+                        // se sabe que el siguiente caracter no cuenta
+                        // como FINCADENA, sino que hace parte del
+                        // texto. Es por esto que se avanza un espacio.
+                        c = is.get();
+                        // TODO: esto deberia reconocer FINCADENA
+                        // estructuralmente.
+                }
                 cad += c;
                 c = is.get();
         }
@@ -192,18 +201,17 @@ NodoTrieS *
 leePlano(char *na, char *nrel, vector<Doc> &docs, Arbol_huffman &arbolHuffman)
 {
         NodoTrieS *r;
-        //cout << "leePlano(" << na << ", " << nrel << ", " << idocs.size() << ", " << condensados.size() << ")" << endl;
         fstream is(na, ios_base::in);
         verificaIndice(is);
         try {
                 r = leePlanoStream(is, arbolHuffman);
-                // std::cout << std::endl << ">> " << r->valorCad() << std::endl;
-                // std::cout << std::endl << ">> " << r->preorden() << std::endl;
         } catch (string m) {
                 stringstream ss;
                 ss << na << ":" << is.tellg() << m << endl;
                 throw ss.str();
         }
+
+        // ERROR: is no se esta cerrando en caso de haber una excepcion
         is.close();
 
         leeRelacion(nrel, docs);

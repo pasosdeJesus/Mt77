@@ -22,6 +22,79 @@ Inicio
 Fin
 */
 
+Arbol_huffman::Arbol_huffman() {
+    this->raiz = nullptr;
+    this->modificado = false;
+    this->bloquear = false;
+}
+
+Arbol_huffman::Arbol_huffman(std::string cadena) {
+    // tendencia de cada caracter
+    std::map<char, int> tendencia = Arbol_huffman::cadenaAMapa(cadena);
+
+    this->raiz = nullptr;
+    this->tendencias = tendencia;
+    this->modificado = true;
+    this->bloquear = false;
+}
+
+void Arbol_huffman::sumarTendencia(std::map<char, int> tendencia) {
+    Arbol_huffman::sumarMapas(this->tendencias, tendencia);
+    this->modificado = true;
+}
+
+void Arbol_huffman::sumarArchivo(std::string archivo) {
+    if (!archivo.empty()) {
+        Arbol_huffman::sumarMapas(this->tendencias, Arbol_huffman::cargar(archivo));
+    }
+    this->modificado = true;
+}
+
+void Arbol_huffman::construirArbol() {
+
+    if (!this->modificado || this->bloquear) {
+        return;
+    }
+    this->modificado = false;
+
+    // cola de prioridad invertida, guarda los valores de menor a mayor
+    std::priority_queue<nodo_arbol_huffman, std::vector<nodo_arbol_huffman>,
+                        std::greater<nodo_arbol_huffman>>
+        cp;
+
+    for (std::pair<char, int> v : this->tendencias) {
+        cp.push(nodo_arbol_huffman(v.first, v.second));
+    }
+
+    while (cp.size() > 1) {
+        nodo_arbol_huffman nah = cp.top();
+        cp.pop();
+        nodo_arbol_huffman nah2 = cp.top();
+        cp.pop();
+        cp.push(nodo_arbol_huffman(nah, nah2));
+    }
+
+    if (cp.size() != 0) {
+        nodo_arbol_huffman nah = cp.top();
+        cp.pop();
+        this->raiz = std::make_shared<nodo_arbol_huffman>(nah);
+        this->generarCodigos(this->raiz, "1");
+    } else {
+        this->raiz = nullptr;
+    }
+}
+
+void Arbol_huffman::generarCodigos(std::shared_ptr<nodo_arbol_huffman> nah,
+                                      std::string codigo) {
+    this->simbolos[nah->valor] = codigo;
+    if (nah->hijo_i != NULL) {
+        generarCodigos(nah->hijo_i, codigo + "1");
+    }
+    if (nah->hijo_d != NULL) {
+        generarCodigos(nah->hijo_d, codigo + "0");
+    }
+}
+
 void Arbol_huffman::restarCadenaAMapa(std::map<char, int> &mapa, std::string cad) {
     for (char c : cad) {
         mapa[c] --;
@@ -32,7 +105,7 @@ void Arbol_huffman::restarCadenaAMapa(std::map<char, int> &mapa, std::string cad
 }
 
 // compara ambos mapas
-bool Arbol_huffman::equivalenciaMapas( std::map<char, int> const &map1, std::map<char, int> const map2) {
+bool Arbol_huffman::equivalenciaMapas(std::map<char, int> const &map1, std::map<char, int> const map2) {
     return map1.size() == map2.size()
         && std::equal(map1.begin(), map1.end(), map2.begin(),
                 [] (auto a, auto b) { return a.first == b.first; }
@@ -85,74 +158,16 @@ std::string nodo_arbol_huffman::toString() {
     return ss.str();
 }
 
-Arbol_huffman::Arbol_huffman() {
-    this->raiz = nullptr;
-}
-
 bool Arbol_huffman::vacio() {
+    this->construirArbol();
     return this->raiz == nullptr;
 }
 
-Arbol_huffman::Arbol_huffman(std::map<char, int> tendencia, std::string archivo) {
-    this->construirArbol(tendencia, archivo);
-}
-
-Arbol_huffman::Arbol_huffman(std::string cadena, std::string archivo) {
-    // tendencia de cada caracter
-    std::map<char, int> tendencia = Arbol_huffman::cadenaAMapa(cadena);
-    this->construirArbol(tendencia, archivo);
-}
-
-void Arbol_huffman::construirArbol(std::map<char, int> tendencia, std::string archivo) {
-
-    if (!archivo.empty()) {
-        Arbol_huffman::sumarMapas(tendencia, Arbol_huffman::cargar(archivo));
-    }
-
-    this->tendencias = tendencia;
-
-    // cola de prioridad invertida, guarda los valores de menor a mayor
-    std::priority_queue<nodo_arbol_huffman, std::vector<nodo_arbol_huffman>,
-                        std::greater<nodo_arbol_huffman>>
-        cp;
-
-    for (std::pair<char, int> v : tendencia) {
-        cp.push(nodo_arbol_huffman(v.first, v.second));
-    }
-
-    while (cp.size() > 1) {
-        nodo_arbol_huffman nah = cp.top();
-        cp.pop();
-        nodo_arbol_huffman nah2 = cp.top();
-        cp.pop();
-        cp.push(nodo_arbol_huffman(nah, nah2));
-    }
-
-    if (cp.size() != 0) {
-        nodo_arbol_huffman nah = cp.top();
-        cp.pop();
-        this->raiz = std::make_shared<nodo_arbol_huffman>(nah);
-    } else {
-        this->raiz = nullptr;
-    }
-}
-
-void Arbol_huffman::conseguirCodigos() {
-    _conseguirCodigos(this->raiz, "1");
-}
-
-void Arbol_huffman::_conseguirCodigos(std::shared_ptr<nodo_arbol_huffman> nah,
-                                      std::string codigo) {
-    this->simbolos[nah->valor] = codigo;
-    if (nah->hijo_i != NULL) {
-        _conseguirCodigos(nah->hijo_i, codigo + "1");
-    }
-    if (nah->hijo_d != NULL) {
-        _conseguirCodigos(nah->hijo_d, codigo + "0");
-    }
-}
-
 std::string Arbol_huffman::descomprimir(std::string binCodigo) {
+
+    this->construirArbol();
+    this->bloquear = true;
+
     // en caso de no haber arbol, no es posible descomprimir cadenas
     if (this->raiz == nullptr || binCodigo.empty()) {
         return binCodigo;
@@ -191,13 +206,14 @@ std::string Arbol_huffman::binarioACadena(std::string codigo)
             }
         }
         pos ++;
-
     }
 
     return respuesta;
 }
 
 void Arbol_huffman::imprimirPreOrden() {
+    this->construirArbol();
+
     _imprimirPreOrden(std::shared_ptr<nodo_arbol_huffman>(this->raiz), 0);
 }
 
@@ -223,12 +239,13 @@ void Arbol_huffman::_imprimirPreOrden(std::shared_ptr<nodo_arbol_huffman> nah,
 
 std::string Arbol_huffman::comprimir(std::string cadena) {
 
+    this->construirArbol();
+
     if (this->raiz == nullptr || cadena.empty())
     {
         return cadena;
     }
 
-    this->conseguirCodigos();
     std::string binString = "";
     std::string ret = "";
 
@@ -253,7 +270,8 @@ std::string Arbol_huffman::comprimir(std::string cadena) {
 }
 
 std::string Arbol_huffman::toString() {
-    if (this->raiz == nullptr )
+    this->construirArbol();
+    if (this->raiz == nullptr)
         return "";
     return _toString(std::shared_ptr<nodo_arbol_huffman>(this->raiz));
 }
@@ -267,10 +285,7 @@ std::string Arbol_huffman::_toString(std::shared_ptr<nodo_arbol_huffman> nah) {
 }
 
 std::map<char, int> Arbol_huffman::conseguirTendencia() {
-    std::map<char, int> tendencia ;
-    if (this != NULL)
-        tendencia = this->tendencias;
-    return tendencia;
+    return this->tendencias;
 }
 
 void Arbol_huffman::guardar(std::string nombre) {
