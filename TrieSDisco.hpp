@@ -182,7 +182,7 @@ set<Pos> *buscaPlano(const char *na, const char *nrel, string pal,
  * @param pal Palabra por buscar
  * @return Conjunto de posiciones donde aparece la palabra
  **/
-set<Pos> *buscaPlanoStream(std::istream &is, string pal) throw(string);
+set<Pos> *buscaPlanoStream(std::istream &is, string pal) noexcept(false);
 
 
 
@@ -195,7 +195,7 @@ set<Pos> *buscaPlanoStream(std::istream &is, string pal) throw(string);
  * Lanza excepción si no puede leer archivo.
  */
 uint32_t 
-leeRelacion(const char *nrel,  vector<Doc> &docs) throw(string);
+leeRelacion(const char *nrel,  vector<Doc> &docs) noexcept(false);
 
 
 /**

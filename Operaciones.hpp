@@ -21,14 +21,14 @@ using namespace std;
  * @param pre Prefijo para indentar
  */
 void
-muestraStream(std::istream &is, string pre); //throw(char *)
+muestraStream(std::istream &is, string pre); //noexcept(false)
 
 /**
  * Lista por salida estándar palabras y frecuencias contenidas en índice.
  * @param noma Nombre de archivo con índice
  * @param nrel Nombre de archivo con relación  de documentos
  */
-void listaPalabras(char *noma, char *nrel) throw(string);
+void listaPalabras(char *noma, char *nrel) noexcept(false);
 
 /**
  * Elimina del indice nomind el documento nd y deja resultado en noma
@@ -37,7 +37,7 @@ void listaPalabras(char *noma, char *nrel) throw(string);
  * @param nd Número de documento a eliminar de nomind
  */
 void
-eliminaDoc(char *noma, char *nomind, uint32_t nd) throw(string);
+eliminaDoc(char *noma, char *nomind, uint32_t nd) noexcept(false);
 
 
 /**
@@ -66,7 +66,7 @@ string determinaFormato(string narch);
  */
 void
 mezclaDosDisco(const char *indsal, const char *ind1, const char *ind2,
-               uint32_t nd = 0) throw(string);
+               uint32_t nd = 0) noexcept(false);
 
 /**
  * Agrega un documento a un índice

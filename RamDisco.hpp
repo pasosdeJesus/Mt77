@@ -56,7 +56,7 @@ escribePlanoStream(NodoTrieS *n, std::ostream &os, uint32_t desp = 0);
  * @return trieS que construye
  */
 NodoTrieS *
-leePlanoStream(std::istream &is) throw(string);
+leePlanoStream(std::istream &is) noexcept(false);
 
 /**
  * Escribe en formato plano en un archivo
@@ -137,6 +137,6 @@ mezclaDiscoRam(istream &is1, NodoTrieS *a2, int saltacad, iostream &os,
 void
 subindiceDiscoaRAM(std::istream &is, NodoTrieS *t, uint32_t nd, 
 		string pcad = "") 
-        throw(string);
+        noexcept(false);
 
 #endif

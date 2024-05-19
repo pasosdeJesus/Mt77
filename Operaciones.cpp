@@ -115,7 +115,7 @@ muestraStream(std::istream &is, string pre)
 }
 
 
-void listaPalabras(char *noma, char *nrel) throw(string)
+void listaPalabras(char *noma, char *nrel) noexcept(false)
 {
         ASSERT(noma != NULL);
         ASSERT(nrel != NULL);
@@ -135,7 +135,7 @@ void listaPalabras(char *noma, char *nrel) throw(string)
 
 
 void
-eliminaDoc(char *noma, char *nomind, uint32_t nd) throw(string)
+eliminaDoc(char *noma, char *nomind, uint32_t nd) noexcept(false)
 {
         ASSERT(nd > 0);
         char nrel1[MAXLURL];
@@ -236,7 +236,7 @@ calcRenum(uint32_t td1, uint32_t td2, uint32_t nd, vector<int64_t> *reord,
 
 void
 mezclaDosDisco(const char *indsal, const char *ind1, const char *ind2,
-               uint32_t nd)  throw(string)
+               uint32_t nd)  noexcept(false)
 {
         ASSERT(nd >= 0);
         char nrel[MAXLURL], nrel1[MAXLURL], nrel2[MAXLURL];

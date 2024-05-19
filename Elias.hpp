@@ -100,14 +100,14 @@ decodifica_elias_gama(vector<bool> &vb);
  * @param is flujo de entrada
  **/
 uint64_t
-lee_elias_gama(std::istream &is) throw(string);
+lee_elias_gama(std::istream &is) noexcept(false);
 
 /**
  * Lee rapidamente un número en codificación elias gama de un flujo.
  * @param is flujo de entrada
  **/
 uint64_t
-lee_elias_gama2(std::istream &is) throw(string);
+lee_elias_gama2(std::istream &is) noexcept(false);
 
 /**
  * Escribe al flujo os un entero en codificación gama de Elias.

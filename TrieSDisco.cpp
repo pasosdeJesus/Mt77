@@ -634,7 +634,7 @@ mezclaRec(istream &is1, istream &is2, iostream &os,
  * formato extra-simple
  */
 set<Pos> *
-buscaPlanoStream(std::istream &is, string pal) throw(string)
+buscaPlanoStream(std::istream &is, string pal) noexcept(false)
 {
         string cad;
         set<Pos> *cpos;
@@ -713,7 +713,7 @@ buscaPlano(const char *na, const char *nrel, string pal, vector<Doc> &docs)
 
 
 uint32_t
-leeRelacion(const char *nrel,  vector<Doc> &docs) throw(string)
+leeRelacion(const char *nrel,  vector<Doc> &docs) noexcept(false)
 {
         ASSERT(nrel != NULL);
         ASSERT(nrel[0] != '\0');

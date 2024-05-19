@@ -81,7 +81,7 @@ const char FINCADENA = '{';
  * @param na Nombre de índice
  * @param nrel con espacio para MAXLURL caracteres, retorna nombre de rel.
  */
-void verificaNombre(const char *na, char *nrel) throw(string);
+void verificaNombre(const char *na, char *nrel) noexcept(false);
 
 
 /**
@@ -125,13 +125,13 @@ std::string errorFormato(std::istream &is, string m);
  * Lee una cadena
  * @param is flujo de entrada
  **/
-string leeCad(istream &is) throw(string);
+string leeCad(istream &is) noexcept(false);
 
 /**
  * Lee un número hexadecimal
  * @param is flujo de entrada
  **/
-long leeHex(std::istream &is) throw(string);
+long leeHex(std::istream &is) noexcept(false);
 
 
 /**
@@ -147,7 +147,7 @@ void escribeHex(std::ostream &os, uint32_t n);
  * Con 5 dígitos de estos puede representarse más de 4294967295 = 0xFFFFFFFF
  * @param is flujo de entrada
  **/
-long lee128b(std::istream &is) throw(string);
+long lee128b(std::istream &is) noexcept(false);
 
 
 /**
@@ -190,7 +190,7 @@ long128b(uint32_t n)
  * @param is flujo de entrada
  **/
 inline uint32_t
-leeNDesp(std::istream &is) throw (std::string)
+leeNDesp(std::istream &is) noexcept(false)
 {
         return lee128b(is);
 }

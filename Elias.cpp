@@ -308,7 +308,7 @@ uint64_t decodifica_elias_gama(vector<bool> &vb)
  * Una secuencia de números quedará cada numero comenzando en un byte.
  */
 uint64_t
-lee_elias_gama(std::istream &is) throw (string)
+lee_elias_gama(std::istream &is) noexcept(false)
 {
         vector<bool> vb(0);
         vb.clear();
@@ -435,7 +435,7 @@ lee_elias_gama(std::istream &is) throw (string)
  
   */
 uint64_t
-lee_elias_gama2(std::istream &is) throw (string)
+lee_elias_gama2(std::istream &is) noexcept(false)
 {
         //clog << "OJO lee_elias_gama2(is)" << endl;
         uint32_t p2;

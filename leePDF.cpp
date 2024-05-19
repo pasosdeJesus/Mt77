@@ -42,7 +42,7 @@ string escapeshellarg(string s)
 
 /** Construye un trieS a partir de un PDF */
 void leePDF(const char *na, long ndoc, NodoTrieS &t, bool normalizaPal)
-throw(std::string)
+noexcept(false)
 {
         ASSERT(na != NULL && na[0] != '\0' && strlen(na) < FILENAME_MAX);
         ASSERT(ndoc >= 0);

@@ -68,7 +68,7 @@ vector<string> estalla(const string &delimitador, const string &cad)
         return arr;
 }
 
-void verificaNombre(const char *na, char *nrel) throw(string)
+void verificaNombre(const char *na, char *nrel) noexcept(false)
 {
         ASSERT(na != NULL);
         ASSERT(nrel != NULL);
@@ -109,7 +109,7 @@ std::string errorFormato(std::istream &is, string m)
 
 /** Lee de un stream una cadena vacía (si el stream no puede leerse) o
  * terminada con { o de MAXCAD caracteres*/
-string leeCad(std::istream &is) throw(string)
+string leeCad(std::istream &is) noexcept(false)
 {
         int c = is.get();
         string cad = "";
@@ -135,7 +135,7 @@ string leeCad(std::istream &is) throw(string)
 
 /** Lee un número hexadecimal */
 long
-leeHex(std::istream &is) throw(std::string)
+leeHex(std::istream &is) noexcept(false)
 {
         uint32_t i;
         long valor = 0;
@@ -191,7 +191,7 @@ void escribe128b(std::ostream &os, uint32_t n)
 
 
 long
-lee128b(std::istream &is) throw (std::string)
+lee128b(std::istream &is) noexcept(false)
 {
         int i;
         long valor = 0;

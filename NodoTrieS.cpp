@@ -278,7 +278,7 @@ NodoTrieS::inserta(string pal, set<Pos> *npos)
 
 void
 NodoTrieS::aDotty(std::ostream &os, string pref, bool primero, bool mayor)
-        throw(string)
+        noexcept(false)
 {
         static int numcluster = 0;
         if (primero) {

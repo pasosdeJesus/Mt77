@@ -29,6 +29,6 @@
  * @return void
  */
 void leePDF(const char *na, long ndoc, NodoTrieS &t, bool normalizaPal)
-throw(std::string);
+noexcept(false);
 
 #endif

@@ -122,7 +122,7 @@ escribePlanoStream(NodoTrieS *n, std::iostream &os, uint32_t desp)
 
 
 NodoTrieS *
-leePlanoStream(std::istream &is) throw(string)
+leePlanoStream(std::istream &is) noexcept(false)
 {
         string cad;
         set<Pos> *cpos;
@@ -730,7 +730,7 @@ mezclaDiscoRam(istream &is1, NodoTrieS *a2, int saltacad, iostream &os,
         
 void
 subindiceDiscoaRAM(std::istream &is, NodoTrieS *t, uint32_t nd, string pcad)
-        throw(string)
+        noexcept(false)
 {
         //clog << "OJO subindiceDiscoaRAM(is, t, nd=" << nd << ", pcad=" << pcad << ")" << endl;
         string cad;

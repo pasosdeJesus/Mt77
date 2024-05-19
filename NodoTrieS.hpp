@@ -155,7 +155,7 @@ class NodoTrieS
                 * @param mayor Si es el mayor de los hermanos del nivel
                  */
                 void aDotty(ostream &os, string pref = "",
-                            bool primero = true, bool mayor = true) throw(string);
+                            bool primero = true, bool mayor = true) noexcept(false);
 
                 /* Arbol mas simple en formato dot */
                 void aDotty2(ostream &os, string pref = "", bool primero = true);
