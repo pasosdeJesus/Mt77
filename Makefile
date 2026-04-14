@@ -142,8 +142,13 @@ depuraindice:  $(FDEPURAINDICE)  depuraindice.o
 
 
 FOPERAINDICE=$(FBASE) Operaciones.o operaindice.o 
+# operaindice dejo de ser static desde adJ 7.8 porque libxml ya no
+# precompila versión static si se compila libxml estatico podría
+# volverse a usar:
+#	c++ $(LFLAGS)  -static -o operaindice /usr/local/lib/libxml2.a $(FOPERAINDICE)
 operaindice: $(FOPERAINDICE)
-	c++ $(LFLAGS)  -static -o operaindice /usr/local/lib/libxml2.a $(FOPERAINDICE)
+	c++ $(LFLAGS)  -o operaindice $(FOPERAINDICE)
+
 
 .SUFFIXES: .o .cpp
 
